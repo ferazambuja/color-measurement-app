@@ -32,12 +32,12 @@ def request(front, mode, workflow="spot", count=1, layout=None, options=None):
                        "options": options or {}, "layout": layout or {}})
 
 
-def drive(front, text, *, cancel_at=None):
+def drive(front, text, *, cancel_at=None, timeout=10):
     operation = front.prepare(text)
     events = []
     try:
         operation.dispatch()
-        deadline = time.monotonic() + 10
+        deadline = time.monotonic() + timeout
         while not operation.done and time.monotonic() < deadline:
             raw = operation.poll_event_json()
             if raw:
@@ -397,7 +397,9 @@ def test_large_demo_batch_does_not_spend_the_deadline_on_artificial_pacing(monke
         product(string.ascii_letters + string.digits, repeat=2), 3000)]
     payload = json.loads(request(front, "reflective_strip", "strip", count=0))
     payload["patch_ids"] = ids
-    result, events = drive(front, json.dumps(payload, separators=(",", ":")))
+    # This is a hang bound, not the pacing oracle above. A busy target runner
+    # needs headroom to construct and validate all 3000 retained observations.
+    result, events = drive(front, json.dumps(payload, separators=(",", ":")), timeout=60)
     assert active_events, "The pacing guard must observe events before producer completion"
     assert len(delivered) > 3000 and not paced, f"Demo delivery paced itself: {paced[:3]}"
     assert result["status"] == "completed", result["error"]

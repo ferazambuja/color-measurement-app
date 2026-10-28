@@ -100,6 +100,10 @@ def packaged_app(tmp_path):
                 + b"\0" * 12
                 + marshal.dumps(compile(content, relative.as_posix(), "exec"))
             )
+            if relative.as_posix() in {"science.py", "presentation.py"}:
+                retained_source = package / relative
+                retained_source.parent.mkdir(parents=True, exist_ok=True)
+                retained_source.write_bytes(content)
         else:
             target.write_bytes(content)
     identity = code / "_packaged_identity.pyc"
