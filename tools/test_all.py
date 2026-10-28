@@ -36,6 +36,9 @@ ROOT = Path(__file__).resolve().parents[1]
 #: The parallel pytest stage's shared deadline, in seconds. A two-worker suite
 #: needs more than 900 s on a shared host.
 PYTEST_STAGE_SECONDS = 1800
+#: Native source proofs, compilation and substituted protocols form one stage.
+#: The full Windows stage exceeds the ordinary five-minute child-command bound.
+NATIVE_STAGE_SECONDS = 900
 sys.path.insert(0, str(ROOT / "src"))
 if "color_measurement" in sys.modules:
     require_module_origin(sys.modules["color_measurement"], ROOT / "src")
@@ -787,7 +790,9 @@ def main(argv: list[str] | None = None) -> int:
                     # complete suite needs headroom on slower or shared hosts.
                     run_tests(pytest_report, test_environment, args.jobs)
                 else:
-                    run(command, cwd=ROOT, extra_env=source_environment())
+                    run(command, cwd=ROOT, extra_env=source_environment(),
+                        timeout=(NATIVE_STAGE_SECONDS
+                                 if stage == "Offline Argyll native feasibility" else 300))
                 if stage == "Offline Argyll native feasibility":
                     # An unsupplied worker comes from this build of this checkout,
                     # authenticated like a supplied one: no second build, and no

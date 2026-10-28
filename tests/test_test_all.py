@@ -526,6 +526,34 @@ def test_full_suite_has_headroom_without_extending_other_child_commands(monkeypa
 
 
 @pytest.mark.skipif(os.name != "posix", reason="POSIX inherited group and pipe control")
+def test_native_stage_has_its_own_deadline_without_extending_other_commands(monkeypatch, tmp_path):
+    """A progressing native stage may exceed five minutes on the Windows runner."""
+    deadlines = []
+
+    def child(command, **kwargs):
+        deadline = kwargs.get("timeout", 300)
+        deadlines.append((command, deadline))
+        if "tools/argyll_native_check.py" in command:
+            if deadline <= 300:
+                raise subprocess.TimeoutExpired(command, deadline)
+        if "pytest" in command:
+            return write_pytest_report(command, outcome="passed", mat_outcome="passed",
+                                       environment=kwargs.get("extra_env"))
+        return ""
+
+    monkeypatch.setattr(runner, "run", child)
+    monkeypatch.setattr(runner.shutil, "which", lambda _: "uv")
+    monkeypatch.setattr(runner, "tree_state", lambda: ("a" * 40, "", "fixture"))
+    monkeypatch.setattr(runner, "check_installed_wheel", lambda *_: None)
+    assert runner.main(["--argyll-archive", str(tmp_path / "source.zip")]) == 0
+    native = [deadline for command, deadline in deadlines
+              if "tools/argyll_native_check.py" in command]
+    ordinary = [deadline for command, deadline in deadlines
+                if "tools/argyll_native_check.py" not in command and "pytest" not in command]
+    assert len(native) == 1 and 300 < native[0] <= 900
+    assert ordinary and all(deadline == 300 for deadline in ordinary)
+
+
 def test_timeout_returns_even_when_a_descendant_keeps_the_captured_pipe(tmp_path):
     """The outer group owner retires the writer; run must not wait for its EOF.
 

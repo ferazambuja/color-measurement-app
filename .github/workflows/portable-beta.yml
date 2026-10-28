@@ -78,6 +78,7 @@ jobs:
           path: |
             local/beta/assets/*
             local/beta/native/report.json
+            local/beta/native/**/*.log
           retention-days: 1
           compression-level: 0
           if-no-files-found: error
@@ -141,6 +142,7 @@ jobs:
           path: |
             local/beta/assets/*
             local/beta/native/report.json
+            local/beta/native/**/*.log
           retention-days: 1
           compression-level: 0
           if-no-files-found: error
