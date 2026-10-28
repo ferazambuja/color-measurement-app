@@ -1,0 +1,51 @@
+{
+  "note": "Two candidates at one path, which is the enumeration being wrong rather than two instruments",
+  "opening": [
+    {
+      "index": 1,
+      "permitted_without_acknowledgement": true,
+      "requires": null
+    },
+    {
+      "index": 2,
+      "permitted_without_acknowledgement": true,
+      "requires": null
+    }
+  ],
+  "refused": null,
+  "scenario": "duplicate_path",
+  "units": [
+    {
+      "attachable": true,
+      "identified": true,
+      "index": 1,
+      "initialization_assessed": true,
+      "initialization_refusal": null,
+      "name": "GretagMacbeth i1 Display 2",
+      "native_type": 18,
+      "opening_requires": null,
+      "path": "fixture:display:1",
+      "symbol": "instI1Disp2",
+      "transport": 4,
+      "transports": [
+        "hid"
+      ]
+    },
+    {
+      "attachable": true,
+      "identified": true,
+      "index": 2,
+      "initialization_assessed": true,
+      "initialization_refusal": null,
+      "name": "GretagMacbeth i1 Display 2",
+      "native_type": 18,
+      "opening_requires": null,
+      "path": "fixture:display:1",
+      "symbol": "instI1Disp2",
+      "transport": 4,
+      "transports": [
+        "hid"
+      ]
+    }
+  ]
+}

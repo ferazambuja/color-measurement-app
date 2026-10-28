@@ -1,0 +1,86 @@
+--- a/spectro/spotread.c
++++ b/spectro/spotread.c
+@@ -73,0 +74,3 @@
++/* insttypes.h keeps this prototype commented, as in upstream inst.c. */
++extern icom_type dev_category(instType itype);
++
+@@ -552,0 +556 @@ usage(char *diag, ...) {
++	fprintf(stderr," -Y I:name:port       Select one named instrument on an explicit serial port\n");
+@@ -616,0 +621,4 @@ int main(int argc, char *argv[]) {
++	int comport_explicit = 0;
++	char *typed_port = NULL;
++	instType typed_type = instUnknown;
++	icompath selected_path;
+@@ -719,0 +728 @@ int main(int argc, char *argv[]) {
++					comport_explicit = 1;
+@@ -1067 +1076,23 @@ int main(int argc, char *argv[]) {
+-				if (na[0] == 'A') {
++				/* Explicit selection avoids discovery probes. The selected
++				 * driver's init_coms must verify its exact model and transport.
++				 * Added 14 October 2026 by Fernando Voltolini de Azambuja. */
++				if (na[0] == 'I') {
++#ifdef ENABLE_FAST_SERIAL
++					char model[128];
++					char *separator;
++					size_t length;
++					if (typed_port != NULL || na[1] != ':'
++					 || (separator = strchr(na + 2, ':')) == NULL
++					 || separator == na + 2 || !separator[1])
++						error("Explicit selection requires -Y I:instrument-name:serial-port-path");
++					length = (size_t)(separator - (na + 2));
++					if (length >= sizeof(model)) error("Explicit instrument name is too long");
++					memcpy(model, na + 2, length); model[length] = '\000';
++					typed_type = inst_enum(model);
++					if (typed_type == instUnknown || dev_category(typed_type) != icomt_instrument)
++						error("Unknown explicit instrument name '%s'", model);
++					typed_port = separator + 1;
++#else
++					error("Explicit serial selection requires fast serial support");
++#endif
++				} else if (na[0] == 'A') {
+@@ -1192,4 +1223,16 @@ int main(int argc, char *argv[]) {
+-	if ((icmps = new_icompaths(g_log)) == NULL)
+-		error("Finding instrument paths failed");
+-	if ((ipath = icmps->get_path(icmps, comport)) == NULL)
+-		error("No instrument at port %d",comport);
++	if (typed_port != NULL) {
++		if (comport_explicit) error("Use either -c listno or -Y I:name:port");
++		memset(&selected_path, 0, sizeof(selected_path));
++		selected_path.dtype = typed_type;
++		selected_path.dctype = icomt_serial | icomt_instrument;
++		selected_path.name = typed_port;
++#if defined(ENABLE_SERIAL) || defined(ENABLE_FAST_SERIAL)
++		selected_path.spath = typed_port;
++#endif
++		ipath = &selected_path;
++	} else {
++		if ((icmps = new_icompaths(g_log)) == NULL)
++			error("Finding instrument paths failed");
++		if ((ipath = icmps->get_path(icmps, comport)) == NULL)
++			error("No instrument at port %d",comport);
++	}
+@@ -1198 +1241 @@ int main(int argc, char *argv[]) {
+-	if ((it = new_inst(ipath, 0, g_log, DUIH_FUNC_AND_CONTEXT)) == NULL) {
++	if ((it = new_inst(ipath, typed_port != NULL, g_log, DUIH_FUNC_AND_CONTEXT)) == NULL) {
+@@ -1478 +1521 @@ remediate:;
+-				if (verb) {
++				if (verb)
+@@ -1480,2 +1523 @@ remediate:;
+-					nadaptive = 0;
+-				}
++				nadaptive = 0;
+@@ -1483,3 +1525,3 @@ remediate:;
+-			if (refrmode >= 0 && it->check_mode(it, inst_mode_emis_refresh_ovd) != inst_ok
+-			                  && it->check_mode(it, inst_mode_emis_norefresh_ovd) != inst_ok) {
+-				if (verb) {
++			if (refrmode >= 0 && !IMODETST(cap, refrmode == 0
++			                            ? inst_mode_emis_norefresh_ovd : inst_mode_emis_refresh_ovd)) {
++				if (verb)
+@@ -1487,2 +1529 @@ remediate:;
+-					refrmode = -1;
+-				}
++				refrmode = -1;
+@@ -3196 +3237,2 @@ done:;
+-	icmps->del(icmps);
++	if (icmps != NULL)
++		icmps->del(icmps);

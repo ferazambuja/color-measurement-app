@@ -1,0 +1,9 @@
+--- a/spectro/sa_conv.h
++++ b/spectro/sa_conv.h
+@@ -201,0 +202 @@ void sa_Add3(double out[3], double in1[3], double in2[3]);
++void sa_Clamp3(double out[3], double in[3]);
+@@ -204,0 +206 @@ void sa_Add3(double out[3], double in1[3], double in2[3]);
++unsigned int sa_rand32(unsigned int seed);
+@@ -240 +242 @@ extern sa_MD5 *new_sa_MD5(void);
+-#define new_icmMD5 new_sa_MD5
++#define new_icmMD5(...) new_sa_MD5()

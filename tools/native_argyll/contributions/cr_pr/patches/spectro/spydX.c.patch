@@ -1,0 +1,9 @@
+--- a/spectro/spydX.c
++++ b/spectro/spydX.c
+@@ -971 +971 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		a1logd(p->log,4,"spydX_calibrate: doing calt 0x%x\n",calt);
++		a1logd(p->log,4,"spydX_calibrate: doing calt 0x%x\n",*calt);
+@@ -996,0 +997 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
++		*calt &= ~inst_calt_emis_offset;
+@@ -1082,0 +1084 @@ spydX_del(inst *pp) {
++	inst_del_disptype_list(p->dtlist, p->ndtlist);	/* CM: the instrument owns this list (inst.h:832-833) */

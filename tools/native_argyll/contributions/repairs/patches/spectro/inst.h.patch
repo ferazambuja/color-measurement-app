@@ -1,0 +1,17 @@
+--- a/spectro/inst.h
++++ b/spectro/inst.h
+@@ -1273,3 +1273,11 @@ void free_iccss(iccss *list);
+-/* Apply a custom filer to an array of ipatch's */
+-/* Spetral values are divided by filter spectrum and XYZ recomputed */
+-void ipatch_convert_custom_filter(ipatch *vals, int nvals, xspect *filt, int clamp);
++/* Return NZ for a supported sample count and wavelength range, with */
++/* finite positive normalisation and finite samples. Actual interpolated */
++/* divisors and corrected values are checked when the filter is applied. */
++int inst_valid_custom_filter(xspect *sp);
++
++/* Apply a custom filter to an array of ipatch's. */
++/* Spectral values are divided by the filter spectrum and XYZ recomputed. */
++/* Return 0 on success, 1 if an XYZ converter cannot be created, or 2 */
++/* for an unusable filter or nonfinite corrected spectral/XYZ values. */
++/* Both failure returns leave the entire patch array unchanged. */
++int ipatch_convert_custom_filter(ipatch *vals, int nvals, xspect *filt, int clamp);

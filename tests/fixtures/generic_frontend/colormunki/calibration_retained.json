@@ -1,0 +1,3633 @@
+{
+  "fixture": "retained_calibration",
+  "routes": {
+    "ambient_flash": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 197128,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56208
+      },
+      {
+        "available_calibrations": 1024,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 0,
+        "performed": false,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            68.86545614943437,
+            53.40405639137513,
+            0.09214833994606052
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 4,
+          "spectrum": {
+            "norm": 1,
+            "samples": [
+              4.159029880923512e-49,
+              1.4499659216928436e-44,
+              3.0349024239652554e-40,
+              3.813755548686912e-36,
+              2.8772801873813206e-32,
+              1.3032647253169032e-28,
+              3.5440864643876023e-25,
+              5.786249543891754e-22,
+              5.671673122791037e-19,
+              3.337693164388253e-16,
+              1.1792416457897617e-13,
+              2.5013841282603484e-11,
+              3.18551133058137e-09,
+              2.435561504743216e-07,
+              1.1179959516236015e-05,
+              0.00030810769385896617,
+              0.005097838096657972,
+              0.050639652446369726,
+              0.3020066993186934,
+              1.081343365793463,
+              2.3245122866497483,
+              3,
+              2.3245122866497483,
+              1.081343365793463,
+              0.3020066993186934,
+              0.050639652446369726,
+              0.005097838096657972,
+              0.00030810769385896617,
+              1.1179959516236015e-05,
+              2.435561504743216e-07,
+              3.18551133058137e-09,
+              2.5013841282603484e-11,
+              1.1792416457897617e-13,
+              3.337693164388253e-16,
+              5.671673122791037e-19,
+              5.786249543891754e-22
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "result",
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "ambient_spot": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 196872,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56208
+      },
+      {
+        "available_calibrations": 1024,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 0,
+        "performed": false,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            68.86545614943437,
+            53.40405639137513,
+            0.09214833994606052
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 2,
+          "spectrum": {
+            "norm": 1,
+            "samples": [
+              4.159029880923512e-49,
+              1.4499659216928436e-44,
+              3.0349024239652554e-40,
+              3.813755548686912e-36,
+              2.8772801873813206e-32,
+              1.3032647253169032e-28,
+              3.5440864643876023e-25,
+              5.786249543891754e-22,
+              5.671673122791037e-19,
+              3.337693164388253e-16,
+              1.1792416457897617e-13,
+              2.5013841282603484e-11,
+              3.18551133058137e-09,
+              2.435561504743216e-07,
+              1.1179959516236015e-05,
+              0.00030810769385896617,
+              0.005097838096657972,
+              0.050639652446369726,
+              0.3020066993186934,
+              1.081343365793463,
+              2.3245122866497483,
+              3,
+              2.3245122866497483,
+              1.081343365793463,
+              0.3020066993186934,
+              0.050639652446369726,
+              0.005097838096657972,
+              0.00030810769385896617,
+              1.1179959516236015e-05,
+              2.435561504743216e-07,
+              3.18551133058137e-09,
+              2.5013841282603484e-11,
+              1.1792416457897617e-13,
+              3.337693164388253e-16,
+              5.671673122791037e-19,
+              5.786249543891754e-22
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "result",
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "emissive_spot": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 196632,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56208
+      },
+      {
+        "available_calibrations": 1024,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 0,
+        "performed": false,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            68.86545614943437,
+            53.40405639137513,
+            0.09214833994606052
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 1,
+          "spectrum": {
+            "norm": 1,
+            "samples": [
+              4.159029880923512e-49,
+              1.4499659216928436e-44,
+              3.0349024239652554e-40,
+              3.813755548686912e-36,
+              2.8772801873813206e-32,
+              1.3032647253169032e-28,
+              3.5440864643876023e-25,
+              5.786249543891754e-22,
+              5.671673122791037e-19,
+              3.337693164388253e-16,
+              1.1792416457897617e-13,
+              2.5013841282603484e-11,
+              3.18551133058137e-09,
+              2.435561504743216e-07,
+              1.1179959516236015e-05,
+              0.00030810769385896617,
+              0.005097838096657972,
+              0.050639652446369726,
+              0.3020066993186934,
+              1.081343365793463,
+              2.3245122866497483,
+              3,
+              2.3245122866497483,
+              1.081343365793463,
+              0.3020066993186934,
+              0.050639652446369726,
+              0.005097838096657972,
+              0.00030810769385896617,
+              1.1179959516236015e-05,
+              2.435561504743216e-07,
+              3.18551133058137e-09,
+              2.5013841282603484e-11,
+              1.1792416457897617e-13,
+              3.337693164388253e-16,
+              5.671673122791037e-19,
+              5.786249543891754e-22
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "result",
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "emissive_spot_adaptive": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 196632,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56208
+      },
+      {
+        "available_calibrations": 1024,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 0,
+        "performed": false,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            68.86545614943437,
+            53.40405639137513,
+            0.09214833994606052
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 1,
+          "spectrum": {
+            "norm": 1,
+            "samples": [
+              4.159029880923512e-49,
+              1.4499659216928436e-44,
+              3.0349024239652554e-40,
+              3.813755548686912e-36,
+              2.8772801873813206e-32,
+              1.3032647253169032e-28,
+              3.5440864643876023e-25,
+              5.786249543891754e-22,
+              5.671673122791037e-19,
+              3.337693164388253e-16,
+              1.1792416457897617e-13,
+              2.5013841282603484e-11,
+              3.18551133058137e-09,
+              2.435561504743216e-07,
+              1.1179959516236015e-05,
+              0.00030810769385896617,
+              0.005097838096657972,
+              0.050639652446369726,
+              0.3020066993186934,
+              1.081343365793463,
+              2.3245122866497483,
+              3,
+              2.3245122866497483,
+              1.081343365793463,
+              0.3020066993186934,
+              0.050639652446369726,
+              0.005097838096657972,
+              0.00030810769385896617,
+              1.1179959516236015e-05,
+              2.435561504743216e-07,
+              3.18551133058137e-09,
+              2.5013841282603484e-11,
+              1.1792416457897617e-13,
+              3.337693164388253e-16,
+              5.671673122791037e-19,
+              5.786249543891754e-22
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "result",
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "emissive_spot_nonadaptive": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 198680,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56208
+      },
+      {
+        "acknowledged": true,
+        "calibration_condition": 256,
+        "display_level": 1,
+        "event": "instruction_required",
+        "instruction": "calibration_setup",
+        "needed_calibrations": 1048576,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "reference_id": null,
+        "reference_type": 0,
+        "remaining_calibrations": 1048576,
+        "request_id": "calibration-0",
+        "skippable": false
+      },
+      {
+        "available_calibrations": 1049600,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 1048576,
+        "performed": true,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "reference_id": null,
+        "reference_type": 0,
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "event": "instruction_required",
+        "instruction": "sample_position",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "request_id": "sample-ready"
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            68.86545614943437,
+            53.40405639137513,
+            0.09214833994606052
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 1,
+          "spectrum": {
+            "norm": 1,
+            "samples": [
+              4.159029880923512e-49,
+              1.4499659216928436e-44,
+              3.0349024239652554e-40,
+              3.813755548686912e-36,
+              2.8772801873813206e-32,
+              1.3032647253169032e-28,
+              3.5440864643876023e-25,
+              5.786249543891754e-22,
+              5.671673122791037e-19,
+              3.337693164388253e-16,
+              1.1792416457897617e-13,
+              2.5013841282603484e-11,
+              3.18551133058137e-09,
+              2.435561504743216e-07,
+              1.1179959516236015e-05,
+              0.00030810769385896617,
+              0.005097838096657972,
+              0.050639652446369726,
+              0.3020066993186934,
+              1.081343365793463,
+              2.3245122866497483,
+              3,
+              2.3245122866497483,
+              1.081343365793463,
+              0.3020066993186934,
+              0.050639652446369726,
+              0.005097838096657972,
+              0.00030810769385896617,
+              1.1179959516236015e-05,
+              2.435561504743216e-07,
+              3.18551133058137e-09,
+              2.5013841282603484e-11,
+              1.1792416457897617e-13,
+              3.337693164388253e-16,
+              5.671673122791037e-19,
+              5.786249543891754e-22
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "result",
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "emissive_strip": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 196648,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56208
+      },
+      {
+        "available_calibrations": 1024,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 0,
+        "performed": false,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "effective_trigger": "programmatic",
+        "event": "instruction_required",
+        "instruction": "strip_position",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "request_id": "strip-ready",
+        "trigger_guidance": "Continuing starts the read immediately. Move the instrument steadily across the selected row, starting before its first patch and ending beyond its last."
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            68.86545614943437,
+            53.40405639137513,
+            0.09214833994606052
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 1,
+          "spectrum": {
+            "norm": 1,
+            "samples": [
+              4.159029880923512e-49,
+              1.4499659216928436e-44,
+              3.0349024239652554e-40,
+              3.813755548686912e-36,
+              2.8772801873813206e-32,
+              1.3032647253169032e-28,
+              3.5440864643876023e-25,
+              5.786249543891754e-22,
+              5.671673122791037e-19,
+              3.337693164388253e-16,
+              1.1792416457897617e-13,
+              2.5013841282603484e-11,
+              3.18551133058137e-09,
+              2.435561504743216e-07,
+              1.1179959516236015e-05,
+              0.00030810769385896617,
+              0.005097838096657972,
+              0.050639652446369726,
+              0.3020066993186934,
+              1.081343365793463,
+              2.3245122866497483,
+              3,
+              2.3245122866497483,
+              1.081343365793463,
+              0.3020066993186934,
+              0.050639652446369726,
+              0.005097838096657972,
+              0.00030810769385896617,
+              1.1179959516236015e-05,
+              2.435561504743216e-07,
+              3.18551133058137e-09,
+              2.5013841282603484e-11,
+              1.1792416457897617e-13,
+              3.337693164388253e-16,
+              5.671673122791037e-19,
+              5.786249543891754e-22
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "strip_patch",
+        "index": 0,
+        "patch_count": 4,
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "emissive_tele": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 197640,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56208
+      },
+      {
+        "available_calibrations": 1024,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 0,
+        "performed": false,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            68.86545614943437,
+            53.40405639137513,
+            0.09214833994606052
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 1,
+          "spectrum": {
+            "norm": 1,
+            "samples": [
+              4.159029880923512e-49,
+              1.4499659216928436e-44,
+              3.0349024239652554e-40,
+              3.813755548686912e-36,
+              2.8772801873813206e-32,
+              1.3032647253169032e-28,
+              3.5440864643876023e-25,
+              5.786249543891754e-22,
+              5.671673122791037e-19,
+              3.337693164388253e-16,
+              1.1792416457897617e-13,
+              2.5013841282603484e-11,
+              3.18551133058137e-09,
+              2.435561504743216e-07,
+              1.1179959516236015e-05,
+              0.00030810769385896617,
+              0.005097838096657972,
+              0.050639652446369726,
+              0.3020066993186934,
+              1.081343365793463,
+              2.3245122866497483,
+              3,
+              2.3245122866497483,
+              1.081343365793463,
+              0.3020066993186934,
+              0.050639652446369726,
+              0.005097838096657972,
+              0.00030810769385896617,
+              1.1179959516236015e-05,
+              2.435561504743216e-07,
+              3.18551133058137e-09,
+              2.5013841282603484e-11,
+              1.1792416457897617e-13,
+              3.337693164388253e-16,
+              5.671673122791037e-19,
+              5.786249543891754e-22
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "result",
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "emissive_tele_adaptive": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 197640,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56208
+      },
+      {
+        "available_calibrations": 1024,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 0,
+        "performed": false,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            68.86545614943437,
+            53.40405639137513,
+            0.09214833994606052
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 1,
+          "spectrum": {
+            "norm": 1,
+            "samples": [
+              4.159029880923512e-49,
+              1.4499659216928436e-44,
+              3.0349024239652554e-40,
+              3.813755548686912e-36,
+              2.8772801873813206e-32,
+              1.3032647253169032e-28,
+              3.5440864643876023e-25,
+              5.786249543891754e-22,
+              5.671673122791037e-19,
+              3.337693164388253e-16,
+              1.1792416457897617e-13,
+              2.5013841282603484e-11,
+              3.18551133058137e-09,
+              2.435561504743216e-07,
+              1.1179959516236015e-05,
+              0.00030810769385896617,
+              0.005097838096657972,
+              0.050639652446369726,
+              0.3020066993186934,
+              1.081343365793463,
+              2.3245122866497483,
+              3,
+              2.3245122866497483,
+              1.081343365793463,
+              0.3020066993186934,
+              0.050639652446369726,
+              0.005097838096657972,
+              0.00030810769385896617,
+              1.1179959516236015e-05,
+              2.435561504743216e-07,
+              3.18551133058137e-09,
+              2.5013841282603484e-11,
+              1.1792416457897617e-13,
+              3.337693164388253e-16,
+              5.671673122791037e-19,
+              5.786249543891754e-22
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "result",
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "emissive_tele_nonadaptive": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 199688,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56208
+      },
+      {
+        "acknowledged": true,
+        "calibration_condition": 256,
+        "display_level": 1,
+        "event": "instruction_required",
+        "instruction": "calibration_setup",
+        "needed_calibrations": 1048576,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "reference_id": null,
+        "reference_type": 0,
+        "remaining_calibrations": 1048576,
+        "request_id": "calibration-0",
+        "skippable": false
+      },
+      {
+        "available_calibrations": 1049600,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 1048576,
+        "performed": true,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "reference_id": null,
+        "reference_type": 0,
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "event": "instruction_required",
+        "instruction": "sample_position",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "request_id": "sample-ready"
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            68.86545614943437,
+            53.40405639137513,
+            0.09214833994606052
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 1,
+          "spectrum": {
+            "norm": 1,
+            "samples": [
+              4.159029880923512e-49,
+              1.4499659216928436e-44,
+              3.0349024239652554e-40,
+              3.813755548686912e-36,
+              2.8772801873813206e-32,
+              1.3032647253169032e-28,
+              3.5440864643876023e-25,
+              5.786249543891754e-22,
+              5.671673122791037e-19,
+              3.337693164388253e-16,
+              1.1792416457897617e-13,
+              2.5013841282603484e-11,
+              3.18551133058137e-09,
+              2.435561504743216e-07,
+              1.1179959516236015e-05,
+              0.00030810769385896617,
+              0.005097838096657972,
+              0.050639652446369726,
+              0.3020066993186934,
+              1.081343365793463,
+              2.3245122866497483,
+              3,
+              2.3245122866497483,
+              1.081343365793463,
+              0.3020066993186934,
+              0.050639652446369726,
+              0.005097838096657972,
+              0.00030810769385896617,
+              1.1179959516236015e-05,
+              2.435561504743216e-07,
+              3.18551133058137e-09,
+              2.5013841282603484e-11,
+              1.1792416457897617e-13,
+              3.337693164388253e-16,
+              5.671673122791037e-19,
+              5.786249543891754e-22
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "result",
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "reflective_spot": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 196625,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56064
+      },
+      {
+        "available_calibrations": 96,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 0,
+        "performed": false,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            32.759327422248404,
+            26.690567443760564,
+            4.163171554924757
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 5,
+          "spectrum": {
+            "norm": 100,
+            "samples": [
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5.00000000000001,
+              5.000000000003538,
+              5.000000000750415,
+              5.00000009556534,
+              5.000007306684514,
+              5.000335398785487,
+              5.009243230815769,
+              5.152935142899739,
+              6.519189573391092,
+              14.060200979560802,
+              37.440300973803886,
+              74.73536859949245,
+              95,
+              74.73536859949245,
+              37.440300973803886,
+              14.060200979560802,
+              6.519189573391092,
+              5.152935142899739,
+              5.009243230815769,
+              5.000335398785487,
+              5.000007306684514,
+              5.00000009556534,
+              5.000000000750415,
+              5.000000000003538,
+              5.00000000000001,
+              5,
+              5
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "result",
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "reflective_spot_m2": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 196625,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56064
+      },
+      {
+        "available_calibrations": 96,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 0,
+        "performed": false,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            32.759327422248404,
+            26.690567443760564,
+            4.163171554924757
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 3,
+          "mtype": 5,
+          "spectrum": {
+            "norm": 100,
+            "samples": [
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5.00000000000001,
+              5.000000000003538,
+              5.000000000750415,
+              5.00000009556534,
+              5.000007306684514,
+              5.000335398785487,
+              5.009243230815769,
+              5.152935142899739,
+              6.519189573391092,
+              14.060200979560802,
+              37.440300973803886,
+              74.73536859949245,
+              95,
+              74.73536859949245,
+              37.440300973803886,
+              14.060200979560802,
+              6.519189573391092,
+              5.152935142899739,
+              5.009243230815769,
+              5.000335398785487,
+              5.000007306684514,
+              5.00000009556534,
+              5.000000000750415,
+              5.000000000003538,
+              5.00000000000001,
+              5,
+              5
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "result",
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "reflective_strip": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 196641,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56064
+      },
+      {
+        "available_calibrations": 96,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 0,
+        "performed": false,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "effective_trigger": "programmatic",
+        "event": "instruction_required",
+        "instruction": "strip_position",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "request_id": "strip-ready",
+        "trigger_guidance": "Continuing starts the read immediately. Move the instrument steadily across the selected row, starting before its first patch and ending beyond its last."
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            32.759327422248404,
+            26.690567443760564,
+            4.163171554924757
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 5,
+          "spectrum": {
+            "norm": 100,
+            "samples": [
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5.00000000000001,
+              5.000000000003538,
+              5.000000000750415,
+              5.00000009556534,
+              5.000007306684514,
+              5.000335398785487,
+              5.009243230815769,
+              5.152935142899739,
+              6.519189573391092,
+              14.060200979560802,
+              37.440300973803886,
+              74.73536859949245,
+              95,
+              74.73536859949245,
+              37.440300973803886,
+              14.060200979560802,
+              6.519189573391092,
+              5.152935142899739,
+              5.009243230815769,
+              5.000335398785487,
+              5.000007306684514,
+              5.00000009556534,
+              5.000000000750415,
+              5.000000000003538,
+              5.00000000000001,
+              5,
+              5
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "strip_patch",
+        "index": 0,
+        "patch_count": 4,
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "reflective_strip_m2": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 196641,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56064
+      },
+      {
+        "available_calibrations": 96,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 0,
+        "performed": false,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "effective_trigger": "programmatic",
+        "event": "instruction_required",
+        "instruction": "strip_position",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "request_id": "strip-ready",
+        "trigger_guidance": "Continuing starts the read immediately. Move the instrument steadily across the selected row, starting before its first patch and ending beyond its last."
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            32.759327422248404,
+            26.690567443760564,
+            4.163171554924757
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 3,
+          "mtype": 5,
+          "spectrum": {
+            "norm": 100,
+            "samples": [
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5.00000000000001,
+              5.000000000003538,
+              5.000000000750415,
+              5.00000009556534,
+              5.000007306684514,
+              5.000335398785487,
+              5.009243230815769,
+              5.152935142899739,
+              6.519189573391092,
+              14.060200979560802,
+              37.440300973803886,
+              74.73536859949245,
+              95,
+              74.73536859949245,
+              37.440300973803886,
+              14.060200979560802,
+              6.519189573391092,
+              5.152935142899739,
+              5.009243230815769,
+              5.000335398785487,
+              5.000007306684514,
+              5.00000009556534,
+              5.000000000750415,
+              5.000000000003538,
+              5.00000000000001,
+              5,
+              5
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "strip_patch",
+        "index": 0,
+        "patch_count": 4,
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "transmission_spot": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 196628,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56064
+      },
+      {
+        "acknowledged": true,
+        "calibration_condition": 128,
+        "display_level": null,
+        "event": "instruction_required",
+        "instruction": "calibration_setup",
+        "needed_calibrations": 4096,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "reference_id": null,
+        "reference_type": 0,
+        "remaining_calibrations": 4096,
+        "request_id": "calibration-0",
+        "skippable": false
+      },
+      {
+        "available_calibrations": 12288,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 4096,
+        "performed": true,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "reference_id": null,
+        "reference_type": 0,
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "event": "instruction_required",
+        "instruction": "sample_position",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "request_id": "sample-ready"
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            32.759327422248404,
+            26.690567443760564,
+            4.163171554924757
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 6,
+          "spectrum": {
+            "norm": 100,
+            "samples": [
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5.00000000000001,
+              5.000000000003538,
+              5.000000000750415,
+              5.00000009556534,
+              5.000007306684514,
+              5.000335398785487,
+              5.009243230815769,
+              5.152935142899739,
+              6.519189573391092,
+              14.060200979560802,
+              37.440300973803886,
+              74.73536859949245,
+              95,
+              74.73536859949245,
+              37.440300973803886,
+              14.060200979560802,
+              6.519189573391092,
+              5.152935142899739,
+              5.009243230815769,
+              5.000335398785487,
+              5.000007306684514,
+              5.00000009556534,
+              5.000000000750415,
+              5.000000000003538,
+              5.00000000000001,
+              5,
+              5
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "result",
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ],
+    "transmission_strip": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65556,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196628,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65560,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196632,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65569,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196641,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65572,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196644,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65576,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196648,
+              "native_code": 0
+            },
+            {
+              "mode_word": 65796,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 196868,
+              "native_code": 327680
+            },
+            {
+              "mode_word": 65800,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196872,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66056,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197128,
+              "native_code": 0
+            },
+            {
+              "mode_word": 66568,
+              "native_code": 0
+            },
+            {
+              "mode_word": 197640,
+              "native_code": 0
+            },
+            {
+              "mode_word": 67608,
+              "native_code": 0
+            },
+            {
+              "mode_word": 198680,
+              "native_code": 0
+            },
+            {
+              "mode_word": 68616,
+              "native_code": 0
+            },
+            {
+              "mode_word": 199688,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 2147684157,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 128,
+        "mode": 196644,
+        "mode_capabilities": 2147946301,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": "CM-CHART-0001",
+        "serial_encoding": "utf8",
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 4096,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 56064
+      },
+      {
+        "acknowledged": true,
+        "calibration_condition": 128,
+        "display_level": null,
+        "event": "instruction_required",
+        "instruction": "calibration_setup",
+        "needed_calibrations": 4096,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "reference_id": null,
+        "reference_type": 0,
+        "remaining_calibrations": 4096,
+        "request_id": "calibration-0",
+        "skippable": false
+      },
+      {
+        "available_calibrations": 12288,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 4096,
+        "performed": true,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "reference_id": null,
+        "reference_type": 0,
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "effective_trigger": "programmatic",
+        "event": "instruction_required",
+        "instruction": "strip_position",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "request_id": "strip-ready",
+        "trigger_guidance": "Continuing starts the read immediately. Move the instrument steadily across the selected row, starting before its first patch and ending beyond its last."
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            32.759327422248404,
+            26.690567443760564,
+            4.163171554924757
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 6,
+          "spectrum": {
+            "norm": 100,
+            "samples": [
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5.00000000000001,
+              5.000000000003538,
+              5.000000000750415,
+              5.00000009556534,
+              5.000007306684514,
+              5.000335398785487,
+              5.009243230815769,
+              5.152935142899739,
+              6.519189573391092,
+              14.060200979560802,
+              37.440300973803886,
+              74.73536859949245,
+              95,
+              74.73536859949245,
+              37.440300973803886,
+              14.060200979560802,
+              6.519189573391092,
+              5.152935142899739,
+              5.009243230815769,
+              5.000335398785487,
+              5.000007306684514,
+              5.00000009556534,
+              5.000000000750415,
+              5.000000000003538,
+              5.00000000000001,
+              5,
+              5
+            ],
+            "spec_n": 36,
+            "wavelength_end_nm": 730,
+            "wavelength_start_nm": 380
+          }
+        },
+        "event": "strip_patch",
+        "index": 0,
+        "patch_count": 4,
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ]
+  }
+}

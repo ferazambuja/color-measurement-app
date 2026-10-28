@@ -1,0 +1,2597 @@
+{
+  "descriptor": {
+    "accepts_correction": false,
+    "baseline_mode_checks": {
+      "checks": [
+        {
+          "mode_word": 65560,
+          "native_code": 0
+        },
+        {
+          "mode_word": 196632,
+          "native_code": 0
+        },
+        {
+          "mode_word": 65800,
+          "native_code": 0
+        },
+        {
+          "mode_word": 196872,
+          "native_code": 0
+        },
+        {
+          "mode_word": 66568,
+          "native_code": 0
+        },
+        {
+          "mode_word": 197640,
+          "native_code": 0
+        },
+        {
+          "mode_word": 67608,
+          "native_code": 1376256
+        },
+        {
+          "mode_word": 198680,
+          "native_code": 1376256
+        },
+        {
+          "mode_word": 68616,
+          "native_code": 1376256
+        },
+        {
+          "mode_word": 199688,
+          "native_code": 1376256
+        }
+      ],
+      "mode_capabilities": 224536,
+      "scope": "initialized_before_mode_configuration"
+    },
+    "calibration": {
+      "actions": [
+        "change_filter",
+        "click_reference",
+        "display_patch",
+        "message",
+        "operate_instrument",
+        "present_reference",
+        "set_sensor_position"
+      ],
+      "conditions": [
+        {
+          "acknowledged": true,
+          "action": "operate_instrument",
+          "condition": "uop_ref_white",
+          "instruction": "Do a reflective white calibration on the instrument itself",
+          "reference_id_holds": null,
+          "value": 1
+        },
+        {
+          "acknowledged": true,
+          "action": "operate_instrument",
+          "condition": "uop_trans_white",
+          "instruction": "Do a transmissive white calibration on the instrument itself",
+          "reference_id_holds": null,
+          "value": 2
+        },
+        {
+          "acknowledged": true,
+          "action": "operate_instrument",
+          "condition": "uop_trans_dark",
+          "instruction": "Do a transmissive dark calibration on the instrument itself",
+          "reference_id_holds": null,
+          "value": 3
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_ref_white",
+          "instruction": "Place the instrument on its reflective white reference",
+          "reference_id_holds": "The expected white reference identifier, held by the driver, not read from the reference placed",
+          "value": 16
+        },
+        {
+          "acknowledged": false,
+          "action": "click_reference",
+          "condition": "man_ref_whitek",
+          "instruction": "Click the instrument down on its reflective white reference",
+          "reference_id_holds": "The expected white reference identifier, held by the driver, not read from the reference placed",
+          "value": 32
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_ref_dark",
+          "instruction": "Place the instrument on a light trap, or in the dark and distant from any surface",
+          "reference_id_holds": null,
+          "value": 48
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_dark_gloss",
+          "instruction": "Place the instrument on its black gloss reference",
+          "reference_id_holds": null,
+          "value": 64
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_em_dark",
+          "instruction": "Place the cap on the instrument, or place it on a dark surface or on the calibration reference",
+          "reference_id_holds": null,
+          "value": 80
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_am_dark",
+          "instruction": "Place the ambient adapter and cap on the instrument, or place it on the calibration reference",
+          "reference_id_holds": null,
+          "value": 96
+        },
+        {
+          "acknowledged": true,
+          "action": "set_sensor_position",
+          "condition": "man_cal_smode",
+          "instruction": "Set the instrument sensor to its calibration position",
+          "reference_id_holds": null,
+          "value": 112
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_trans_white",
+          "instruction": "Place the instrument on its transmissive white source",
+          "reference_id_holds": null,
+          "value": 128
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_trans_dark",
+          "instruction": "Block the transmission path with the appropriate transmissive blocking",
+          "reference_id_holds": null,
+          "value": 144
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_white",
+          "instruction": "Display a 100% white test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 256
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_80pc",
+          "instruction": "Display an 80% white test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 512
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_grey",
+          "instruction": "Display a grey test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 768
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_grey_darker",
+          "instruction": "Display a darker grey test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 1024
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_grey_ligher",
+          "instruction": "Display a lighter grey test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 1280
+        },
+        {
+          "acknowledged": true,
+          "action": "change_filter",
+          "condition": "change_filter",
+          "instruction": "Change the filter on the instrument",
+          "reference_id_holds": "The filter to fit",
+          "value": 65536
+        },
+        {
+          "acknowledged": true,
+          "action": "message",
+          "condition": "message",
+          "instruction": "The driver has a message for the operator",
+          "reference_id_holds": "The message text",
+          "value": 131072
+        }
+      ],
+      "deferrable_types": [
+        "emis_int_time",
+        "ref_freq"
+      ],
+      "display_level": "A fraction of full white for the patch the client must display; present only for `display_patch` conditions, and never to be invented by the client",
+      "types": [
+        "wavelength",
+        "ref_white",
+        "ref_dark",
+        "ref_dark_gl",
+        "emis_offset",
+        "emis_ratio",
+        "em_dark",
+        "trans_white",
+        "trans_vwhite",
+        "trans_dark",
+        "emis_int_time",
+        "ref_freq"
+      ]
+    },
+    "calibration_setup": [],
+    "capability_id": "f3e0f9df0658f6543e19c92a6a5963b44384b04e7be3e8689e2718b8c2efdc7e",
+    "capability_source": "instrument capabilities(), decoded; baseline_native_mode reports exact initialized-state checks when observed; acquisition confirms the requested configuration at bind time",
+    "contract": "argyll_generic_instrument_v1",
+    "current_binding_identity": {
+      "device_id": "Photo Research PR-655",
+      "initialized_type": 42,
+      "native_identity": {
+        "driver": "pr655",
+        "identity": {
+          "firmware": "9.01-test",
+          "grid": {
+            "bandwidth_nm": 4.75,
+            "count": 101,
+            "end_nm": 780,
+            "first_pixel": 9,
+            "last_pixel": 118,
+            "pixels": 128,
+            "start_nm": 380,
+            "step_nm": 4
+          },
+          "model": "PR-655",
+          "serial": "SYNTHETIC-P7",
+          "verified": true
+        },
+        "native_controls": true
+      },
+      "provenance": {
+        "backend_version": "3.5.0",
+        "build_report_sha256": "8f999c290a411439be672f4b6d50692ba2d2661da3f546ffb04420f28d6f5d48",
+        "description_helper_sha256": "96d1a1389d93808b593cde23a3614db9d350518571dba41fbecf2baf878e5184",
+        "session_helper_sha256": "f2192b3dcde085b2dac090075d090795b00dbedcc1ac3d801930a9d2986d94ee"
+      }
+    },
+    "default_event_contract": "retained_patch_v1",
+    "device": {
+      "backend": "argyll-native",
+      "backend_version": "3.5.0",
+      "device_id": "Photo Research PR-655",
+      "model": "Photo Research PR-655",
+      "serial": "SYNTHETIC-P7",
+      "serial_encoding": "utf8"
+    },
+    "device_id": "Photo Research PR-655",
+    "display_types": {
+      "applied_choice_id": null,
+      "catalogue_id": null,
+      "count": 0,
+      "entries": [],
+      "native_code": 327680,
+      "readback": {
+        "base_calibration_id": null,
+        "native_code": 327680,
+        "refresh_mode": null,
+        "technology_code": null
+      },
+      "status": "unsupported"
+    },
+    "event_contracts": [
+      "retained_patch_v1"
+    ],
+    "facilities": [
+      "prog_trig",
+      "set_refresh_rate",
+      "user_trig"
+    ],
+    "filter_capabilities": 1,
+    "filters": [
+      "average"
+    ],
+    "instructions": [
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Present the declared external display stimulus and keep it unchanged during the frequency measurement",
+        "instruction": "refresh_stimulus",
+        "kind": "present_refresh_stimulus"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Prepare the requested strip, then continue",
+        "instruction": "strip_position",
+        "kind": "present_strip"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Position the sample or measurement optics, then continue",
+        "instruction": "sample_position",
+        "kind": "present_sample"
+      },
+      {
+        "answered": true,
+        "carries_calibration": true,
+        "detail": "Set up what the instrument asks for to calibrate, then continue",
+        "instruction": "calibration_setup",
+        "kind": "present_calibration_reference"
+      },
+      {
+        "answered": false,
+        "carries_calibration": true,
+        "detail": "Do what the instrument asks for to calibrate; it continues by itself",
+        "instruction": "calibration_condition",
+        "kind": "notify_calibration_condition"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Place the chart on the table",
+        "instruction": "xy_sheet",
+        "kind": "place_sheet"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Sight a named fiducial so the table can locate the sheet",
+        "instruction": "xy_locate",
+        "kind": "sight_fiducial"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "The sensor, dial, diffuser or adapter is not where this step needs it. Move it, then continue; the step is tried once more",
+        "instruction": "sensor_position",
+        "kind": "reposition_sensor"
+      }
+    ],
+    "limits": {
+      "binding_policy": {
+        "all_modes_read_allowance_floor_seconds": 310.0,
+        "binding_timeout_margin_seconds": 120.0,
+        "cheapest_read_allowance_floor_seconds": 310.0,
+        "default_binding_timeout_seconds": 600.0,
+        "limitation": "Exceeding driver floors is necessary, not sufficient for a read",
+        "read_allowance_floors_seconds_by_word": {
+          "196632": 310.0,
+          "196872": 310.0,
+          "197640": 310.0,
+          "198680": 310.0,
+          "198920": 310.0,
+          "199688": 310.0,
+          "65560": 310.0,
+          "65800": 310.0,
+          "66568": 310.0,
+          "67608": 310.0,
+          "67848": 310.0,
+          "68616": 310.0
+        }
+      },
+      "binding_timeout_seconds": 600.0,
+      "max_event_bytes": 16384,
+      "max_patch_id_bytes": 128,
+      "max_patches": 4096,
+      "max_request_bytes": 16384,
+      "max_response_timeout_seconds": 600,
+      "native_diagnostics": {
+        "available": true,
+        "debug_level_range": [
+          0,
+          8
+        ],
+        "default_debug_level": 0,
+        "default_limit_bytes": 65536,
+        "max_limit_bytes": 1048576,
+        "scope": "Auxiliary stderr provenance; no scientific setting changes",
+        "unavailable_reason": null
+      },
+      "read_allowance_floor_seconds": 310.0,
+      "read_allowance_floor_seconds_by_mode": {
+        "ambient_spot": {
+          "default": 310.0,
+          "xyz_only": 310.0
+        },
+        "emissive_spot": {
+          "default": 310.0,
+          "xyz_only": 310.0
+        },
+        "emissive_spot_adaptive": {
+          "default": 310.0,
+          "xyz_only": 310.0
+        },
+        "emissive_spot_nonadaptive": {
+          "default": 310.0,
+          "xyz_only": 310.0
+        },
+        "emissive_tele": {
+          "default": 310.0,
+          "xyz_only": 310.0
+        },
+        "emissive_tele_adaptive": {
+          "default": 310.0,
+          "xyz_only": 310.0
+        },
+        "emissive_tele_nonadaptive": {
+          "default": 310.0,
+          "xyz_only": 310.0
+        }
+      }
+    },
+    "live": false,
+    "mode_capabilities": 224536,
+    "mode_flags": [
+      "colorimeter",
+      "emis_nonadaptive",
+      "emis_norefresh_ovd",
+      "spectral"
+    ],
+    "modes": [
+      {
+        "available": true,
+        "axes": {
+          "action": "spot",
+          "condition": null,
+          "illumination": "emissive",
+          "mode_flags": [],
+          "modifiers": [],
+          "route": "emis_spot"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 196632,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 65560,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": null,
+            "document": "Color Measurement PR contribution, spectro/pr655.c",
+            "location": "Bundled source: tools/native_argyll/contributions/cr_pr/files/spectro/pr655.c",
+            "official": true,
+            "quote": "if (needed) *needed = inst_calt_none;",
+            "text": "Measure and Calibrate do not request a manual reference calibration for this instrument."
+          }
+        ],
+        "canonical": true,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "emissive_spot",
+        "expected_measurement_type": 1,
+        "expected_measurement_type_name": "emission",
+        "expected_quantities": {
+          "illuminant": "none (emissive)",
+          "quantity": "spectral_radiance",
+          "scale": "absolute; Y is luminance",
+          "spectrum_unit": "mW/(m^2 sr nm)",
+          "xyz_unit": "cd/m^2"
+        },
+        "label": "Emissive spot",
+        "mode": "emissive_spot",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "choices": [
+                  "read",
+                  "apply"
+                ],
+                "default": "read",
+                "help": "Read instrument settings or apply explicit changes. This action takes no measurement.",
+                "key": "action",
+                "label": "Settings action",
+                "required": false,
+                "type": "choice"
+              }
+            ],
+            "layout_keys": [
+              "action"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "native_controls",
+            "unavailable_reason": null,
+            "workflow": "native_controls"
+          }
+        ]
+      },
+      {
+        "available": true,
+        "axes": {
+          "action": "spot",
+          "condition": null,
+          "illumination": "emissive",
+          "mode_flags": [],
+          "modifiers": [
+            "adaptive"
+          ],
+          "route": "emis_spot"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 196632,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 65560,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": null,
+            "document": "Color Measurement PR contribution, spectro/pr655.c",
+            "location": "Bundled source: tools/native_argyll/contributions/cr_pr/files/spectro/pr655.c",
+            "official": true,
+            "quote": "if (needed) *needed = inst_calt_none;",
+            "text": "Measure and Calibrate do not request a manual reference calibration for this instrument."
+          }
+        ],
+        "canonical": false,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "emissive_spot",
+        "expected_measurement_type": 1,
+        "expected_measurement_type_name": "emission",
+        "expected_quantities": {
+          "illuminant": "none (emissive)",
+          "quantity": "spectral_radiance",
+          "scale": "absolute; Y is luminance",
+          "spectrum_unit": "mW/(m^2 sr nm)",
+          "xyz_unit": "cd/m^2"
+        },
+        "label": "Emissive spot, adaptive acquisition",
+        "mode": "emissive_spot_adaptive",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "choices": [
+                  "read",
+                  "apply"
+                ],
+                "default": "read",
+                "help": "Read instrument settings or apply explicit changes. This action takes no measurement.",
+                "key": "action",
+                "label": "Settings action",
+                "required": false,
+                "type": "choice"
+              }
+            ],
+            "layout_keys": [
+              "action"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "native_controls",
+            "unavailable_reason": null,
+            "workflow": "native_controls"
+          }
+        ]
+      },
+      {
+        "available": true,
+        "axes": {
+          "action": "spot",
+          "condition": null,
+          "illumination": "emissive",
+          "mode_flags": [
+            "emis_nonadaptive"
+          ],
+          "modifiers": [
+            "nonadaptive"
+          ],
+          "route": "emis_spot"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 198680,
+            "native_code": 1376256,
+            "reason": "native_check_inconclusive",
+            "status": "unknown"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 67608,
+            "native_code": 1376256,
+            "reason": "native_check_inconclusive",
+            "status": "unknown"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": null,
+            "document": "Color Measurement PR contribution, spectro/pr655.c",
+            "location": "Bundled source: tools/native_argyll/contributions/cr_pr/files/spectro/pr655.c",
+            "official": true,
+            "quote": "if (needed) *needed = inst_calt_none;",
+            "text": "Measure and Calibrate do not request a manual reference calibration for this instrument."
+          }
+        ],
+        "canonical": true,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "emissive_spot_nonadaptive",
+        "expected_measurement_type": 1,
+        "expected_measurement_type_name": "emission",
+        "expected_quantities": {
+          "illuminant": "none (emissive)",
+          "quantity": "spectral_radiance",
+          "scale": "absolute; Y is luminance",
+          "spectrum_unit": "mW/(m^2 sr nm)",
+          "xyz_unit": "cd/m^2"
+        },
+        "label": "Emissive spot, nonadaptive acquisition",
+        "mode": "emissive_spot_nonadaptive",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "choices": [
+                  "read",
+                  "apply"
+                ],
+                "default": "read",
+                "help": "Read instrument settings or apply explicit changes. This action takes no measurement.",
+                "key": "action",
+                "label": "Settings action",
+                "required": false,
+                "type": "choice"
+              }
+            ],
+            "layout_keys": [
+              "action"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "native_controls",
+            "unavailable_reason": null,
+            "workflow": "native_controls"
+          }
+        ]
+      },
+      {
+        "available": true,
+        "axes": {
+          "action": "spot",
+          "condition": null,
+          "illumination": "ambient",
+          "mode_flags": [],
+          "modifiers": [],
+          "route": "emis_ambient"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 196872,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 65800,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": null,
+            "document": "Color Measurement PR contribution, spectro/pr655.c",
+            "location": "Bundled source: tools/native_argyll/contributions/cr_pr/files/spectro/pr655.c",
+            "official": true,
+            "quote": "if (needed) *needed = inst_calt_none;",
+            "text": "Measure and Calibrate do not request a manual reference calibration for this instrument."
+          }
+        ],
+        "canonical": true,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "ambient_spot",
+        "expected_measurement_type": 2,
+        "expected_measurement_type_name": "ambient",
+        "expected_quantities": {
+          "illuminant": "none (ambient)",
+          "quantity": "spectral_irradiance",
+          "scale": "absolute; Y is illuminance",
+          "spectrum_unit": "mW/(m^2 nm)",
+          "xyz_unit": "lux"
+        },
+        "label": "Ambient spot",
+        "mode": "ambient_spot",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "choices": [
+                  "read",
+                  "apply"
+                ],
+                "default": "read",
+                "help": "Read instrument settings or apply explicit changes. This action takes no measurement.",
+                "key": "action",
+                "label": "Settings action",
+                "required": false,
+                "type": "choice"
+              }
+            ],
+            "layout_keys": [
+              "action"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "native_controls",
+            "unavailable_reason": null,
+            "workflow": "native_controls"
+          }
+        ]
+      },
+      {
+        "available": true,
+        "axes": {
+          "action": "tele",
+          "condition": null,
+          "illumination": "emissive",
+          "mode_flags": [],
+          "modifiers": [],
+          "route": "emis_tele"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 197640,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 66568,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": null,
+            "document": "Color Measurement PR contribution, spectro/pr655.c",
+            "location": "Bundled source: tools/native_argyll/contributions/cr_pr/files/spectro/pr655.c",
+            "official": true,
+            "quote": "if (needed) *needed = inst_calt_none;",
+            "text": "Measure and Calibrate do not request a manual reference calibration for this instrument."
+          }
+        ],
+        "canonical": true,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "emissive_tele",
+        "expected_measurement_type": 1,
+        "expected_measurement_type_name": "emission",
+        "expected_quantities": {
+          "illuminant": "none (emissive)",
+          "quantity": "spectral_radiance",
+          "scale": "absolute; Y is luminance",
+          "spectrum_unit": "mW/(m^2 sr nm)",
+          "xyz_unit": "cd/m^2"
+        },
+        "label": "Emissive telephoto",
+        "mode": "emissive_tele",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "choices": [
+                  "read",
+                  "apply"
+                ],
+                "default": "read",
+                "help": "Read instrument settings or apply explicit changes. This action takes no measurement.",
+                "key": "action",
+                "label": "Settings action",
+                "required": false,
+                "type": "choice"
+              }
+            ],
+            "layout_keys": [
+              "action"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "native_controls",
+            "unavailable_reason": null,
+            "workflow": "native_controls"
+          }
+        ]
+      },
+      {
+        "available": true,
+        "axes": {
+          "action": "tele",
+          "condition": null,
+          "illumination": "emissive",
+          "mode_flags": [],
+          "modifiers": [
+            "adaptive"
+          ],
+          "route": "emis_tele"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 197640,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 66568,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": null,
+            "document": "Color Measurement PR contribution, spectro/pr655.c",
+            "location": "Bundled source: tools/native_argyll/contributions/cr_pr/files/spectro/pr655.c",
+            "official": true,
+            "quote": "if (needed) *needed = inst_calt_none;",
+            "text": "Measure and Calibrate do not request a manual reference calibration for this instrument."
+          }
+        ],
+        "canonical": false,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "emissive_tele",
+        "expected_measurement_type": 1,
+        "expected_measurement_type_name": "emission",
+        "expected_quantities": {
+          "illuminant": "none (emissive)",
+          "quantity": "spectral_radiance",
+          "scale": "absolute; Y is luminance",
+          "spectrum_unit": "mW/(m^2 sr nm)",
+          "xyz_unit": "cd/m^2"
+        },
+        "label": "Emissive telephoto, adaptive acquisition",
+        "mode": "emissive_tele_adaptive",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "choices": [
+                  "read",
+                  "apply"
+                ],
+                "default": "read",
+                "help": "Read instrument settings or apply explicit changes. This action takes no measurement.",
+                "key": "action",
+                "label": "Settings action",
+                "required": false,
+                "type": "choice"
+              }
+            ],
+            "layout_keys": [
+              "action"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "native_controls",
+            "unavailable_reason": null,
+            "workflow": "native_controls"
+          }
+        ]
+      },
+      {
+        "available": true,
+        "axes": {
+          "action": "tele",
+          "condition": null,
+          "illumination": "emissive",
+          "mode_flags": [
+            "emis_nonadaptive"
+          ],
+          "modifiers": [
+            "nonadaptive"
+          ],
+          "route": "emis_tele"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 199688,
+            "native_code": 1376256,
+            "reason": "native_check_inconclusive",
+            "status": "unknown"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 68616,
+            "native_code": 1376256,
+            "reason": "native_check_inconclusive",
+            "status": "unknown"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": null,
+            "document": "Color Measurement PR contribution, spectro/pr655.c",
+            "location": "Bundled source: tools/native_argyll/contributions/cr_pr/files/spectro/pr655.c",
+            "official": true,
+            "quote": "if (needed) *needed = inst_calt_none;",
+            "text": "Measure and Calibrate do not request a manual reference calibration for this instrument."
+          }
+        ],
+        "canonical": true,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "emissive_tele_nonadaptive",
+        "expected_measurement_type": 1,
+        "expected_measurement_type_name": "emission",
+        "expected_quantities": {
+          "illuminant": "none (emissive)",
+          "quantity": "spectral_radiance",
+          "scale": "absolute; Y is luminance",
+          "spectrum_unit": "mW/(m^2 sr nm)",
+          "xyz_unit": "cd/m^2"
+        },
+        "label": "Emissive telephoto, nonadaptive acquisition",
+        "mode": "emissive_tele_nonadaptive",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "choices": [
+                  "read",
+                  "apply"
+                ],
+                "default": "read",
+                "help": "Read instrument settings or apply explicit changes. This action takes no measurement.",
+                "key": "action",
+                "label": "Settings action",
+                "required": false,
+                "type": "choice"
+              }
+            ],
+            "layout_keys": [
+              "action"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "native_controls",
+            "unavailable_reason": null,
+            "workflow": "native_controls"
+          }
+        ]
+      }
+    ],
+    "native_controls": {
+      "available": true,
+      "current": null,
+      "driver": "pr655",
+      "fields": [
+        "exposureMilliseconds",
+        "cycles",
+        "syncMode",
+        "syncFrequencyHz",
+        "primaryAccessoryId",
+        "addon1Id",
+        "addon2Id",
+        "addon3Id",
+        "apertureId",
+        "sensitivityMode",
+        "smartDark",
+        "photometricUnits",
+        "instrumentObserver",
+        "shutterMode",
+        "speedModeCode"
+      ],
+      "pending": 0
+    },
+    "options": [
+      {
+        "applies_to": null,
+        "available": true,
+        "by_mode": {
+          "ambient_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot_nonadaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele_nonadaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          }
+        },
+        "default": null,
+        "id": "native_controls",
+        "label": "Instrument settings",
+        "members": [
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. 0 requests Adaptive exposure. Fixed durations and compatible modes depend on the identified model and sensitivity.",
+            "key": "exposureMilliseconds",
+            "label": "Exposure Milliseconds",
+            "maximum": 2147483647,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "ms"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. The instrument checks supported values and combinations.",
+            "key": "cycles",
+            "label": "Cycles",
+            "maximum": 2147483647,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "cycles"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. Use a synchronization code from the instrument report and manual. Frequency and supported combinations depend on that mode.",
+            "key": "syncMode",
+            "label": "Sync Mode",
+            "maximum": 2147483647,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "native code"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Whole Hz from 20 to 400 for User Frequency synchronization (syncMode 3).",
+            "key": "syncFrequencyHz",
+            "label": "Sync Frequency Hz",
+            "maximum": 400,
+            "minimum": 20,
+            "required": false,
+            "type": "integer",
+            "unit": "Hz"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. The instrument checks supported values and combinations.",
+            "key": "primaryAccessoryId",
+            "label": "Primary Accessory Id",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "native code"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. The instrument checks supported values and combinations.",
+            "key": "addon1Id",
+            "label": "Addon1Id",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "native code"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. The instrument checks supported values and combinations.",
+            "key": "addon2Id",
+            "label": "Addon2Id",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "native code"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. The instrument checks supported values and combinations.",
+            "key": "addon3Id",
+            "label": "Addon3Id",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "native code"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. The instrument checks supported values and combinations.",
+            "key": "apertureId",
+            "label": "Aperture Id",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "native code"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. The instrument checks supported values and combinations.",
+            "key": "sensitivityMode",
+            "label": "Sensitivity Mode",
+            "maximum": 2147483647,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "native code"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. The instrument checks supported values and combinations.",
+            "key": "smartDark",
+            "label": "Smart Dark",
+            "maximum": 2147483647,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "native code"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. 0 selects English units; 1 selects Metric units. Measurement units are verified separately from this request.",
+            "key": "photometricUnits",
+            "label": "Photometric Units",
+            "maximum": 2147483647,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "native code"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. 2 selects the 2\u00b0 observer; 10 selects the 10\u00b0 observer. Measurement publication requires 2; a 10\u00b0 setup is retained and refused without an automatic reset.",
+            "key": "instrumentObserver",
+            "label": "Instrument Observer",
+            "maximum": 2147483647,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "native code"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. Use a documented shutter code. Acknowledgment does not provide current-setting readback.",
+            "key": "shutterMode",
+            "label": "Shutter Mode",
+            "maximum": 2147483647,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "native code"
+          },
+          {
+            "default": null,
+            "exclusive_minimum": false,
+            "help": "Leave blank to omit a change. Zero is explicit. Use a documented speed code. Acknowledgment does not establish a current code or a mapping to reported Gain.",
+            "key": "speedModeCode",
+            "label": "Speed Mode Code",
+            "maximum": 2147483647,
+            "minimum": 0,
+            "required": false,
+            "type": "integer",
+            "unit": "native code"
+          }
+        ],
+        "refusal_stage": "native_controls_unavailable",
+        "type": "object",
+        "unavailable_reason": null,
+        "validation_owner": "initialized_native_adapter"
+      },
+      {
+        "allowed_ranges": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            150
+          ]
+        ],
+        "applies_to": null,
+        "available": true,
+        "by_mode": {
+          "ambient_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot_nonadaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele_nonadaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          }
+        },
+        "default": null,
+        "id": "refresh_rate",
+        "label": "Stored refresh override (0 invalidates the stored rate)",
+        "maximum": 150,
+        "minimum": 0,
+        "refusal_stage": "refresh_rate_unavailable",
+        "type": "number",
+        "unavailable_reason": null,
+        "unit": "Hz"
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "ambient_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          },
+          "emissive_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          },
+          "emissive_spot_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          },
+          "emissive_spot_nonadaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          },
+          "emissive_tele": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          },
+          "emissive_tele_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          },
+          "emissive_tele_nonadaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          }
+        },
+        "default": false,
+        "id": "highres",
+        "label": "High resolution spectral mode",
+        "refusal_stage": "highres_unavailable",
+        "type": "boolean",
+        "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+      },
+      {
+        "applies_to": null,
+        "available": true,
+        "by_mode": {
+          "ambient_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot_nonadaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele_nonadaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          }
+        },
+        "default": false,
+        "id": "xyz_only",
+        "label": "XYZ only, without the spectrum",
+        "refusal_stage": "xyz_only_unavailable",
+        "type": "boolean",
+        "unavailable_reason": null
+      },
+      {
+        "applies_to": null,
+        "available": true,
+        "by_mode": {
+          "ambient_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot_nonadaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele_nonadaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          }
+        },
+        "default": 0,
+        "id": "averages",
+        "label": "Readings averaged into one (0 = the driver's own)",
+        "maximum": 1000,
+        "minimum": 0,
+        "refusal_stage": "averaging_unavailable",
+        "type": "integer",
+        "unavailable_reason": null
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "ambient_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          },
+          "emissive_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          },
+          "emissive_spot_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          },
+          "emissive_spot_nonadaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          },
+          "emissive_tele": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          },
+          "emissive_tele_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          },
+          "emissive_tele_nonadaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          }
+        },
+        "choices": [
+          "gmdi",
+          "native",
+          "none",
+          "xrdi",
+          "xrga"
+        ],
+        "default": "none",
+        "id": "xcalstd",
+        "label": "Reflective calibration standard",
+        "refusal_stage": "set_xcalstd",
+        "type": "choice",
+        "unavailable_reason": "Calibration standards apply only to reflective measurements"
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "ambient_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [],
+            "unavailable_reason": "No observed display-calibration choices"
+          },
+          "emissive_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [],
+            "unavailable_reason": "No observed display-calibration choices"
+          },
+          "emissive_spot_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [],
+            "unavailable_reason": "No observed display-calibration choices"
+          },
+          "emissive_spot_nonadaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [],
+            "unavailable_reason": "No observed display-calibration choices"
+          },
+          "emissive_tele": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [],
+            "unavailable_reason": "No observed display-calibration choices"
+          },
+          "emissive_tele_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [],
+            "unavailable_reason": "No observed display-calibration choices"
+          },
+          "emissive_tele_nonadaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [],
+            "unavailable_reason": "No observed display-calibration choices"
+          }
+        },
+        "catalogue_id": null,
+        "choice_details": [],
+        "choices": [],
+        "default": null,
+        "id": "display_type",
+        "label": "Display calibration",
+        "refusal_stage": "display_type_unavailable",
+        "type": "choice",
+        "unavailable_reason": "No observed display-calibration choices"
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "ambient_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          },
+          "emissive_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          },
+          "emissive_spot_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          },
+          "emissive_spot_nonadaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          },
+          "emissive_tele": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          },
+          "emissive_tele_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          },
+          "emissive_tele_nonadaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          }
+        },
+        "choices": [
+          "unknown"
+        ],
+        "default": null,
+        "id": "filter",
+        "label": "Measurement condition",
+        "refusal_stage": "set_filter",
+        "type": "choice",
+        "unavailable_reason": "This instrument advertises no reflective mode"
+      },
+      {
+        "alternative_shape": {
+          "text": "string"
+        },
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "ambient_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          },
+          "emissive_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          },
+          "emissive_spot_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          },
+          "emissive_spot_nonadaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          },
+          "emissive_tele": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          },
+          "emissive_tele_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          },
+          "emissive_tele_nonadaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          }
+        },
+        "default": null,
+        "id": "correction",
+        "kinds": [],
+        "label": "Colorimeter correction (.ccmx or .ccss)",
+        "note": "Without one the driver's factory/display-type calibration remains in use. A suitable correction can reduce display spectral mismatch. The file's CGATS identifier determines the kind. Ambient CCMX availability comes from the backend.",
+        "refusal_stage": "correction_matrix_unavailable",
+        "shape": {
+          "path": "string"
+        },
+        "type": "object",
+        "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+      }
+    ],
+    "provenance": "simulated",
+    "schema_version": 1,
+    "spectral": true,
+    "synthetic": true,
+    "trigger_capabilities": 832
+  },
+  "events": [
+    {
+      "kind": "started",
+      "operation_id": "dc7f866d-d411-4569-be10-c2695a78c7c4",
+      "payload": {
+        "capability_id": "f3e0f9df0658f6543e19c92a6a5963b44384b04e7be3e8689e2718b8c2efdc7e",
+        "device_id": "Photo Research PR-655",
+        "event_contract": "retained_patch_v1",
+        "provenance": "simulated"
+      },
+      "schema_version": 1,
+      "sequence": 0
+    },
+    {
+      "kind": "patch_reference",
+      "operation_id": "dc7f866d-d411-4569-be10-c2695a78c7c4",
+      "payload": {
+        "index": 0,
+        "observation_id": "2fdfa606-c729-46f8-89af-d663ad6c7501",
+        "patch_id": "A1"
+      },
+      "schema_version": 1,
+      "sequence": 1
+    },
+    {
+      "kind": "terminal",
+      "operation_id": "dc7f866d-d411-4569-be10-c2695a78c7c4",
+      "payload": {
+        "completed_patches": 1,
+        "error": null,
+        "error_native_code": null,
+        "error_stage": null,
+        "expected_patches": 1,
+        "instrument_state": "not_applicable",
+        "software_stopped": true,
+        "status": "completed"
+      },
+      "schema_version": 1,
+      "sequence": 2
+    }
+  ],
+  "request": {
+    "capability_id": "f3e0f9df0658f6543e19c92a6a5963b44384b04e7be3e8689e2718b8c2efdc7e",
+    "device_id": "Photo Research PR-655",
+    "event_contract": "retained_patch_v1",
+    "layout": {},
+    "mode": "emissive_spot_adaptive",
+    "options": {},
+    "patch_ids": [
+      "A1"
+    ],
+    "schema_version": 1,
+    "workflow": "spot"
+  },
+  "result": {
+    "calibration": {
+      "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+      "status": "valid"
+    },
+    "configuration": [
+      [
+        "calibration_events_json",
+        "[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"needed_calibrations\":0,\"available_calibrations\":0,\"remaining_calibrations\":0,\"status_source\":\"driver\",\"skipped\":false,\"performed\":false,\"initial_calibration_suppressed\":false}]"
+      ],
+      [
+        "calibration_outcome_json",
+        "{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"needed_calibrations\":0,\"available_calibrations\":0,\"remaining_calibrations\":0,\"status_source\":\"driver\",\"skipped\":false,\"performed\":false,\"initial_calibration_suppressed\":false}"
+      ],
+      [
+        "capability_id",
+        "f3e0f9df0658f6543e19c92a6a5963b44384b04e7be3e8689e2718b8c2efdc7e"
+      ],
+      [
+        "capability_source",
+        "instrument capabilities(), decoded; baseline_native_mode reports exact initialized-state checks when observed; acquisition confirms the requested configuration at bind time"
+      ],
+      [
+        "display_types_json",
+        "{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]}"
+      ],
+      [
+        "event_contract",
+        "retained_patch_v1"
+      ],
+      [
+        "filter_capabilities",
+        "1"
+      ],
+      [
+        "mode_capabilities",
+        "224536"
+      ],
+      [
+        "requested_layout_json",
+        "{}"
+      ],
+      [
+        "requested_options_json",
+        "{}"
+      ],
+      [
+        "trigger_capabilities",
+        "832"
+      ]
+    ],
+    "device": {
+      "backend": "argyll-native",
+      "backend_version": "3.5.0",
+      "device_id": "Photo Research PR-655",
+      "model": "Photo Research PR-655",
+      "serial": "SYNTHETIC-P7",
+      "serial_encoding": "utf8"
+    },
+    "device_id": "Photo Research PR-655",
+    "error": null,
+    "error_native_code": null,
+    "error_stage": null,
+    "expected_patch_ids": [
+      "A1"
+    ],
+    "instrument_state": "not_applicable",
+    "mode": "emissive_spot_adaptive",
+    "operation_id": "dc7f866d-d411-4569-be10-c2695a78c7c4",
+    "patches": [
+      {
+        "index": 0,
+        "observation": {
+          "acquired_at": "2026-10-16T00:41:47.417Z",
+          "actual_mode": "emissive_spot_adaptive",
+          "backend_reported": {
+            "spectrum": {
+              "quantity": "spectral_radiance",
+              "unit": "mW/(m^2 sr nm)",
+              "values": [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+              ],
+              "wavelengths_nm": [
+                380.0,
+                384.0,
+                388.0,
+                392.0,
+                396.0,
+                400.0,
+                404.0,
+                408.0,
+                412.0,
+                416.0,
+                420.0,
+                424.0,
+                428.0,
+                432.0,
+                436.0,
+                440.0,
+                444.0,
+                448.0,
+                452.0,
+                456.0,
+                460.0,
+                464.0,
+                468.0,
+                472.0,
+                476.0,
+                480.0,
+                484.0,
+                488.0,
+                492.0,
+                496.0,
+                500.0,
+                504.0,
+                508.0,
+                512.0,
+                516.0,
+                520.0,
+                524.0,
+                528.0,
+                532.0,
+                536.0,
+                540.0,
+                544.0,
+                548.0,
+                552.0,
+                556.0,
+                560.0,
+                564.0,
+                568.0,
+                572.0,
+                576.0,
+                580.0,
+                584.0,
+                588.0,
+                592.0,
+                596.0,
+                600.0,
+                604.0,
+                608.0,
+                612.0,
+                616.0,
+                620.0,
+                624.0,
+                628.0,
+                632.0,
+                636.0,
+                640.0,
+                644.0,
+                648.0,
+                652.0,
+                656.0,
+                660.0,
+                664.0,
+                668.0,
+                672.0,
+                676.0,
+                680.0,
+                684.0,
+                688.0,
+                692.0,
+                696.0,
+                700.0,
+                704.0,
+                708.0,
+                712.0,
+                716.0,
+                720.0,
+                724.0,
+                728.0,
+                732.0,
+                736.0,
+                740.0,
+                744.0,
+                748.0,
+                752.0,
+                756.0,
+                760.0,
+                764.0,
+                768.0,
+                772.0,
+                776.0,
+                780.0
+              ]
+            },
+            "xyz": {
+              "illuminant": "none (emissive)",
+              "observer": "CIE1931_2",
+              "scale": "absolute; Y is luminance",
+              "unit": "cd/m^2",
+              "values": [
+                9.122870288922737,
+                7.29829623113819,
+                -0.9122870288922738
+              ]
+            }
+          },
+          "calibration": {
+            "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+            "status": "valid"
+          },
+          "configuration": [
+            [
+              "acquired_at_source",
+              "client receipt; the ladder publishes no instrument clock"
+            ],
+            [
+              "confirmed_routes",
+              "emis_spot"
+            ],
+            [
+              "correction_applied",
+              "none"
+            ],
+            [
+              "native_clamping",
+              "instNoClamp"
+            ],
+            [
+              "native_duration_seconds",
+              "0.0"
+            ],
+            [
+              "native_facts_json",
+              "{\"capture\":{\"accessory_list_error\":0,\"accessory_list_valid\":true,\"budget_policy\":{\"dark_per_cycle\":true,\"floor_s\":300,\"source\":\"host\"},\"exposure_started\":true,\"geometry_valid\":true,\"host_allowance_s\":599.9835480831098,\"inventory_counts_error\":0,\"inventory_counts_valid\":true,\"measurement_budget_s\":300,\"native_complete\":true,\"native_integrated\":0.04040000000000001,\"native_photon_integrated\":4.125,\"peak_nm\":554,\"problem\":null,\"remaining_s\":598.977,\"reply_count\":12,\"reported_accessory_count\":1,\"reported_aperture_count\":3,\"required_s\":310,\"setup_after\":{\"adaptive\":true,\"adaptive_known\":true,\"addons\":[-1,-1,-1],\"aperture\":2,\"capture_mode\":91,\"cycles\":1,\"dark_mode\":0,\"descriptions\":[\"Test lens\",\"None\",\"None\",\"None\",\"Half degree\",\"Metric\",\"Adaptive\",\"0 msec\",\"Native gain\",\"1 cycles\",\"2 deg\",\"No Smart Dark\",\"No Sync\",\"Standard Sensitivity\",\"75.00 Hertz\"],\"exposure_mode\":73,\"exposure_ms\":0,\"extended\":false,\"frequency_hz\":75,\"gain\":87,\"observer\":2,\"primary\":8,\"sensitivity_known\":true,\"sync_mode\":0,\"sync_value\":75,\"units\":1},\"setup_before\":{\"adaptive\":true,\"adaptive_known\":true,\"addons\":[-1,-1,-1],\"aperture\":2,\"capture_mode\":91,\"cycles\":1,\"dark_mode\":0,\"descriptions\":[\"Test lens\",\"None\",\"None\",\"None\",\"Half degree\",\"Metric\",\"Adaptive\",\"0 msec\",\"Native gain\",\"1 cycles\",\"2 deg\",\"No Smart Dark\",\"No Sync\",\"Standard Sensitivity\",\"75.00 Hertz\"],\"exposure_mode\":73,\"exposure_ms\":0,\"extended\":false,\"frequency_hz\":75,\"gain\":87,\"observer\":2,\"primary\":8,\"sensitivity_known\":true,\"sync_mode\":0,\"sync_value\":75,\"units\":1},\"spectrum\":{\"count\":101,\"end_nm\":780,\"inferred_unit\":\"W/(sr.m^2.nm)\",\"published_scale\":1000,\"published_unit\":\"mW/(m^2.sr.nm)\",\"start_nm\":380,\"step_nm\":4,\"unit\":null,\"unit_basis\":\"manual M5 integral and radiance definition; per-capture consistency verdict retained separately\",\"values\":[0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001]},\"spectrum_chunk_count\":2,\"spectrum_complete\":true,\"spectrum_count\":101,\"spectrum_parsed\":true,\"spectrum_units\":0,\"valid\":true,\"xyz\":[9.122870288922737,7.29829623113819,-0.9122870288922738],\"xyz_complete\":true,\"xyz_parsed\":true,\"xyz_publication\":{\"native_to_published_scale\":1,\"observer\":2,\"unit\":\"cd/m2\",\"xyz\":[9.122870288922737,7.29829623113819,-0.9122870288922738]},\"xyz_scale\":\"cd/m2\",\"xyz_units\":0},\"driver\":\"pr655\",\"factory_calibration\":\"unknown\",\"identity\":{\"firmware\":\"9.01-test\",\"model\":\"PR-655\",\"serial\":\"SYNTHETIC-P7\",\"verified\":true},\"link_uncertain\":false,\"metadata\":{\"exposure\":{\"complete\":false,\"description\":null,\"error\":0,\"parsed\":false,\"queried\":false,\"value\":null},\"stored_synchronization\":{\"complete\":false,\"description\":null,\"error\":0,\"parsed\":false,\"queried\":false,\"value\":null}},\"raw_replies\":[{\"byte_total\":46,\"command\":\"D601\",\"complete\":true,\"error\":0,\"raw_hex\":\"303030302c382c2d312c2d312c2d312c322c312c37332c302c38372c312c322c302c302c39312c37352e30300d0a\"},{\"byte_total\":148,\"command\":\"D602\",\"complete\":true,\"error\":0,\"raw_hex\":\"303030302c54657374206c656e732c4e6f6e652c4e6f6e652c4e6f6e652c48616c66206465677265652c4d65747269632c41646170746976652c30206d7365632c4e6174697665206761696e2c31206379636c65732c32206465672c4e6f20536d617274204461726b2c4e6f2053796e632c5374616e646172642053656e73697469766974792c37352e303020486572747a0d0a\"},{\"byte_total\":10,\"command\":\"D112\",\"complete\":true,\"error\":0,\"raw_hex\":\"303030302c312c330d0a\"},{\"byte_total\":45,\"command\":\"D116\",\"complete\":true,\"error\":0,\"raw_hex\":\"303030302c382c54657374206c656e732c5072696d6172792c4c756d696e616e63652c52616469616e63650d0a\"},{\"byte_total\":22,\"command\":\"B00\",\"complete\":true,\"error\":0,\"raw_hex\":\"4261636b6c696768742073657420746f203020250d0a\"},{\"byte_total\":1250,\"command\":\"M5\",\"complete\":true,\"error\":0,\"raw_hex\":\"303030302c302c3535342c302e30343034303030303030303030303030312c342e3132350d0a3338302c302e303030310d0a3338342c302e303030310d0a3338382c302e303030310d0a3339322c302e303030310d0a3339362c302e303030310d0a3430302c302e303030310d0a3430342c302e303030310d0a3430382c302e303030310d0a3431322c302e303030310d0a3431362c302e303030310d0a3432302c302e303030310d0a3432342c302e303030310d0a3432382c302e303030310d0a3433322c302e303030310d0a3433362c302e303030310d0a3434302c302e303030310d0a3434342c302e303030310d0a3434382c302e303030310d0a3435322c302e303030310d0a3435362c302e303030310d0a3436302c302e303030310d0a3436342c302e303030310d0a3436382c302e303030310d0a3437322c302e303030310d0a3437362c302e303030310d0a3438302c302e303030310d0a3438342c302e303030310d0a3438382c302e303030310d0a3439322c302e303030310d0a3439362c302e303030310d0a3530302c302e303030310d0a3530342c302e303030310d0a3530382c302e303030310d0a3531322c302e303030310d0a3531362c302e303030310d0a3532302c302e303030310d0a3532342c302e303030310d0a3532382c302e303030310d0a3533322c302e303030310d0a3533362c302e303030310d0a3534302c302e303030310d0a3534342c302e303030310d0a3534382c302e303030310d0a3535322c302e303030310d0a3535362c302e303030310d0a3536302c302e303030310d0a3536342c302e303030310d0a3536382c302e303030310d0a3537322c302e303030310d0a3537362c302e303030310d0a3538302c302e303030310d0a3538342c302e303030310d0a3538382c302e303030310d0a3539322c302e303030310d0a3539362c302e303030310d0a3630302c302e303030310d0a3630342c302e303030310d0a3630382c302e303030310d0a3631322c302e303030310d0a3631362c302e303030310d0a3632302c302e303030310d0a3632342c302e303030310d0a3632382c302e303030310d0a3633322c302e303030310d0a3633362c302e303030310d0a3634302c302e303030310d0a3634342c302e303030310d0a3634382c302e303030310d0a3635322c302e303030310d0a3635362c302e303030310d0a3636302c302e303030310d0a3636342c302e303030310d0a3636382c302e303030310d0a3637322c302e303030310d0a3637362c302e303030310d0a3638302c302e303030310d0a3638342c302e303030310d0a3638382c302e303030310d0a3639322c302e303030310d0a3639362c302e303030310d0a3730302c302e303030310d0a3730342c302e303030310d0a3730382c302e303030310d0a3731322c302e303030310d0a3731362c302e303030310d0a3732302c302e303030310d0a3732342c302e303030310d0a3732382c302e303030310d0a3733322c302e303030310d0a3733362c302e303030310d0a3734302c302e303030310d0a3734342c302e303030310d0a3734382c302e303030310d0a3735322c302e303030310d0a3735362c302e303030310d0a3736302c302e303030310d0a3736342c302e303030310d0a3736382c302e303030310d0a3737322c302e303030310d0a3737362c302e303030310d0a3738302c302e303030310d0a\"},{\"byte_total\":63,\"command\":\"D2\",\"complete\":true,\"error\":0,\"raw_hex\":\"303030302c302c392e3132323837303238383932323733372c372e32393832393632333131333831392c2d302e393132323837303238383932323733380d0a\"},{\"byte_total\":24,\"command\":\"B100\",\"complete\":true,\"error\":0,\"raw_hex\":\"4261636b6c696768742073657420746f2031303020250d0a\"},{\"byte_total\":46,\"command\":\"D601\",\"complete\":true,\"error\":0,\"raw_hex\":\"303030302c382c2d312c2d312c2d312c322c312c37332c302c38372c312c322c302c302c39312c37352e30300d0a\"},{\"byte_total\":148,\"command\":\"D602\",\"complete\":true,\"error\":0,\"raw_hex\":\"303030302c54657374206c656e732c4e6f6e652c4e6f6e652c4e6f6e652c48616c66206465677265652c4d65747269632c41646170746976652c30206d7365632c4e6174697665206761696e2c31206379636c65732c32206465672c4e6f20536d617274204461726b2c4e6f2053796e632c5374616e646172642053656e73697469766974792c37352e303020486572747a0d0a\"},{\"byte_total\":10,\"command\":\"D112\",\"complete\":true,\"error\":0,\"raw_hex\":\"303030302c312c330d0a\"},{\"byte_total\":45,\"command\":\"D116\",\"complete\":true,\"error\":0,\"raw_hex\":\"303030302c382c54657374206c656e732c5072696d6172792c4c756d696e616e63652c52616469616e63650d0a\"}],\"trace_overflow\":false,\"unit_check\":{\"computed\":3,\"discriminating\":3,\"power_ratio\":0.9999999999999991,\"verdict\":1,\"y_ratio\":1.000002928257686},\"xyz_origin\":\"native M2/D2, requested unclamped\"}"
+            ],
+            [
+              "native_mcond",
+              "0"
+            ],
+            [
+              "native_mtype",
+              "1"
+            ],
+            [
+              "spectrum_norm",
+              "1.0"
+            ],
+            [
+              "units_source",
+              "PR spectral density uses the manual M5 integral/D116 geometry model; native unit, consistency inference and publication remain separate"
+            ]
+          ],
+          "device": {
+            "backend": "argyll-native",
+            "backend_version": "3.5.0",
+            "device_id": "Photo Research PR-655",
+            "model": "Photo Research PR-655",
+            "serial": "SYNTHETIC-P7",
+            "serial_encoding": "utf8"
+          },
+          "observation_id": "2fdfa606-c729-46f8-89af-d663ad6c7501",
+          "operation_id": "dc7f866d-d411-4569-be10-c2695a78c7c4",
+          "project_computed": {
+            "lab": null,
+            "xyy": null
+          },
+          "provenance": "simulated",
+          "raw_backend_output": "{\"events\":[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"connected\",\"serial\":\"SYNTHETIC-P7\",\"serial_encoding\":\"utf8\",\"mode\":196632,\"mode_capabilities\":224536,\"trigger_capabilities\":832,\"filter_capabilities\":1,\"trigger\":16,\"spectral\":true,\"ambient_ccmx\":false,\"ambient_matrix_threshold\":null,\"strip_policies\":{\"reflection\":{\"max_patches\":0,\"requirement\":null,\"layout_fields\":[]},\"transmission\":{\"max_patches\":0,\"requirement\":null,\"layout_fields\":[]},\"emission\":{\"max_patches\":0,\"requirement\":null,\"layout_fields\":[]}},\"baseline_mode_checks\":{\"scope\":\"initialized_before_mode_configuration\",\"mode_capabilities\":224536,\"checks\":[{\"mode_word\":65560,\"native_code\":0},{\"mode_word\":196632,\"native_code\":0},{\"mode_word\":65800,\"native_code\":0},{\"mode_word\":196872,\"native_code\":0},{\"mode_word\":66568,\"native_code\":0},{\"mode_word\":197640,\"native_code\":0},{\"mode_word\":67608,\"native_code\":1376256},{\"mode_word\":198680,\"native_code\":1376256},{\"mode_word\":68616,\"native_code\":1376256},{\"mode_word\":199688,\"native_code\":1376256}]},\"display_types\":{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]},\"refresh_rate_override_hz\":null,\"correction\":\"none\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"needed_calibrations\":0,\"available_calibrations\":0,\"remaining_calibrations\":0,\"status_source\":\"driver\",\"skipped\":false,\"performed\":false,\"initial_calibration_suppressed\":false},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"read_allowance_required\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_facts\",\"driver\":\"pr655\",\"identity\":{\"verified\":true,\"model\":\"PR-655\",\"serial\":\"SYNTHETIC-P7\",\"firmware\":\"9.01-test\"},\"capture\":{\"valid\":true,\"native_complete\":true,\"exposure_started\":true,\"geometry_valid\":true,\"inventory_counts_valid\":true,\"accessory_list_valid\":true,\"reported_accessory_count\":1,\"reported_aperture_count\":3,\"inventory_counts_error\":0,\"accessory_list_error\":0,\"spectrum_complete\":true,\"spectrum_parsed\":true,\"xyz_complete\":true,\"xyz_parsed\":true,\"xyz\":[9.122870288922737,7.29829623113819,-0.9122870288922738],\"xyz_publication\":{\"xyz\":[9.122870288922737,7.29829623113819,-0.9122870288922738],\"unit\":\"cd/m2\",\"observer\":2,\"native_to_published_scale\":1},\"xyz_units\":0,\"spectrum_units\":0,\"spectrum_count\":101,\"reply_count\":12,\"spectrum_chunk_count\":2,\"spectrum\":{\"start_nm\":380,\"end_nm\":780,\"step_nm\":4,\"count\":101,\"unit\":null,\"inferred_unit\":\"W/(sr.m^2.nm)\",\"published_unit\":\"mW/(m^2.sr.nm)\",\"published_scale\":1000,\"unit_basis\":\"manual M5 integral and radiance definition; per-capture consistency verdict retained separately\"},\"xyz_scale\":\"cd/m2\",\"measurement_budget_s\":300,\"required_s\":310,\"host_allowance_s\":599.9835480831098,\"remaining_s\":598.977,\"native_integrated\":0.04040000000000001,\"native_photon_integrated\":4.125,\"peak_nm\":554,\"problem\":null,\"setup_before\":{\"primary\":8,\"addons\":[-1,-1,-1],\"aperture\":2,\"units\":1,\"exposure_mode\":73,\"exposure_ms\":0,\"gain\":87,\"cycles\":1,\"observer\":2,\"dark_mode\":0,\"sync_mode\":0,\"capture_mode\":91,\"sync_value\":75,\"frequency_hz\":75,\"adaptive_known\":true,\"adaptive\":true,\"sensitivity_known\":true,\"extended\":false,\"descriptions\":[\"Test lens\",\"None\",\"None\",\"None\",\"Half degree\",\"Metric\",\"Adaptive\",\"0 msec\",\"Native gain\",\"1 cycles\",\"2 deg\",\"No Smart Dark\",\"No Sync\",\"Standard Sensitivity\",\"75.00 Hertz\"]},\"setup_after\":{\"primary\":8,\"addons\":[-1,-1,-1],\"aperture\":2,\"units\":1,\"exposure_mode\":73,\"exposure_ms\":0,\"gain\":87,\"cycles\":1,\"observer\":2,\"dark_mode\":0,\"sync_mode\":0,\"capture_mode\":91,\"sync_value\":75,\"frequency_hz\":75,\"adaptive_known\":true,\"adaptive\":true,\"sensitivity_known\":true,\"extended\":false,\"descriptions\":[\"Test lens\",\"None\",\"None\",\"None\",\"Half degree\",\"Metric\",\"Adaptive\",\"0 msec\",\"Native gain\",\"1 cycles\",\"2 deg\",\"No Smart Dark\",\"No Sync\",\"Standard Sensitivity\",\"75.00 Hertz\"]},\"budget_policy\":{\"source\":\"host\",\"floor_s\":300,\"dark_per_cycle\":true}},\"unit_check\":{\"verdict\":1,\"discriminating\":3,\"computed\":3,\"power_ratio\":0.9999999999999991,\"y_ratio\":1.000002928257686},\"metadata\":{\"exposure\":{\"queried\":false,\"complete\":false,\"parsed\":false,\"error\":0,\"description\":null,\"value\":null},\"stored_synchronization\":{\"queried\":false,\"complete\":false,\"parsed\":false,\"error\":0,\"description\":null,\"value\":null}},\"link_uncertain\":false,\"trace_overflow\":false,\"factory_calibration\":\"unknown\",\"xyz_origin\":\"native M2/D2, requested unclamped\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_raw\",\"driver\":\"pr655\",\"command\":\"D601\",\"exchange_index\":0,\"exchange_count\":12,\"complete\":true,\"error\":0,\"byte_offset\":0,\"byte_total\":46,\"raw_hex\":\"303030302c382c2d312c2d312c2d312c322c312c37332c302c38372c312c322c302c302c39312c37352e30300d0a\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_raw\",\"driver\":\"pr655\",\"command\":\"D602\",\"exchange_index\":1,\"exchange_count\":12,\"complete\":true,\"error\":0,\"byte_offset\":0,\"byte_total\":148,\"raw_hex\":\"303030302c54657374206c656e732c4e6f6e652c4e6f6e652c4e6f6e652c48616c66206465677265652c4d65747269632c41646170746976652c30206d7365632c4e6174697665206761696e2c31206379636c65732c32206465672c4e6f20536d617274204461726b2c4e6f2053796e632c5374616e646172642053656e73697469766974792c37352e303020486572747a0d0a\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_raw\",\"driver\":\"pr655\",\"command\":\"D112\",\"exchange_index\":2,\"exchange_count\":12,\"complete\":true,\"error\":0,\"byte_offset\":0,\"byte_total\":10,\"raw_hex\":\"303030302c312c330d0a\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_raw\",\"driver\":\"pr655\",\"command\":\"D116\",\"exchange_index\":3,\"exchange_count\":12,\"complete\":true,\"error\":0,\"byte_offset\":0,\"byte_total\":45,\"raw_hex\":\"303030302c382c54657374206c656e732c5072696d6172792c4c756d696e616e63652c52616469616e63650d0a\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_raw\",\"driver\":\"pr655\",\"command\":\"B00\",\"exchange_index\":4,\"exchange_count\":12,\"complete\":true,\"error\":0,\"byte_offset\":0,\"byte_total\":22,\"raw_hex\":\"4261636b6c696768742073657420746f203020250d0a\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_raw\",\"driver\":\"pr655\",\"command\":\"M5\",\"exchange_index\":5,\"exchange_count\":12,\"complete\":true,\"error\":0,\"byte_offset\":0,\"byte_total\":1250,\"raw_hex\":\"303030302c302c3535342c302e30343034303030303030303030303030312c342e3132350d0a3338302c302e303030310d0a3338342c302e303030310d0a3338382c302e303030310d0a3339322c302e303030310d0a3339362c302e303030310d0a3430302c302e303030310d0a3430342c302e303030310d0a3430382c302e303030310d0a3431322c302e303030310d0a3431362c302e303030310d0a3432302c302e303030310d0a3432342c302e303030310d0a3432382c302e303030310d0a3433322c302e303030310d0a3433362c302e303030310d0a3434302c302e303030310d0a3434342c302e303030310d0a3434382c302e303030310d0a3435322c302e303030310d0a3435362c302e303030310d0a3436302c302e303030310d0a3436342c302e303030310d0a3436382c302e303030310d0a3437322c302e303030310d0a3437362c302e303030310d0a3438302c302e303030310d0a3438342c302e303030310d0a3438382c302e303030310d0a3439322c302e303030310d0a3439362c302e303030310d0a3530302c302e303030310d0a3530342c302e303030310d0a3530382c302e303030310d0a3531322c302e303030310d0a3531362c302e303030310d0a3532302c302e303030310d0a3532342c302e303030310d0a3532382c302e303030310d0a3533322c302e303030310d0a3533362c302e303030310d0a3534302c302e303030310d0a3534342c302e303030310d0a3534382c302e303030310d0a3535322c302e303030310d0a3535362c302e303030310d0a3536302c302e303030310d0a3536342c302e303030310d0a3536382c302e303030310d0a3537322c302e303030310d0a3537362c302e303030310d0a3538302c302e303030310d0a3538342c302e303030310d0a3538382c302e303030310d0a3539322c302e303030310d0a3539362c302e303030310d0a3630302c302e303030310d0a3630342c302e303030310d0a3630382c302e303030310d0a3631322c302e303030310d0a3631362c302e303030310d0a3632302c302e303030310d0a3632342c302e303030310d0a3632382c302e303030310d0a3633322c302e303030310d0a3633362c302e303030310d0a3634302c302e303030310d0a3634342c302e303030310d0a3634382c302e303030310d0a3635322c302e303030310d0a3635362c302e303030310d0a3636302c302e303030310d0a3636342c302e303030310d0a3636382c302e303030310d0a3637322c302e303030310d0a3637362c302e303030310d0a3638302c302e303030310d0a3638342c302e303030310d0a3638382c302e303030310d0a3639322c302e303030310d0a3639362c302e303030310d0a3730302c302e303030310d0a3730342c302e303030310d0a3730\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_raw\",\"driver\":\"pr655\",\"command\":\"M5\",\"exchange_index\":5,\"exchange_count\":12,\"complete\":true,\"error\":0,\"byte_offset\":1024,\"byte_total\":1250,\"raw_hex\":\"382c302e303030310d0a3731322c302e303030310d0a3731362c302e303030310d0a3732302c302e303030310d0a3732342c302e303030310d0a3732382c302e303030310d0a3733322c302e303030310d0a3733362c302e303030310d0a3734302c302e303030310d0a3734342c302e303030310d0a3734382c302e303030310d0a3735322c302e303030310d0a3735362c302e303030310d0a3736302c302e303030310d0a3736342c302e303030310d0a3736382c302e303030310d0a3737322c302e303030310d0a3737362c302e303030310d0a3738302c302e303030310d0a\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_raw\",\"driver\":\"pr655\",\"command\":\"D2\",\"exchange_index\":6,\"exchange_count\":12,\"complete\":true,\"error\":0,\"byte_offset\":0,\"byte_total\":63,\"raw_hex\":\"303030302c302c392e3132323837303238383932323733372c372e32393832393632333131333831392c2d302e393132323837303238383932323733380d0a\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_raw\",\"driver\":\"pr655\",\"command\":\"B100\",\"exchange_index\":7,\"exchange_count\":12,\"complete\":true,\"error\":0,\"byte_offset\":0,\"byte_total\":24,\"raw_hex\":\"4261636b6c696768742073657420746f2031303020250d0a\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_raw\",\"driver\":\"pr655\",\"command\":\"D601\",\"exchange_index\":8,\"exchange_count\":12,\"complete\":true,\"error\":0,\"byte_offset\":0,\"byte_total\":46,\"raw_hex\":\"303030302c382c2d312c2d312c2d312c322c312c37332c302c38372c312c322c302c302c39312c37352e30300d0a\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_raw\",\"driver\":\"pr655\",\"command\":\"D602\",\"exchange_index\":9,\"exchange_count\":12,\"complete\":true,\"error\":0,\"byte_offset\":0,\"byte_total\":148,\"raw_hex\":\"303030302c54657374206c656e732c4e6f6e652c4e6f6e652c4e6f6e652c48616c66206465677265652c4d65747269632c41646170746976652c30206d7365632c4e6174697665206761696e2c31206379636c65732c32206465672c4e6f20536d617274204461726b2c4e6f2053796e632c5374616e646172642053656e73697469766974792c37352e303020486572747a0d0a\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_raw\",\"driver\":\"pr655\",\"command\":\"D112\",\"exchange_index\":10,\"exchange_count\":12,\"complete\":true,\"error\":0,\"byte_offset\":0,\"byte_total\":10,\"raw_hex\":\"303030302c312c330d0a\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_raw\",\"driver\":\"pr655\",\"command\":\"D116\",\"exchange_index\":11,\"exchange_count\":12,\"complete\":true,\"error\":0,\"byte_offset\":0,\"byte_total\":45,\"raw_hex\":\"303030302c382c54657374206c656e732c5072696d6172792c4c756d696e616e63652c52616469616e63650d0a\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_spectrum\",\"driver\":\"pr655\",\"spectrum_chunk_index\":0,\"spectrum_chunk_count\":2,\"offset\":0,\"values\":[0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001]},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"native_spectrum\",\"driver\":\"pr655\",\"spectrum_chunk_index\":1,\"spectrum_chunk_count\":2,\"offset\":100,\"values\":[0.0001]},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"result\",\"argyll_version\":\"3.5.0\",\"backend_reported\":{\"mtype\":1,\"mcond\":0,\"XYZ_v\":1,\"XYZ\":[9.122870288922737,7.29829623113819,-0.9122870288922738],\"duration\":0,\"spectrum\":{\"spec_n\":101,\"wavelength_start_nm\":380,\"wavelength_end_nm\":780,\"norm\":1,\"samples\":[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1]}}},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"terminal\",\"status\":\"completed\",\"instrument_state\":\"unknown\",\"software_stopped\":true}]}",
+          "requested_mode": "emissive_spot_adaptive",
+          "sample_id": "A1",
+          "schema_version": 1,
+          "warnings": [
+            "PR spectral density uses the manual M5 integral/D116 geometry model; native unit, consistency inference and publication remain separate",
+            "SIMULATED: these values did not come from a physical measurement of a physical sample."
+          ]
+        },
+        "patch_id": "A1"
+      }
+    ],
+    "provenance": "simulated",
+    "request_json": "{\"schema_version\":1,\"device_id\":\"Photo Research PR-655\",\"capability_id\":\"f3e0f9df0658f6543e19c92a6a5963b44384b04e7be3e8689e2718b8c2efdc7e\",\"mode\":\"emissive_spot_adaptive\",\"workflow\":\"spot\",\"patch_ids\":[\"A1\"],\"options\":{},\"layout\":{},\"event_contract\":\"retained_patch_v1\"}",
+    "schema_version": 1,
+    "software_stopped": true,
+    "status": "completed",
+    "workflow": "spot"
+  }
+}

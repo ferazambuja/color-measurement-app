@@ -1,0 +1,9 @@
+{
+  "note": "The enumeration itself failed; no list is produced and none is invented",
+  "refused": {
+    "error": "NativeRefusal",
+    "message": "enumeration refused at enumeration_failed (native code 0)"
+  },
+  "scenario": "enumeration_failure",
+  "units": null
+}

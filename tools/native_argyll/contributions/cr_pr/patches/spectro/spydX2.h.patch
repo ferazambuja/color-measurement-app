@@ -1,0 +1,10 @@
+--- a/spectro/spydX2.h
++++ b/spectro/spydX2.h
+@@ -109,0 +110,4 @@ typedef struct {
++/* Calibration slots, indexed by native ix: enough for whichever model has more. */
++#define SPYDX2_MAXCALIBS (SPYD2024_NOCALIBS > SPYDX2_NOCALIBS \
++                          ? SPYD2024_NOCALIBS : SPYDX2_NOCALIBS)
++
+@@ -137 +141 @@ struct _spydX2 {
+-	SpX2calinfo cinfo[SPYDX2_NOCALIBS];	/* cal & meas setup info indexed by native ix */
++	SpX2calinfo cinfo[SPYDX2_MAXCALIBS];	/* cal & meas setup info indexed by native ix */

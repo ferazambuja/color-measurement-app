@@ -1,0 +1,382 @@
+--- a/spectro/i1pro3_imp.c
++++ b/spectro/i1pro3_imp.c
+@@ -106,0 +107,2 @@
++#include <float.h>
++#include <limits.h>
+@@ -148,0 +151,3 @@
++#undef UPSAMPLE_PLOT		/* [und] Plot the upsampling fit */
++#undef PLOT_FILLINS		/* [und] Plot position-based fill-ins */
++#undef DEBUG_UVFILT		/* [und] Plot UV multiplex filtering */
+@@ -220 +225,5 @@
+-|| defined(HIGH_RES_PLOT_STRAYL)		
++|| defined(HIGH_RES_PLOT_STRAYL)		\
++|| defined(D_STRAYPLOT)			\
++|| defined(UPSAMPLE_PLOT)			\
++|| defined(PLOT_FILLINS)			\
++|| defined(DEBUG_UVFILT)
+@@ -597,0 +607,22 @@ i1pro3_code i1pro3_imp_init(i1pro3 *p) {
++	/* Refuse timing parameters that would overflow i1pro3_do_measure()'s */
++	/* int counts. min_int_time can't exceed MAX_INT_TIME, and a MAXSCANTIME */
++	/* polarized scan at tint 10 has the most native measurements, each of */
++	/* 2 * MX_NSEN bytes and 2 * 10 * minintclks zebra clocks. */
++	{
++		double mit = m->minintclks * m->intclkp;	/* As i1pro3_parse_eeprom() */
++		double nnmeas;
++
++		if (!(mit > 0.0 && mit <= MAX_INT_TIME)) {
++			a1logd(p->log,1,"Minimum integration time %g is unusable\n",mit);
++			return I1PRO3_DATA_PARSE_ERROR;
++		}
++
++		/* nummeas * tint/2 + nnskip, as i1pro3_do_measure() */
++		nnmeas = (MAXSCANTIME/(10.0 * mit) + 0.5) * 10/2 + 5 * ((LEDTURNONMEAS + 4)/5);
++		if (2.0 * MX_NSEN * nnmeas > (double)INT_MAX
++		 || 2.0 * 10 * m->minintclks * nnmeas > (double)INT_MAX) {
++			a1logd(p->log,1,"Integration clock %g x %u overflows a scan\n",m->intclkp,m->minintclks);
++			return I1PRO3_DATA_PARSE_ERROR;
++		}
++	}
++
+@@ -1220,0 +1252,2 @@ i1pro3_code i1pro3_imp_calibrate(
++				free_dvector(wlraw, -1, m->nraw-1);
++				m->mmode = mmode;			/* Restore actual mode */
+@@ -1231,0 +1265,2 @@ i1pro3_code i1pro3_imp_calibrate(
++				free_dvector(wlraw, -1, m->nraw-1);
++				m->mmode = mmode;			/* Restore actual mode */
+@@ -1240,0 +1276 @@ i1pro3_code i1pro3_imp_calibrate(
++				m->mmode = mmode;			/* Restore actual mode */
+@@ -1287,0 +1324 @@ i1pro3_code i1pro3_imp_calibrate(
++				m->mmode = mmode;			/* Restore actual mode */
+@@ -1324,0 +1362 @@ i1pro3_code i1pro3_imp_calibrate(
++			s->cal_valid = 0;		/* White calibration data will be overwritten. */
+@@ -1332,0 +1371 @@ i1pro3_code i1pro3_imp_calibrate(
++					m->mmode = mmode;			/* Restore actual mode */
+@@ -1339,0 +1379 @@ i1pro3_code i1pro3_imp_calibrate(
++					m->mmode = mmode;			/* Restore actual mode */
+@@ -1399,0 +1440 @@ i1pro3_code i1pro3_imp_calibrate(
++			s->cal_valid = 0;		/* White calibration data will be overwritten. */
+@@ -1411,0 +1453 @@ i1pro3_code i1pro3_imp_calibrate(
++				m->mmode = mmode;			/* Restore actual mode */
+@@ -1450,0 +1493 @@ i1pro3_code i1pro3_imp_calibrate(
++			s->done_dintsel = 0; /* A failed refresh must not retain validity. */
+@@ -1456 +1499,2 @@ i1pro3_code i1pro3_imp_calibrate(
+-			if (ev != I1PRO3_RD_SENSORSATURATED) {
++			if (ev != I1PRO3_OK) {
++				m->mmode = mmode; /* Restore actual mode on probe failure. */
+@@ -1461,0 +1506,2 @@ i1pro3_code i1pro3_imp_calibrate(
++				if (maxval <= 0.0)	/* Match the adaptive exposure floor. */
++					maxval = 1.0;
+@@ -1606 +1652 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-	double stime, etime;
++	double stime, etime, delayms, reactionms;
+@@ -1613 +1659 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-	if ((rstart = usec_time()) < 0.0) {
++	if ((rstart = usec_time()) < 0.0 || !(rstart <= DBL_MAX)) {
+@@ -1615 +1661 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-		return inst_internal_error; 
++		return I1PRO3_INTERNAL_ERROR; 
+@@ -1619,0 +1666,4 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++	if (!(inttime > 0.0 && inttime <= DBL_MAX
++	   && NDMXTIME/inttime + 0.5 >= 2.0
++	   && NDMXTIME/inttime + 0.5 <= (double)INT_MAX))
++		return I1PRO3_INTERNAL_ERROR;
+@@ -1624,0 +1675 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++		free_dmatrix(multimeas, 0, nummeas-1, 0, m->nwav[hr]-1);
+@@ -1636 +1687,3 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-	if (m->whitestamp < 0.0) {
++	if (!(m->whitestamp >= 0.0 && m->whitestamp <= DBL_MAX
++	   && m->trigstamp >= 0.0 && m->trigstamp <= DBL_MAX
++	   && inttime > 0.0 && inttime <= DBL_MAX)) {
+@@ -1638 +1691,3 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-		return inst_internal_error; 
++		free_dmatrix(multimeas, 0, nummeas-1, 0, m->nwav[hr]-1);
++		free(samp);
++		return I1PRO3_INTERNAL_ERROR; 
+@@ -1644,0 +1700,2 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++		if (!(samp[i].sec >= -DBL_MAX && samp[i].sec <= DBL_MAX))
++			goto invalid_clock;
+@@ -1649,0 +1707,2 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++			if (!(multimeas[i][j] >= -DBL_MAX && multimeas[i][j] <= DBL_MAX))
++				goto invalid_samples;
+@@ -1655,0 +1715,2 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++				if (!(samp[i].rgb[k] >= -DBL_MAX && samp[i].rgb[k] <= DBL_MAX))
++					goto invalid_samples;
+@@ -1658,0 +1720,2 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++		if (!(samp[i].tot >= -DBL_MAX && samp[i].tot <= DBL_MAX))
++			goto invalid_samples;
+@@ -1660,0 +1724 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++	multimeas = NULL;
+@@ -1685,0 +1750,3 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++	if (!(del >= -DBL_MAX && del <= DBL_MAX
++	   && thr >= -DBL_MAX && thr <= DBL_MAX))
++		goto invalid_samples;
+@@ -1721 +1788 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-	for (i = 0; i < (nummeas-1); i++) {
++	for (i = 0; i < nummeas; i++) {
+@@ -1724,0 +1792,2 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++	if (i == nummeas)
++		goto invalid_samples;
+@@ -1729,2 +1798,7 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-	dispmsec = (int)(samp[i].sec * 1000.0 + 0.5);				/* Display update time */
+-	instmsec = (int)((m->trigstamp - rstart)/1000.0 + 0.5);		/* Reaction time */
++	delayms = samp[i].sec * 1000.0 + 0.5;
++	reactionms = (m->trigstamp - rstart)/1000.0 + 0.5;
++	if (!(delayms >= (double)INT_MIN && delayms <= (double)INT_MAX
++	   && reactionms >= (double)INT_MIN && reactionms <= (double)INT_MAX))
++		goto invalid_clock;
++	dispmsec = (int)delayms;				/* Display update time */
++	instmsec = (int)reactionms;		/* Reaction time */
+@@ -1754,0 +1829,10 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++
++invalid_clock:
++	free_dmatrix(multimeas, 0, nummeas-1, 0, m->nwav[hr]-1);
++	free(samp);
++	return I1PRO3_INTERNAL_ERROR;
++
++invalid_samples:
++	free_dmatrix(multimeas, 0, nummeas-1, 0, m->nwav[hr]-1);
++	free(samp);
++	return I1PRO3_RD_NOTRANS_FOUND;
+@@ -2975,0 +3060 @@ i1pro3_code i1pro3_restore_calibration(i1pro3 *p) {
++	double itime[i1p3_no_modes];	/* Initial integration times */
+@@ -3055,0 +3141,3 @@ i1pro3_code i1pro3_restore_calibration(i1pro3 *p) {
++	for (i = 0; i < i1p3_no_modes; i++)
++		itime[i] = m->ms[i].inttime;
++
+@@ -3065,0 +3154,17 @@ i1pro3_code i1pro3_restore_calibration(i1pro3 *p) {
++	/* A restored integration time outside what the mode's calibration sets */
++	/* (or NaN) would overflow the measurement counts. Keep the initial time */
++	/* and leave the mode uncalibrated, as for a missing calibration. */
++	for (i = 0; i < i1p3_no_modes; i++) {
++		i1pro3_state *s = &m->ms[i];
++		double mintime = s->pol ? 2.0 * m->min_int_time : m->min_int_time;	/* As */
++		double maxtime = s->pol ? 10.0 * m->min_int_time				/* i1pro3_pol_refl_cal() */
++		               : itime[i] > m->max_int_time ? itime[i] : m->max_int_time;
++
++		if (!(s->inttime >= mintime && s->inttime <= maxtime)) {
++			a1logd(p->log,2,"Mode %d restored integration time %f is unusable\n",i,s->inttime);
++			s->inttime = itime[i];
++			s->dark_valid = 0;
++			s->cal_valid = 0;
++		}
++	}
++
+@@ -3389 +3493,0 @@ static void fast_upsample(i1pro3 *p, double *hi, double *lo, int clip, char *deb
+-#undef UPSAMPLE_PLOT
+@@ -4440,0 +4545,2 @@ i1pro3_code i1pro3_compute_wav_filter(i1pro3 *p, int hr, int refl) {
++			free(m->mtx[hr][refl].index);
++			m->mtx[hr][refl].index = NULL;
+@@ -4446,0 +4553,4 @@ i1pro3_code i1pro3_compute_wav_filter(i1pro3 *p, int hr, int refl) {
++			free(m->mtx[hr][refl].nocoef);
++			free(m->mtx[hr][refl].index);
++			m->mtx[hr][refl].nocoef = NULL;
++			m->mtx[hr][refl].index = NULL;
+@@ -4772,0 +4883,12 @@ static double opt_adj_weights[21] = {
++static int cm_i1pro3_patch_finite(const ipatch *v) {
++	int j;
++	if (v->sp.spec_n < 0 || v->sp.spec_n > XSPECT_MAX_BANDS
++	 || !isfinite(v->sp.norm) || v->sp.norm <= 0.0) return 0;
++	for (j = 0; j < v->sp.spec_n; j++)
++		if (!isfinite(v->sp.spec[j])) return 0;
++	if (v->XYZ_v)
++		for (j = 0; j < 3; j++)
++			if (!isfinite(v->XYZ[j])) return 0;
++	return 1;
++}
++
+@@ -4836,0 +4959,4 @@ i1pro3_code i1pro3_conv2XYZ(
++			if (!cm_i1pro3_patch_finite(&vals[i])) {
++				conv->del(conv);
++				return I1PRO3_RD_READINCONS;
++			}
+@@ -4858,0 +4985,4 @@ i1pro3_code i1pro3_conv2XYZ(
++			if (!cm_i1pro3_patch_finite(&vals[i])) {
++				conv->del(conv);
++				return I1PRO3_RD_READINCONS;
++			}
+@@ -4880,3 +5010,3 @@ i1pro3_code i1pro3_conv2XYZ(
+-		/* Don't return spectral if not asked for */
+-		if (!m->spec_en) {
+-			vals[i].sp.spec_n = 0;
++		if (!cm_i1pro3_patch_finite(&vals[i])) {
++			conv->del(conv);
++			return I1PRO3_RD_READINCONS;
+@@ -4884 +5013,0 @@ i1pro3_code i1pro3_conv2XYZ(
+-
+@@ -4890 +5019,2 @@ i1pro3_code i1pro3_conv2XYZ(
+-	ipatch_convert_xrga(vals, nvals, xcalstd_nonpol, m->target_calstd, m->native_calstd, clamp);
++	if (ipatch_convert_xrga(vals, nvals, xcalstd_nonpol, m->target_calstd, m->native_calstd, clamp) != 0)
++		return I1PRO3_INT_CIECONVFAIL;
+@@ -4893,2 +5023,14 @@ i1pro3_code i1pro3_conv2XYZ(
+-	if (m->custfilt_en)
+-		ipatch_convert_custom_filter(vals, nvals, &m->custfilt, clamp);
++	if (m->custfilt_en &&
++	    ipatch_convert_custom_filter(vals, nvals, &m->custfilt, clamp) != 0)
++		return I1PRO3_INT_CIECONVFAIL;
++
++	for (i = 0; i < nvals; i++)
++		if (!cm_i1pro3_patch_finite(&vals[i]))
++			return I1PRO3_RD_READINCONS;
++
++	/* Don't return spectral if not asked for. CM: after the conversions above, */
++	/* which skip a patch without one (xrga.c:200-202, inst.c:2198-2202). */
++	if (!m->spec_en) {
++		for (i = 0; i < nvals; i++)
++			vals[i].sp.spec_n = 0;
++	}
+@@ -8453,2 +8594,0 @@ i1pro3_code i1pro3_strip_refl_meas(
+-#undef PLOT_FILLINS
+-
+@@ -8513,0 +8654 @@ i1pro3_code i1pro3_strip_refl_meas(
++		free_dmatrix(plot, 0, 2, 0, npos-1);
+@@ -8798 +8939,8 @@ i1pro3_code i1pro3_pol_refl_cal(
+-		inttime = inttime * s->targoscale * m->sens_target/maxval;
++		if (maxval != 0.0)
++			inttime = inttime * s->targoscale * m->sens_target/maxval;
++
++		/* Limit it before converting to a count */
++		if (maxval == 0.0 || inttime > 10.0 * m->min_int_time)
++			inttime = 10.0 * m->min_int_time;
++		else if (!(inttime >= 0.0))
++			inttime = 0.0;
+@@ -9186,2 +9333,0 @@ i1pro3_code i1pro3_pol_strip_refl_meas(
+-#undef PLOT_FILLINS
+-
+@@ -9246,0 +9393 @@ i1pro3_code i1pro3_pol_strip_refl_meas(
++		free_dmatrix(plot, 0, 2, 0, npos-1);
+@@ -9758,0 +9906,13 @@ i1pro3_code i1pro3_scan_emis_meas(
++	/* CM: flash background rows must not dilute a saturated pulse.
++	 * Reuse the upstream tolerance (>10 channels), independently per row.
++	 * Non-flash modes retain the original aggregate check below. */
++	if (s->flash) {
++		for (i = 0; i < nummeasW; i++) {
++			if (i1pro3_multimeas_check_sat(p, NULL, raw_sample + i, 1)) {
++				if (p2m != NULL) del_zebix_list(p2m, npos);
++				i1pro3_free_raw(p, i1p3mm_em, raw_sample, nummeasW);
++				return I1PRO3_RD_SENSORSATURATED;
++			}
++		}
++	}
++
+@@ -9791,0 +9952,10 @@ i1pro3_code i1pro3_scan_emis_meas(
++		/* CM: the recognition proxy requires finite, nonzero divisors.
++		 * Dark-subtracted reference channels may be negative; retain them. */
++		for (i = 0; i < m->nraw; i++) {
++			if (!isfinite(norm[i]) || norm[i] == 0.0) {
++				if (p2m != NULL) del_zebix_list(p2m, npos);
++				i1pro3_free_raw(p, i1p3mm_em, raw_sample, nummeasW);
++				return I1PRO3_RD_READINCONS;
++			}
++		}
++
+@@ -9796 +9966,2 @@ i1pro3_code i1pro3_scan_emis_meas(
+-		for (i = 0; i < nummeasW; i++)
++		for (i = 0; i < nummeasW; i++) {
++			int j;
+@@ -9797,0 +9969,10 @@ i1pro3_code i1pro3_scan_emis_meas(
++			/* CM: finite operands can still overflow during normalization. */
++			for (j = 0; j < m->nraw; j++) {
++				if (!isfinite(filt_sample[i][j])) {
++					if (p2m != NULL) del_zebix_list(p2m, npos);
++					free_dmatrix(filt_sample, 0, nfiltsamp-1, -9, m->nraw-1);
++					i1pro3_free_raw(p, i1p3mm_em, raw_sample, nummeasW);
++					return I1PRO3_RD_READINCONS;
++				}
++			}
++		}
+@@ -9849,0 +10031,14 @@ i1pro3_code i1pro3_scan_emis_meas(
++		/* CM: position-slot summation/interpolation can overflow even
++		 * when each normalized sample is finite. Validate the final proxy. */
++		for (i = 0; i < nfiltsamp; i++) {
++			int j;
++			for (j = 0; j < m->nraw; j++) {
++				if (!isfinite(filt_sample[i][j])) {
++					if (p2m != NULL) del_zebix_list(p2m, npos);
++					free_dmatrix(filt_sample, 0, nfiltsamp-1, -9, m->nraw-1);
++					i1pro3_free_raw(p, i1p3mm_em, raw_sample, nummeasW);
++					return I1PRO3_RD_READINCONS;
++				}
++			}
++		}
++
+@@ -9924,0 +10120,12 @@ i1pro3_code i1pro3_scan_emis_meas(
++
++			/* CM: averaging and calibration multiplication may overflow separately. */
++			for (j = 0; j < m->nwav[hr]; j++) {
++				if (!isfinite(specrd[i][j])) {
++					if (p2m != NULL) del_zebix_list(p2m, npos);
++					free(pwav_sample);
++					free(patch);
++					free_dmatrix(wav_sample, 0, nummeasW-1, -9, m->nwav[hr]-1);
++					a1logd(p->log,1," sample has nonfinite spectral values\n");
++					return I1PRO3_RD_READINCONS;
++				}
++			}
+@@ -9936,0 +10144,6 @@ i1pro3_code i1pro3_scan_emis_meas(
++		/* CM: flash recognition does not use the zebra position list. */
++		if (p2m != NULL) {
++			del_zebix_list(p2m, npos);
++			p2m = NULL;
++		}
++
+@@ -9960 +10173,2 @@ i1pro3_code i1pro3_scan_emis_meas(
+-		i1pro3_absraw_to_abswav(p, hr, 0, wav_sample, praw_avg, 1);
++		/* CM: packed flash average has no auxiliary element; keep emissive matrix. */
++		i1pro3_absraw_to_abswav(p, hr, 2, wav_sample, praw_avg, 1);
+@@ -9964,0 +10179,6 @@ i1pro3_code i1pro3_scan_emis_meas(
++		for (i = 0; i < m->nwav[hr]; i++) {
++			if (!isfinite(wav_sample[0][i])) {
++				free_dmatrix(wav_sample, 0, 0, -1, m->nwav[hr]-1);
++				return I1PRO3_RD_READINCONS;
++			}
++		}
+@@ -10366 +10586,5 @@ i1pro3_code i1pro3_locate_patches(
+-	if (lead_avg/trail_avg < 0.7 || trail_avg/lead_avg < 0.7) {
++	/* CM: undefined/nonfinite ratios cannot confirm consistency. */
++	if (!isfinite(lead_avg) || !isfinite(trail_avg)
++	 || lead_avg == 0.0 || trail_avg == 0.0
++	 || !isfinite(lead_avg/trail_avg) || !isfinite(trail_avg/lead_avg)
++	 || lead_avg/trail_avg < 0.7 || trail_avg/lead_avg < 0.7) {
+@@ -10418,0 +10643,3 @@ i1pro3_code i1pro3_locate_patches(
++			free(points);
++			if (pcurve != NULL)
++				pcurve->del(pcurve);
+@@ -11383 +11610 @@ i1pro3_code i1pro3_spot_adapt_emis_raw_meas(
+-		i1pro3_free_raw(p, i1p3mm_rf_wh, raw_sample, nummeasW);
++		i1pro3_free_raw(p, i1p3mm_em, raw_sample, nummeasW);
+@@ -11390 +11617 @@ i1pro3_code i1pro3_spot_adapt_emis_raw_meas(
+-		i1pro3_free_raw(p, i1p3mm_rf_wh, raw_sample, nummeasW);
++		i1pro3_free_raw(p, i1p3mm_em, raw_sample, nummeasW);
+@@ -11478 +11705 @@ i1pro3_code i1pro3_spot_simple_emis_raw_meas(
+-		i1pro3_free_raw(p, i1p3mm_rf_wh, raw_sample, nummeas);
++		i1pro3_free_raw(p, i1p3mm_em, raw_sample, nummeas);
+@@ -11692,0 +11920,10 @@ i1pro3_code i1pro3_extract_patches_flash(
++	/* CM: a threshold pulse selects one neighbor on either side. Refuse
++	 * a window reaching the excluded final row; do not invent missing energy.
++	 * This does not establish that a physical pulse waveform was complete. */
++	for (k = nummeas > 1 ? nummeas - 2 : 0; k < nummeas; k++) {
++		for (j = 0; j < m->nraw; j++) {
++			if (multimeas[k][j] >= thresh)
++				return I1PRO3_RD_READINCONS;
++		}
++	}
++
+@@ -11854,0 +12092,4 @@ int i1pro3_multimeas_check_raw_consistency(
++	if (!isfinite(aavg)) {
++		free_dvector(avgs, 0, nummeas-1);
++		return 1;
++	}
+@@ -11983,0 +12225,5 @@ int i1pro3_multimeas_check_wav_consistency(
++	/* CM: a nonfinite aggregate cannot establish consistency. */
++	if (!isfinite(aavg)) {
++		free_dvector(avgs, 0, nummeas-1);
++		return 1;
++	}
+@@ -12061,0 +12308,5 @@ int i1pro3_multimeas_check_wav_consistency2(
++	/* CM: a nonfinite aggregate cannot establish consistency. */
++	if (!isfinite(aavg)) {
++		free_dvector(avgs, 0, nummeas-1);
++		return 1;
++	}
+@@ -12385 +12635,0 @@ void i1pro3_comp_ledm(
+-#undef DEBUG_UVFILT

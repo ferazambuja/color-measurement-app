@@ -1,0 +1,82 @@
+--- a/spectro/specbos.c
++++ b/spectro/specbos.c
+@@ -568,0 +569,17 @@ int specbos_diff_thread(void *pp) {
++/* Return the number of bands in a 1nm wavelength range, */
++/* or 0 if the spectrum xspect can't hold it. */
++static int specbos_nbands(double wl_short, double wl_long) {
++	double bands = (wl_long - wl_short + 1.0)/1.0 + 0.5;
++
++	/* The range command sends integer endpoints. Fractional replies would */
++	/* make the band count and wavelength labels disagree with that command. */
++	if (!(wl_short > -1e6 && wl_short < 1e6
++	   && wl_long > -1e6 && wl_long < 1e6
++	   && bands >= 2.0 && bands < XSPECT_MAX_BANDS + 1.0))
++		return 0;
++	if (wl_short != (double)(int)(wl_short + 0.5)
++	 || wl_long != (double)(int)(wl_long + 0.5))
++		return 0;
++	return (int)bands;
++}
++
+@@ -765 +782 @@ specbos_init_inst(inst *pp) {
+-		int wstart, wend, wstep;
++		double wstart, wend, wstep;
+@@ -784 +801 @@ specbos_init_inst(inst *pp) {
+-			if (sscanf(buf, "%d %d %d",&wstart,&wend,&wstep) != 3) {
++			if (sscanf(buf, "%lf %lf %lf",&wstart,&wend,&wstep) != 3) {
+@@ -796,2 +813,2 @@ specbos_init_inst(inst *pp) {
+-		p->wl_short = (double)wstart;
+-		p->wl_long = (double)wend;
++		p->wl_short = wstart;
++		p->wl_long = wend;
+@@ -806 +823,6 @@ specbos_init_inst(inst *pp) {
+-		p->nbands = (int)((p->wl_long - p->wl_short + 1.0)/1.0 + 0.5);
++		if ((p->nbands = specbos_nbands(p->wl_short, p->wl_long)) == 0) {
++			amutex_unlock(p->lock);
++			a1loge(p->log, 1, "specbos_init_inst: unusable wavelength range %f - %f\n",
++			                                        p->wl_short, p->wl_long);
++			return specbos_interp_code((inst *)p, SPECBOS_DATA_PARSE_ERROR);
++		}
+@@ -861 +883,6 @@ specbos_init_inst(inst *pp) {
+-		p->nbands = (int)((p->wl_long - p->wl_short + 1.0)/1.0 + 0.5);
++		if ((p->nbands = specbos_nbands(p->wl_short, p->wl_long)) == 0) {
++			amutex_unlock(p->lock);
++			a1loge(p->log, 1, "specbos_init_inst: unusable wavelength range %f - %f\n",
++			                                        p->wl_short, p->wl_long);
++			return specbos_interp_code((inst *)p, SPECBOS_DATA_PARSE_ERROR);
++		}
+@@ -1150 +1177,2 @@ instClamping clamp) {		/* NZ if clamp XYZ/Lab to be +ve */
+-	if ((rv = set_average(p, nav, 0)) != inst_ok)
++	if ((rv = set_average(p, nav, 0)) != inst_ok) {
++		amutex_unlock(p->lock);
+@@ -1151,0 +1180 @@ instClamping clamp) {		/* NZ if clamp XYZ/Lab to be +ve */
++	}
+@@ -1217,0 +1247 @@ instClamping clamp) {		/* NZ if clamp XYZ/Lab to be +ve */
++			int nbands;
+@@ -1221,0 +1252,5 @@ instClamping clamp) {		/* NZ if clamp XYZ/Lab to be +ve */
++			if ((nbands = specbos_nbands(p->wl_short < 380.0 ? 380.0 : p->wl_short,
++			                              p->wl_long > 780.0 ? 780.0 : p->wl_long)) == 0) {
++				amutex_unlock(p->lock);
++				return specbos_interp_code((inst *)p, ec);
++			}
+@@ -1226,2 +1261 @@ instClamping clamp) {		/* NZ if clamp XYZ/Lab to be +ve */
+-
+-			p->nbands = (int)((p->wl_long - p->wl_short + 1.0)/1.0 + 0.5);
++			p->nbands = nbands;
+@@ -1836 +1870 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		a1logd(p->log,4,"specbos_calibrate: doing calt 0x%x\n",calt);
++		a1logd(p->log,4,"specbos_calibrate: doing calt 0x%x\n",*calt);
+@@ -1882 +1916,3 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		if ((ev = set_average(p, 50, 1)) != inst_ok)
++		if ((ev = set_average(p, 50, 1)) != inst_ok) {
++			p->mode = cmode;
++			p->doing_cal = 0;
+@@ -1883,0 +1920 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
++		}
+@@ -1895 +1932,3 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		if ((ev = set_average(p, 1, 1)) != inst_ok)
++		if ((ev = set_average(p, 1, 1)) != inst_ok) {
++			p->mode = cmode;
++			p->doing_cal = 0;
+@@ -1896,0 +1936 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
++		}

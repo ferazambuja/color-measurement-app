@@ -1,0 +1,8 @@
+# Text inputs must retain the same LF bytes on each target checkout.
+* text=auto eol=lf
+# Authenticated contribution files, patches and proof predecessors are kept verbatim.
+tools/native_argyll/contributions/** -text
+tools/native_argyll/proof_inputs/** -text
+# Authenticated scientific resources retain the publisher's exact bytes too.
+src/color_measurement/data/illuminants/** -text
+src/color_measurement/desktop_assets/resources/** -text

@@ -1,0 +1,51 @@
+{
+  "note": "As above for colorhug.c:653-666",
+  "opening": [
+    {
+      "index": 1,
+      "permitted_without_acknowledgement": false,
+      "requires": "accept_disclosed_initialization"
+    },
+    {
+      "index": 2,
+      "permitted_without_acknowledgement": false,
+      "requires": "accept_disclosed_initialization"
+    }
+  ],
+  "refused": null,
+  "scenario": "colorhug_flash",
+  "units": [
+    {
+      "attachable": false,
+      "identified": true,
+      "index": 1,
+      "initialization_assessed": true,
+      "initialization_refusal": "initialization_changes_indicator_leds",
+      "name": "Hughski ColorHug",
+      "native_type": 37,
+      "opening_requires": "accept_disclosed_initialization",
+      "path": "fixture:display:1",
+      "symbol": "instColorHug",
+      "transport": 4,
+      "transports": [
+        "hid"
+      ]
+    },
+    {
+      "attachable": false,
+      "identified": true,
+      "index": 2,
+      "initialization_assessed": true,
+      "initialization_refusal": "initialization_changes_indicator_leds",
+      "name": "Hughski ColorHug",
+      "native_type": 37,
+      "opening_requires": "accept_disclosed_initialization",
+      "path": "fixture:display:2",
+      "symbol": "instColorHug",
+      "transport": 4,
+      "transports": [
+        "hid"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+--- a/spectro/i1disp.c
++++ b/spectro/i1disp.c
+@@ -261,2 +261,2 @@ static int buf2int(unsigned char *buf) {
+-	int val;
+-	val = (signed char)buf[0];
++	unsigned int val;
++	val = buf[0];
+@@ -266 +266,3 @@ static int buf2int(unsigned char *buf) {
+-	return val;
++	if (val <= 0x7fffffff)		/* Convert to signed without overflow */
++		return (int)val;
++	return -(int)(~val) - 1;
+@@ -336 +338,2 @@ i1disp_rdreg_word(
+-	int v, val;
++	int v;
++	unsigned int val;
+@@ -354 +357,4 @@ i1disp_rdreg_word(
+-	*outp = val;
++	if (val <= 0x7fffffff)		/* Convert to signed without overflow */
++		*outp = (int)val;
++	else
++		*outp = -(int)(~val) - 1;
+@@ -2061 +2067 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		a1logd(p->log,4,"i1disp_calibrate: doing calt 0x%x\n",calt);
++		a1logd(p->log,4,"i1disp_calibrate: doing calt 0x%x\n",*calt);

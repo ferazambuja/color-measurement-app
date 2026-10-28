@@ -1,0 +1,79 @@
+--- a/cgats/cgats.c
++++ b/cgats/cgats.c
+@@ -70,0 +71,3 @@ extern void error(const char *fmt, ...), warning(const char *fmt, ...);
++#include <limits.h>
++#include <float.h>
++#include <errno.h>
+@@ -107 +110 @@ static void unquote_cs(char *cs);
+-static data_type guess_type(const char *cs);
++static data_type guess_type(const char *cs, int strict);
+@@ -595,2 +598,15 @@ cgats_read(cgats *p, cgatsFile *fp) {
+-				if(strcmp(kw,"NUMBER_OF_SETS") == 0)
+-					expsets = atoi(tp);
++				if(strcmp(kw,"NUMBER_OF_SETS") == 0) {
++					double dv;		/* A whole number, as the spectral counts */
++					char *ep;
++					errno = 0;
++					dv = strtod(tp, &ep);
++					if (ep == tp || *ep != '\000' || errno == ERANGE
++					 || !(dv >= INT_MIN && dv <= INT_MAX) || floor(dv) != dv) {
++						err(p,-1,"Error at line %d of file '%s': NUMBER_OF_SETS is invalid or out of range",pp->line,fp->fname(fp));
++						p->al->free(p->al, kw);	/* CM: local keyword is not in the table */
++						pp->del(pp);
++						DBGF((DBGA,"NUMBER_OF_SETS out of range\n"));
++						return p->e.c;
++					}
++					expsets = (int)dv;
++				}
+@@ -683 +699 @@ cgats_read(cgats *p, cgatsFile *fp) {
+-							ty = guess_type(((char *)ct->rfdata[j][i]));
++							ty = guess_type(((char *)ct->rfdata[j][i]), 1);
+@@ -722 +738,8 @@ cgats_read(cgats *p, cgatsFile *fp) {
+-									dv = atof((char *)ct->rfdata[j][i]);
++									errno = 0;
++									dv = strtod((char *)ct->rfdata[j][i], NULL);
++									if (errno == ERANGE && (dv == HUGE_VAL || dv == -HUGE_VAL)) {
++										err(p, -1,"Error in file '%s': Field %d value in set %d is out of range",fp->fname(fp),i,j);
++										pp->del(pp);
++										DBGF((DBGA,"Real field value out of range\n"));
++										return p->e.c;
++									}
+@@ -733 +756,10 @@ cgats_read(cgats *p, cgatsFile *fp) {
+-									iv = atoi((char *)ct->rfdata[j][i]);
++									long lv;
++									errno = 0;
++									lv = strtol((char *)ct->rfdata[j][i], NULL, 10);
++									if (errno == ERANGE || lv < INT_MIN || lv > INT_MAX) {
++										err(p, -1,"Error in file '%s': Field %d value in set %d is out of range",fp->fname(fp),i,j);
++										pp->del(pp);
++										DBGF((DBGA,"Integer field value out of range\n"));
++										return p->e.c;
++									}
++									iv = (int)lv;
+@@ -1603 +1635 @@ cgats_write(cgats *p, cgatsFile *fp) {
+-				      && (sfield[field] || (tt = guess_type((char *)t->fdata[set][field]),
++				      && (sfield[field] || (tt = guess_type((char *)t->fdata[set][field], 0),
+@@ -1916 +1948,5 @@ static data_type
+-guess_type(const char *cs)
++guess_type(
++const char *cs,
++int strict			/* nz to require digits, as a number read must have; */
++					/* 0 for anything an earlier reader would take for a number */
++)
+@@ -1919,0 +1956 @@ guess_type(const char *cs)
++	int md = 0, ed = 0;		/* Mantissa and exponent digits */
+@@ -1935 +1972,5 @@ guess_type(const char *cs)
+-		if (c >= '0' && c <= '9')	/* Strictly numeric */
++		if (c >= '0' && c <= '9') {	/* Strictly numeric */
++			if (rf & 2)
++				ed = 1;
++			else
++				md = 1;
+@@ -1936,0 +1978 @@ guess_type(const char *cs)
++		}
+@@ -1957,0 +2000,2 @@ guess_type(const char *cs)
++	if (strict && (!md || ((rf & 2) && !ed)))	/* No digits, so not a number */
++		return nqcs_t;
+@@ -1976 +2020 @@ real_format(double value, int nsd, char *fmt) {
+-	if (value != value) {		/* Hmm. A nan */
++	if (!(value >= -DBL_MAX && value <= DBL_MAX)) {	/* A nan or infinity */

@@ -1,0 +1,91 @@
+--- a/spectro/kleink10.c
++++ b/spectro/kleink10.c
+@@ -43,0 +44 @@
++#include <limits.h>
+@@ -1974,0 +1976 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
++	double sampsp, delayms;
+@@ -1996 +1998,5 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
+-	putime = usec_time() / 1000000.0;
++	sutime = putime = usec_time() / 1000000.0;
++	if (!(sutime >= 0.0 && sutime <= DBL_MAX)) {
++		p->log->debug = isdeb;
++		return inst_internal_error;
++	}
+@@ -2013,0 +2020,7 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
++		if (!(samp[i].xyz[0] >= -DBL_MAX && samp[i].xyz[0] <= DBL_MAX
++		   && samp[i].xyz[1] >= -DBL_MAX && samp[i].xyz[1] <= DBL_MAX
++		   && samp[i].xyz[2] >= -DBL_MAX && samp[i].xyz[2] <= DBL_MAX)) {
++			amutex_unlock(p->lock);
++			p->log->debug = isdeb;
++			return inst_misread;
++		}
+@@ -2015,0 +2029,5 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
++		if (!(cutime >= 0.0 && cutime <= DBL_MAX)) {
++			amutex_unlock(p->lock);
++			p->log->debug = isdeb;
++			return inst_internal_error;
++		}
+@@ -2020 +2038 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
+-		if (cutime > NDMXTIME)
++		if (cutime - sutime > NDMXTIME)
+@@ -2023 +2041 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
+-	ndsamps = i;
++	ndsamps = i < NDSAMPS ? i + 1 : i;
+@@ -2026,3 +2043,0 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
+-	/* Average sample spacing in msec */
+-	avgsampsp = (int)(1000.0 * (samp[i-1].sec - samp[0].sec)/(i-1.0) + 0.5);
+-
+@@ -2032,2 +2047,2 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
+-	if (ndsamps == 0) {
+-		a1logd(p->log, 1, "k10_meas_delay: No measurement samples returned in time\n");
++	if (ndsamps < 2) {
++		a1logd(p->log, 1, "k10_meas_delay: Too few measurement samples for spacing\n");
+@@ -2037 +2052,11 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
+-	if (p->whitestamp < 0.0) {
++	/* Require positive finite spacing before rounding or dividing by it. */
++	sampsp = 1000.0 * (samp[ndsamps-1].sec - samp[0].sec)/(ndsamps-1.0);
++	if (!(sampsp > 0.0 && sampsp <= DBL_MAX
++	   && sampsp <= 1000.0 * NDMXTIME
++	   && sampsp + 0.5 >= 1.0 && sampsp + 0.5 <= (double)INT_MAX)) {
++		a1logd(p->log, 1, "k10_meas_delay: Invalid measurement sample spacing\n");
++		return inst_internal_error;
++	}
++	avgsampsp = (int)(sampsp + 0.5);
++
++	if (!(p->whitestamp >= 0.0 && p->whitestamp <= DBL_MAX)) {
+@@ -2093 +2118,5 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
+-	if (del < (0.7 * etot)) {
++	if (!(stot >= -DBL_MAX && stot <= DBL_MAX
++	   && etot >= -DBL_MAX && etot <= DBL_MAX
++	   && del > 0.0 && del <= DBL_MAX
++	   && thr >= -DBL_MAX && thr <= DBL_MAX
++	   && del >= 0.7 * etot)) {
+@@ -2099 +2128 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
+-	for (i = 0; i < (ndsamps-1); i++) {
++	for (i = 0; i < ndsamps; i++) {
+@@ -2102,0 +2132,2 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
++	if (i == ndsamps)
++		return inst_misread;
+@@ -2107 +2138,4 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
+-	dispmsec = (int)(samp[i].sec * 1000.0 + 0.5);
++	delayms = samp[i].sec * 1000.0 + 0.5;
++	if (!(delayms >= (double)INT_MIN && delayms <= (double)INT_MAX))
++		return inst_internal_error;
++	dispmsec = (int)delayms;
+@@ -2120,0 +2155,2 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
++	if (dispmsec < INT_MIN - instmsec)
++		return inst_internal_error;
+@@ -2127 +2163,4 @@ int *pinstmsec) {	/* Return instrument reaction time in msec */
+-	dispmsec = (int)((1.0 + floor((double)dispmsec/(double)avgsampsp)) * avgsampsp + 0.5);
++	delayms = (1.0 + floor((double)dispmsec/(double)avgsampsp)) * avgsampsp + 0.5;
++	if (!(delayms >= 0.0 && delayms <= (double)INT_MAX))
++		return inst_internal_error;
++	dispmsec = (int)delayms;
+@@ -2323 +2362 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		a1logd(p->log,4,"k10_calibrate: doing calt 0x%x\n",calt);
++		a1logd(p->log,4,"k10_calibrate: doing calt 0x%x\n",*calt);
+@@ -2346 +2385 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		*calt &= ~inst_calc_man_em_dark;
++		*calt &= ~inst_calt_emis_offset;
+@@ -2480,0 +2520 @@ k10_del(inst *pp) {
++		inst_del_disptype_list(p->dtlist, p->ndtlist);	/* CM: the instrument owns this list (inst.h:832-833) */

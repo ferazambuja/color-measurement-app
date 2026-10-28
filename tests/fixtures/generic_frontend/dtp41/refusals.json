@@ -1,0 +1,117 @@
+{
+  "layout_key_not_used_by_this_workflow": {
+    "message": "Strip layout keys not consumed: ['passes']",
+    "refused": true,
+    "request": {
+      "capability_id": "26d12ce857505f3e86101270811eea689972b140b87c37ca0426e9a2f40dd14f",
+      "device_id": "X-Rite DTP41",
+      "layout": {
+        "passes": 2
+      },
+      "mode": "reflective_strip",
+      "options": {},
+      "patch_ids": [
+        "A1"
+      ],
+      "schema_version": 1,
+      "workflow": "strip"
+    }
+  },
+  "mode_not_offered": {
+    "message": "Mode is not advertised by this instrument",
+    "refused": true,
+    "request": {
+      "capability_id": "26d12ce857505f3e86101270811eea689972b140b87c37ca0426e9a2f40dd14f",
+      "device_id": "X-Rite DTP41",
+      "layout": {},
+      "mode": "reflective_xy_m3",
+      "options": {},
+      "patch_ids": [
+        "A1"
+      ],
+      "schema_version": 1,
+      "workflow": "strip"
+    }
+  },
+  "stale_capability_id": {
+    "message": "Stale or different capability snapshot",
+    "refused": true,
+    "request": {
+      "capability_id": "0000000000000000000000000000000000000000000000000000000000000000",
+      "device_id": "X-Rite DTP41",
+      "layout": {},
+      "mode": "reflective_strip",
+      "options": {},
+      "patch_ids": [
+        "A1"
+      ],
+      "schema_version": 1,
+      "workflow": "strip"
+    }
+  },
+  "too_many_patch_ids": {
+    "message": "This workflow takes 1 to 403 unique patch IDs",
+    "refused": true,
+    "request": {
+      "capability_id": "26d12ce857505f3e86101270811eea689972b140b87c37ca0426e9a2f40dd14f",
+      "device_id": "X-Rite DTP41",
+      "layout": {},
+      "mode": "reflective_strip",
+      "options": {},
+      "patch_ids": [],
+      "schema_version": 1,
+      "workflow": "strip"
+    }
+  },
+  "unknown_field": {
+    "message": "Request must contain exactly the generic frontend fields",
+    "refused": true,
+    "request": {
+      "capability_id": "26d12ce857505f3e86101270811eea689972b140b87c37ca0426e9a2f40dd14f",
+      "device_id": "X-Rite DTP41",
+      "layout": {},
+      "mode": "reflective_strip",
+      "not_a_field": 1,
+      "options": {},
+      "patch_ids": [
+        "A1"
+      ],
+      "schema_version": 1,
+      "workflow": "strip"
+    }
+  },
+  "unknown_option": {
+    "message": "Strip layout requires ['gap_width_mm', 'patch_width_mm']",
+    "refused": true,
+    "request": {
+      "capability_id": "26d12ce857505f3e86101270811eea689972b140b87c37ca0426e9a2f40dd14f",
+      "device_id": "X-Rite DTP41",
+      "layout": {},
+      "mode": "reflective_strip",
+      "options": {
+        "not_an_option": 1
+      },
+      "patch_ids": [
+        "A1"
+      ],
+      "schema_version": 1,
+      "workflow": "strip"
+    }
+  },
+  "workflow_not_offered": {
+    "message": "Workflow is not offered for this mode",
+    "refused": true,
+    "request": {
+      "capability_id": "26d12ce857505f3e86101270811eea689972b140b87c37ca0426e9a2f40dd14f",
+      "device_id": "X-Rite DTP41",
+      "layout": {},
+      "mode": "reflective_strip",
+      "options": {},
+      "patch_ids": [
+        "A1"
+      ],
+      "schema_version": 1,
+      "workflow": "xy"
+    }
+  }
+}

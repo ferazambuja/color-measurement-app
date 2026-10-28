@@ -1,0 +1,25 @@
+--- a/xicc/xspect.c
++++ b/xicc/xspect.c
+@@ -30,0 +31,2 @@
++#include <ctype.h>
++#include <errno.h>
+@@ -3642,0 +3645,13 @@ char *meas_cond2str(inst_meas_cond mc) {
++/* Read a keyword value as a complete finite number. Return nz if valid */
++int xspect_read_number(char *text, double *value) {
++	char *end;
++	errno = 0;
++	*value = strtod(text, &end);
++	if (end == text || errno == ERANGE)
++		return 0;
++	while (isspace((unsigned char)*end))
++		end++;
++	return *end == '\0' && *value >= -DBL_MAX && *value <= DBL_MAX;
++}
++
++/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+@@ -4070,0 +4086 @@ int read_cmf(xspect sp[3], char *fname) {
++static int getval_raw_xspec_lin_ex(xspect *sp, double *spec, double *rv, double wl);
+@@ -4084,0 +4101,3 @@ static int getval_raw_xspec_poly3_ex(xspect *sp, double *spec, double *rv, doubl
++	if (sp->spec_n < 4)		/* Too few points for a cubic */
++		return getval_raw_xspec_lin_ex(sp, spec, rv, xw);
++

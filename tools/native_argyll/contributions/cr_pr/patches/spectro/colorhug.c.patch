@@ -1,0 +1,10 @@
+--- a/spectro/colorhug.c
++++ b/spectro/colorhug.c
+@@ -294 +294 @@ static int buf2int_le(unsigned char *buf) {
+-	int val;
++	unsigned int val;
+@@ -299 +299,3 @@ static int buf2int_le(unsigned char *buf) {
+-	return val;
++	if (val <= 0x7fffffff)		/* Convert to signed without overflow */
++		return (int)val;
++	return -(int)(~val) - 1;

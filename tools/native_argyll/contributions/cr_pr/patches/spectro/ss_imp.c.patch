@@ -1,0 +1,29 @@
+--- a/spectro/ss_imp.c
++++ b/spectro/ss_imp.c
+@@ -303,2 +303,2 @@ int ss_sub_2(ss *p) {
+-int ss_sub_4(ss *p) {
+-	int rv;
++unsigned int ss_sub_4(ss *p) {
++	unsigned int rv;	/* Shift the wire bits without signed overflow. */
+@@ -308,8 +308,8 @@ int ss_sub_4(ss *p) {
+-	rv = (h2b(p, p->rbuf[0]) << 4)
+-	   | (h2b(p, p->rbuf[1]) << 0)
+-	   | (h2b(p, p->rbuf[2]) << 12)
+-	   | (h2b(p, p->rbuf[3]) << 8)
+-	   | (h2b(p, p->rbuf[4]) << 20)
+-	   | (h2b(p, p->rbuf[5]) << 16)
+-	   | (h2b(p, p->rbuf[6]) << 28)
+-	   | (h2b(p, p->rbuf[7]) << 24);
++	rv = ((unsigned int)h2b(p, p->rbuf[0]) << 4)
++	   | ((unsigned int)h2b(p, p->rbuf[1]) << 0)
++	   | ((unsigned int)h2b(p, p->rbuf[2]) << 12)
++	   | ((unsigned int)h2b(p, p->rbuf[3]) << 8)
++	   | ((unsigned int)h2b(p, p->rbuf[4]) << 20)
++	   | ((unsigned int)h2b(p, p->rbuf[5]) << 16)
++	   | ((unsigned int)h2b(p, p->rbuf[6]) << 28)
++	   | ((unsigned int)h2b(p, p->rbuf[7]) << 24);
+@@ -544,2 +544,2 @@ void ss_command(ss *p, double tmo) {
+-		  && p->rbuf[0] == 'A'
+-		  && p->rbuf[1] == '0') {	/* COMM Error */
++		  && p->rbuf[2] == 'A'
++		  && p->rbuf[3] == '0') {	/* COMM Error after the D1 prefix */

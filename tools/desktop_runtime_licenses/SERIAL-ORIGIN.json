@@ -1,0 +1,8 @@
+{
+  "component": "pyserial",
+  "version": "3.5",
+  "commit": "0e7634747568547b8a7f9fd0c48ed74f16af4b23",
+  "source_url": "https://raw.githubusercontent.com/pyserial/pyserial/0e7634747568547b8a7f9fd0c48ed74f16af4b23/LICENSE.txt",
+  "path": "PYSERIAL.txt",
+  "sha256": "f91cb9813de6a5b142b8f7f2dede630b5134160aedaeaf55f4d6a7e2593ca3f3"
+}

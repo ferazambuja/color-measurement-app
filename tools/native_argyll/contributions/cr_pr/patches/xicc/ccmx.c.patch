@@ -1,0 +1,17 @@
+--- a/xicc/ccmx.c
++++ b/xicc/ccmx.c
+@@ -33,0 +34 @@
++#include <limits.h>
+@@ -36,0 +38 @@
++#include "aconfig.h"
+@@ -43,0 +46 @@
++#include "xspect.h"
+@@ -261 +264,7 @@ cgats *icg			/* input cgats structure */
+-		p->cc_cbid = atoi(icg->t[0].kdata[ti]);
++		double kv;
++		if (!xspect_read_number(icg->t[0].kdata[ti], &kv)	/* 0 if not known */
++		 || !(kv >= 0.0 && kv <= INT_MAX) || floor(kv) != kv) {
++			sprintf(p->e.m, "read_ccmx: Input file has out of range DISPLAY_TYPE_BASE_ID");
++			return 1;
++		}
++		p->cc_cbid = (int)kv;

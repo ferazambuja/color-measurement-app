@@ -1,0 +1,14 @@
+--- a/spectro/afiles
++++ b/spectro/afiles
+@@ -97,0 +98,5 @@ smcube.h
++pr655.c
++pr655.h
++pr655_imp.c
++pr655_imp.h
++pr655.txt
+@@ -140,0 +146,5 @@ spotread.c
++cr250.c
++cr250.h
++cr250_imp.c
++cr250_imp.h
++cr250.txt

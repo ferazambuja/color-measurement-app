@@ -1,0 +1,23 @@
+--- a/spectro/huey.c
++++ b/spectro/huey.c
+@@ -291 +291 @@ static int buf2int(unsigned char *buf) {
+-	int val;
++	unsigned int val;
+@@ -296 +296,3 @@ static int buf2int(unsigned char *buf) {
+-	return val;
++	if (val <= 0x7fffffff)		/* Convert to signed without overflow */
++		return (int)val;
++	return -(int)(~val) - 1;
+@@ -359 +361,2 @@ huey_rdreg_word(
+-	int v, val;
++	int v;
++	unsigned int val;
+@@ -377 +380,4 @@ huey_rdreg_word(
+-	*outp = val;
++	if (val <= 0x7fffffff)		/* Convert to signed without overflow */
++		*outp = (int)val;
++	else
++		*outp = -(int)(~val) - 1;
+@@ -1246 +1252 @@ instClamping clamp) {		/* NZ if clamp XYZ/Lab to be +ve */
+-		val->mtype = inst_mrt_none;
++		val->mtype = inst_mrt_emission; /* CM: emission XYZ has luminance units. */

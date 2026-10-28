@@ -1,0 +1,999 @@
+{
+  "schema_version": 2,
+  "name": "cr-pr-drivers",
+  "description": "Portable Argyll repairs and experimental CR/PR drivers, contracts and synthetic tests from the reviewed composition.",
+  "base": {
+    "argyll_version": "3.5.0",
+    "archive_sha256": "f8576ce5589fd15620abb73ff049ea31f55ddbd1bba6d1ffa87452658e7bc85f"
+  },
+  "source_origin": {
+    "repository": "argyll-contributions",
+    "commit": "31f72ddc73ceefcfa5eb6ca863aa882aba6814ef",
+    "tree": "0bd751f3aaac0b721ab3c0b823ab2990a00f401c"
+  },
+  "instrument_types_added": [
+    "instCR250",
+    "instCR100",
+    "instCR300",
+    "instPR655",
+    "instPR670"
+  ],
+  "entries": [
+    {
+      "path": "spectro/cr250.c",
+      "operation": "add",
+      "source": "files/spectro/cr250.c",
+      "source_sha256": "60d97f725987cefd90f6a8fa53f78dbbc7378a726aeb10bcc54b5ece8794f5ed",
+      "post_sha256": "60d97f725987cefd90f6a8fa53f78dbbc7378a726aeb10bcc54b5ece8794f5ed",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250.h",
+      "operation": "add",
+      "source": "files/spectro/cr250.h",
+      "source_sha256": "ecfa3f22a317989ba210398e7c23bb1164e6fdd5ae213cbb0ccfdcafdc11f4e2",
+      "post_sha256": "ecfa3f22a317989ba210398e7c23bb1164e6fdd5ae213cbb0ccfdcafdc11f4e2",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_imp.c",
+      "operation": "add",
+      "source": "files/spectro/cr250_imp.c",
+      "source_sha256": "8d7894c8f337537926a1bd3259ac049d3cf8cd15caa3f44f59953c9deb68e13e",
+      "post_sha256": "8d7894c8f337537926a1bd3259ac049d3cf8cd15caa3f44f59953c9deb68e13e",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_imp.h",
+      "operation": "add",
+      "source": "files/spectro/cr250_imp.h",
+      "source_sha256": "ebde6d2632825bc60d5e6b7371406726176103597de3289ed6b2209a2d7b7d55",
+      "post_sha256": "ebde6d2632825bc60d5e6b7371406726176103597de3289ed6b2209a2d7b7d55",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250.txt",
+      "operation": "add",
+      "source": "files/spectro/cr250.txt",
+      "source_sha256": "b9f30e9b71138992227c70cc9c4f04b043142f54b3f57b21ecde492ef239d926",
+      "post_sha256": "b9f30e9b71138992227c70cc9c4f04b043142f54b3f57b21ecde492ef239d926",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_test.c",
+      "operation": "add",
+      "source": "files/spectro/cr250_test.c",
+      "source_sha256": "2fe0efacd47c1a63ea21b7d6b0be1e18dfdc415c45024a679ab08ffbda685774",
+      "post_sha256": "2fe0efacd47c1a63ea21b7d6b0be1e18dfdc415c45024a679ab08ffbda685774",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_test.ksh",
+      "operation": "add",
+      "source": "files/spectro/cr250_test.ksh",
+      "source_sha256": "54ff87295a39c9051ecf306da1171e78a16973948043769592be8728372282c2",
+      "post_sha256": "54ff87295a39c9051ecf306da1171e78a16973948043769592be8728372282c2",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_driver_test.c",
+      "operation": "add",
+      "source": "files/spectro/cr250_driver_test.c",
+      "source_sha256": "8309a3aeb1251cb06392b8296468abdc4d7574719e8c22473e4b4e6f57002b04",
+      "post_sha256": "8309a3aeb1251cb06392b8296468abdc4d7574719e8c22473e4b4e6f57002b04",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_driver_test.py",
+      "operation": "add",
+      "source": "files/spectro/cr250_driver_test.py",
+      "source_sha256": "44071dec95b4e859e103c018f36e8224715c69885b1237f20aeda0b6498c4b62",
+      "post_sha256": "44071dec95b4e859e103c018f36e8224715c69885b1237f20aeda0b6498c4b62",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_fake.h",
+      "operation": "add",
+      "source": "files/spectro/cr250_fake.h",
+      "source_sha256": "b5036193f687c9b4bef21f892bb70ced2e4a6a1e4e281fb9f301777a3997184c",
+      "post_sha256": "b5036193f687c9b4bef21f892bb70ced2e4a6a1e4e281fb9f301777a3997184c",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_fake.c",
+      "operation": "add",
+      "source": "files/spectro/cr250_fake.c",
+      "source_sha256": "6cc34433d4a9cdfcfa4ca0d2462a3b89c8be11419196d6848d42031a05dcc04d",
+      "post_sha256": "6cc34433d4a9cdfcfa4ca0d2462a3b89c8be11419196d6848d42031a05dcc04d",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/insttypes.h",
+      "operation": "modify",
+      "source": "patches/spectro/insttypes.h.patch",
+      "source_sha256": "a295495562ab70fb71c8d6c97fd69363c380154e8f10673b55456c66e91a7a3f",
+      "pre_sha256": "89a7c677e894a0659d35f86e50d751f6fdd3b370e1e7db7b7ccb9adb8c2974a4",
+      "post_sha256": "62ea894cab2719f1b67ce421f6c2b2823f5e926806d12b77a697a912284a0146",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/insttypes.c",
+      "operation": "modify",
+      "source": "patches/spectro/insttypes.c.patch",
+      "source_sha256": "fef630783f05c09a345aafedac33bd5f32b5e9c97ebe40e8aaf27d3cb53df92d",
+      "pre_sha256": "c6a7645a3e0f3b22a57ffe9e06f3a2b17cceb28d42173a65510defd5f45dca2f",
+      "post_sha256": "d9ba333f837de19edab534a94282f3833f379608210d235896ce295d4afa0a20",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/insttypeinst.h",
+      "operation": "modify",
+      "source": "patches/spectro/insttypeinst.h.patch",
+      "source_sha256": "d54fbe751c76afab30cbaecb7d59fe63df5c55bb3775399a104d8d23ff2bfd01",
+      "pre_sha256": "3f11fa767758213acf0fe81c495b3611ffbd07f158bca4da10511ab6f157ed7d",
+      "post_sha256": "e6125ee08e6719b0ff29c9d91bbcc8a9811971ca328a24cf90959861752af942",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/inst.c",
+      "operation": "modify",
+      "source": "patches/spectro/inst.c.patch",
+      "source_sha256": "09cc5acae4857379cca052d7272c8dc390786e72130efaf55f4d1af152aad072",
+      "pre_sha256": "5c57222a05ce6dc574789cced23dfa478f9d6099b12bad286c8e4b0aa77d9fbc",
+      "post_sha256": "878cab4dd7e39a68307c2f1874f07d3df447926cf954a3bb77093cc16d821e72",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/Jamfile",
+      "operation": "modify",
+      "source": "patches/spectro/Jamfile.patch",
+      "source_sha256": "1ce9fc5221a1a46167c29a7435c07c080650f4456f4f22848d02312f898543a6",
+      "pre_sha256": "a1c2da5dee92da2112d55ada087118426ab4b4c034930e66f58acf59ed511b44",
+      "post_sha256": "f62dcfa6b64da28919b550a96e37ee27b04059d41e2298fff23e3ff50aa1bd9f",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/Jamfile.SA",
+      "operation": "modify",
+      "source": "patches/spectro/Jamfile.SA.patch",
+      "source_sha256": "99a5e965cf26d855ffd4c77cb532ae7a28219fcd9d9ad756834595a01ff237c3",
+      "pre_sha256": "a036d6f3c4dd80790839d6d67ee581759e0e85ac4c0a9701f4ad2dff402dd6ef",
+      "post_sha256": "3abfe4148cdcbb0dc4c23f449f69e0aea41586e8382e0d0b8b558a52797369ef",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/Makefile.SA",
+      "operation": "modify",
+      "source": "patches/spectro/Makefile.SA.patch",
+      "source_sha256": "6adf277c452de759c461fa3f6a17db3c5e1aaa9f7b4017a260b3dc872f8b2853",
+      "pre_sha256": "f3c8fcde8b2a45db1969ca6fcebc2e558f079a92d9ef0451d61cf83afcb1f7c1",
+      "post_sha256": "ac166ae6ada9c98217815a7b60e2715febaa9bb32cdd1260772141571162fe16",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/instlib.ksh",
+      "operation": "modify",
+      "source": "patches/spectro/instlib.ksh.patch",
+      "source_sha256": "c249384b1ffc9ed9ecf24ce8e14d59ce1ebb107036c302985c46fe8d824a3229",
+      "pre_sha256": "a1a8c8f176a8fd97cb1977b2c55316dc847f78fdda2017055643ef53d8711fc4",
+      "post_sha256": "c7b7193fd72fd968a47f237a35b6c281d3d21bae282528b14353c520a70a9046",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/afiles",
+      "operation": "modify",
+      "source": "patches/spectro/afiles.patch",
+      "source_sha256": "805881b5c1947d58b7a47cc21ce644fba167cb6a8233060897dcb82876a0abe8",
+      "pre_sha256": "9248bef8f0b2b094e0831ea10e22a08fe311956017c7ffd175b468a430269dae",
+      "post_sha256": "64ac2ed9ec52f3b2d2a1d28cdb40dead5ee6a25dd90d083e229549e9c06e37e0",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/pr655.c",
+      "operation": "add",
+      "source": "files/spectro/pr655.c",
+      "source_sha256": "a09b90abec08418a76d725e1387cd9d32370ba4cac2ebc6aec007b61c2206a1f",
+      "post_sha256": "a09b90abec08418a76d725e1387cd9d32370ba4cac2ebc6aec007b61c2206a1f",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655.h",
+      "operation": "add",
+      "source": "files/spectro/pr655.h",
+      "source_sha256": "34bfc75cdaf8e3f210d06e81bb05f01353789e485adc982b6c92ca5ca588c901",
+      "post_sha256": "34bfc75cdaf8e3f210d06e81bb05f01353789e485adc982b6c92ca5ca588c901",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655_imp.c",
+      "operation": "add",
+      "source": "files/spectro/pr655_imp.c",
+      "source_sha256": "c2be10fbbe7e6cc73b506fab979ec57b198c6177d89c3df28dbd4b25b80b1296",
+      "post_sha256": "c2be10fbbe7e6cc73b506fab979ec57b198c6177d89c3df28dbd4b25b80b1296",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655_imp.h",
+      "operation": "add",
+      "source": "files/spectro/pr655_imp.h",
+      "source_sha256": "48dcb428fd637745994969300b2f30ae46d93b7f0558bcdb127c4eae2c312d26",
+      "post_sha256": "48dcb428fd637745994969300b2f30ae46d93b7f0558bcdb127c4eae2c312d26",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655.txt",
+      "operation": "add",
+      "source": "files/spectro/pr655.txt",
+      "source_sha256": "1b9b948f300f12c3f2ccfda97ac8950db96ebbe89f8afae4801051d75968160a",
+      "post_sha256": "1b9b948f300f12c3f2ccfda97ac8950db96ebbe89f8afae4801051d75968160a",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655_test.c",
+      "operation": "add",
+      "source": "files/spectro/pr655_test.c",
+      "source_sha256": "e0d0ef063af9f26ceb5afb77aacce5b6ed8c17e88236be0c9b0bc1b6d545c1d4",
+      "post_sha256": "e0d0ef063af9f26ceb5afb77aacce5b6ed8c17e88236be0c9b0bc1b6d545c1d4",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655_test.ksh",
+      "operation": "add",
+      "source": "files/spectro/pr655_test.ksh",
+      "source_sha256": "4f13c09d04e3281c7a987dc98f2db3b6b53656e38a939b87685224261c6fd1d6",
+      "post_sha256": "4f13c09d04e3281c7a987dc98f2db3b6b53656e38a939b87685224261c6fd1d6",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655_driver_test.c",
+      "operation": "add",
+      "source": "files/spectro/pr655_driver_test.c",
+      "source_sha256": "d67ee68ca14dc331e3a09966bfc9133dcfd5fb56df6fcfd5f5313b90b6fc8ff7",
+      "post_sha256": "d67ee68ca14dc331e3a09966bfc9133dcfd5fb56df6fcfd5f5313b90b6fc8ff7",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655_driver_test.py",
+      "operation": "add",
+      "source": "files/spectro/pr655_driver_test.py",
+      "source_sha256": "2a3d735f8a52367c669ca5ae10b20e7cd73130138d99e46e6b2e657a0b5a4393",
+      "post_sha256": "2a3d735f8a52367c669ca5ae10b20e7cd73130138d99e46e6b2e657a0b5a4393",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/sa_conv.h",
+      "operation": "modify",
+      "source": "patches/spectro/sa_conv.h.patch",
+      "source_sha256": "50c4b4121f5c0413421e834b02a68c0ad29c578a89f314ada5c9ff813aecfa17",
+      "pre_sha256": "b8a46e5797f3a2cf0cc22a53aa3772f535eaf588c6ba9ebd09c9f6baccbaa203",
+      "post_sha256": "510d2e27e671a37e1c4cbfdef7de87959a2141e72569265b42bda258d252cb10",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/spotread.c",
+      "operation": "modify",
+      "source": "patches/spectro/spotread.c.patch",
+      "source_sha256": "2ca87e1b4f4baa88a5a3da3baf257052078610ccbf263d002129d877e045aa22",
+      "pre_sha256": "f903bd8cf3cfb9b7eb1c31ea413859f064a346c8567f4321fc3dabd69ba91d24",
+      "post_sha256": "79b1aaa23e3e33c837493eb6ed0410873cfa691e81dfa416a8aa89398cd04498",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/spydX2.h",
+      "operation": "modify",
+      "source": "patches/spectro/spydX2.h.patch",
+      "source_sha256": "5ae2446581901c6b6e2f7e21542107ded02c440a68cc9ea340808d87098747b6",
+      "pre_sha256": "8a6732a325c6a16c7b0a6644cfc83225bbdd3da84c9f51b38a0f5844f55289e6",
+      "post_sha256": "973f40b6edbd56900b737e45c14c8114d96a781c763b3085573841fbc8b69150",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "repair": "spyder-calibration-slots",
+        "basis": "Retained upstream notices; calibration-array capacity matches the advertised native indices."
+      }
+    },
+    {
+      "path": "cgats/cgats.c",
+      "operation": "modify",
+      "source": "patches/cgats/cgats.c.patch",
+      "source_sha256": "42672659b09602be505308ebce64408dcbf9a75658abcfcea023ad1f976fdddf",
+      "pre_sha256": "71ab80027ca714868b4c3ac755a217de28be91191d39c3e86b6c2f475c3f1c53",
+      "post_sha256": "2dd4c2ed045e76c9d4db0155615d42f2fce46d5492a9eb37820ffb4731468b1e",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "numlib/numsup.c",
+      "operation": "modify",
+      "source": "patches/numlib/numsup.c.patch",
+      "source_sha256": "bf82e7ba81a6dffcab959ebe4f5029cb295e9e1cfdf2c921d77c8d7cf9e93f00",
+      "pre_sha256": "cf361c4acf302de8ab112f5da90e62943ffa5ff664fbe2eae4646f438a49e4f5",
+      "post_sha256": "b378aef7fc3231c824c49bb514fd1ca869de436ab330ee753fc03279934b38ac",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/colorhug.c",
+      "operation": "modify",
+      "source": "patches/spectro/colorhug.c.patch",
+      "source_sha256": "5988cd0642b80fad98d28c2b3e1019441dee768225e1145f11c7b30923d9c2df",
+      "pre_sha256": "e0e9f66251fbdf007464ceebc5739d8b4d86920daf547c7a2f74bd29de17f581",
+      "post_sha256": "a5c4d909076522a095c5d51649fd9f4ee3adc28f34a013a71784f353e8433a8f",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/dtp20.c",
+      "operation": "modify",
+      "source": "patches/spectro/dtp20.c.patch",
+      "source_sha256": "e5ada5f87c4e9b5be67f364e671b7d669a5772dc3c34dcfaf07ab35660a9d568",
+      "pre_sha256": "e2f15f0814b37aec262d3a818598386d2fa72568e612fad7e15ffb2a840a5bb6",
+      "post_sha256": "62ac68b0c6932ecc3ccfb2fe17475439a6bc03740d7adc0eb9cf1ef8d4c4e652",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/dtp22.c",
+      "operation": "modify",
+      "source": "patches/spectro/dtp22.c.patch",
+      "source_sha256": "046e61a75412617e61f61b7156ac6c6da1b69f155b1abe1f77b7f4b5850ad806",
+      "pre_sha256": "6abedc3c8dad7f44757f9479feec6a4ee6524e41f4cc88369b0f36b6b1624746",
+      "post_sha256": "c3b428fa905cc11896d470255b396063d83e1bb8a527fb5c946b0719280f3734",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/dtp41.c",
+      "operation": "modify",
+      "source": "patches/spectro/dtp41.c.patch",
+      "source_sha256": "61b98e543885d1fcf061db039509e96db8848d7c3ddd3658d2b3ad9ea1825ba0",
+      "pre_sha256": "7de062ca76cc153de32b8fff0c031d12fd9f7918882993a201ae72b740c4220e",
+      "post_sha256": "b778b47184f387dfa56292210600b0b270eb57a89867d5555478ef7a7f10d2f4",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/dtp51.c",
+      "operation": "modify",
+      "source": "patches/spectro/dtp51.c.patch",
+      "source_sha256": "e7415a74ae3f220407349a9cee7a47d89644bd0750cf9b166733f058b11dfc55",
+      "pre_sha256": "a938a8c294849ea6096f8fc8262b5d11df14a2fb0896e34ca179cc491e5c9c5d",
+      "post_sha256": "af0e31699a41a9b5f95fbc80f14faf4144d45df4cba8802666d44a7bc5fa2d9c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/dtp92.c",
+      "operation": "modify",
+      "source": "patches/spectro/dtp92.c.patch",
+      "source_sha256": "7352bbdee88af7901b8c48e376a6b723bf4d743d67b5c6995a16bce417b69a3e",
+      "pre_sha256": "d717cbd8af5fbd2d3d1954cd95ae4825749ac11e7a0dc6dd1a2df1bd607b1456",
+      "post_sha256": "b76bd8bec8170540de1c4b0aa8c4c0d838f7901a95a547b0e5aef074f24b87f7",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/ex1.c",
+      "operation": "modify",
+      "source": "patches/spectro/ex1.c.patch",
+      "source_sha256": "22d463a6cf19be1724b89fb5abc91a23fcfbf5884a37711a7a75f0c4997cf03f",
+      "pre_sha256": "b440a4723cf72c9ec13296533bee339bfecd600e48bf6e65470cf478465c561f",
+      "post_sha256": "32c9333aa51438e59d543d9f053d4fecaa9220d197b691baef66167f5f16e488",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/huey.c",
+      "operation": "modify",
+      "source": "patches/spectro/huey.c.patch",
+      "source_sha256": "16e9b16b7dcddef8275e697e02b56e2212cf2b2702145cfd708912df9bdb94b2",
+      "pre_sha256": "853ef8bcf7b432fd81f11df982d2ee7c8f20649d2438870065a5707262f15353",
+      "post_sha256": "10519cb73753abeff32de6f51448cf64435b765b8dfd134dbc2291fe1d7288fe",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/i1d3.c",
+      "operation": "modify",
+      "source": "patches/spectro/i1d3.c.patch",
+      "source_sha256": "4051d02cbdc1e5b6c3010592d7503229fa65865ebebe99249839e56c1d34a087",
+      "pre_sha256": "65839017319d335ae4de270fd9c882ca0d504afe4863f5cd72cf08df5d0c1a6a",
+      "post_sha256": "4d421eb0a00c19ba6284a1f266e68cd846b8ec888b28bdc24bb88ca2be876e43",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/i1disp.c",
+      "operation": "modify",
+      "source": "patches/spectro/i1disp.c.patch",
+      "source_sha256": "130cfef12a105552f00342f40b7cdf619e335f7846bc8560aac9e9f0593cb269",
+      "pre_sha256": "5363429e9e0b56383d922e3d5e11e6ddd4212f84358d9d7690fa532445e090d2",
+      "post_sha256": "36f5934751ba4ad0fbf247d916cde7539a870dd64671a77b60dfb7d9a91b1471",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/i1pro.c",
+      "operation": "modify",
+      "source": "patches/spectro/i1pro.c.patch",
+      "source_sha256": "953bc7b44e16000bcd70ba3d6b9f908090806dbf39735a5af94b5cab60e381c8",
+      "pre_sha256": "ac75b6e3f47537b87ba7ae2b84a5cfdd84047413bdf0235114d4a489562a0bc5",
+      "post_sha256": "16abcefa886071f0a43283335469e5823f79394c403f93df5183bb624b8be1c0",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/i1pro3.c",
+      "operation": "modify",
+      "source": "patches/spectro/i1pro3.c.patch",
+      "source_sha256": "0da6088387d23903593b774ffd5392d57b864389111487568962eca5fe24a67e",
+      "pre_sha256": "9c4b1ac9f8af507a2f79de12e51ee89c090ad4d2d0e5557544bc37467c0c535c",
+      "post_sha256": "9651d9d79c04b8ca3f2978e12e3c1ccff5f970bc779efc3dd25701570c6388a1",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/i1pro3_imp.c",
+      "operation": "modify",
+      "source": "patches/spectro/i1pro3_imp.c.patch",
+      "source_sha256": "48d3173a3ffd5f716a29292fc9fcfdfc62624a747e9f3bfcfaf3cb2c24d0d5f2",
+      "pre_sha256": "42c684afa3bbb15dbbb880820c55a17f32d79ceaa7f8cbcf07cddaf3f2073e32",
+      "post_sha256": "06a0c341633616e7cb91f486f4a19aa8bb612e6390d5fda77bdc435b2d5d1c58",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/i1pro_imp.c",
+      "operation": "modify",
+      "source": "patches/spectro/i1pro_imp.c.patch",
+      "source_sha256": "32e1bfe92f9aca18259064d69ac8eea729917a17c10fe3fdf09c74e3dd158b9a",
+      "pre_sha256": "8b8516cdd89e21de7ded3d58e1b03663c9908a343c82d393fedf9d1960ee6de6",
+      "post_sha256": "2b0af748d81a5e4a98b8299e3e6b67118ea928776e3ae50e81ef6595ca50b6a1",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/inst.h",
+      "operation": "modify",
+      "source": "patches/spectro/inst.h.patch",
+      "source_sha256": "6ce4f90c9b8e6e62fa89dee78589ef55255b7a013c03e52ac9bd760a779a5a43",
+      "pre_sha256": "8f0c69beee979a003464707e53a9fe73f6c2f7bc03d444f7e4dd8588ab124c8a",
+      "post_sha256": "1677e2ec67042a5b08f4c833a603c126e5a440d73b1f048d395bae68f47b4403",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/kleink10.c",
+      "operation": "modify",
+      "source": "patches/spectro/kleink10.c.patch",
+      "source_sha256": "b024226fdbda1b590a72c5b678554ff3738906b72c6e69f99770048d9d9efbe2",
+      "pre_sha256": "aa0c3d46052800c6d92e3123767dbb56196c2987fc18fdce290520d9b56a11a3",
+      "post_sha256": "87555478e79f0ed9110df317277f9161eb5bae01a8b88b3078597ae0834ae022",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/munki.c",
+      "operation": "modify",
+      "source": "patches/spectro/munki.c.patch",
+      "source_sha256": "2a1f0fa62651b2a687b12af88b8990d9e304509ba094835a351a183bccb24ee5",
+      "pre_sha256": "775ba17c71e42d9c931a91d4e66965a7077ce5c7a6b3edb845dcbbf5b3cecad6",
+      "post_sha256": "14e1e14a18c9800793be47e7cd7e47513d6dcdcce1fd4a8514357e594256dcc6",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/munki_imp.c",
+      "operation": "modify",
+      "source": "patches/spectro/munki_imp.c.patch",
+      "source_sha256": "6d6f7a63b94b1f648bb87f2eb95226d2fbea6526331fec1378a661c92d4baf68",
+      "pre_sha256": "1086372fd9cfbd4229b0affc04337a10ce81bf1e139faa46df4cb5030d984ebe",
+      "post_sha256": "b28da84fbbaa37cc6526b8f0c551aacef7c887c6705f5764a673ac70f7fcf0b9",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/munki_imp.h",
+      "operation": "modify",
+      "source": "patches/spectro/munki_imp.h.patch",
+      "source_sha256": "964d4055030871c7c2ef7d99994a68f51e4fba356b0d8d6ffffa5d65aeb7f152",
+      "pre_sha256": "8901bd6bb0649edaaa02acf7fea9e3b852a221a74a2cdaff9a0ad3bdb776b5da",
+      "post_sha256": "117df3186c17450772d55cccdaa9d8add1957e7e451023ba095ba601809a11ad",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/rspec.c",
+      "operation": "modify",
+      "source": "patches/spectro/rspec.c.patch",
+      "source_sha256": "7bb7783207f5f36fc2e44a5d34a67e65df4a301840c6ccf5bd84def3a2654c75",
+      "pre_sha256": "05adc19bb0df58a7e0d216e819958e301882677124661ee6a91d4048820825da",
+      "post_sha256": "69cc54ecd38e5d645f924eb6a6f2cff7da3f3e6fa79c3d49bf75eed369e5d8f5",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/sa_conv.c",
+      "operation": "modify",
+      "source": "patches/spectro/sa_conv.c.patch",
+      "source_sha256": "6177f3cbfbd40b95b6d8df1fe3a626bf673f8bccb9a87ecbaebcb967272f8437",
+      "pre_sha256": "a1042fec995dd14bfe8ce3481210d6823510934dc60872cbfa7a1c819c473be7",
+      "post_sha256": "b754424d70988e33a1735b9945289b26df2be128b34a6f09f5a3efd5bb4d4bed",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/smcube.c",
+      "operation": "modify",
+      "source": "patches/spectro/smcube.c.patch",
+      "source_sha256": "a27672227d0fdb13ad3f7883beb594c79949e710870437f6c541c9fbb2fea6d6",
+      "pre_sha256": "b52bb0c8bfcb98bcc56cebb5b3de420ae89a18dbc4d8ffbe70f879625944f5c0",
+      "post_sha256": "c3a9711b943a7095a123f8eb318e19e62752bd1597b336102316357bf2aa8312",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/specbos.c",
+      "operation": "modify",
+      "source": "patches/spectro/specbos.c.patch",
+      "source_sha256": "c2d6dd2574332c5a4d8131c1bad5f7a0414cccb898745825a24e6b87386ceac2",
+      "pre_sha256": "c7e17ec2634d257385ce1b5075b579ed735264fba21e745d7d2d354590f33438",
+      "post_sha256": "2b62c76050d43c711398bca6dbad9545d096fa88fc36b372a38ee7f813ccd2d3",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/spyd2.c",
+      "operation": "modify",
+      "source": "patches/spectro/spyd2.c.patch",
+      "source_sha256": "25b87fc6ceacab9bcef2beae402f1b7752f10bfab0c5c54280a9f64cf1957042",
+      "pre_sha256": "2e2db1744774740436071a4806ab1142e064b0cf8f7332f8b5b38ee3252a025a",
+      "post_sha256": "a6ef6bb39d03d0a391525522a9cd4646ae4cde11af6b9e268780c9c140ec2191",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/spydX.c",
+      "operation": "modify",
+      "source": "patches/spectro/spydX.c.patch",
+      "source_sha256": "4ac71226a7cb959566e0d467d188456adfd4e24bc1bfe6a1f772759543bc3f97",
+      "pre_sha256": "21c52591efbd0b92e725128897ae6a349f5f298582d51658c7d5bed7ca867177",
+      "post_sha256": "870e46d975095f24ec3b1d136befe34a52479bbbe15557b44c8656e856677052",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/spydX2.c",
+      "operation": "modify",
+      "source": "patches/spectro/spydX2.c.patch",
+      "source_sha256": "20d3a0983e65fa74cc9177e722c1966f75c6ccb127b05883949a2c661f01f024",
+      "pre_sha256": "0605716f89cdd2986a342245c1e60e901314306cde6dcf63cd0dfb4d37113668",
+      "post_sha256": "cf86dffd0b76e768c48094aa4f5276406cf19f0ac093c0b42116679b75af19d4",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/ss.c",
+      "operation": "modify",
+      "source": "patches/spectro/ss.c.patch",
+      "source_sha256": "32e1f30c1aa3ef38b7d3a4d0ee650a0987397dd508cb6c05b009b6b5b2c2459d",
+      "pre_sha256": "594dfa78d9611dc2bc26496f775f854813a8bc77fd966ecaf746bb07433a6642",
+      "post_sha256": "5dd7734f9a65eb94f8f28d32a4489f90293c8a131070a8efd47bbd2795428d8a",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/ss_imp.c",
+      "operation": "modify",
+      "source": "patches/spectro/ss_imp.c.patch",
+      "source_sha256": "6e6f82166fcd4db9aaaa41726d2ce5eb9c61b5e675247ba244d265a6a81cb17b",
+      "pre_sha256": "22533a5cadbc2bce29aed1aacef671548f8d1dfb8e9d53a12f8acd0a70734fdb",
+      "post_sha256": "4c907899d1f8c044be46aa4ace2a2457c2a6e662df1af436dd92d309a639813c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/ss_imp.h",
+      "operation": "modify",
+      "source": "patches/spectro/ss_imp.h.patch",
+      "source_sha256": "17fc1c9e72ee58261dff297afad6a473261a0c714b73449ef7ab53df59b49023",
+      "pre_sha256": "9860268d0a59c798e758a0d43b22f8c4d3d19a73727d88140804de84dd4c258d",
+      "post_sha256": "7f92ffd8ccab8c21dd478a99e68ac5382ea48990028a304c718874b5d34d3654",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/xrga.c",
+      "operation": "modify",
+      "source": "patches/spectro/xrga.c.patch",
+      "source_sha256": "c4de23c3c76cc86625d14585243b93fcbc464671fea5558d4b82266fdd340ba1",
+      "pre_sha256": "088ec6bdfb88d651c9b2810c8a9157e176a12115b0030c717b2e0fc93d13956b",
+      "post_sha256": "6684e494652c78905a4c94eaee41497ed6e1b8b7da96552aa2a88fac41ed01b3",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/xrga.h",
+      "operation": "modify",
+      "source": "patches/spectro/xrga.h.patch",
+      "source_sha256": "1dd7a25c99a685f9b623baa2e08845b8c10f30af7cfd6047b69ece14bc149a15",
+      "pre_sha256": "b315a13a2066a30138e4add92b1380ed6418ee2e8d26f4857d54fcaa7e1e520c",
+      "post_sha256": "45db94f99f66fc97cd1aa2c597ce86cfd98c027b2dbd1acc3a078a2c4e024cc4",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "xicc/ccmx.c",
+      "operation": "modify",
+      "source": "patches/xicc/ccmx.c.patch",
+      "source_sha256": "49e88f8fb81a0d65ad87bdbd811b9bd7beedbb621e6dfa1e59f76d12e4127f62",
+      "pre_sha256": "efacd1f04ba9e524287532db984222de7b2f34537ef4583931615fa303b9725d",
+      "post_sha256": "8b1ea9860d8fa0efa25c05ed31dcf07cb22a4245827bd0ba4b77b0ef538fbf1d",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "xicc/ccss.c",
+      "operation": "modify",
+      "source": "patches/xicc/ccss.c.patch",
+      "source_sha256": "e17184be6d82533018dc5b44b3ff387d726edbd0bc209ef3a0a3b63d533a801b",
+      "pre_sha256": "9d14e965c1ca61d8fde62b931f624261dffb069d3a9341d102cc8ae0b04607ef",
+      "post_sha256": "c16f248e60920c514029ced871a440614e275d44128540a6ca3ffbc06274e76a",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "xicc/xspect.c",
+      "operation": "modify",
+      "source": "patches/xicc/xspect.c.patch",
+      "source_sha256": "8d05724e7de31bedb3da39a4d798b56e619d1e1a76c9b9fc25424025098ffe8d",
+      "pre_sha256": "ec494fe4a87f3498c95692b2339824d952beebe2fbf67f2a8c7d92051dbab0c5",
+      "post_sha256": "401b82c9771298d1a67c2a4a6d415473a25a4d79afc37ae59960923e3b1cd130",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "xicc/xspect.h",
+      "operation": "modify",
+      "source": "patches/xicc/xspect.h.patch",
+      "source_sha256": "8443524318bf15c6338e225d7525882dd23dd6448cebf5aa6d241c9b294896d0",
+      "pre_sha256": "10d1adf61cd5e247d39d14e40b0ccab31527ff0bb91c0506bc1bf18fd9c2612f",
+      "post_sha256": "42d41b2cf95398fcaa7e8306ebe7490603e63d85a0b8297c111c3a1aa3ee23d5",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "producer_source_sha256": "af979a051732a1c08f5f937f2a0cbdccbb363ad8b1c8dd7a24ce12d63a2ebfca",
+  "destination_binding": "The receipt destination is reduced to its basename, and tests bind it to their temporary directory; the producing commit identifier is omitted. Payload and all ownership/digest fields are unchanged.",
+  "snapshot": {
+    "schema_version": 2,
+    "owner_id": "stable-segment",
+    "source_id": "authoritative-source",
+    "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "records": [
+      {
+        "id": "original-1",
+        "name": "Name \"\u6e2c\u5b9a\"\nline",
+        "notes": "annotation\r\n\u2600",
+        "provenance": "simulated",
+        "kind": "color",
+        "xyz": {
+          "values": [
+            -2,
+            0,
+            101.5
+          ],
+          "unit": "1",
+          "scale": "relative; perfect-diffuser Y=100",
+          "observer": "CIE1931_2",
+          "illuminant": "D50",
+          "origin": "native",
+          "method": "native XYZ"
+        },
+        "spectrum": {
+          "wavelengths_nm": [
+            400.5,
+            410.5,
+            420.5,
+            430.5
+          ],
+          "values": [
+            -1,
+            0,
+            101,
+            50
+          ],
+          "quantity": "reflectance",
+          "unit": "%"
+        },
+        "context": {
+          "route": "demo",
+          "material": {
+            "mode": "reflective_spot_m2"
+          },
+          "provenance": {
+            "raw": "response",
+            "timestamp": "old"
+          }
+        }
+      }
+    ],
+    "charts": []
+  },
+  "receipt": {
+    "files": [
+      {
+        "chart_id": null,
+        "group_id": "e397718306076c8f9ddeeacb1a0b944874ec8543333c8fd22e58e8f762a496b1",
+        "path": "measurements-simulated-e397718306076c8f9ddeeacb1a0b944874ec8543333c8fd22e58e8f762a496b1.ti3",
+        "payload_sha256": "a8551d2712d12f790a2a4732abe8b7a72ce017650e0182bebcd93c739f1a0bb0",
+        "provenance": "simulated",
+        "reason": "",
+        "row_count": 1,
+        "row_ids": [
+          "original-1"
+        ],
+        "scope": "ordinary",
+        "snapshot_id": "1d0670b97a9e509ac270f3db1003e6ef05c2a53b2ba1518cad7e6e470253ef82",
+        "state": "current",
+        "target_path": null,
+        "target_sha256": null,
+        "total_rows": null
+      }
+    ],
+    "owner_id": "stable-segment",
+    "retryable": false,
+    "schema_version": 2,
+    "snapshot_id": "1d0670b97a9e509ac270f3db1003e6ef05c2a53b2ba1518cad7e6e470253ef82",
+    "source_id": "authoritative-source",
+    "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "status": "current",
+    "unavailable": []
+  }
+}

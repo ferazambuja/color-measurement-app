@@ -1,0 +1,55 @@
+--- a/spectro/ss.c
++++ b/spectro/ss.c
+@@ -813 +813 @@ ipatch *vals) { 		/* Pointer to array of values */
+-						if (try < notries) {
++						if (try + 1 < notries) {
+@@ -837 +837 @@ ipatch *vals) { 		/* Pointer to array of values */
+-						if (try < notries) {
++						if (try + 1 < notries) {
+@@ -866 +866,3 @@ ipatch *vals) { 		/* Pointer to array of values */
+-							if (try < notries) {
++							if (rv == inst_ok)
++								rv = inst_wrong_setup | ss_et_NoValidMeas;
++							if (try + 1 < notries) {
+@@ -879,0 +882,12 @@ ipatch *vals) { 		/* Pointer to array of values */
++					/* X-Y is reflective (ss_determine_capabilities).
++					 * Preserve the condition policy of ss_read_sample before XRGA. */
++					vals[patch].mtype = inst_mrt_reflective;
++					if (p->filt == ss_aft_PolFilter)
++						vals[patch].mcond = inst_mrc_pol;
++					else if (p->filt == ss_aft_D65Filter)
++						vals[patch].mcond = inst_mrc_D65;
++					else if (p->filt == ss_aft_UVCutFilter)
++						vals[patch].mcond = inst_mrc_uvcut;
++					else if (p->filt == ss_aft_CustomFilter)
++						vals[patch].mcond = inst_mrc_custom;
++
+@@ -903 +917 @@ ipatch *vals) { 		/* Pointer to array of values */
+-	ipatch_convert_xrga(vals, npatch, 
++	if (ipatch_convert_xrga(vals, npatch, 
+@@ -905 +919,2 @@ ipatch *vals) { 		/* Pointer to array of values */
+-	                   p->target_calstd, p->native_calstd, instClamp);
++	                   p->target_calstd, p->native_calstd, instClamp) != 0)
++		return inst_internal_error;
+@@ -908,2 +923,3 @@ ipatch *vals) { 		/* Pointer to array of values */
+-	if (p->custfilt_en)
+-		ipatch_convert_custom_filter(vals, npatch, &p->custfilt, instClamp);
++	if (p->custfilt_en &&
++	    ipatch_convert_custom_filter(vals, npatch, &p->custfilt, instClamp) != 0)
++		return inst_internal_error;
+@@ -1316 +1332 @@ instClamping clamp) {		/* NZ if clamp XYZ/Lab to be +ve */
+-	ipatch_convert_xrga(val, 1, 
++	if (ipatch_convert_xrga(val, 1, 
+@@ -1318 +1334,2 @@ instClamping clamp) {		/* NZ if clamp XYZ/Lab to be +ve */
+-	                   p->target_calstd, p->native_calstd, clamp);
++	                   p->target_calstd, p->native_calstd, clamp) != 0)
++		return inst_internal_error;
+@@ -1952,0 +1970,2 @@ ss_get_set_opt(inst *pp, inst_opt_type m, ...) {
++		} else if (!inst_valid_custom_filter(sp)) {
++			return inst_bad_parameter;	/* Not evaluable by the interpolators */
+@@ -1967,0 +1987,5 @@ ss_get_set_opt(inst *pp, inst_opt_type m, ...) {
++		/* The target is a conversion-table index, or native for no conversion. */
++		if (standard != xcalstd_native && standard != xcalstd_xrdi
++		 && standard != xcalstd_gmdi && standard != xcalstd_xrga)
++			return inst_bad_parameter;
++

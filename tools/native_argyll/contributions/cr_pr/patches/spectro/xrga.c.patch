@@ -1,0 +1,31 @@
+--- a/spectro/xrga.c
++++ b/spectro/xrga.c
+@@ -184 +184 @@ void xspec_convert_xrga(xspect *dst, xspect *srcp, xcalpol pol, xcalstd dsp, xca
+-void ipatch_convert_xrga(ipatch *vals, int nvals,
++int ipatch_convert_xrga(ipatch *vals, int nvals,
+@@ -194 +194 @@ void ipatch_convert_xrga(ipatch *vals, int nvals,
+-		return;
++		return 0;
+@@ -198,0 +199,15 @@ void ipatch_convert_xrga(ipatch *vals, int nvals,
++	/* Create the XYZ converter before modifying any patch. */
++	for (i = 0; i < nvals; i++) {
++		if (vals[i].mtype != inst_mrt_reflective
++		 || vals[i].sp.spec_n <= 0) {
++			continue;
++		}
++		if (vals[i].XYZ_v) {
++			conv = new_xsp2cie(icxIT_D50, 0.0, NULL, icxOT_CIE_1931_2,
++			                   NULL, icSigXYZData, (icxClamping)clamp);
++			if (conv == NULL)
++				return 1;
++			break;
++		}
++	}
++
+@@ -209,4 +223,0 @@ void ipatch_convert_xrga(ipatch *vals, int nvals,
+-			if (conv == NULL) {
+-				conv = new_xsp2cie(icxIT_D50, 0.0, NULL, icxOT_CIE_1931_2,
+-				                   NULL, icSigXYZData, (icxClamping)clamp);
+-			}
+@@ -221,0 +233 @@ void ipatch_convert_xrga(ipatch *vals, int nvals,
++	return 0;

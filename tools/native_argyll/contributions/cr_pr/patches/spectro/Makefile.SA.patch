@@ -1,0 +1,22 @@
+--- a/spectro/Makefile.SA
++++ b/spectro/Makefile.SA
+@@ -41 +41 @@ all:: libinst$(SUFLIB) libinstappsup$(SUFLIB) spotread$(SUFEXE) oeminst$(SUFEXE)
+-INSTHEADERS = dtp20.h dtp22.h dtp41.h dtp51.h dtp92.h ss.h ss_imp.h i1disp.h i1d3.h i1pro.h i1pro_imp.h munki.h munki_imp.h hcfr.h huey.h colorhug.h spyd2.h spydX.h specbos.h kleink10.h
++INSTHEADERS = dtp20.h dtp22.h dtp41.h dtp51.h dtp92.h ss.h ss_imp.h i1disp.h i1d3.h i1pro.h i1pro_imp.h munki.h munki_imp.h hcfr.h huey.h colorhug.h spyd2.h spydX.h specbos.h kleink10.h cr250.h cr250_imp.h pr655.h pr655_imp.h
+@@ -43 +43 @@ INSTHEADERS = dtp20.h dtp22.h dtp41.h dtp51.h dtp92.h ss.h ss_imp.h i1disp.h i1d
+-INSOBJS = dtp20$(SUFOBJ) dtp22$(SUFOBJ) dtp41$(SUFOBJ) dtp51$(SUFOBJ) dtp92$(SUFOBJ) ss$(SUFOBJ) ss_imp$(SUFOBJ) i1disp$(SUFOBJ) i1d3$(SUFOBJ) i1pro$(SUFOBJ) i1pro_imp$(SUFOBJ) i1pro3$(SUFOBJ) i1pro3_imp$(SUFOBJ) munki$(SUFOBJ) munki_imp$(SUFOBJ) hcfr$(SUFOBJ) huey$(SUFOBJ) colorhug$(SUFOBJ) spyd2$(SUFOBJ) spydX$(SUFOBJ) specbos$(SUFOBJ) kleink10$(SUFOBJ) ex1$(SUFOBJ) smcube$(SUFOBJ)
++INSOBJS = dtp20$(SUFOBJ) dtp22$(SUFOBJ) dtp41$(SUFOBJ) dtp51$(SUFOBJ) dtp92$(SUFOBJ) ss$(SUFOBJ) ss_imp$(SUFOBJ) i1disp$(SUFOBJ) i1d3$(SUFOBJ) i1pro$(SUFOBJ) i1pro_imp$(SUFOBJ) i1pro3$(SUFOBJ) i1pro3_imp$(SUFOBJ) munki$(SUFOBJ) munki_imp$(SUFOBJ) hcfr$(SUFOBJ) huey$(SUFOBJ) colorhug$(SUFOBJ) spyd2$(SUFOBJ) spydX$(SUFOBJ) specbos$(SUFOBJ) kleink10$(SUFOBJ) ex1$(SUFOBJ) smcube$(SUFOBJ) cr250$(SUFOBJ) cr250_imp$(SUFOBJ) pr655$(SUFOBJ) pr655_imp$(SUFOBJ)
+@@ -157,0 +158,6 @@ spydX$(SUFOBJ): spydX.c $(HEADERS)
++cr250$(SUFOBJ): cr250.c $(HEADERS)
++	$(CC) cr250.c
++
++cr250_imp$(SUFOBJ): cr250_imp.c $(HEADERS)
++	$(CC) cr250_imp.c
++
+@@ -160,0 +167,6 @@ specbos$(SUFOBJ): specbos.c $(HEADERS)
++pr655$(SUFOBJ): pr655.c $(HEADERS)
++	$(CC) pr655.c
++
++pr655_imp$(SUFOBJ): pr655_imp.c $(HEADERS)
++	$(CC) pr655_imp.c
++

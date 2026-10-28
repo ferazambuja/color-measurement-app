@@ -1,0 +1,6 @@
+--- a/xicc/xspect.h
++++ b/xicc/xspect.h
+@@ -151,0 +152,3 @@ int write_C_xspect(char *fname, xspect *s);
++/* Read a keyword value as a complete finite number. Return nz if valid */
++int xspect_read_number(char *text, double *value);
++

@@ -1,0 +1,34 @@
+[
+  {
+    "component": "Python",
+    "version": "3.13.16",
+    "license": "Python-2.0",
+    "path": "PYTHON.txt",
+    "source": "https://github.com/python/cpython/blob/v3.13.16/LICENSE",
+    "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb"
+  },
+  {
+    "component": "OpenSSL",
+    "version": "3.5.9",
+    "license": "Apache-2.0",
+    "path": "OPENSSL.txt",
+    "source": "https://github.com/openssl/openssl/blob/openssl-3.5.9/LICENSE.txt",
+    "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a"
+  },
+  {
+    "component": "mpdecimal",
+    "version": "4.0.1",
+    "license": "BSD-2-Clause",
+    "path": "MPDECIMAL.txt",
+    "source": "https://www.bytereef.org/mpdecimal/index.html",
+    "sha256": "6aa4af7c6f245d7fcda3d7fff98256f41e0ed72ed9abf3da1890661e40ce468a"
+  },
+  {
+    "component": "XZ liblzma",
+    "version": "5.8.4",
+    "license": "0BSD",
+    "path": "LIBLZMA.txt",
+    "source": "https://github.com/tukaani-project/xz/blob/v5.8.4/COPYING.0BSD",
+    "sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1"
+  }
+]

@@ -1,0 +1,14 @@
+--- a/spectro/instlib.ksh
++++ b/spectro/instlib.ksh
+@@ -109,0 +110,5 @@ SPECTRO_FILES="
++	cr250.h
++	cr250.c
++	cr250_imp.h
++	cr250_imp.c
++	cr250.txt
+@@ -117,0 +123,5 @@ SPECTRO_FILES="
++	pr655.h
++	pr655.c
++	pr655_imp.h
++	pr655_imp.c
++	pr655.txt

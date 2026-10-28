@@ -1,0 +1,5 @@
+--- a/spectro/Jamfile
++++ b/spectro/Jamfile
+@@ -87 +87 @@ if [ GLOB [ NormPaths . ] : d123.c ]  {
+-FAST_SER_INSTS = specbos.c kleink10.c smcube.c ;
++FAST_SER_INSTS = specbos.c kleink10.c smcube.c cr250.c cr250_imp.c pr655.c pr655_imp.c ;

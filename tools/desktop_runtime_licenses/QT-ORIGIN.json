@@ -1,0 +1,47 @@
+{
+  "version": "6.10.3",
+  "notices": [
+    {
+      "path": "qt/LGPL-3.0-only.txt",
+      "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768",
+      "source": "https://raw.githubusercontent.com/qt/qtbase/v6.10.3/LICENSES/LGPL-3.0-only.txt"
+    },
+    {
+      "path": "qt/GPL-3.0-only.txt",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source": "https://raw.githubusercontent.com/qt/qtbase/v6.10.3/LICENSES/GPL-3.0-only.txt"
+    },
+    {
+      "path": "qt/GPL-2.0-only.txt",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "source": "https://raw.githubusercontent.com/qt/qtbase/v6.10.3/LICENSES/GPL-2.0-only.txt"
+    },
+    {
+      "path": "qt/Qt-GPL-exception-1.0.txt",
+      "sha256": "40678d338ce53cd93f8b22b281a2ecbcaa3ee65ce60b25ffb0c462b0530846b2",
+      "source": "https://raw.githubusercontent.com/qt/qtbase/v6.10.3/LICENSES/Qt-GPL-exception-1.0.txt"
+    },
+    {
+      "path": "qt/THIRD-PARTY.txt",
+      "sha256": "d4ca51c9f6f6496277ef5411958cead05b81833289090bcd1cf6a810ebb9ab58",
+      "source": "https://doc.qt.io/qt-6.10/licenses-used-in-qt.html",
+      "pages": 269
+    }
+  ],
+  "source": {
+    "Qt": "https://download.qt.io/official_releases/qt/6.10/6.10.3/submodules/",
+    "PySide6 and Shiboken6": "https://download.qt.io/official_releases/QtForPython/pyside6/PySide6-6.10.3-src/"
+  },
+  "archives": [
+    {
+      "url": "https://download.qt.io/official_releases/qt/6.10/6.10.3/single/qt-everywhere-src-6.10.3.tar.xz",
+      "filename": "qt-everywhere-src-6.10.3.tar.xz",
+      "sha256": "cbc81e726b0ff3c0cdb0219bf74545e91cec013c4a8503c20f93f83d73dff5d2"
+    },
+    {
+      "url": "https://download.qt.io/official_releases/QtForPython/pyside6/PySide6-6.10.3-src/pyside-setup-everywhere-src-6.10.3.tar.xz",
+      "filename": "pyside-setup-everywhere-src-6.10.3.tar.xz",
+      "sha256": "2c7462fe0cecb5b8ac0a3d92014b8d0b88bd4d9f8646709dab5286d9416f45bc"
+    }
+  ]
+}

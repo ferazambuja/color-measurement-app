@@ -1,0 +1,26 @@
+--- a/spectro/spyd2.c
++++ b/spectro/spyd2.c
+@@ -185 +185 @@ static int buf2int(unsigned char *buf) {
+-	int val;
++	unsigned int val;
+@@ -190 +190,3 @@ static int buf2int(unsigned char *buf) {
+-	return val;
++	if (val <= 0x7fffffff)		/* Convert to signed without overflow */
++		return (int)val;
++	return -(int)(~val) - 1;
+@@ -3302 +3304 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		a1logd(p->log,4,"spyd2_calibrate: doing calt 0x%x\n",calt);
++		a1logd(p->log,4,"spyd2_calibrate: doing calt 0x%x\n",*calt);
+@@ -3307,0 +3310,5 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
++	/* See if it's a calibration we understand */
++	if (*calt & ~available & inst_calt_all_mask) {
++		return inst_unsupported;
++	}
++
+@@ -3353 +3360 @@ double ref_rate
+-	if (ref_rate == 0.0)
++	if (ref_rate == 0.0) {
+@@ -3355 +3362,2 @@ double ref_rate
+-	else
++		p->refrvalid = 0;
++	} else

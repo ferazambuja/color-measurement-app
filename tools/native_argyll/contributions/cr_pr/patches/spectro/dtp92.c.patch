@@ -1,0 +1,17 @@
+--- a/spectro/dtp92.c
++++ b/spectro/dtp92.c
+@@ -824 +824 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		a1logd(p->log,4,"dtp92_calibrate: doing calt 0x%x\n",calt);
++		a1logd(p->log,4,"dtp92_calibrate: doing calt 0x%x\n",*calt);
+@@ -846 +846,2 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		*calt &= inst_calt_emis_offset;
++		*calt &= ~inst_calt_emis_offset;
++		p->need_offset_cal = 0;
+@@ -870 +871,2 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		*calt &= inst_calt_emis_ratio;
++		*calt &= ~inst_calt_emis_ratio;
++		p->need_ratio_cal = 0;
+@@ -909,0 +912,3 @@ double *ref_rate
++	if (ref_rate != NULL)
++		*ref_rate = refrate;
++

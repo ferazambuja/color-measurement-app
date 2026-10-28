@@ -1,0 +1,461 @@
+--- a/spectro/i1pro_imp.c
++++ b/spectro/i1pro_imp.c
+@@ -77,0 +78,2 @@
++#include <float.h>
++#include <limits.h>
+@@ -221 +223,4 @@
+-#if defined(DEBUG) || defined(PLOT_DEBUG) || defined(PATREC_DEBUG)
++#if defined(DEBUG) || defined(PLOT_DEBUG) || defined(HIGH_RES_PLOT) \
++ || defined(HIGH_RES_PLOT_WAVFILT) || defined(HIGH_RES_PLOT_STRAYL) \
++ || defined(PLOT_REFRESH) || defined(PLOT_UPDELAY) \
++ || defined(PLOT_BLACK_SUBTRACT) || defined(PATREC_DEBUG)
+@@ -781,0 +787,4 @@ i1pro_code i1pro_imp_init(i1pro *p) {
++		if (!isfinite(m->max_int_time) || m->max_int_time < m->min_int_time) {
++			a1logd(p->log,2,"Invalid key_max_int_time\n");
++			return I1PRO_HW_CALIBINFO;
++		}
+@@ -1753,0 +1763,2 @@ i1pro_code i1pro_imp_calibrate(
++				free_dvector(wlraw, -1, m->nraw-1);
++				m->mmode = mmode;			/* Restore actual mode */
+@@ -1759,0 +1771,2 @@ i1pro_code i1pro_imp_calibrate(
++				free_dvector(wlraw, -1, m->nraw-1);
++				m->mmode = mmode;			/* Restore actual mode */
+@@ -1767,0 +1781 @@ i1pro_code i1pro_imp_calibrate(
++				m->mmode = mmode;			/* Restore actual mode */
+@@ -1773,0 +1788 @@ i1pro_code i1pro_imp_calibrate(
++				m->mmode = mmode;			/* Restore actual mode */
+@@ -1779,0 +1795 @@ i1pro_code i1pro_imp_calibrate(
++				m->mmode = mmode;			/* Restore actual mode */
+@@ -1823,0 +1840 @@ i1pro_code i1pro_imp_calibrate(
++			s->dark_valid = 0;		/* Dark cal. data will be overwritten */
+@@ -1921,0 +1939 @@ i1pro_code i1pro_imp_calibrate(
++			s->dark_valid = 0;		/* Dark cal. data will be overwritten */
+@@ -1981,0 +2000 @@ i1pro_code i1pro_imp_calibrate(
++			s->idark_valid = 0;		/* Dark cal. data will be overwritten */
+@@ -2147,0 +2167 @@ i1pro_code i1pro_imp_calibrate(
++			s->idark_valid = 0;		/* Dark cal. data will be overwritten */
+@@ -2229,0 +2250 @@ i1pro_code i1pro_imp_calibrate(
++			s->cal_valid = 0;		/* White data and factors are being replaced. */
+@@ -2233,0 +2255,5 @@ i1pro_code i1pro_imp_calibrate(
++				/* CM: fixed-time scan cannot recover or use unwritten white output. */
++				if (s->scan && !s->adaptive) {
++					m->mmode = mmode;
++					return ev;
++				}
+@@ -2314,0 +2341 @@ i1pro_code i1pro_imp_calibrate(
++						s->dark_valid = 0;		/* Dark cal. data will be overwritten */
+@@ -2356 +2383 @@ i1pro_code i1pro_imp_calibrate(
+-				int j;
++				int j, gainswitch = 0;
+@@ -2364,0 +2392,2 @@ i1pro_code i1pro_imp_calibrate(
++					s->dark_valid = 0;		/* Dark cal. data is for the other gain mode */
++					gainswitch = 1;
+@@ -2375,0 +2405,2 @@ i1pro_code i1pro_imp_calibrate(
++					s->dark_valid = 0;		/* Dark cal. data is for the other gain mode */
++					gainswitch = 1;
+@@ -2387,4 +2417,0 @@ i1pro_code i1pro_imp_calibrate(
+-				if (scale > 6.0) {
+-					m->transwarn |= 2;
+-					a1logd(p->log,2, "scan white reference is not bright enough by %f\n",scale);
+-				}
+@@ -2394,0 +2422 @@ i1pro_code i1pro_imp_calibrate(
++					s->dark_valid = 0;		/* Dark cal. data will be overwritten */
+@@ -2424,0 +2453,14 @@ i1pro_code i1pro_imp_calibrate(
++				/* A white measured after a gain switch used the other gain's dark */
++				if (gainswitch) {
++					nummeas = i1pro_comp_nummeas(p, s->wcaltime, s->inttime);
++					if ((ev = i1pro_whitemeasure(p, s->cal_factor[0], s->cal_factor[1], s->white_data,
++					   &scale, nummeas, &s->inttime, s->gainmode, 1.0, 0)) != I1PRO_OK) {
++						m->mmode = mmode;			/* Restore actual mode */
++						return ev;
++					}
++				}
++				/* (Judged on the final white) */
++				if (scale > 6.0) {
++					m->transwarn |= 2;
++					a1logd(p->log,2, "scan white reference is not bright enough by %f\n",scale);
++				}
+@@ -2490,0 +2533 @@ i1pro_code i1pro_imp_calibrate(
++			s->done_dintsel = 0; /* A failed refresh must not retain validity. */
+@@ -2509 +2552 @@ i1pro_code i1pro_imp_calibrate(
+-			if (ev == I1PRO_RD_SENSORSATURATED || scale < 1.0) {
++			if (ev == I1PRO_RD_SENSORSATURATED || (ev == I1PRO_OK && scale < 1.0)) {
+@@ -2521 +2564 @@ i1pro_code i1pro_imp_calibrate(
+-				if (ev == I1PRO_RD_SENSORSATURATED || scale < 1.0) {
++				if (ev == I1PRO_RD_SENSORSATURATED || (ev == I1PRO_OK && scale < 1.0)) {
+@@ -2536 +2579 @@ i1pro_code i1pro_imp_calibrate(
+-					if (ev == I1PRO_RD_SENSORSATURATED || scale < 1.0) {
++					if (ev == I1PRO_RD_SENSORSATURATED || (ev == I1PRO_OK && scale < 1.0)) {
+@@ -2747 +2790 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-	double stime, etime;
++	double stime, etime, delayms, reactionms;
+@@ -2753 +2796 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-	if ((rstart = usec_time()) < 0.0) {
++	if ((rstart = usec_time()) < 0.0 || !(rstart <= DBL_MAX)) {
+@@ -2755 +2798 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-		return inst_internal_error; 
++		return I1PRO_INTERNAL_ERROR; 
+@@ -2759,0 +2803,4 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++	if (!(inttime > 0.0 && inttime <= DBL_MAX
++	   && NDMXTIME/inttime + 0.5 >= 2.0
++	   && NDMXTIME/inttime + 0.5 <= (double)INT_MAX))
++		return I1PRO_INTERNAL_ERROR;
+@@ -2763,0 +2811 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++		free_dmatrix(multimeas, 0, nummeas-1, 0, m->nwav[m->highres]-1);
+@@ -2775 +2823,3 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-	if (m->whitestamp < 0.0) {
++	if (!(m->whitestamp >= 0.0 && m->whitestamp <= DBL_MAX
++	   && m->trigstamp >= 0.0 && m->trigstamp <= DBL_MAX
++	   && inttime > 0.0 && inttime <= DBL_MAX)) {
+@@ -2777 +2827,3 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-		return inst_internal_error; 
++		free_dmatrix(multimeas, 0, nummeas-1, 0, m->nwav[m->highres]-1);
++		free(samp);
++		return I1PRO_INTERNAL_ERROR; 
+@@ -2783,0 +2836,2 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++		if (!(samp[i].sec >= -DBL_MAX && samp[i].sec <= DBL_MAX))
++			goto invalid_clock;
+@@ -2788,0 +2843,2 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++			if (!(multimeas[i][j] >= -DBL_MAX && multimeas[i][j] <= DBL_MAX))
++				goto invalid_samples;
+@@ -2794,0 +2851,2 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++				if (!(samp[i].rgb[k] >= -DBL_MAX && samp[i].rgb[k] <= DBL_MAX))
++					goto invalid_samples;
+@@ -2797,0 +2856,2 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++		if (!(samp[i].tot >= -DBL_MAX && samp[i].tot <= DBL_MAX))
++			goto invalid_samples;
+@@ -2799,0 +2860 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++	multimeas = NULL;
+@@ -2824,0 +2886,3 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++	if (!(del >= -DBL_MAX && del <= DBL_MAX
++	   && thr >= -DBL_MAX && thr <= DBL_MAX))
++		goto invalid_samples;
+@@ -2860 +2924 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-	for (i = 0; i < (nummeas-1); i++) {
++	for (i = 0; i < nummeas; i++) {
+@@ -2863,0 +2928,2 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++	if (i == nummeas)
++		goto invalid_samples;
+@@ -2868,2 +2934,7 @@ int *pinstmsec) {	/* Return instrument latency in msec */
+-	dispmsec = (int)(samp[i].sec * 1000.0 + 0.5);				/* Display update time */
+-	instmsec = (int)((m->trigstamp - rstart)/1000.0 + 0.5);		/* Reaction time */
++	delayms = samp[i].sec * 1000.0 + 0.5;
++	reactionms = (m->trigstamp - rstart)/1000.0 + 0.5;
++	if (!(delayms >= (double)INT_MIN && delayms <= (double)INT_MAX
++	   && reactionms >= (double)INT_MIN && reactionms <= (double)INT_MAX))
++		goto invalid_clock;
++	dispmsec = (int)delayms;				/* Display update time */
++	instmsec = (int)reactionms;		/* Reaction time */
+@@ -2893,0 +2965,10 @@ int *pinstmsec) {	/* Return instrument latency in msec */
++
++invalid_clock:
++	free_dmatrix(multimeas, 0, nummeas-1, 0, m->nwav[m->highres]-1);
++	free(samp);
++	return I1PRO_INTERNAL_ERROR;
++
++invalid_samples:
++	free_dmatrix(multimeas, 0, nummeas-1, 0, m->nwav[m->highres]-1);
++	free(samp);
++	return I1PRO_RD_NOTRANS_FOUND;
+@@ -4046,0 +4128,6 @@ i1pro_code i1pro_restore_refspot_cal(i1pro *p) {
++	/* Ignore unusable saved calibration, as if none was stored. */
++	if (!isfinite(dp[0]) || dp[0] > m->max_int_time) {
++		a1logd(p->log,2,"Invalid EEProm calibration integration time\n");
++		s->dark_valid = s->cal_valid = 0;
++		return I1PRO_OK;
++	}
+@@ -4048 +4135 @@ i1pro_code i1pro_restore_refspot_cal(i1pro *p) {
+-	if (s->inttime < m->min_int_time)	/* Hmm. EEprom is occasionaly screwed up */
++	if (s->inttime < m->min_int_time)	/* Preserve the finite sub-minimum clamp. */
+@@ -4508,0 +4596 @@ i1pro_code i1pro_restore_calibration(i1pro *p) {
++	int maxgain = 0;		/* Highest gain mode this build and instrument set */
+@@ -4683,0 +4772,5 @@ i1pro_code i1pro_restore_calibration(i1pro *p) {
++#ifdef USE_HIGH_GAIN_MODE
++	if (p->dtype != instI1Pro2)
++		maxgain = 1;	/* (High gain isn't compiled in otherwise, as the EEPROM restore) */
++#endif
++
+@@ -4758,0 +4852,6 @@ i1pro_code i1pro_restore_calibration(i1pro *p) {
++		 && (!s->adaptive || (ts.inttime >= -DBL_MAX && ts.inttime <= DBL_MAX	/* Finite */
++		    && m->min_int_time > 0.0 && m->max_int_time >= m->min_int_time
++		    && m->max_int_time <= DBL_MAX))		/* and a range to keep it in */
++		 && ts.gainmode >= 0 && ts.gainmode <= maxgain
++		 && ts.dark_gain_mode >= 0 && ts.dark_gain_mode <= maxgain
++		 && (s->adaptive || !ts.dark_valid || ts.dark_gain_mode == ts.gainmode)
+@@ -4770,0 +4870,8 @@ i1pro_code i1pro_restore_calibration(i1pro *p) {
++			/* An adaptive time can be just outside the range after rounding to */
++			/* clocks; keep it inside, as i1pro_trigger_one_measure() does a low one */
++			if (s->adaptive) {
++				if (s->inttime < m->min_int_time)
++					s->inttime = m->min_int_time;
++				else if (s->inttime > m->max_int_time)
++					s->inttime = m->max_int_time;
++			}
+@@ -5498,0 +5606,9 @@ i1pro_code i1pro_read_patches_1(
++static int cm_i1pro_scaled_finite(i1pro *p, double **rows, int count) {
++	i1proimp *m = (i1proimp *)p->m;
++	int i, j;
++	for (i = 0; i < count; i++)
++		for (j = 0; j < m->nwav[m->highres]; j++)
++			if (!isfinite(rows[i][j])) return 0;
++	return 1;
++}
++
+@@ -5595,0 +5712,18 @@ i1pro_code i1pro_read_patches_2(
++			/* CM: apply the existing spot saturation criterion to flash.
++			 * Keep its converted threshold and Rev A-D edge-cell exclusion;
++			 * do not apply spot consistency to an intentionally varying flash. */
++			if (satthresh > 0.0) {
++				int i, j;
++				for (i = 0; i < nmeasuered; i++) {
++					for (j = 0; j < m->nraw; j++) {
++						if (m->nsen == m->nraw && (j == 0 || j == 127))
++							continue;
++						if (multimes[i][j] > satthresh) {
++							free_dmatrix(absraw, 0, numpatches-1, -1, m->nraw-1);
++							free_dmatrix(multimes, 0, nmeasuered-1, -1, m->nraw-1);
++							return I1PRO_RD_SENSORSATURATED;
++						}
++					}
++				}
++			}
++
+@@ -5694,0 +5829,2 @@ i1pro_code i1pro_read_patches_2(
++	if (!cm_i1pro_scaled_finite(p, specrd, numpatches))
++		return I1PRO_RD_READINCONS;
+@@ -5762,0 +5899,2 @@ i1pro_code i1pro_read_patches_2a(
++	if (!cm_i1pro_scaled_finite(p, specrd, numpatches))
++		return I1PRO_RD_READINCONS;
+@@ -6096 +6234 @@ i1pro_trigger_one_measure(
+-		if (dintclocks > 4294967296.0)		/* This is probably not the actual limit */
++		if (!(dintclocks <= (double)INT_MAX))	/* Converted to int below; device limit unknown */
+@@ -6099 +6237 @@ i1pro_trigger_one_measure(
+-		if (dintclocks > 65535.0)
++		if (!(dintclocks <= 65535.0))
+@@ -6221 +6359 @@ static int buf2int(unsigned char *buf) {
+-	int val;
++	unsigned int val;
+@@ -6226 +6364,3 @@ static int buf2int(unsigned char *buf) {
+-	return val;
++	if (val <= 0x7fffffff)		/* Convert to signed without overflow */
++		return (int)val;
++	return -(int)(~val) - 1;
+@@ -6231,2 +6371,2 @@ static int buf2short(unsigned char *buf) {
+-	int val;
+-	val = *((signed char *)buf);		/* Sign extend */
++	unsigned int val;
++	val = (0xff & buf[0]);
+@@ -6234 +6374,3 @@ static int buf2short(unsigned char *buf) {
+-	return val;
++	if (val <= 0x7fff)			/* Sign extend without overflow */
++		return (int)val;
++	return (int)val - 0x10000;
+@@ -6575 +6717 @@ int i1pro_average_multimeas(
+-	for (j = -1; j < 128; j++) 
++	for (j = -1; j < 128; j++) {
+@@ -6576,0 +6719,3 @@ int i1pro_average_multimeas(
++		if (!isfinite(avg[j]))
++			rv |= 1;
++	}
+@@ -6596 +6741,2 @@ int i1pro_average_multimeas(
+-	if ((maxavg - minavg)/norm > PATCH_CONS_THR) {
++	/* (Written so that an undefined ratio fails) */
++	if (!((maxavg - minavg)/norm <= PATCH_CONS_THR)) {
+@@ -7019 +7165,6 @@ i1pro_code i1pro_extract_patches_multimeas(
+-	if (lead_avg/trail_avg < 0.7 || trail_avg/lead_avg < 0.7) {
++	/* CM: undefined/nonfinite ratios cannot confirm relative agreement.
++	 * Preserve finite nonzero signed margins and the existing threshold. */
++	if (!isfinite(lead_avg) || !isfinite(trail_avg)
++	 || lead_avg == 0.0 || trail_avg == 0.0
++	 || !isfinite(lead_avg/trail_avg) || !isfinite(trail_avg/lead_avg)
++	 || lead_avg/trail_avg < 0.7 || trail_avg/lead_avg < 0.7) {
+@@ -7062 +7213 @@ i1pro_code i1pro_extract_patches_multimeas(
+-			free_dvector(maxval, 0, m->nraw-1);  
++			free_dvector(maxval, -1, m->nraw-1);  
+@@ -7063,0 +7215,3 @@ i1pro_code i1pro_extract_patches_multimeas(
++			free(points);
++			if (pcurve != NULL)
++				pcurve->del(pcurve);
+@@ -7315,0 +7470,3 @@ i1pro_code i1pro_extract_patches_multimeas(
++	/* CM: a nonfinite normalization cannot establish consistency. */
++	if (!isfinite(white_avg))
++		rv |= 1;
+@@ -7372 +7529 @@ i1pro_code i1pro_extract_patches_multimeas(
+-		for (j = 0; j < m->nraw; j++) 
++		for (j = 0; j < m->nraw; j++) {
+@@ -7373,0 +7531,4 @@ i1pro_code i1pro_extract_patches_multimeas(
++			/* CM: band sums can overflow independently of row sums. */
++			if (!isfinite(pavg[pix][j]))
++				rv |= 1;
++		}
+@@ -7381 +7542,2 @@ i1pro_code i1pro_extract_patches_multimeas(
+-		if (cons > patch_cons_thr) {
++		/* CM: a nonfinite ratio cannot pass, even with a nonfinite tolerance. */
++		if (!isfinite(cons) || cons > patch_cons_thr) {
+@@ -7574,0 +7737,10 @@ i1pro_code i1pro_extract_patches_flash(
++	/* CM: a threshold pulse selects one neighbor on either side. Refuse
++	 * a window reaching the excluded final row; do not invent missing energy.
++	 * This does not establish that a physical pulse waveform was complete. */
++	for (k = nummeas > 1 ? nummeas - 2 : 0; k < nummeas; k++) {
++		for (j = 0; j < m->nraw; j++) {
++			if (multimeas[k][j] >= thresh)
++				return I1PRO_RD_READINCONS;
++		}
++	}
++
+@@ -7668 +7840,3 @@ void i1pro_sub_absraw(
+-//		double xx[NSEN_MAX], in[NSEN_MAX], res[NSEN_MAX];
++#ifdef PLOT_BLACK_SUBTRACT
++		double xx[NSEN_MAX], in[NSEN_MAX], res[NSEN_MAX];
++#endif
+@@ -7718 +7892,4 @@ void i1pro_sub_absraw(
+-//				xx[j] = j, in[j] = absraw[i][j];
++#ifdef PLOT_BLACK_SUBTRACT
++				xx[j] = j;
++				in[j] = absraw[i][j];
++#endif
+@@ -7722 +7899,4 @@ void i1pro_sub_absraw(
+-//				 res[j] = absraw[i][j] + (double)((int)(avgscell/20.0)) * 20.0;
++#ifdef PLOT_BLACK_SUBTRACT
++				/* Plot gain- and integration-time-normalized values before linearisation. */
++				res[j] = absraw[i][j];
++#endif
+@@ -7739,2 +7919,2 @@ void i1pro_sub_absraw(
+-			plot_msg("black = meas, red = black, green = adjuste black, blue = result\n"); 
+-			do_plot6(xx, in, sub, adjsub, res, NULL, NULL, m->nraw);
++			plot_msg("black = meas, red = black, green = adjusted black, blue = result\n"); 
++			do_plot6(xx, in, sub, asub, res, NULL, NULL, m->nraw);
+@@ -8385,0 +8566,2 @@ i1pro_code i1pro_compute_wav_filters(i1pro *p, int hr, int refl) {
++			free(m->mtx_c[hr][refl].index);
++			m->mtx_c[hr][refl].index = NULL;
+@@ -8391,0 +8574,4 @@ i1pro_code i1pro_compute_wav_filters(i1pro *p, int hr, int refl) {
++			free(m->mtx_c[hr][refl].nocoef);
++			free(m->mtx_c[hr][refl].index);
++			m->mtx_c[hr][refl].nocoef = NULL;
++			m->mtx_c[hr][refl].index = NULL;
+@@ -9119 +9305 @@ i1pro_code i1pro_create_hr_calfactors(i1pro *p, int eonly) {
+-	i1pro_code ev = I1PRO_OK;
++	i1pro_code ev = I1PRO_OK, rv = I1PRO_OK;
+@@ -9166 +9352,3 @@ i1pro_code i1pro_create_hr_calfactors(i1pro *p, int eonly) {
+-							return ev;
++							s->cal_valid = 0;		/* cal_factor[] now holds the rejected white */
++							if (rv == I1PRO_OK)
++								rv = ev;			/* Report it once the other modes are done */
+@@ -9212 +9400,3 @@ i1pro_code i1pro_create_hr_calfactors(i1pro *p, int eonly) {
+-							return ev;
++							s->cal_valid = 0;		/* cal_factor[] now holds the rejected white */
++							if (rv == I1PRO_OK)
++								rv = ev;			/* Report it once the other modes are done */
+@@ -9219 +9409 @@ i1pro_code i1pro_create_hr_calfactors(i1pro *p, int eonly) {
+-	return ev;
++	return rv;
+@@ -10408,0 +10599,12 @@ static double opt_adj_weights[21] = {
++static int cm_i1pro_patch_finite(const ipatch *v) {
++	int j;
++	if (v->sp.spec_n < 0 || v->sp.spec_n > XSPECT_MAX_BANDS
++	 || !isfinite(v->sp.norm) || v->sp.norm <= 0.0) return 0;
++	for (j = 0; j < v->sp.spec_n; j++)
++		if (!isfinite(v->sp.spec[j])) return 0;
++	if (v->XYZ_v)
++		for (j = 0; j < 3; j++)
++			if (!isfinite(v->XYZ[j])) return 0;
++	return 1;
++}
++
+@@ -10471,0 +10674,4 @@ i1pro_code i1pro_conv2XYZ(
++			if (!cm_i1pro_patch_finite(&vals[i])) {
++				conv->del(conv);
++				return I1PRO_RD_READINCONS;
++			}
+@@ -10494,0 +10701,4 @@ i1pro_code i1pro_conv2XYZ(
++			if (!cm_i1pro_patch_finite(&vals[i])) {
++				conv->del(conv);
++				return I1PRO_RD_READINCONS;
++			}
+@@ -10512,3 +10722,3 @@ i1pro_code i1pro_conv2XYZ(
+-		/* Don't return spectral if not asked for */
+-		if (!m->spec_en) {
+-			vals[i].sp.spec_n = 0;
++		if (!cm_i1pro_patch_finite(&vals[i])) {
++			conv->del(conv);
++			return I1PRO_RD_READINCONS;
+@@ -10516 +10725,0 @@ i1pro_code i1pro_conv2XYZ(
+-
+@@ -10522 +10731,2 @@ i1pro_code i1pro_conv2XYZ(
+-	ipatch_convert_xrga(vals, nvals, xcalstd_nonpol, m->target_calstd, m->native_calstd, clamp);
++	if (ipatch_convert_xrga(vals, nvals, xcalstd_nonpol, m->target_calstd, m->native_calstd, clamp) != 0)
++		return I1PRO_INT_CIECONVFAIL;
+@@ -10525,2 +10735,14 @@ i1pro_code i1pro_conv2XYZ(
+-	if (m->custfilt_en)
+-		ipatch_convert_custom_filter(vals, nvals, &m->custfilt, clamp);
++	if (m->custfilt_en &&
++	    ipatch_convert_custom_filter(vals, nvals, &m->custfilt, clamp) != 0)
++		return I1PRO_INT_CIECONVFAIL;
++
++	for (i = 0; i < nvals; i++)
++		if (!cm_i1pro_patch_finite(&vals[i]))
++			return I1PRO_RD_READINCONS;
++
++	/* Don't return spectral if not asked for. CM: after the conversions above, */
++	/* which skip a patch without one (xrga.c:200-202, inst.c:2198-2202). */
++	if (!m->spec_en) {
++		for (i = 0; i < nvals; i++)
++			vals[i].sp.spec_n = 0;
++	}
+@@ -10617,0 +10840,14 @@ i1pro_code i1pro_compute_white_cal(
++	/* CM: validate every reference band. */
++	for (j = 0; j < m->nwav[0]; j++)
++		if (!isfinite(white_read0[j]) || (white_ref0 != NULL
++		 && (!isfinite(white_ref0[j]) || white_ref0[j] <= 0.0)))
++			return I1PRO_RD_WHITEREFERROR;
++#ifdef HIGH_RES
++	if (m->hr_inited) {
++	for (j = 0; j < m->nwav[1]; j++)
++		if (!isfinite(white_read1[j]) || (white_ref1 != NULL
++		 && (!isfinite(white_ref1[j]) || white_ref1[j] <= 0.0)))
++			return I1PRO_RD_WHITEREFERROR;
++	}
++#endif
++
+@@ -10626,0 +10863 @@ i1pro_code i1pro_compute_white_cal(
++		double new_emis[XSPECT_MAX_BANDS];
+@@ -10629,0 +10867,5 @@ i1pro_code i1pro_compute_white_cal(
++		if (m->nwav[1] < 1 || m->nwav[1] > XSPECT_MAX_BANDS)
++			return I1PRO_INT_ASSERT;
++		for (i = 0; i < m->nwav[1]; i++)
++			if (!(white_read1[i] > 0.0 && isfinite(white_read1[i])))
++				return I1PRO_RD_WHITEREFERROR;
+@@ -10735,2 +10977,2 @@ i1pro_code i1pro_compute_white_cal(
+-				m->emis_coef[1][i] = (ff * pp.v[0] * white_ref1[i] * value_xspect(&illA, wl))
+-				                     /white_read1[i];
++				new_emis[i] = (ff * pp.v[0] * white_ref1[i] * value_xspect(&illA, wl))
++				              /white_read1[i];
+@@ -10777 +11019 @@ i1pro_code i1pro_compute_white_cal(
+-			m->emis_coef[1][i] = (yw  * white_ref1[i] * value_xspect(&illA, xw))/white_read1[i];
++			new_emis[i] = (yw  * white_ref1[i] * value_xspect(&illA, xw))/white_read1[i];
+@@ -10780,0 +11023,14 @@ i1pro_code i1pro_compute_white_cal(
++		/* Keep the previous emissive calibration on any bad band. */
++		for (i = 0; i < m->nwav[1]; i++) {
++			if (!isfinite(new_emis[i]) || new_emis[i] <= 0.0) {
++				free(fudge);
++				free(lincal);
++#ifdef HIGH_RES_PLOT
++				free(old_emis);
++				free(targ_smth);
++#endif
++				return I1PRO_RD_WHITEREFERROR;
++			}
++		}
++		memcpy(m->emis_coef[1], new_emis, m->nwav[1] * sizeof(double));
++
+@@ -10908,0 +11165,3 @@ i1pro_code i1pro_compute_white_cal(
++	for (j = 0; j < m->nwav[0]; j++)
++		if (!isfinite(cal_factor0[j]) || cal_factor0[j] <= 0.0)
++			return I1PRO_RD_WHITEREFERROR;
+@@ -10941 +11199,0 @@ i1pro_code i1pro_compute_white_cal(
+-#endif /* HIGH_RES */
+@@ -10942,0 +11201,4 @@ i1pro_code i1pro_compute_white_cal(
++	for (j = 0; j < m->nwav[1]; j++)
++		if (!isfinite(cal_factor1[j]) || cal_factor1[j] <= 0.0)
++			return I1PRO_RD_WHITEREFERROR;
++#endif /* HIGH_RES */

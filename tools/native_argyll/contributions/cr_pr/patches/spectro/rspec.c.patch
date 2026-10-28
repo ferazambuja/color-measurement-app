@@ -1,0 +1,37 @@
+--- a/spectro/rspec.c
++++ b/spectro/rspec.c
+@@ -9,0 +10 @@
++ * Proposed changes: Fernando Voltolini de Azambuja, 3 October 2026.
+@@ -1196,0 +1198,2 @@ void calf_rtime_ts(calf *x, time_t *dp, int n) {
++#define CALF_MAXSTRL 1024	/* Calibration file strings are instrument identifiers */
++
+@@ -1201,0 +1205 @@ void calf_rstrz(calf *x, char **dp) {
++	long pos, end;
+@@ -1207 +1211,7 @@ void calf_rstrz(calf *x, char **dp) {
+-	nbytes = sizeof(char) * n;
++	if (x->ef)
++		return;
++	if (n < 1 || n > CALF_MAXSTRL) {
++		x->ef = 1;
++		a1logd(x->log,2,"calf_rstrz: invalid string length %d\n",n);
++		return;
++	}
+@@ -1209 +1219,10 @@ void calf_rstrz(calf *x, char **dp) {
+-	if (x->ef || n == 0)
++	/* Reject a length past the file end before allocating from file data. */
++	pos = ftell(x->fp);
++	if (pos < 0 || fseek(x->fp, 0, SEEK_END) != 0) {
++		x->ef = 1;
++		return;
++	}
++	end = ftell(x->fp);
++	if (fseek(x->fp, pos, SEEK_SET) != 0 || end < pos || (long)n > end - pos) {
++		x->ef = 1;
++		a1logd(x->log,2,"calf_rstrz: string length exceeds file\n");
+@@ -1210,0 +1230,2 @@ void calf_rstrz(calf *x, char **dp) {
++	}
++	nbytes = (size_t)n;
+@@ -1223,0 +1245,3 @@ void calf_rstrz(calf *x, char **dp) {
++	} else if (dest[nbytes-1] != '\0' || memchr(dest, '\0', nbytes-1) != NULL) {
++		x->ef = 1;
++		a1logd(x->log,2,"calf_rstrz: invalid zero terminated string\n");

@@ -1,0 +1,5 @@
+--- a/spectro/sa_conv.c
++++ b/spectro/sa_conv.c
+@@ -488 +488 @@ static void sa_MD5_reset(sa_MD5 *p) {
+-		data = (pp)[0] + ((pp)[3] << 24) + ((pp)[2] << 16) + ((pp)[1] << 8); \
++		data = (pp)[0] + (((ORD32)(pp)[3]) << 24) + ((pp)[2] << 16) + ((pp)[1] << 8); \

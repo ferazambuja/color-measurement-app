@@ -1,0 +1,18 @@
+--- a/spectro/munki.c
++++ b/spectro/munki.c
+@@ -531 +531 @@ munki_interp_error(inst *pp, munki_code ec) {
+-			return "Creating spectral to CIE converted failed";
++			return "Spectral to CIE conversion or custom filter compensation failed";
+@@ -817,0 +818,3 @@ munki_get_set_opt(inst *pp, inst_opt_type m, ...) {
++		/* CM: a nonfinite ratio cannot bound a consistency check. */
++		if (!isfinite(toll_ratio))
++			return inst_bad_parameter;
+@@ -830,0 +834,5 @@ munki_get_set_opt(inst *pp, inst_opt_type m, ...) {
++		/* The target is a conversion-table index, or native for no conversion. */
++		if (standard != xcalstd_native && standard != xcalstd_xrdi
++		 && standard != xcalstd_gmdi && standard != xcalstd_xrga)
++			return inst_bad_parameter;
++
+@@ -867,0 +876,2 @@ munki_get_set_opt(inst *pp, inst_opt_type m, ...) {
++		} else if (!inst_valid_custom_filter(sp)) {
++			return inst_bad_parameter;	/* Not evaluable by the interpolators */

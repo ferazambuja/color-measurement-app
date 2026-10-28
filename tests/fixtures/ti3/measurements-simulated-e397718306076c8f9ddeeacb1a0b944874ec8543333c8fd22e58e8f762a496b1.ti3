@@ -1,0 +1,38 @@
+CTI3
+DESCRIPTOR "Color Measurement reflective measurement-only reference"
+ORIGINATOR "Color Measurement"
+DEVICE_CLASS "INPUT"
+KEYWORD "CM_EXPORT_KIND"
+CM_EXPORT_KIND "ordinary"
+KEYWORD "CM_OWNER_ID"
+CM_OWNER_ID "stable-segment"
+KEYWORD "CM_GROUP_ID"
+CM_GROUP_ID "e397718306076c8f9ddeeacb1a0b944874ec8543333c8fd22e58e8f762a496b1"
+KEYWORD "CM_SOURCE_SHA256"
+CM_SOURCE_SHA256 "1111111111111111111111111111111111111111111111111111111111111111"
+KEYWORD "CM_SOURCE_ID"
+CM_SOURCE_ID "authoritative-source"
+KEYWORD "CM_SNAPSHOT_ID"
+CM_SNAPSHOT_ID "1d0670b97a9e509ac270f3db1003e6ef05c2a53b2ba1518cad7e6e470253ef82"
+KEYWORD "CM_PROVENANCE"
+CM_PROVENANCE "simulated"
+KEYWORD "CM_MATERIAL_JSON"
+CM_MATERIAL_JSON "{""mode"":""reflective_spot_m2""}"
+KEYWORD "CM_XYZ_JSON"
+CM_XYZ_JSON "{""illuminant"":""D50"",""method"":""native XYZ"",""observer"":""CIE1931_2"",""origin"":""native"",""scale"":""relative; perfect-diffuser Y=100"",""unit"":""1""}"
+KEYWORD "CM_SPECTRUM_JSON"
+CM_SPECTRUM_JSON "{""quantity"":""reflectance"",""unit"":""%""}"
+SPECTRAL_BANDS "4"
+SPECTRAL_START_NM "400.5"
+SPECTRAL_END_NM "430.5"
+SPECTRAL_NORM "100"
+KEYWORD "CM_SPECTRAL_UNIT"
+CM_SPECTRAL_UNIT "%"
+NUMBER_OF_FIELDS 13
+BEGIN_DATA_FORMAT
+SAMPLE_ID CM_RECORD_ID CM_NAME_JSON CM_NOTES_JSON CM_PROVENANCE CM_CONTEXT_JSON XYZ_X XYZ_Y XYZ_Z SPEC_401 SPEC_411 SPEC_421 SPEC_431
+END_DATA_FORMAT
+NUMBER_OF_SETS 1
+BEGIN_DATA
+"original-1" """original-1""" """Name \""\u6e2c\u5b9a\""\nline""" """annotation\r\n\u2600""" "simulated" "{""material"":{""mode"":""reflective_spot_m2""},""provenance"":{""raw"":""response"",""timestamp"":""old""},""route"":""demo""}" -2.0 0.0 101.5 -1.0 0.0 101.0 50.0
+END_DATA

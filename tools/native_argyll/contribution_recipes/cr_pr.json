@@ -1,0 +1,664 @@
+{
+  "name": "cr-pr-drivers",
+  "description": "Portable Argyll repairs and experimental CR/PR drivers, contracts and synthetic tests from the reviewed composition.",
+  "instrument_types_added": [
+    "instCR250",
+    "instCR100",
+    "instCR300",
+    "instPR655",
+    "instPR670"
+  ],
+  "entries": [
+    {
+      "path": "spectro/cr250.c",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250.h",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_imp.c",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_imp.h",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250.txt",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_test.c",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_test.ksh",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_driver_test.c",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_driver_test.py",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_fake.h",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/cr250_fake.c",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "written from Colorimetry Research Remote Communication 1.36"
+      }
+    },
+    {
+      "path": "spectro/insttypes.h",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/insttypes.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/insttypeinst.h",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/inst.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/Jamfile",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/Jamfile.SA",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/Makefile.SA",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/instlib.ksh",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/afiles",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/pr655.c",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655.h",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655_imp.c",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655_imp.h",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655.txt",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655_test.c",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655_test.ksh",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655_driver_test.c",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/pr655_driver_test.py",
+      "provenance": {
+        "author": "Fernando Voltolini de Azambuja",
+        "terms": "GPL-2.0-or-later",
+        "origin": "original implementation from Photo Research manual 9903-0006-65 revision B (2009) protocol facts"
+      }
+    },
+    {
+      "path": "spectro/sa_conv.h",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/spotread.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "upstream notices where present and standalone library License2.txt; contribution authorship and terms recorded here separately"
+      }
+    },
+    {
+      "path": "spectro/spydX2.h",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "repair": "spyder-calibration-slots",
+        "basis": "Retained upstream notices; calibration-array capacity matches the advertised native indices."
+      }
+    },
+    {
+      "path": "cgats/cgats.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "numlib/numsup.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/colorhug.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/dtp20.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/dtp22.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/dtp41.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/dtp51.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/dtp92.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/ex1.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/huey.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/i1d3.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/i1disp.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/i1pro.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/i1pro3.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/i1pro3_imp.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/i1pro_imp.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/inst.h",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/kleink10.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/munki.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/munki_imp.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/munki_imp.h",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/rspec.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/sa_conv.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/smcube.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/specbos.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/spyd2.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/spydX.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/spydX2.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/ss.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/ss_imp.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/ss_imp.h",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/xrga.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "spectro/xrga.h",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "xicc/ccmx.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "xicc/ccss.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "xicc/xspect.c",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    },
+    {
+      "path": "xicc/xspect.h",
+      "provenance": {
+        "upstream_author": "Graeme W. Gill",
+        "upstream_license": "GPL-2.0-or-later",
+        "change_author": "Fernando Voltolini de Azambuja",
+        "change_terms": "GPL-2.0-or-later",
+        "basis": "Portable repairs relocated without behavior changes; see repair_catalogue.json for source-local identities."
+      }
+    }
+  ]
+}

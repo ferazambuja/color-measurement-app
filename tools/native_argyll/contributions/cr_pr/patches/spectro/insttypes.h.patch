@@ -1,0 +1,8 @@
+--- a/spectro/insttypes.h
++++ b/spectro/insttypes.h
+@@ -68,0 +69,5 @@ typedef enum {
++	instCR250,					/* Colorimetry Research CR-250 */
++	instCR100,					/* Colorimetry Research CR-100 */
++	instCR300,					/* Colorimetry Research CR-300 */
++	instPR655,					/* Photo Research PR-655 */
++	instPR670,					/* Photo Research PR-670 */

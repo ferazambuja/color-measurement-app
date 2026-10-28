@@ -1,0 +1,5 @@
+--- a/spectro/ss_imp.h
++++ b/spectro/ss_imp.h
+@@ -744 +744 @@ int ss_sub_2(struct _ss *p);
+-int ss_sub_4(struct _ss *p);
++unsigned int ss_sub_4(struct _ss *p);

@@ -1,0 +1,4390 @@
+{
+  "calibration_capture_shape": "At least one representative capture per operator action. `instruction_required` carries a prompt to answer; `instruction_notified` carries one that takes NO answer, because the instrument itself triggers it -- its `calibration.acknowledged` is false. Both carry the same decoded `calibration` block. The i1Pro family raises 7 of ArgyllCMS's 19 conditions, so most of these come from instruments whose conditions no i1Pro can raise.",
+  "calibration_retained_shape": "<persona>/calibration_retained.json, for each persona whose fresh start calibrated: every such route read again from a start whose driver restored a calibration still within its own limits (the stubs' retained_calibration). `routes` maps the mode to the helper's native events for that reading. A reading asks the driver to keep what it retained (initial_calibration_suppressed in calibration_ready); what is still asked is the driver's own need, or a transmission white. A driver that is not asked -- the SpectroScan family, whose option would mask the need -- calibrates again. The demo replays these once a mode has been calibrated.",
+  "calibrations": [
+    {
+      "action": "present_reference",
+      "answered": [
+        true
+      ],
+      "capture": "i1pro3/calibration.present_reference",
+      "conditions": [
+        "man_ref_white"
+      ],
+      "persona": "i1pro3",
+      "prompts": 1,
+      "status": "completed"
+    },
+    {
+      "action": "present_reference",
+      "answered": [
+        true
+      ],
+      "capture": "dtp20/calibration.present_reference",
+      "conditions": [
+        "man_ref_white"
+      ],
+      "persona": "dtp20",
+      "prompts": 1,
+      "status": "completed"
+    },
+    {
+      "action": "click_reference",
+      "answered": [
+        false
+      ],
+      "capture": "dtp22/calibration.click_reference",
+      "conditions": [
+        "man_ref_whitek"
+      ],
+      "persona": "dtp22",
+      "prompts": 1,
+      "status": "completed"
+    },
+    {
+      "action": "change_filter",
+      "answered": [
+        true
+      ],
+      "capture": "spectroscan/calibration.change_filter",
+      "conditions": [
+        "change_filter"
+      ],
+      "persona": "spectroscan",
+      "prompts": 1,
+      "status": "completed"
+    },
+    {
+      "action": "set_sensor_position",
+      "answered": [
+        true
+      ],
+      "capture": "colormunki/calibration.set_sensor_position",
+      "conditions": [
+        "man_cal_smode"
+      ],
+      "persona": "colormunki",
+      "prompts": 1,
+      "status": "completed"
+    },
+    {
+      "action": "message",
+      "answered": [
+        true
+      ],
+      "capture": "i1pro2/calibration.message",
+      "conditions": [
+        "message"
+      ],
+      "persona": "i1pro2",
+      "prompts": 1,
+      "status": "completed"
+    },
+    {
+      "action": "operate_instrument",
+      "answered": [
+        true
+      ],
+      "capture": "dtp41/calibration.operate_instrument",
+      "conditions": [
+        "uop_ref_white"
+      ],
+      "persona": "dtp41",
+      "prompts": 1,
+      "status": "completed"
+    },
+    {
+      "action": "display_patch",
+      "answered": [
+        true,
+        true,
+        true
+      ],
+      "capture": "i1_display_3/calibration.display_patch",
+      "conditions": [
+        "emis_grey",
+        "emis_grey_darker",
+        "emis_grey_ligher"
+      ],
+      "persona": "i1_display_3",
+      "prompts": 3,
+      "status": "completed"
+    }
+  ],
+  "captured_entry_shape": "Each `captured` entry records its own outcome: status, patch count, and the native stage/code when the substituted instrument refused the route. A `failed` capture is a real recorded refusal, not a gap in the fixtures: every non-completed capture here carries a stage, so none of them failed outside the instrument. `check_mode` means the persona does not serve that route; `set_filter` means it does not advertise that measurement condition. A stage-less failure would mean the capture itself broke and should be reported rather than pinned.",
+  "configuration_queries": [
+    "i1_display_3/query.mode_snapshot.success.default.json",
+    "i1_display_3/query.mode_snapshot.stored_unsupported.default.json",
+    "i1_display_3/query.mode_snapshot.stored_zero.default.json",
+    "i1_display_3/query.stored_refresh.success.default.json",
+    "i1_display_3/query.stored_refresh.success.60.json",
+    "i1_display_3/query.stored_refresh.success.0.json",
+    "i1_display_3/query.stored_refresh.stored_misread.default.json",
+    "i1_display_3/query.stored_refresh.stored_zero.default.json",
+    "i1_display_3/query.stored_refresh.stored_error.default.json",
+    "i1_display_3/query.stored_refresh.stored_set_error.60.json",
+    "i1_display_3/query.stored_refresh.calibration.false.json",
+    "i1_display_3/query.stored_refresh.calibration.true.json"
+  ],
+  "display_timing": [
+    "i1_display_3/timing_success.json",
+    "i1_display_3/timing_zero.json",
+    "i1_display_3/timing_marker_error.json",
+    "i1_display_3/timing_error.json"
+  ],
+  "display_type_isolation": [
+    "i1_display_3/display_invalid_label.json",
+    "i1_display_3/display_invalid_path.json",
+    "i1_display_3/display_invalid_both.json",
+    "i1_display_3/display_invalid_all.json"
+  ],
+  "named_display_type": "i1_display_3/named_display_type.json",
+  "native_failures": [
+    {
+      "capture": "cr250/failure.capture_warning",
+      "error_native_code": 196386,
+      "error_stage": "read_sample",
+      "patches": 0,
+      "status": "failed"
+    },
+    {
+      "capture": "cr250/failure.budget_refused_before_m",
+      "error_native_code": 1638157,
+      "error_stage": "read_sample",
+      "patches": 0,
+      "status": "failed"
+    },
+    {
+      "capture": "cr250/failure.setting_not_taken",
+      "error_native_code": 1441568,
+      "error_stage": "read_sample",
+      "patches": 0,
+      "status": "failed"
+    },
+    {
+      "capture": "cr250/failure.spectrum_mismatch",
+      "error_native_code": 982820,
+      "error_stage": "read_sample",
+      "patches": 1,
+      "status": "failed"
+    }
+  ],
+  "not_yet_available": {},
+  "origin": "tools/generate_frontend_fixtures.py",
+  "personas": {
+    "colorhug": {
+      "calibration_retained": null,
+      "capability_id": "84fbc41d3e042176f118313a4c98c7fbfb9d2c43dc4d452a94a7848c35b13b7a",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot"
+      ],
+      "instrument": "Hughski ColorHug",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "colorhug2": {
+      "calibration_retained": null,
+      "capability_id": "41430225ef5684ca7007d9e67b164ca81e84e8c5425c9e0b321cfb1425355c7a",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot"
+      ],
+      "instrument": "Hughski ColorHug2",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "colormunki": {
+      "calibration_retained": [
+        "ambient_flash",
+        "ambient_spot",
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "emissive_strip",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive",
+        "reflective_spot",
+        "reflective_spot_m2",
+        "reflective_strip",
+        "reflective_strip_m2",
+        "transmission_spot",
+        "transmission_strip"
+      ],
+      "capability_id": "6baed930d5f44ea3780e35a82937ca4fc6e6d828b554bfa3a6ed5acfb5f0a334",
+      "captured": [
+        {
+          "capture": "emissive_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "reflective_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "reflective_strip_m2.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_strip_m2",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "transmission_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "transmission_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m2.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m2",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "transmission_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_ambient.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "transmission_ambient",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_flash.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_flash",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_strip.strip",
+        "reflective_strip.strip",
+        "reflective_strip_m2.strip",
+        "transmission_strip.strip",
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "emissive_spot_nonadaptive.spot",
+        "reflective_spot.spot",
+        "reflective_spot_m2.spot",
+        "transmission_spot.spot",
+        "ambient_spot.spot",
+        "ambient_flash.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot",
+        "emissive_tele_nonadaptive.spot"
+      ],
+      "instrument": "X-Rite ColorMunki",
+      "modes": [
+        "emissive_strip",
+        "reflective_strip",
+        "reflective_strip_m2",
+        "transmission_strip",
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "reflective_spot",
+        "reflective_spot_m2",
+        "transmission_spot",
+        "transmission_ambient",
+        "ambient_spot",
+        "ambient_flash",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive"
+      ],
+      "not_completed": [
+        "transmission_ambient.spot"
+      ],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "colormunki_smile": {
+      "calibration_retained": null,
+      "capability_id": "cdfb8d0e1ccac3fe4a19e6f83a0db70c8d7fcd85dbc97da9986fa1e54593cf30",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "ambient_spot.spot"
+      ],
+      "instrument": "ColorMunki Smile",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "ambient_spot"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "cr100": {
+      "calibration_retained": null,
+      "capability_id": "8c5d9baf27c94d4b167d59e85200a2d10bb8937db3c6c3253f5a8aedfb6d190d",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot"
+      ],
+      "instrument": "Colorimetry Research CR-100",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_tele",
+        "emissive_tele_adaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "cr250": {
+      "calibration_retained": null,
+      "capability_id": "a05d84564c1659581c96a4eb333b38f5dd022098abf0cb5f9f7339127f758f5f",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "emissive_spot_nonadaptive.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot",
+        "emissive_tele_nonadaptive.spot"
+      ],
+      "instrument": "Colorimetry Research CR-250",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "cr300": {
+      "calibration_retained": null,
+      "capability_id": "9657bbd8eb5a01ffb24eca5ac46011b3d32874322ba8dbe9cbec606762228ff5",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "emissive_spot_nonadaptive.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot",
+        "emissive_tele_nonadaptive.spot"
+      ],
+      "instrument": "Colorimetry Research CR-300",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "dtp20": {
+      "calibration_retained": null,
+      "capability_id": "a6252d8ab1385caaa38d60c11b736dd5efcb9b9f13611b77f6fa66f062e2e513",
+      "captured": [
+        {
+          "capture": "reflective_chart.chart",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "reflective_chart",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "chart"
+        },
+        {
+          "capture": "reflective_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "reflective_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "saved_chart.chart",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "saved_chart",
+          "patches": 12,
+          "status": "completed",
+          "workflow": "chart"
+        },
+        {
+          "capture": "saved_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "saved_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "reflective_strip.strip",
+        "reflective_spot.spot",
+        "saved_chart.chart",
+        "saved_spot.spot"
+      ],
+      "instrument": "X-Rite DTP20",
+      "modes": [
+        "reflective_chart",
+        "reflective_strip",
+        "reflective_spot",
+        "saved_chart",
+        "saved_strip",
+        "saved_spot"
+      ],
+      "not_completed": [
+        "reflective_chart.chart"
+      ],
+      "retained_patch_v1": {
+        "capture": "reflective_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "reflective_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {
+        "saved_strip": "The native driver has no assessed strip operand contract."
+      }
+    },
+    "dtp22": {
+      "calibration_retained": [
+        "reflective_spot"
+      ],
+      "capability_id": "4f194abb748943465ef6a0290273224d3e96e0b4c28eb2370b94c8a0db95c93c",
+      "captured": [
+        {
+          "capture": "reflective_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "reflective_spot.spot"
+      ],
+      "instrument": "X-Rite DTP22",
+      "modes": [
+        "reflective_spot"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "reflective_spot.retained",
+        "event_kinds": [
+          "instruction_notified",
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "reflective_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "dtp41": {
+      "calibration_retained": null,
+      "capability_id": "26d12ce857505f3e86101270811eea689972b140b87c37ca0426e9a2f40dd14f",
+      "captured": [
+        {
+          "capture": "reflective_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "reflective_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "reflective_strip.strip",
+        "reflective_spot.spot"
+      ],
+      "instrument": "X-Rite DTP41",
+      "modes": [
+        "reflective_strip",
+        "reflective_spot"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "reflective_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "reflective_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "dtp51": {
+      "calibration_retained": null,
+      "capability_id": "31c84278038deff4a3e854e829c88bc35e4c64375f133af2f82137ca0e7e06b1",
+      "captured": [
+        {
+          "capture": "reflective_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        }
+      ],
+      "completed": [
+        "reflective_strip.strip"
+      ],
+      "instrument": "X-Rite DTP51",
+      "modes": [
+        "reflective_strip"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": null,
+      "unavailable_modes": {}
+    },
+    "dtp92": {
+      "calibration_retained": null,
+      "capability_id": "9dcf16df6ca39f7fd3fea654c06cb0aac047fe5dd9747bc3ed264bcbc0745e24",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot"
+      ],
+      "instrument": "X-Rite DTP92",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "dtp94": {
+      "calibration_retained": null,
+      "capability_id": "07d45fdc42e678428b5ad394f679fcb7f21940f162a39f5cd004a97374bc9100",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot"
+      ],
+      "instrument": "X-Rite DTP94",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "ex1": {
+      "calibration_retained": [
+        "emissive_tele",
+        "emissive_tele_adaptive"
+      ],
+      "capability_id": "9d1ebccdc73228040fd4220cbdc88c8d1ef32c273dc06a17a1a8ba9fc9d262a9",
+      "captured": [
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot"
+      ],
+      "instrument": "Image Engineering EX1",
+      "modes": [
+        "emissive_tele",
+        "emissive_tele_adaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_tele.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_tele",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "hcfr": {
+      "calibration_retained": null,
+      "capability_id": "83d3d0b8f8cd2651e5340b53e6154004fc690c03ef67e20fd934ee20b07524df",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot"
+      ],
+      "instrument": "Colorimtre HCFR",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "huey": {
+      "calibration_retained": null,
+      "capability_id": "bba587773403a1bd288c6157dca8f7034427ed9e84f2fd1562faef97ffe60ef3",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "ambient_spot.spot"
+      ],
+      "instrument": "GretagMacbeth Huey",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "ambient_spot"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "i1_display_1": {
+      "calibration_retained": null,
+      "capability_id": "d579c8f191621736f09988c7867a5ff15e0768dd2ac3fad9a60485bedbd18725",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot"
+      ],
+      "instrument": "GretagMacbeth i1 Display 1",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "i1_display_2": {
+      "calibration_retained": null,
+      "capability_id": "63fea4814dd79e5f3f1829dbc31d1ee4d11399140797c1f6da4d306b1c6a96c6",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "ambient_spot.spot"
+      ],
+      "instrument": "GretagMacbeth i1 Display 2",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "ambient_spot"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "i1_display_3": {
+      "calibration_retained": null,
+      "capability_id": "95ecf2dbb11a28544c31bcb2f411b8ec6d1892e82eedf846f72431be8ab293df",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "emissive_spot_nonadaptive.spot",
+        "ambient_spot.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot",
+        "emissive_tele_nonadaptive.spot"
+      ],
+      "instrument": "X-Rite i1 DisplayPro, ColorMunki Display",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "ambient_spot",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "i1monitor": {
+      "calibration_retained": [
+        "ambient_flash",
+        "ambient_spot",
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "emissive_strip",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive",
+        "transmission_spot",
+        "transmission_strip"
+      ],
+      "capability_id": "e2abd3f52b65bad42a7ab783a6b2483843b8c60980b7a9f2ef884ff5c75af054",
+      "captured": [
+        {
+          "capture": "emissive_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "transmission_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "transmission_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "transmission_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_ambient.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "transmission_ambient",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_flash.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_flash",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_strip.strip",
+        "transmission_strip.strip",
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "emissive_spot_nonadaptive.spot",
+        "transmission_spot.spot",
+        "ambient_spot.spot",
+        "ambient_flash.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot",
+        "emissive_tele_nonadaptive.spot"
+      ],
+      "instrument": "GretagMacbeth i1 Monitor",
+      "modes": [
+        "emissive_strip",
+        "transmission_strip",
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "transmission_spot",
+        "transmission_ambient",
+        "ambient_spot",
+        "ambient_flash",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive"
+      ],
+      "not_completed": [
+        "transmission_ambient.spot"
+      ],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "i1pro": {
+      "calibration_retained": [
+        "ambient_flash",
+        "ambient_spot",
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "emissive_strip",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive",
+        "reflective_spot",
+        "reflective_spot_m0",
+        "reflective_strip",
+        "reflective_strip_m0",
+        "transmission_spot",
+        "transmission_strip"
+      ],
+      "capability_id": "4afdbc64e89163983577deb835fe31b98071039c173a819d6e980a6c47b2b31e",
+      "captured": [
+        {
+          "capture": "emissive_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "reflective_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "reflective_strip_m0.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_strip_m0",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "transmission_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "transmission_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m0.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m0",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "transmission_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_ambient.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "transmission_ambient",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_flash.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_flash",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_strip.strip",
+        "reflective_strip.strip",
+        "reflective_strip_m0.strip",
+        "transmission_strip.strip",
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "emissive_spot_nonadaptive.spot",
+        "reflective_spot.spot",
+        "reflective_spot_m0.spot",
+        "transmission_spot.spot",
+        "ambient_spot.spot",
+        "ambient_flash.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot",
+        "emissive_tele_nonadaptive.spot"
+      ],
+      "instrument": "GretagMacbeth i1 Pro",
+      "modes": [
+        "emissive_strip",
+        "reflective_strip",
+        "reflective_strip_m0",
+        "transmission_strip",
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "reflective_spot",
+        "reflective_spot_m0",
+        "transmission_spot",
+        "transmission_ambient",
+        "ambient_spot",
+        "ambient_flash",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive"
+      ],
+      "not_completed": [
+        "transmission_ambient.spot"
+      ],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "i1pro2": {
+      "calibration_retained": [
+        "ambient_flash",
+        "ambient_spot",
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "emissive_strip",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive",
+        "reflective_spot",
+        "reflective_spot_m2",
+        "reflective_strip",
+        "reflective_strip_m2",
+        "transmission_spot",
+        "transmission_strip"
+      ],
+      "capability_id": "693d975c356e29e874f1f925f3627bc3459fa2f9522f8cdcd1ab6252d393cb14",
+      "captured": [
+        {
+          "capture": "emissive_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "reflective_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "reflective_strip_m2.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_strip_m2",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "transmission_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "transmission_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m2.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m2",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "transmission_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_ambient.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "transmission_ambient",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_flash.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_flash",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_strip.strip",
+        "reflective_strip.strip",
+        "reflective_strip_m2.strip",
+        "transmission_strip.strip",
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "emissive_spot_nonadaptive.spot",
+        "reflective_spot.spot",
+        "reflective_spot_m2.spot",
+        "transmission_spot.spot",
+        "ambient_spot.spot",
+        "ambient_flash.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot",
+        "emissive_tele_nonadaptive.spot"
+      ],
+      "instrument": "X-Rite i1 Pro 2",
+      "modes": [
+        "emissive_strip",
+        "reflective_strip",
+        "reflective_strip_m2",
+        "transmission_strip",
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "reflective_spot",
+        "reflective_spot_m2",
+        "transmission_spot",
+        "transmission_ambient",
+        "ambient_spot",
+        "ambient_flash",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive"
+      ],
+      "not_completed": [
+        "transmission_ambient.spot"
+      ],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "i1pro3": {
+      "calibration_retained": [
+        "ambient_flash",
+        "ambient_spot",
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "emissive_strip",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive",
+        "reflective_spot",
+        "reflective_spot_m0",
+        "reflective_spot_m1",
+        "reflective_spot_m2",
+        "reflective_strip",
+        "reflective_strip_m0",
+        "reflective_strip_m1",
+        "reflective_strip_m2",
+        "transmission_spot",
+        "transmission_strip"
+      ],
+      "capability_id": "22d8c110d3967ccda7e6757393d6c18c62bc09d130644d513a9cd65065d1b15d",
+      "captured": [
+        {
+          "capture": "emissive_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "reflective_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "reflective_strip_m0.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_strip_m0",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "reflective_strip_m1.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_strip_m1",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "reflective_strip_m2.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_strip_m2",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "transmission_strip.strip",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "transmission_strip",
+          "patches": 4,
+          "status": "completed",
+          "workflow": "strip"
+        },
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m0.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m0",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m1.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m1",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m2.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m2",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "transmission_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_ambient.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "transmission_ambient",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_flash.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_flash",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_strip.strip",
+        "reflective_strip.strip",
+        "reflective_strip_m0.strip",
+        "reflective_strip_m1.strip",
+        "reflective_strip_m2.strip",
+        "transmission_strip.strip",
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "emissive_spot_nonadaptive.spot",
+        "reflective_spot.spot",
+        "reflective_spot_m0.spot",
+        "reflective_spot_m1.spot",
+        "reflective_spot_m2.spot",
+        "transmission_spot.spot",
+        "ambient_spot.spot",
+        "ambient_flash.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot",
+        "emissive_tele_nonadaptive.spot"
+      ],
+      "instrument": "X-Rite i1 Pro 3",
+      "modes": [
+        "emissive_strip",
+        "reflective_strip",
+        "reflective_strip_m0",
+        "reflective_strip_m1",
+        "reflective_strip_m2",
+        "transmission_strip",
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "reflective_spot",
+        "reflective_spot_m0",
+        "reflective_spot_m1",
+        "reflective_spot_m2",
+        "transmission_spot",
+        "transmission_ambient",
+        "ambient_spot",
+        "ambient_flash",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive"
+      ],
+      "not_completed": [
+        "transmission_ambient.spot"
+      ],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "klein_k10": {
+      "calibration_retained": null,
+      "capability_id": "704761a4216d4c00d5726e9c60c62020d2d22319d016d58bf446870b9f123db1",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_nonadaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_nonadaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "emissive_spot_nonadaptive.spot",
+        "ambient_spot.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot",
+        "emissive_tele_nonadaptive.spot"
+      ],
+      "instrument": "Klein K-10",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "ambient_spot",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "pr655": {
+      "calibration_retained": null,
+      "capability_id": "f3e0f9df0658f6543e19c92a6a5963b44384b04e7be3e8689e2718b8c2efdc7e",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_nonadaptive.spot",
+          "error_native_code": 1376256,
+          "error_stage": "check_mode",
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot_nonadaptive",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_nonadaptive.spot",
+          "error_native_code": 1376256,
+          "error_stage": "check_mode",
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele_nonadaptive",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "ambient_spot.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot"
+      ],
+      "instrument": "Photo Research PR-655",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "ambient_spot",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive"
+      ],
+      "not_completed": [
+        "emissive_spot_nonadaptive.spot",
+        "emissive_tele_nonadaptive.spot"
+      ],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "pr670": {
+      "calibration_retained": null,
+      "capability_id": "1e12b6761e348268ebc9d05dc6706b0a2710a459c07cf735e76fc3e74e59280f",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_nonadaptive.spot",
+          "error_native_code": 1376256,
+          "error_stage": "check_mode",
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_spot_nonadaptive",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_nonadaptive.spot",
+          "error_native_code": 1376256,
+          "error_stage": "check_mode",
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele_nonadaptive",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "ambient_spot.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot"
+      ],
+      "instrument": "Photo Research PR-670",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_spot_nonadaptive",
+        "ambient_spot",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "emissive_tele_nonadaptive"
+      ],
+      "not_completed": [
+        "emissive_spot_nonadaptive.spot",
+        "emissive_tele_nonadaptive.spot"
+      ],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "smcube": {
+      "calibration_retained": [
+        "reflective_spot"
+      ],
+      "capability_id": "c53f70dee656623739c15befb3c1ebddff586b32c39ec1bdfa79821e594cd06d",
+      "captured": [
+        {
+          "capture": "reflective_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "reflective_spot.spot"
+      ],
+      "instrument": "SwatchMate Cube",
+      "modes": [
+        "reflective_spot"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "reflective_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "reflective_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "specbos": {
+      "calibration_retained": [
+        "transmission_ambient",
+        "transmission_spot"
+      ],
+      "capability_id": "a0e8b6885816dc3243d7e81868b7a283dba6a13786208640d6bdfc607bb42736",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "transmission_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_ambient.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "transmission_ambient",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "transmission_spot.spot",
+        "transmission_ambient.spot",
+        "ambient_spot.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot"
+      ],
+      "instrument": "JETI specbos",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "transmission_spot",
+        "transmission_ambient",
+        "ambient_spot",
+        "emissive_tele",
+        "emissive_tele_adaptive"
+      ],
+      "not_completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot"
+      ],
+      "retained_patch_v1": {
+        "capture": "transmission_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "transmission_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "specbos_1201": {
+      "calibration_retained": [
+        "transmission_ambient",
+        "transmission_spot"
+      ],
+      "capability_id": "6ab55dabba5b78526ffea2b233ab4765d0c622c300c7feee7091fa557eab6473",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "transmission_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_ambient.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "transmission_ambient",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "transmission_spot.spot",
+        "transmission_ambient.spot",
+        "ambient_spot.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot"
+      ],
+      "instrument": "JETI specbos 1201",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "transmission_spot",
+        "transmission_ambient",
+        "ambient_spot",
+        "emissive_tele",
+        "emissive_tele_adaptive"
+      ],
+      "not_completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot"
+      ],
+      "retained_patch_v1": {
+        "capture": "transmission_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "transmission_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "specbos_2501": {
+      "calibration_retained": [
+        "transmission_ambient",
+        "transmission_spot"
+      ],
+      "capability_id": "e65c7941ef9d463e80ea5b049ecff8db59eb2c814a5148f6fdd9fde808d827ac",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "transmission_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_ambient.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "transmission_ambient",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "transmission_spot.spot",
+        "transmission_ambient.spot",
+        "ambient_spot.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot"
+      ],
+      "instrument": "JETI specbos 2501",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "transmission_spot",
+        "transmission_ambient",
+        "ambient_spot",
+        "emissive_tele",
+        "emissive_tele_adaptive"
+      ],
+      "not_completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot"
+      ],
+      "retained_patch_v1": {
+        "capture": "transmission_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "transmission_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "spectraval": {
+      "calibration_retained": [
+        "transmission_ambient",
+        "transmission_spot"
+      ],
+      "capability_id": "9242a77afeddfac01ffe6c5bed6aa7df439fb385ba9ac6f3db4078b44a8cca9e",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "transmission_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_ambient.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "transmission_ambient",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "retained_patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "transmission_spot.spot",
+        "transmission_ambient.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot"
+      ],
+      "instrument": "JETI spectraval",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "transmission_spot",
+        "transmission_ambient",
+        "ambient_spot",
+        "emissive_tele",
+        "emissive_tele_adaptive"
+      ],
+      "not_completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "ambient_spot.spot"
+      ],
+      "retained_patch_v1": {
+        "capture": "transmission_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "transmission_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "spectrolino": {
+      "calibration_retained": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "reflective_spot",
+        "reflective_spot_m0",
+        "reflective_spot_m2",
+        "reflective_spot_m3",
+        "transmission_spot"
+      ],
+      "capability_id": "618712d900f23a3775f55ecf26f07f597d78b248dfaba3917a9c88c78b64ec5a",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m0.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m0",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m2.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m2",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m3.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m3",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "transmission_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "reflective_spot.spot",
+        "reflective_spot_m0.spot",
+        "reflective_spot_m2.spot",
+        "reflective_spot_m3.spot",
+        "transmission_spot.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot"
+      ],
+      "instrument": "GretagMacbeth Spectrolino",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "reflective_spot",
+        "reflective_spot_m0",
+        "reflective_spot_m2",
+        "reflective_spot_m3",
+        "transmission_spot",
+        "emissive_tele",
+        "emissive_tele_adaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "spectroscan": {
+      "calibration_retained": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "reflective_spot",
+        "reflective_spot_m0",
+        "reflective_spot_m2",
+        "reflective_spot_m3",
+        "reflective_xy",
+        "reflective_xy_m0",
+        "reflective_xy_m2",
+        "reflective_xy_m3"
+      ],
+      "capability_id": "0f45bb153cfc7a776e45d47ed23ce7d04babb8d99ba863063f7bf8443dc9e074",
+      "captured": [
+        {
+          "capture": "reflective_xy.xy",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_xy",
+          "patches": 6,
+          "status": "completed",
+          "workflow": "xy"
+        },
+        {
+          "capture": "reflective_xy_m0.xy",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_xy_m0",
+          "patches": 6,
+          "status": "completed",
+          "workflow": "xy"
+        },
+        {
+          "capture": "reflective_xy_m2.xy",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_xy_m2",
+          "patches": 6,
+          "status": "completed",
+          "workflow": "xy"
+        },
+        {
+          "capture": "reflective_xy_m3.xy",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_xy_m3",
+          "patches": 6,
+          "status": "completed",
+          "workflow": "xy"
+        },
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m0.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m0",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m2.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m2",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m3.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m3",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "reflective_xy.xy",
+        "reflective_xy_m0.xy",
+        "reflective_xy_m2.xy",
+        "reflective_xy_m3.xy",
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "reflective_spot.spot",
+        "reflective_spot_m0.spot",
+        "reflective_spot_m2.spot",
+        "reflective_spot_m3.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot"
+      ],
+      "instrument": "GretagMacbeth SpectroScan",
+      "modes": [
+        "reflective_xy",
+        "reflective_xy_m0",
+        "reflective_xy_m2",
+        "reflective_xy_m3",
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "reflective_spot",
+        "reflective_spot_m0",
+        "reflective_spot_m2",
+        "reflective_spot_m3",
+        "emissive_tele",
+        "emissive_tele_adaptive"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "spectroscant": {
+      "calibration_retained": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "emissive_tele",
+        "emissive_tele_adaptive",
+        "reflective_spot",
+        "reflective_spot_m0",
+        "reflective_spot_m2",
+        "reflective_spot_m3",
+        "reflective_xy",
+        "reflective_xy_m0",
+        "reflective_xy_m2",
+        "reflective_xy_m3",
+        "transmission_spot"
+      ],
+      "capability_id": "55ef3452257741c2b336b367ae921520c594edf90633b5509901619294f119d5",
+      "captured": [
+        {
+          "capture": "reflective_xy.xy",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_xy",
+          "patches": 6,
+          "status": "completed",
+          "workflow": "xy"
+        },
+        {
+          "capture": "reflective_xy_m0.xy",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_xy_m0",
+          "patches": 6,
+          "status": "completed",
+          "workflow": "xy"
+        },
+        {
+          "capture": "reflective_xy_m2.xy",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_xy_m2",
+          "patches": 6,
+          "status": "completed",
+          "workflow": "xy"
+        },
+        {
+          "capture": "reflective_xy_m3.xy",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_xy_m3",
+          "patches": 6,
+          "status": "completed",
+          "workflow": "xy"
+        },
+        {
+          "capture": "transmission_xy.xy",
+          "error_native_code": 327680,
+          "error_stage": "check_mode",
+          "event_contract": "patch_v1",
+          "mode": "transmission_xy",
+          "patches": 0,
+          "status": "failed",
+          "workflow": "xy"
+        },
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m0.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m0",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m2.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m2",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "reflective_spot_m3.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "reflective_spot_m3",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "transmission_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "transmission_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_tele_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_tele_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "reflective_xy.xy",
+        "reflective_xy_m0.xy",
+        "reflective_xy_m2.xy",
+        "reflective_xy_m3.xy",
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "reflective_spot.spot",
+        "reflective_spot_m0.spot",
+        "reflective_spot_m2.spot",
+        "reflective_spot_m3.spot",
+        "transmission_spot.spot",
+        "emissive_tele.spot",
+        "emissive_tele_adaptive.spot"
+      ],
+      "instrument": "GretagMacbeth SpectroScanT",
+      "modes": [
+        "reflective_xy",
+        "reflective_xy_m0",
+        "reflective_xy_m2",
+        "reflective_xy_m3",
+        "transmission_xy",
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "reflective_spot",
+        "reflective_spot_m0",
+        "reflective_spot_m2",
+        "reflective_spot_m3",
+        "transmission_spot",
+        "emissive_tele",
+        "emissive_tele_adaptive"
+      ],
+      "not_completed": [
+        "transmission_xy.xy"
+      ],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "spyder2024": {
+      "calibration_retained": null,
+      "capability_id": "a0c81419105dd62b4e7ae1440fbca1716f6d0b75393321a3cabb115b529f2f16",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "ambient_spot.spot"
+      ],
+      "instrument": "GretagMacbeth Spyder 2024",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "ambient_spot"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "spyder3": {
+      "calibration_retained": null,
+      "capability_id": "4234e95fc1d55b26c5cdb3104c421c436b4131ae3f22d8f9ca0ff4187599ee31",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "ambient_spot.spot"
+      ],
+      "instrument": "Datacolor Spyder3",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "ambient_spot"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "spyder4": {
+      "calibration_retained": null,
+      "capability_id": "3bf439e2a4e02c915b18a5f072838c2be9a13912d2db744c8abef4c0cfdb9082",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "ambient_spot.spot"
+      ],
+      "instrument": "Datacolor Spyder4",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "ambient_spot"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "spyder5": {
+      "calibration_retained": null,
+      "capability_id": "8d8d6bdbd37b48a7cb02dde814c350c143ed825710c5047af2fb01c7e1ff6498",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "ambient_spot.spot"
+      ],
+      "instrument": "Datacolor Spyder5",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "ambient_spot"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "spyderx": {
+      "calibration_retained": [
+        "emissive_spot",
+        "emissive_spot_adaptive"
+      ],
+      "capability_id": "e06882eaa894f95d8ae4f93e8563b863c21f5d30e12dc732b1a6e8f9ce091a65",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "ambient_spot.spot"
+      ],
+      "instrument": "Datacolor SpyderX",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "ambient_spot"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "instruction_required",
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    },
+    "spyderx2": {
+      "calibration_retained": null,
+      "capability_id": "32c49f694825c7d9ebdcea9620fbf1b41a9464db04761af7950618d6057b59df",
+      "captured": [
+        {
+          "capture": "emissive_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "emissive_spot_adaptive.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "emissive_spot_adaptive",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        },
+        {
+          "capture": "ambient_spot.spot",
+          "error_native_code": null,
+          "error_stage": null,
+          "event_contract": "patch_v1",
+          "mode": "ambient_spot",
+          "patches": 1,
+          "status": "completed",
+          "workflow": "spot"
+        }
+      ],
+      "completed": [
+        "emissive_spot.spot",
+        "emissive_spot_adaptive.spot",
+        "ambient_spot.spot"
+      ],
+      "instrument": "Datacolor SpyderX2",
+      "modes": [
+        "emissive_spot",
+        "emissive_spot_adaptive",
+        "ambient_spot"
+      ],
+      "not_completed": [],
+      "retained_patch_v1": {
+        "capture": "emissive_spot.retained",
+        "event_kinds": [
+          "patch_reference",
+          "started",
+          "terminal"
+        ],
+        "mode": "emissive_spot",
+        "started_event_contract": "retained_patch_v1",
+        "status": "completed"
+      },
+      "unavailable_modes": {}
+    }
+  },
+  "provenance": "simulated; substituted instruments only, no hardware",
+  "refresh_frequency": [
+    "i1_display_3/refresh_success.json",
+    "i1_display_3/refresh_needs_cal.json",
+    "i1_display_3/refresh_nan.json"
+  ],
+  "scenarios": [
+    {
+      "capture": "dtp41/scenario.late_calibration",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "dtp41/scenario.late_calibration_failure",
+      "error_stage": "calibrate",
+      "patches": 0,
+      "status": "failed"
+    },
+    {
+      "capture": "dtp41/scenario.repeated_calibration",
+      "error_stage": "read_sample",
+      "patches": 0,
+      "status": "failed"
+    },
+    {
+      "capture": "dtp92/scenario.late_calibration",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "dtp20/scenario.nothing_stored",
+      "error_stage": "no_saved_readings",
+      "patches": 0,
+      "status": "failed"
+    },
+    {
+      "capture": "spectroscan/scenario.xy_release_failure",
+      "error_stage": "xy_release",
+      "patches": 6,
+      "status": "failed"
+    },
+    {
+      "capture": "spectroscan/scenario.xy_restore_failure",
+      "error_stage": "xy_restore",
+      "patches": 1,
+      "status": "failed"
+    },
+    {
+      "capture": "colormunki/scenario.wrong_dial",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "colormunki/scenario.wrong_dial_calibration",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "colormunki/scenario.dial_left_wrong",
+      "error_stage": "read_sample",
+      "patches": 0,
+      "status": "failed"
+    },
+    {
+      "capture": "i1_display_3/scenario.diffuser_arm",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "i1pro3/scenario.ambient_head",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "i1pro3/scenario.off_tile_calibration",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "i1pro3/scenario.calibration_position_only",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "i1pro2/scenario.calibration_message_only",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "i1pro3/scenario.calibration_position_refused",
+      "error_stage": "calibrate",
+      "patches": 0,
+      "status": "failed"
+    },
+    {
+      "capture": "i1pro3/scenario.tile_then_ambient_head",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "i1pro3/scenario.retained_calibration",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "pr655/scenario.controls_read",
+      "error_stage": null,
+      "patches": 0,
+      "status": "completed"
+    },
+    {
+      "capture": "pr655/scenario.controls_apply",
+      "error_stage": null,
+      "patches": 0,
+      "status": "completed"
+    },
+    {
+      "capture": "pr655/scenario.controls_apply_spot",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "pr655/scenario.geometry_refused",
+      "error_stage": "read_sample",
+      "patches": 1,
+      "status": "failed"
+    },
+    {
+      "capture": "pr655/scenario.late_d2_retained",
+      "error_stage": "read_sample",
+      "patches": 1,
+      "status": "failed"
+    },
+    {
+      "capture": "pr655/scenario.xyz_only",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "pr670/scenario.controls_read",
+      "error_stage": null,
+      "patches": 0,
+      "status": "completed"
+    },
+    {
+      "capture": "pr670/scenario.controls_apply",
+      "error_stage": null,
+      "patches": 0,
+      "status": "completed"
+    },
+    {
+      "capture": "pr670/scenario.controls_apply_spot",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "pr670/scenario.geometry_refused",
+      "error_stage": "read_sample",
+      "patches": 1,
+      "status": "failed"
+    },
+    {
+      "capture": "pr670/scenario.late_d2_retained",
+      "error_stage": "read_sample",
+      "patches": 1,
+      "status": "failed"
+    },
+    {
+      "capture": "pr670/scenario.xyz_only",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "pr655/scenario.control_recovery_failed_apply",
+      "error_stage": "native_controls",
+      "patches": 0,
+      "status": "failed"
+    },
+    {
+      "capture": "pr655/scenario.control_recovery_read",
+      "error_stage": null,
+      "patches": 0,
+      "status": "completed"
+    },
+    {
+      "capture": "pr655/scenario.control_recovery_apply",
+      "error_stage": null,
+      "patches": 0,
+      "status": "completed"
+    },
+    {
+      "capture": "pr655/scenario.control_recovery_spot",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    },
+    {
+      "capture": "pr670/scenario.control_recovery_failed_apply",
+      "error_stage": "native_controls",
+      "patches": 0,
+      "status": "failed"
+    },
+    {
+      "capture": "pr670/scenario.control_recovery_read",
+      "error_stage": null,
+      "patches": 0,
+      "status": "completed"
+    },
+    {
+      "capture": "pr670/scenario.control_recovery_apply",
+      "error_stage": null,
+      "patches": 0,
+      "status": "completed"
+    },
+    {
+      "capture": "pr670/scenario.control_recovery_spot",
+      "error_stage": null,
+      "patches": 1,
+      "status": "completed"
+    }
+  ]
+}

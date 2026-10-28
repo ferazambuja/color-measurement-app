@@ -1,0 +1,51 @@
+{
+  "note": "Listed, identified, and NOT attachable: opening it flashes the LED (i1d3.c:3079)",
+  "opening": [
+    {
+      "index": 1,
+      "permitted_without_acknowledgement": false,
+      "requires": "accept_disclosed_initialization"
+    },
+    {
+      "index": 2,
+      "permitted_without_acknowledgement": false,
+      "requires": "accept_disclosed_initialization"
+    }
+  ],
+  "refused": null,
+  "scenario": "i1d3_flash",
+  "units": [
+    {
+      "attachable": false,
+      "identified": true,
+      "index": 1,
+      "initialization_assessed": true,
+      "initialization_refusal": "initialization_changes_indicator_leds",
+      "name": "X-Rite i1 DisplayPro, ColorMunki Display",
+      "native_type": 19,
+      "opening_requires": "accept_disclosed_initialization",
+      "path": "fixture:display:1",
+      "symbol": "instI1Disp3",
+      "transport": 4,
+      "transports": [
+        "hid"
+      ]
+    },
+    {
+      "attachable": false,
+      "identified": true,
+      "index": 2,
+      "initialization_assessed": true,
+      "initialization_refusal": "initialization_changes_indicator_leds",
+      "name": "X-Rite i1 DisplayPro, ColorMunki Display",
+      "native_type": 19,
+      "opening_requires": "accept_disclosed_initialization",
+      "path": "fixture:display:2",
+      "symbol": "instI1Disp3",
+      "transport": 4,
+      "transports": [
+        "hid"
+      ]
+    }
+  ]
+}

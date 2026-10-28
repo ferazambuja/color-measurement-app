@@ -1,0 +1,79 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "package_backend"
+backend-path = ["."]
+
+[project]
+name = "color-measurement"
+version = "0.1.0"
+description = "Color-measurement application with Python science, Argyll C workers and a web workspace"
+readme = "README.md"
+requires-python = ">=3.11,<3.15"
+dynamic = ["license"]
+license-files = ["LICENSE", "LICENSES/*.txt"]
+dependencies = []
+
+[project.scripts]
+color-measurement = "color_measurement.cli:main"
+color-measurement-app = "color_measurement.desktop:main"
+
+[project.optional-dependencies]
+app = [
+    "pyserial>=3.5,<4",
+    "scipy>=1.12,<2",
+    "pyside6>=6.10,<6.11",
+]
+mat = [
+    "scipy>=1.12,<2",
+]
+
+[dependency-groups]
+app-build = [
+    "pyinstaller>=6.16,<7",
+]
+dev = [
+    "pytest>=8.3,<10",
+    "ruff>=0.9,<1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/color_measurement"]
+
+[tool.hatch.build.targets.sdist.hooks.custom]
+path = "package_backend.py"
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+    "src",
+    "tests",
+    "tools",
+    "examples",
+    "docs",
+    "README.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    ".github",
+    "LICENSE",
+    "LICENSES",
+    "pyproject.toml",
+    "package_backend.py",
+    "uv.lock",
+    ".python-version",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Test modules import the native proof helpers as `native_argyll` from tools/.
+pythonpath = ["tools"]
+addopts = "-ra"
+# Both JUnit families retain per-case properties; xunit1 avoids pytest's xunit2 warning.
+junit_family = "xunit1"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+# Verbatim contribution series files are authenticated by digest, not linted.
+extend-exclude = ["tools/native_argyll/contributions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]

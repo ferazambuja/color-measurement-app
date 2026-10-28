@@ -1,0 +1,167 @@
+{
+  "fixture": "retained_calibration",
+  "routes": {
+    "reflective_spot": [
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            },
+            {
+              "mode_word": 196625,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 196625,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": null,
+          "count": 0,
+          "entries": [],
+          "native_code": 327680,
+          "readback": {
+            "base_calibration_id": null,
+            "native_code": 327680,
+            "refresh_mode": null,
+            "technology_code": null
+          },
+          "status": "unsupported"
+        },
+        "event": "connected",
+        "filter_capabilities": 0,
+        "mode": 196625,
+        "mode_capabilities": 196625,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": null,
+        "serial_encoding": null,
+        "spectral": true,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 0,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 0,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 0,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 11008
+      },
+      {
+        "acknowledged": false,
+        "calibration_condition": 32,
+        "display_level": null,
+        "event": "calibration_condition",
+        "needed_calibrations": 32,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "reference_id": "22",
+        "reference_type": 1,
+        "remaining_calibrations": 32,
+        "skippable": false
+      },
+      {
+        "available_calibrations": 32,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": false,
+        "needed_calibrations": 32,
+        "performed": true,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "reference_id": null,
+        "reference_type": 0,
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "event": "instruction_required",
+        "instruction": "sample_position",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "request_id": "sample-ready"
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            32.75932742263112,
+            26.690567443898843,
+            4.163171554924757
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 5,
+          "spectrum": {
+            "norm": 100,
+            "samples": [
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5.00000000000001,
+              5.000000000003538,
+              5.000000000750415,
+              5.00000009556534,
+              5.000007306684514,
+              5.000335398785487,
+              5.009243230815769,
+              5.152935142899739,
+              6.519189573391092,
+              14.060200979560802,
+              37.440300973803886,
+              74.73536859949245,
+              95,
+              74.73536859949245,
+              37.440300973803886,
+              14.060200979560802,
+              6.519189573391092,
+              5.152935142899739,
+              5.009243230815769,
+              5.000335398785487,
+              5.000007306684514,
+              5.00000009556534,
+              5.000000000750415,
+              5.000000000003538
+            ],
+            "spec_n": 31,
+            "wavelength_end_nm": 700,
+            "wavelength_start_nm": 400
+          }
+        },
+        "event": "result",
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ]
+  }
+}

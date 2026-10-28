@@ -1,0 +1,945 @@
+{
+  "app-policy:ccss-grid": {
+    "implementation": "application-policy",
+    "module": "ccss_grid_policy"
+  },
+  "app-policy:cr250-host": {
+    "implementation": "application-policy",
+    "module": "cr250_host"
+  },
+  "app-policy:display-digest": {
+    "functions": [
+      "prepare_display_digest"
+    ],
+    "implementation": "application-policy",
+    "module": "display_catalogue"
+  },
+  "app-policy:native-preparation": {
+    "functions": [
+      "standalone_utf16",
+      "write_mode_check_candidates",
+      "prepare_application_policies"
+    ],
+    "implementation": "application-policy",
+    "module": "argyll_native_check",
+    "note": "Worker source selection, generated adapters and policy composition; not upstream repairs."
+  },
+  "app-policy:no-termination": {
+    "implementation": "application-policy",
+    "module": "no_termination"
+  },
+  "app-policy:pr655-host": {
+    "implementation": "application-policy",
+    "module": "pr655_host"
+  },
+  "argyll:huey-measurement-type": {
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/huey.c"
+    ]
+  },
+  "argyll:standalone-declarations": {
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/sa_conv.h"
+    ]
+  },
+  "native-resync:activate-mode": {
+    "function": "activate_mode",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/dtp41.c"
+    ]
+  },
+  "native-resync:buf2int": {
+    "function": "buf2int",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c",
+      "spectro/munki_imp.c",
+      "spectro/spyd2.c",
+      "spectro/colorhug.c"
+    ]
+  },
+  "native-resync:build-strip": {
+    "function": "build_strip",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/dtp41.c"
+    ]
+  },
+  "native-resync:calf-rstrz": {
+    "function": "calf_rstrz",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/rspec.c"
+    ]
+  },
+  "native-resync:calibration-diagnostic": {
+    "function": "calibration diagnostic",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/dtp92.c",
+      "spectro/dtp20.c",
+      "spectro/dtp22.c",
+      "spectro/dtp41.c",
+      "spectro/dtp51.c",
+      "spectro/ex1.c",
+      "spectro/i1d3.c",
+      "spectro/i1disp.c",
+      "spectro/smcube.c",
+      "spectro/specbos.c"
+    ]
+  },
+  "native-resync:cgats-read": {
+    "function": "cgats_read",
+    "implementation": "argyll-source",
+    "paths": [
+      "cgats/cgats.c"
+    ]
+  },
+  "native-resync:cgats-write": {
+    "function": "cgats_write",
+    "implementation": "argyll-source",
+    "paths": [
+      "cgats/cgats.c"
+    ]
+  },
+  "native-resync:copyright-notice": {
+    "function": "copyright notice",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/rspec.c"
+    ]
+  },
+  "native-resync:dtp41-calibrate": {
+    "function": "dtp41_calibrate",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/dtp41.c"
+    ]
+  },
+  "native-resync:dtp41-get-n-a-cals": {
+    "function": "dtp41_get_n_a_cals",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/dtp41.c"
+    ]
+  },
+  "native-resync:dtp41-read-sample": {
+    "function": "dtp41_read_sample",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/dtp41.c"
+    ]
+  },
+  "native-resync:dtp41-read-strip": {
+    "function": "dtp41_read_strip",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/dtp41.c"
+    ]
+  },
+  "native-resync:dtp92-get-refr-rate": {
+    "function": "dtp92_get_refr_rate",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/dtp92.c"
+    ]
+  },
+  "native-resync:getval-raw-xspec-poly3-ex": {
+    "function": "getval_raw_xspec_poly3_ex",
+    "implementation": "argyll-source",
+    "paths": [
+      "xicc/xspect.c"
+    ]
+  },
+  "native-resync:good-upsample": {
+    "function": "good_upsample",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:guess-type": {
+    "function": "guess_type",
+    "implementation": "argyll-source",
+    "paths": [
+      "cgats/cgats.c"
+    ]
+  },
+  "native-resync:header": {
+    "function": "header",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/kleink10.c",
+      "spectro/i1d3.c"
+    ]
+  },
+  "native-resync:huey-decode": {
+    "function": "huey_decode",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/huey.c"
+    ]
+  },
+  "native-resync:i1d3-decode": {
+    "function": "i1d3_decode",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1d3.c"
+    ]
+  },
+  "native-resync:i1disp-decode": {
+    "function": "i1disp_decode",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1disp.c"
+    ]
+  },
+  "native-resync:i1pro-average-multimeas": {
+    "function": "i1pro_average_multimeas",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro-compute-wav-filters": {
+    "function": "i1pro_compute_wav_filters",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro-compute-white-cal": {
+    "function": "i1pro_compute_white_cal",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro-conv2xyz": {
+    "function": "i1pro_conv2XYZ",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro-create-hr-calfactors": {
+    "function": "i1pro_create_hr_calfactors",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro-extract-patches-multimeas": {
+    "function": "i1pro_extract_patches_multimeas",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro-imp-calibrate": {
+    "function": "i1pro_imp_calibrate",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro-imp-init": {
+    "function": "i1pro_imp_init",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro-interp-error": {
+    "function": "i1pro_interp_error",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro.c"
+    ]
+  },
+  "native-resync:i1pro-read-patches-2": {
+    "function": "i1pro_read_patches_2",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro-read-patches-2a": {
+    "function": "i1pro_read_patches_2a",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro-restore-calibration": {
+    "function": "i1pro_restore_calibration",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro-restore-refspot-cal": {
+    "function": "i1pro_restore_refspot_cal",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro-sub-absraw": {
+    "function": "i1pro_sub_absraw",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro-trigger-one-measure": {
+    "function": "i1pro_trigger_one_measure",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-compute-wav-filter": {
+    "function": "i1pro3_compute_wav_filter",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-conv2xyz": {
+    "function": "i1pro3_conv2XYZ",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-filter-uvmux": {
+    "function": "i1pro3_filter_uvmux",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-imp-calibrate": {
+    "function": "i1pro3_imp_calibrate",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-imp-init": {
+    "function": "i1pro3_imp_init",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-interp-error": {
+    "function": "i1pro3_interp_error",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3.c"
+    ]
+  },
+  "native-resync:i1pro3-locate-patches": {
+    "function": "i1pro3_locate_patches",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-multimeas-check-raw-consistency": {
+    "function": "i1pro3_multimeas_check_raw_consistency",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-pol-refl-cal": {
+    "function": "i1pro3_pol_refl_cal",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-pol-strip-refl-meas": {
+    "function": "i1pro3_pol_strip_refl_meas",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-pol-strip-refl-meas-plot-cleanup": {
+    "function": "i1pro3_pol_strip_refl_meas plot cleanup",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-restore-calibration": {
+    "function": "i1pro3_restore_calibration",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-scan-emis-meas": {
+    "function": "i1pro3_scan_emis_meas",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-strip-refl-meas": {
+    "function": "i1pro3_strip_refl_meas",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:i1pro3-strip-refl-meas-plot-cleanup": {
+    "function": "i1pro3_strip_refl_meas plot cleanup",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "native-resync:inst-creat-disptype-list": {
+    "function": "inst_creat_disptype_list",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/inst.c"
+    ]
+  },
+  "native-resync:inst-valid-custom-filter": {
+    "function": "inst_valid_custom_filter",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/inst.c"
+    ]
+  },
+  "native-resync:k10-calibrate": {
+    "function": "k10_calibrate",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/kleink10.c"
+    ]
+  },
+  "native-resync:munki-average-multimeas": {
+    "function": "munki_average_multimeas",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "native-resync:munki-compute-white-cal": {
+    "function": "munki_compute_white_cal",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/munki_imp.c",
+      "spectro/munki_imp.h"
+    ]
+  },
+  "native-resync:munki-conv2xyz": {
+    "function": "munki_conv2XYZ",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "native-resync:munki-create-hr": {
+    "function": "munki_create_hr",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "native-resync:munki-extract-patches-multimeas": {
+    "function": "munki_extract_patches_multimeas",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "native-resync:munki-imp-calibrate": {
+    "function": "munki_imp_calibrate",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "native-resync:munki-imp-init": {
+    "function": "munki_imp_init",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "native-resync:munki-interp-error": {
+    "function": "munki_interp_error",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/munki.c"
+    ]
+  },
+  "native-resync:munki-ledtemp-whitemeasure": {
+    "function": "munki_ledtemp_whitemeasure",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "native-resync:munki-read-patches-2": {
+    "function": "munki_read_patches_2",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "native-resync:munki-read-patches-2a": {
+    "function": "munki_read_patches_2a",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "native-resync:munki-restore-calibration": {
+    "function": "munki_restore_calibration",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "native-resync:munki-trigger-one-measure": {
+    "function": "munki_trigger_one_measure",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "native-resync:numsup-read-inr": {
+    "function": "numsup_read_INR",
+    "implementation": "argyll-source",
+    "paths": [
+      "numlib/numsup.c"
+    ]
+  },
+  "native-resync:plot-header": {
+    "function": "plot header",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/i1pro_imp.c",
+      "spectro/i1pro3_imp.c",
+      "spectro/munki_imp.c"
+    ]
+  },
+  "native-resync:read-ccmx": {
+    "function": "read_ccmx",
+    "implementation": "argyll-source",
+    "paths": [
+      "xicc/ccmx.c"
+    ]
+  },
+  "native-resync:real-format": {
+    "function": "real_format",
+    "implementation": "argyll-source",
+    "paths": [
+      "cgats/cgats.c"
+    ]
+  },
+  "native-resync:sa-md5-accume": {
+    "function": "sa_MD5_accume",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/sa_conv.c"
+    ]
+  },
+  "native-resync:specbos-init-inst": {
+    "function": "specbos_init_inst",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/specbos.c"
+    ]
+  },
+  "native-resync:spyd2-calibrate": {
+    "function": "spyd2_calibrate",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/spyd2.c"
+    ]
+  },
+  "native-resync:spyd2-set-refr-rate": {
+    "function": "spyd2_set_refr_rate",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/spyd2.c"
+    ]
+  },
+  "native-resync:spydx-calibrate": {
+    "function": "spydX_calibrate",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/spydX.c"
+    ]
+  },
+  "native-resync:spydx2-calibrate": {
+    "function": "spydX2_calibrate",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/spydX2.c"
+    ]
+  },
+  "native-resync:spydx2-restore-calibration": {
+    "function": "spydX2_restore_calibration",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/spydX2.c"
+    ]
+  },
+  "native-resync:spydx2-save-calibration": {
+    "function": "spydX2_save_calibration",
+    "implementation": "argyll-source",
+    "paths": [
+      "spectro/spydX2.c"
+    ]
+  },
+  "native-resync:xspect-read-number": {
+    "function": "xspect_read_number",
+    "implementation": "argyll-source",
+    "paths": [
+      "xicc/xspect.h",
+      "xicc/xspect.c"
+    ]
+  },
+  "recipe:calibration-repairs": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "calibration_repairs",
+    "paths": [
+      "spectro/dtp41.c",
+      "spectro/dtp92.c",
+      "spectro/specbos.c"
+    ]
+  },
+  "recipe:ccss-cgats": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "ccss_cgats",
+    "paths": [
+      "xicc/ccss.c"
+    ]
+  },
+  "recipe:conversion-allocation": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "conversion_allocation",
+    "paths": [
+      "spectro/dtp20.c",
+      "spectro/dtp22.c",
+      "spectro/dtp41.c",
+      "spectro/i1pro3_imp.c",
+      "spectro/i1pro_imp.c",
+      "spectro/inst.c",
+      "spectro/inst.h",
+      "spectro/munki_imp.c",
+      "spectro/ss.c",
+      "spectro/xrga.c",
+      "spectro/xrga.h"
+    ]
+  },
+  "recipe:display-timing": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "display_timing",
+    "paths": [
+      "spectro/i1d3.c",
+      "spectro/kleink10.c"
+    ]
+  },
+  "recipe:display-timing-spectral": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "display_timing_spectral",
+    "paths": [
+      "spectro/i1pro3_imp.c",
+      "spectro/i1pro_imp.c",
+      "spectro/munki_imp.c"
+    ]
+  },
+  "recipe:disptype-list-member-release": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "disptype_list_member_release",
+    "paths": [
+      "spectro/inst.c"
+    ]
+  },
+  "recipe:disptype-list-release": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "disptype_list_release",
+    "paths": [
+      "spectro/kleink10.c",
+      "spectro/spydX.c",
+      "spectro/spydX2.c"
+    ]
+  },
+  "recipe:driver-manifest": {
+    "implementation": "application-policy",
+    "module": "driver_manifest",
+    "note": "Discovery and checked-constructor policy; portable Huey and standalone declarations have separate source IDs."
+  },
+  "recipe:filter-values": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "filter_values",
+    "paths": [
+      "spectro/dtp20.c",
+      "spectro/dtp22.c",
+      "spectro/dtp41.c",
+      "spectro/i1pro.c",
+      "spectro/i1pro3.c",
+      "spectro/inst.c",
+      "spectro/inst.h",
+      "spectro/munki.c",
+      "spectro/ss.c"
+    ]
+  },
+  "recipe:flash-capture": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "flash_capture",
+    "paths": [
+      "spectro/i1pro3_imp.c",
+      "spectro/i1pro_imp.c",
+      "spectro/munki_imp.c"
+    ],
+    "proofs": [
+      "flash_capture",
+      "flash_endpoints",
+      "i1pro_flash_saturation"
+    ]
+  },
+  "recipe:i1pro3-wavelength-finite": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "i1pro3_wavelength_finite",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "recipe:ieee754-special": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "ieee754_special",
+    "paths": [
+      "numlib/numsup.c"
+    ]
+  },
+  "recipe:legacy-nonadaptive-calibration": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "legacy_nonadaptive_calibration",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "recipe:legacy-scan-recognition": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "legacy_scan_recognition",
+    "paths": [
+      "spectro/i1pro_imp.c"
+    ]
+  },
+  "recipe:munki-curve-release": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "munki_curve_release",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "recipe:munki-dark-copy": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "munki_dark_copy",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "recipe:munki-ledtemp-slope": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "munki_ledtemp_slope",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "recipe:munki-nonadaptive-calibration": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "munki_nonadaptive_calibration",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "recipe:munki-scan-margin": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "munki_scan_margin",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "recipe:munki-white-buffer-release": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "munki_white_buffer_release",
+    "paths": [
+      "spectro/munki_imp.c"
+    ]
+  },
+  "recipe:native-resync": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "native_resync_proof",
+    "paths": [
+      "cgats/cgats.c",
+      "numlib/numsup.c",
+      "spectro/colorhug.c",
+      "spectro/dtp20.c",
+      "spectro/dtp22.c",
+      "spectro/dtp41.c",
+      "spectro/dtp51.c",
+      "spectro/dtp92.c",
+      "spectro/ex1.c",
+      "spectro/huey.c",
+      "spectro/i1d3.c",
+      "spectro/i1disp.c",
+      "spectro/i1pro.c",
+      "spectro/i1pro3.c",
+      "spectro/i1pro3_imp.c",
+      "spectro/i1pro_imp.c",
+      "spectro/inst.c",
+      "spectro/kleink10.c",
+      "spectro/munki.c",
+      "spectro/munki_imp.c",
+      "spectro/munki_imp.h",
+      "spectro/rspec.c",
+      "spectro/sa_conv.c",
+      "spectro/smcube.c",
+      "spectro/specbos.c",
+      "spectro/spyd2.c",
+      "spectro/spydX.c",
+      "spectro/spydX2.c",
+      "xicc/ccmx.c",
+      "xicc/xspect.c",
+      "xicc/xspect.h"
+    ],
+    "proofs": [
+      "native_resync"
+    ]
+  },
+  "recipe:nonadaptive-calibration": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "nonadaptive_calibration",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "recipe:scan-finite": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "scan_finite",
+    "paths": [
+      "spectro/i1pro_imp.c",
+      "spectro/munki_imp.c"
+    ]
+  },
+  "recipe:scan-normalization": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "scan_normalization",
+    "paths": [
+      "spectro/i1pro3_imp.c"
+    ]
+  },
+  "recipe:scan-tolerance-option": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "scan_tolerance_option",
+    "paths": [
+      "spectro/i1pro.c",
+      "spectro/i1pro3.c",
+      "spectro/munki.c"
+    ]
+  },
+  "recipe:spyder-black-cache": {
+    "implementation": "argyll-source",
+    "module": "spyder_black_cache",
+    "paths": [
+      "spectro/spydX2.c"
+    ]
+  },
+  "recipe:spyder-selection-path": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "spyder_selection_path",
+    "paths": [
+      "spectro/spydX2.c"
+    ]
+  },
+  "recipe:ss-protocol": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "ss_protocol",
+    "paths": [
+      "spectro/ss_imp.c",
+      "spectro/ss_imp.h"
+    ]
+  },
+  "recipe:ss-xy-metadata": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "ss_xy_metadata",
+    "paths": [
+      "spectro/ss.c"
+    ]
+  },
+  "recipe:xcalstd-option": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "xcalstd_option",
+    "paths": [
+      "spectro/dtp20.c",
+      "spectro/dtp22.c",
+      "spectro/dtp41.c",
+      "spectro/i1pro.c",
+      "spectro/i1pro3.c",
+      "spectro/munki.c",
+      "spectro/ss.c"
+    ]
+  },
+  "recipe:xyz-only-conversion": {
+    "fixture_role": "Frozen BEFORE inputs and a current production-source behavior proof; never a production transform.",
+    "implementation": "argyll-source",
+    "module": "xyz_only_conversion",
+    "paths": [
+      "spectro/i1pro3_imp.c",
+      "spectro/i1pro_imp.c",
+      "spectro/munki_imp.c"
+    ]
+  },
+  "spyder-calibration-slots": {
+    "implementation": "argyll-source",
+    "module": "spyder_calibration_slots",
+    "paths": [
+      "spectro/spydX2.h"
+    ]
+  }
+}

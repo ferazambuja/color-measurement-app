@@ -1,0 +1,24 @@
+--- a/spectro/dtp22.c
++++ b/spectro/dtp22.c
+@@ -628 +628,2 @@ instClamping clamp) {		/* NZ if clamp XYZ/Lab to be +ve */
+-	ipatch_convert_xrga(val, 1, xcalstd_nonpol, p->target_calstd, p->native_calstd, clamp);
++	if (ipatch_convert_xrga(val, 1, xcalstd_nonpol, p->target_calstd, p->native_calstd, clamp) != 0)
++		return inst_internal_error | DTP22_INTERNAL_ERROR;
+@@ -631,2 +632,3 @@ instClamping clamp) {		/* NZ if clamp XYZ/Lab to be +ve */
+-	if (p->custfilt_en)
+-		ipatch_convert_custom_filter(val, 1, &p->custfilt, clamp);
++	if (p->custfilt_en &&
++	    ipatch_convert_custom_filter(val, 1, &p->custfilt, clamp) != 0)
++		return inst_internal_error | DTP22_INTERNAL_ERROR;
+@@ -701 +703 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		a1logd(p->log,4,"dtp22_calibrate: doing calt 0x%x\n",calt);
++		a1logd(p->log,4,"dtp22_calibrate: doing calt 0x%x\n",*calt);
+@@ -1086,0 +1089,5 @@ dtp22_get_set_opt(inst *pp, inst_opt_type m, ...)
++		/* The target is a conversion-table index, or native for no conversion. */
++		if (standard != xcalstd_native && standard != xcalstd_xrdi
++		 && standard != xcalstd_gmdi && standard != xcalstd_xrga)
++			return inst_bad_parameter;
++
+@@ -1121,0 +1129,2 @@ dtp22_get_set_opt(inst *pp, inst_opt_type m, ...)
++		} else if (!inst_valid_custom_filter(sp)) {
++			return inst_bad_parameter;	/* Not evaluable by the interpolators */

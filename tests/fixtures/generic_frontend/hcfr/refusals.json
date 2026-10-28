@@ -1,0 +1,120 @@
+{
+  "layout_key_not_used_by_this_workflow": {
+    "message": "Layout keys not used by a spot workflow: ['guide']",
+    "refused": true,
+    "request": {
+      "capability_id": "83d3d0b8f8cd2651e5340b53e6154004fc690c03ef67e20fd934ee20b07524df",
+      "device_id": "Colorimtre HCFR",
+      "layout": {
+        "guide": 3
+      },
+      "mode": "emissive_spot",
+      "options": {},
+      "patch_ids": [
+        "A1"
+      ],
+      "schema_version": 1,
+      "workflow": "spot"
+    }
+  },
+  "mode_not_offered": {
+    "message": "Mode is not advertised by this instrument",
+    "refused": true,
+    "request": {
+      "capability_id": "83d3d0b8f8cd2651e5340b53e6154004fc690c03ef67e20fd934ee20b07524df",
+      "device_id": "Colorimtre HCFR",
+      "layout": {},
+      "mode": "reflective_xy_m3",
+      "options": {},
+      "patch_ids": [
+        "A1"
+      ],
+      "schema_version": 1,
+      "workflow": "spot"
+    }
+  },
+  "stale_capability_id": {
+    "message": "Stale or different capability snapshot",
+    "refused": true,
+    "request": {
+      "capability_id": "0000000000000000000000000000000000000000000000000000000000000000",
+      "device_id": "Colorimtre HCFR",
+      "layout": {},
+      "mode": "emissive_spot",
+      "options": {},
+      "patch_ids": [
+        "A1"
+      ],
+      "schema_version": 1,
+      "workflow": "spot"
+    }
+  },
+  "too_many_patch_ids": {
+    "message": "This workflow takes 1 to 1 unique patch IDs",
+    "refused": true,
+    "request": {
+      "capability_id": "83d3d0b8f8cd2651e5340b53e6154004fc690c03ef67e20fd934ee20b07524df",
+      "device_id": "Colorimtre HCFR",
+      "layout": {},
+      "mode": "emissive_spot",
+      "options": {},
+      "patch_ids": [
+        "A1",
+        "A2"
+      ],
+      "schema_version": 1,
+      "workflow": "spot"
+    }
+  },
+  "unknown_field": {
+    "message": "Request must contain exactly the generic frontend fields",
+    "refused": true,
+    "request": {
+      "capability_id": "83d3d0b8f8cd2651e5340b53e6154004fc690c03ef67e20fd934ee20b07524df",
+      "device_id": "Colorimtre HCFR",
+      "layout": {},
+      "mode": "emissive_spot",
+      "not_a_field": 1,
+      "options": {},
+      "patch_ids": [
+        "A1"
+      ],
+      "schema_version": 1,
+      "workflow": "spot"
+    }
+  },
+  "unknown_option": {
+    "message": "Unknown option for this instrument: Configuration.__init__() got an unexpected keyword argument 'not_an_option'",
+    "refused": true,
+    "request": {
+      "capability_id": "83d3d0b8f8cd2651e5340b53e6154004fc690c03ef67e20fd934ee20b07524df",
+      "device_id": "Colorimtre HCFR",
+      "layout": {},
+      "mode": "emissive_spot",
+      "options": {
+        "not_an_option": 1
+      },
+      "patch_ids": [
+        "A1"
+      ],
+      "schema_version": 1,
+      "workflow": "spot"
+    }
+  },
+  "workflow_not_offered": {
+    "message": "Workflow is not offered for this mode",
+    "refused": true,
+    "request": {
+      "capability_id": "83d3d0b8f8cd2651e5340b53e6154004fc690c03ef67e20fd934ee20b07524df",
+      "device_id": "Colorimtre HCFR",
+      "layout": {},
+      "mode": "emissive_spot",
+      "options": {},
+      "patch_ids": [
+        "A1"
+      ],
+      "schema_version": 1,
+      "workflow": "xy"
+    }
+  }
+}

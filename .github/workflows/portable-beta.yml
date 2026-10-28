@@ -1,0 +1,146 @@
+name: Prepare portable beta candidates
+
+# Deliberate target builds only. Public artifacts are readable by repository
+# readers; private runs consume minutes and all artifacts can consume storage.
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Target to qualify and package (no publication)
+        type: choice
+        options: [linux, windows, both]
+        default: linux
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portable-beta-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  sources:
+    name: Matching app, Argyll and Qt source set
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.12.15"
+          python-version: "3.11"
+      - name: Prepare matching source attachments
+        run: |
+          mkdir sources
+          curl --fail --location --retry 2 --output sources/Argyll_V3.5.0_src.zip https://www.argyllcms.com/Argyll_V3.5.0_src.zip
+          echo 'f8576ce5589fd15620abb73ff049ea31f55ddbd1bba6d1ffa87452658e7bc85f  sources/Argyll_V3.5.0_src.zip' | sha256sum --check
+          uv build --sdist --out-dir sources
+          uv run --locked python tools/collect_runtime_sources.py sources
+          python3 -c 'import json,subprocess,pathlib; pathlib.Path("sources/SOURCE.json").write_text(json.dumps({"commit": subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip(), "tree": subprocess.check_output(["git","rev-parse","HEAD^{tree}"],text=True).strip()},indent=2)+"\n")'
+          cd sources
+          sha256sum ./* > ../SOURCE-SHA256SUMS
+          mv ../SOURCE-SHA256SUMS .
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: corresponding-source-${{ github.sha }}
+          path: sources/*
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error
+
+  linux:
+    name: Linux x64 / glibc 2.36
+    if: inputs.target == 'linux' || inputs.target == 'both'
+    needs: sources
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Build fixed Linux environment
+        run: docker build --platform linux/amd64 -t cm-beta-linux -f tools/desktop_builder/linux.Dockerfile .
+      - name: Full software gate and target package without production execution
+        run: |
+          mkdir -p local/beta
+          docker run --rm --platform linux/amd64 -v "$GITHUB_WORKSPACE:/project" cm-beta-linux sh -ec '
+            uv sync --locked --extra app --group app-build
+            npm ci --prefix tools/desktop_builder --ignore-scripts --no-audit --no-fund
+            curl --fail --location --retry 2 --output local/beta/Argyll_V3.5.0_src.zip https://www.argyllcms.com/Argyll_V3.5.0_src.zip
+            echo "f8576ce5589fd15620abb73ff049ea31f55ddbd1bba6d1ffa87452658e7bc85f  local/beta/Argyll_V3.5.0_src.zip" | sha256sum --check
+            uv run --locked --extra app python tools/test_all.py --require-mat --jobs 4 --argyll-archive local/beta/Argyll_V3.5.0_src.zip --argyll-contribution tools/native_argyll/contributions/cr_pr --native-output local/beta/native
+            uv run --locked --extra app --group app-build python tools/build_desktop_app.py --instrument-build-report local/beta/native/report.json --output local/beta/application --build local/beta/build
+            uv run --locked python tools/prepare_beta_assets.py --application "local/beta/application/Color Measurement" --native-report local/beta/native/report.json --output local/beta/assets
+          '
+      - name: Retain complete candidate and original gate report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linux-x64-candidate-${{ github.sha }}
+          path: |
+            local/beta/assets/*
+            local/beta/native/report.json
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error
+
+  windows:
+    name: Windows x64 / CLANG64
+    if: inputs.target == 'windows' || inputs.target == 'both'
+    needs: sources
+    runs-on: windows-latest
+    timeout-minutes: 60
+    env:
+      PYTHONUTF8: "1"
+      CC: clang
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.12.15"
+          python-version: "3.11"
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+      - uses: msys2/setup-msys2@66cd2cce69caa17b53920067426061ca1de3a884 # v2
+        id: msys2
+        with:
+          msystem: CLANG64
+          release: true
+          update: true
+          install: mingw-w64-clang-x86_64-clang mingw-w64-clang-x86_64-compiler-rt mingw-w64-clang-x86_64-binutils
+      - name: Expose native compiler and obtain pinned Argyll source
+        shell: pwsh
+        env:
+          MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
+        run: |
+          Add-Content $env:GITHUB_PATH (Join-Path $env:MSYS2_LOCATION "clang64/bin")
+          New-Item -ItemType Directory -Force local/beta | Out-Null
+          curl.exe --fail --location --retry 2 --output local/beta/Argyll_V3.5.0_src.zip https://www.argyllcms.com/Argyll_V3.5.0_src.zip
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if ((Get-FileHash local/beta/Argyll_V3.5.0_src.zip -Algorithm SHA256).Hash.ToLowerInvariant() -ne 'f8576ce5589fd15620abb73ff049ea31f55ddbd1bba6d1ffa87452658e7bc85f') { throw 'Source digest mismatch' }
+      - name: Install locked application and renderer tools
+        shell: pwsh
+        run: |
+          uv sync --locked --extra app --group app-build
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm ci --prefix tools/desktop_builder --ignore-scripts --no-audit --no-fund
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Full software gate without production execution
+        run: uv run --locked --extra app python tools/test_all.py --require-mat --jobs 4 --argyll-archive local/beta/Argyll_V3.5.0_src.zip --argyll-contribution tools/native_argyll/contributions/cr_pr --native-output local/beta/native
+      - name: Freeze and source-check the target package
+        shell: pwsh
+        run: |
+          uv run --locked --extra app --group app-build python tools/build_desktop_app.py --instrument-build-report local/beta/native/report.json --output local/beta/application --build local/beta/build
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          uv run --locked python tools/prepare_beta_assets.py --application "local/beta/application/Color Measurement" --native-report local/beta/native/report.json --output local/beta/assets
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Retain complete candidate and original gate report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: windows-x64-candidate-${{ github.sha }}
+          path: |
+            local/beta/assets/*
+            local/beta/native/report.json
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error

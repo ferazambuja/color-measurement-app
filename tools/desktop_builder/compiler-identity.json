@@ -1,0 +1,8 @@
+{
+  "package": "@esbuild/darwin-arm64",
+  "version": "0.28.2",
+  "archive_url": "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.28.2.tgz",
+  "archive_integrity": "sha512-n4KqkOQrraxHJcgjM1RvwbigfQKIKJVpM7xp+KsxiyUSrRdIXnt73VhrPAx0fV44hgfmIVKjxMN9J1t5jySVkw==",
+  "binary_path": "bin/esbuild",
+  "binary_sha256": "10b6243df618d374bb2d5c9cfbe7052e1405f6aa4e53a6164f11a91b9f2e1384"
+}

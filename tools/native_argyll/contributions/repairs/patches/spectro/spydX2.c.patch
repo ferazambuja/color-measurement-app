@@ -1,0 +1,52 @@
+--- a/spectro/spydX2.c
++++ b/spectro/spydX2.c
+@@ -1052 +1052 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		a1logd(p->log,4,"spydX2_calibrate: doing calt 0x%x\n",calt);
++		a1logd(p->log,4,"spydX2_calibrate: doing calt 0x%x\n",*calt);
+@@ -1078,0 +1079 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
++			*calt &= ~inst_calt_emis_offset;
+@@ -1170,0 +1172 @@ spydX2_del(inst *pp) {
++	inst_del_disptype_list(p->dtlist, p->ndtlist);	/* CM: the instrument owns this list (inst.h:832-833) */
+@@ -1421,0 +1424,19 @@ static inst_code set_disp_type(spydX2 *p, inst_disptypesel *dentry) {
++	int usehl = 0;
++
++	/* CM: the measurement path belongs to the native index, so decide it on
++	 * every selection of one. It was decided only while first reading an
++	 * inbuilt matrix, so a cached reselection, and a CCMX over its base, kept
++	 * the previous selection's path. The inputs are fixed after init, so an
++	 * index first read on the low level path stays loaded, and one chosen
++	 * high level never needs the read. */
++	if ((dentry->flags & (inst_dtflags_mtx | inst_dtflags_ccmx)) != 0) {
++		int ix = dentry->ix; 
++
++		/* See if we could/should use high level measure XYZ for Spyder 2024 */
++		if ( p->is2024
++		 && !p->forcell
++		 && ix < p->mxdnp1
++   		 && ((1 << ix) & p->dnomask) != 0) {	
++			usehl = 1;
++		}
++	}
+@@ -1432,9 +1453 @@ static inst_code set_disp_type(spydX2 *p, inst_disptypesel *dentry) {
+-
+-		/* See if we could/should use high level measure XYZ for Spyder 2024 */
+-		p->usehl = 0;
+-		if ( p->is2024
+-		 && !p->forcell
+-		 && ix < p->mxdnp1
+-   		 && ((1 << ix) & p->dnomask) != 0) {	
+-			p->usehl = 1;
+-		}
++		p->usehl = usehl;
+@@ -1475,0 +1489 @@ static inst_code set_disp_type(spydX2 *p, inst_disptypesel *dentry) {
++	p->usehl = usehl;				/* CM: and its measurement path */
+@@ -1728 +1742 @@ static int spydX2_save_calibration(spydX2 *p) {
+-	calf_wints(&x, p->bcal, 3);
++	calf_wints(&x, p->bcal, 6);
+@@ -1789 +1803 @@ static int spydX2_restore_calibration(spydX2 *p) {
+-		calf_rints(&x, p->bcal, 3);
++		calf_rints(&x, p->bcal, 6);
+@@ -1805 +1819,2 @@ static int spydX2_restore_calibration(spydX2 *p) {
+-	a1logd(p->log, 3, "Restored spydX2_BlackCal: offsets %d %d %d\n",p->bcal[0], p->bcal[1], p->bcal[2]);
++	a1logd(p->log, 3, "Restored spydX2_BlackCal: offsets %d %d %d %d %d %d\n",
++		p->bcal[0], p->bcal[1], p->bcal[2], p->bcal[3], p->bcal[4], p->bcal[5]);

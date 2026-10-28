@@ -1,0 +1,41 @@
+--- a/spectro/insttypes.c
++++ b/spectro/insttypes.c
+@@ -84,0 +85,5 @@ extern icom_type dev_category(devType dtype) {
++	case instCR250:
++	case instCR100:
++	case instCR300:
++	case instPR655:
++	case instPR670:
+@@ -190,0 +196,10 @@ char *inst_sname(instType itype) {
++		case instCR250:
++			return "CR-250";
++		case instCR100:
++			return "CR-100";
++		case instCR300:
++			return "CR-300";
++		case instPR655:
++			return "PR-655";
++		case instPR670:
++			return "PR-670";
+@@ -286,0 +302,10 @@ char *inst_name(instType itype) {
++		case instCR250:
++			return "Colorimetry Research CR-250";
++		case instCR100:
++			return "Colorimetry Research CR-100";
++		case instCR300:
++			return "Colorimetry Research CR-300";
++		case instPR655:
++			return "Photo Research PR-655";
++		case instPR670:
++			return "Photo Research PR-670";
+@@ -401,0 +427,10 @@ instType inst_enum(char *name) {
++	else if (strcmp(name, "Colorimetry Research CR-250") == 0)
++		return instCR250;
++	else if (strcmp(name, "Colorimetry Research CR-100") == 0)
++		return instCR100;
++	else if (strcmp(name, "Colorimetry Research CR-300") == 0)
++		return instCR300;
++	else if (strcmp(name, "Photo Research PR-655") == 0)
++		return instPR655;
++	else if (strcmp(name, "Photo Research PR-670") == 0)
++		return instPR670;

@@ -1,0 +1,18 @@
+--- a/spectro/i1pro3.c
++++ b/spectro/i1pro3.c
+@@ -466 +466 @@ i1pro3_interp_error(inst *pp, i1pro3_code ec) {
+-			return "Creating spectral to CIE converted failed";
++			return "Spectral to CIE conversion or custom filter compensation failed";
+@@ -808,0 +809,3 @@ i1pro3_get_set_opt(inst *pp, inst_opt_type ot, ...) {
++		/* CM: a nonfinite ratio cannot bound a consistency check. */
++		if (!isfinite(toll_ratio))
++			return inst_bad_parameter;
+@@ -894,0 +898,5 @@ i1pro3_get_set_opt(inst *pp, inst_opt_type ot, ...) {
++		/* The target is a conversion-table index, or native for no conversion. */
++		if (standard != xcalstd_native && standard != xcalstd_xrdi
++		 && standard != xcalstd_gmdi && standard != xcalstd_xrga)
++			return inst_bad_parameter;
++
+@@ -929,0 +938,2 @@ i1pro3_get_set_opt(inst *pp, inst_opt_type ot, ...) {
++		} else if (!inst_valid_custom_filter(sp)) {
++			return inst_bad_parameter;	/* Not evaluable by the interpolators */

@@ -1,0 +1,259 @@
+--- a/spectro/inst.c
++++ b/spectro/inst.c
+@@ -672,0 +673,2 @@ void *cntx			/* Context for callback */
++	if (itype == instPR655 || itype == instPR670)
++		p = (inst *)new_pr655(icom, itype);
+@@ -680 +682,3 @@ void *cntx			/* Context for callback */
+-#endif /* ENABLE_SERIAL */
++	if (itype == instCR250 || itype == instCR100 || itype == instCR300)
++		p = (inst *)new_cr250(icom, itype);
++#endif /* ENABLE_FAST_SERIAL */
+@@ -906,2 +910,2 @@ static inst_disptypesel *expand_dlist(inst_disptypesel *list, int nlist, int *na
+-	NOTE that we assume that we cannot exaust the single letter
+-	selectors via hard coded, ccmx or ccss calibrations.
++	If both selector pools are exhausted, retain the remaining
++	calibrations without selectors.
+@@ -923 +927,5 @@ int doccmx						/* Add matching installed ccmx files */
+-	int fail = 0;
++	/* Preserve existing selectors. The tools encode '_' plus any printable
++	 * suffix as two bytes (instappsup.c); these additional plain characters
++	 * let both 64-entry CR calibration inventories remain selectable. */
++	static char *asels2 = "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0:,.+-=/@";
++	int nosel = 0;
+@@ -997 +1005 @@ int doccmx						/* Add matching installed ccmx files */
+-			free(list);
++			inst_del_disptype_list(list, nlist);	/* CCSS entries own their path and sets */
+@@ -1066,0 +1075,2 @@ int doccmx						/* Add matching installed ccmx files */
++		if (list[i].sel[0] != '\000')
++			continue;	/* Preserve selectors assigned in the earlier passes */
+@@ -1078,4 +1088,6 @@ int doccmx						/* Add matching installed ccmx files */
+-			disptechs_set_sel(2, i, &list[i].sel[1], list[i].isel, usels, &k, asels);
+-			if (list[i].sel[0] == '\000') {	/* Ran out of two letter selectors! */
+-				fail = 1;
+-				break;
++			/* The suffix is a fresh selector, not a retained candidate byte. */
++			list[i].sel[1] = '\000';
++			disptechs_set_sel(2, i, &list[i].sel[1], list[i].isel, usels, &k, asels2);
++			if (list[i].sel[1] == '\000') {	/* Ran out of two letter selectors! */
++				list[i].sel[0] = '\000';
++				nosel++;
+@@ -1109,5 +1121,2 @@ int doccmx						/* Add matching installed ccmx files */
+-
+-	if (fail) {
+-		a1loge(p->log, 1, "inst_creat_disptype_list: run out of selectors\n");
+-		return inst_internal_error;
+-	}
++	if (nosel)
++		a1logw(p->log, "inst_creat_disptype_list: %d calibration(s) have no selectors\n",nosel);
+@@ -1753,0 +1763,86 @@ devType fast_ser_dev_type(
++
++		/* Colorimetry Research CR family (cr250.c: CR-250, CR-100). Its host */
++		/* serial policy is 115200 8N1 and it has no Bluetooth transport. Send */
++		/* only the read-only "RC Model" query; an exact reply for a registered */
++		/* model identifies it. With its echo on (manual 4.1) the query comes */
++		/* back first. Continuation reads use the remaining probe allowance; */
++		/* write_read_ex itself has separate write/read timeouts and a flush. */
++		if ((p->dctype & icomt_btserial) == 0 && brt[i] == baud_115200) {
++			unsigned int stime = msec_time();
++			double rtime;
++			int bread, used = 0, echoed = 0, drop_lf = 0;
++
++			se = p->write_read_ex(p, "RC Model\r\n", 0, buf, BUFSZ, &bread, "\r\n", 1, tryto, 1);
++			for (;;) {
++				char *end;
++				int n, consume;
++				char line[64];
++
++				/* Serial reads return chunks, not lines: an echo may arrive
++				 * with some or all of its reply. Keep the unconsumed bytes. */
++				if (se != ICOM_OK || bread < 0 || bread >= BUFSZ - used)
++					break;
++				used += bread;
++				if ((int)strlen(buf) != used)
++					break;					/* Embedded NUL is not protocol text */
++				if (drop_lf && used > 0) {
++					if (buf[0] == '\n') {
++						used--;
++						memmove(buf, buf + 1, used + 1);
++					}
++					drop_lf = 0;
++				}
++				if ((end = strpbrk(buf, "\r\n")) != NULL) {
++					n = (int)(end - buf);
++					if (n > (int)sizeof(line) - 3)
++						break;
++					/* Normalize a complete line for the exact reply/echo tests. */
++					memcpy(line, buf, n);
++					memcpy(line + n, "\r\n", 3);
++					consume = n + 1;
++					if (*end == '\r') {
++						if (consume < used) {
++							if (buf[consume] == '\n') consume++;
++						} else
++							drop_lf = 1;
++					}
++					used -= consume;
++					memmove(buf, buf + consume, used + 1);
++					if (!echoed && cr250_model_echo(line)) {
++						echoed = 1;
++						if (used > 0) {
++							bread = 0;
++							continue;
++						}
++					} else {
++						/* One status line, with no unrelated text already buffered.
++						 * A split final LF may remain unread: init_coms must call
++						 * set_ser_port to flush before starting the new engine. */
++						if (used == 0)
++							rv = cr250_model_reply(line);
++						break;
++					}
++				}
++				/* An incomplete line or the LF of a split CRLF needs another
++				 * chunk, with only the original allowance still remaining. */
++				if (used > (int)sizeof(line) - 3
++				 || (rtime = tryto - (msec_time() - stime) / 1000.0) <= 0.0)
++					break;
++				se = p->read(p, buf + used, BUFSZ - used, &bread, "\r\n", 1, rtime);
++				if (bread == 0)
++					break;
++			}
++			if (rv != instUnknown) {
++				a1logd(p->log, 5, "fser_inst_type: found %s\n", inst_name(rv));
++				break;
++			}
++
++			/* Check for user abort */
++			if (uicallback != NULL) {
++				inst_code ev;
++				if ((ev = uicallback(cntx, inst_negcoms)) == inst_user_abort) {
++					a1logd(p->log, 5, "fser_inst_type: User aborted\n");
++					return instUnknown;
++				}
++			}
++		}
+@@ -2184,0 +2280,31 @@ int sym_to_inst_mode(inst_mode *mode, const char *sym) {
++/* A finite double, without relying on C99 isfinite() */
++static int inst_double_finite(double value) {
++	return value >= -DBL_MAX && value <= DBL_MAX;
++}
++
++/* Return NZ if a supplied custom filter can be evaluated by the spectral */
++/* interpolators and normalised: a finite, ordered wavelength range, enough */
++/* samples for interpolation (the composed cubic helper uses linear */
++/* interpolation below four samples), and finite, */
++/* positive normalisation and finite samples. Applied divisors must be positive. */
++int inst_valid_custom_filter(xspect *sp) {
++	int i;
++	double spcg;
++
++	if (sp == NULL || sp->spec_n < 2 || sp->spec_n > XSPECT_MAX_BANDS)
++		return 0;
++	if (!inst_double_finite(sp->spec_wl_short) || !inst_double_finite(sp->spec_wl_long)
++	 || sp->spec_wl_long <= sp->spec_wl_short)
++		return 0;
++	spcg = (sp->spec_wl_long - sp->spec_wl_short)/(sp->spec_n - 1.0);
++	if (!inst_double_finite(spcg) || spcg <= 0.0)
++		return 0;
++	if (!inst_double_finite(sp->norm) || sp->norm <= 0.0)
++		return 0;
++	for (i = 0; i < sp->spec_n; i++) {
++		if (!inst_double_finite(sp->spec[i]))
++			return 0;
++	}
++	return 1;
++}
++
+@@ -2187 +2313 @@ int sym_to_inst_mode(inst_mode *mode, const char *sym) {
+-void ipatch_convert_custom_filter(ipatch *vals, int nvals, xspect *filt, int clamp) {
++int ipatch_convert_custom_filter(ipatch *vals, int nvals, xspect *filt, int clamp) {
+@@ -2194 +2320,81 @@ void ipatch_convert_custom_filter(ipatch *vals, int nvals, xspect *filt, int cla
+-		return;
++		return 0;
++
++	/* The filter must be evaluable, with finite positive divisors and finite */
++	/* quotients before any patch changes: an unusable filter is refused */
++	/* whole rather than applied to some bands or some patches. */
++	if (!inst_valid_custom_filter(filt))
++		return 2;
++	for (i = 0; i < nvals; i++) {
++		if ((   vals[i].mtype != inst_mrt_emission
++		     && vals[i].mtype != inst_mrt_ambient
++		     && vals[i].mtype != inst_mrt_emission_flash
++		     && vals[i].mtype != inst_mrt_ambient_flash)
++		 || vals[i].sp.spec_n <= 0) {
++			continue;
++		}
++		for (j = 0; j < vals[i].sp.spec_n; j++) {
++			double nm = XSPECT_XWL(&vals[i].sp, j);
++			double fw, quotient;
++			getval_xspec(filt, &fw, nm);
++			/* Refuse the divisor before dividing by it. */
++			if (!inst_double_finite(fw) || fw <= 0.0)
++				return 2;
++			quotient = vals[i].sp.spec[j] / fw;
++			if (!inst_double_finite(quotient))
++				return 2;
++		}
++	}
++
++	/* Create the XYZ converter before modifying any patch. */
++	for (i = 0; i < nvals; i++) {
++		if ((   vals[i].mtype != inst_mrt_emission
++		     && vals[i].mtype != inst_mrt_ambient
++		     && vals[i].mtype != inst_mrt_emission_flash
++		     && vals[i].mtype != inst_mrt_ambient_flash)
++		 || vals[i].sp.spec_n <= 0) {
++			continue;
++		}
++		if (vals[i].XYZ_v) {
++			conv = new_xsp2cie(icxIT_none, 0.0, NULL, icxOT_CIE_1931_2,
++			                   NULL, icSigXYZData, (icxClamping)clamp);
++			if (conv == NULL)
++				return 1;
++			break;
++		}
++	}
++
++	/* Check the corrected XYZ on scratch spectra before changing any patch. */
++	/* Finite individual bands can still overflow during CIE integration. The */
++	/* check converts unclamped: clamping would turn -inf into a finite 0. */
++	if (conv != NULL) {
++		xsp2cie *check = new_xsp2cie(icxIT_none, 0.0, NULL, icxOT_CIE_1931_2,
++		                             NULL, icSigXYZData, icxNoClamp);
++		if (check == NULL) {
++			conv->del(conv);
++			return 1;
++		}
++		for (i = 0; i < nvals; i++) {
++			double xyz[3];
++			if (!vals[i].XYZ_v
++			 || (vals[i].mtype != inst_mrt_emission
++			  && vals[i].mtype != inst_mrt_ambient
++			  && vals[i].mtype != inst_mrt_emission_flash
++			  && vals[i].mtype != inst_mrt_ambient_flash)
++			 || vals[i].sp.spec_n <= 0)
++				continue;
++			tmp = vals[i].sp;
++			for (j = 0; j < tmp.spec_n; j++) {
++				double fw;
++				getval_xspec(filt, &fw, XSPECT_XWL(&tmp, j));
++				tmp.spec[j] /= fw;
++			}
++			check->convert(check, xyz, &tmp);
++			if (!inst_double_finite(xyz[0]) || !inst_double_finite(xyz[1])
++			 || !inst_double_finite(xyz[2])) {
++				check->del(check);
++				conv->del(conv);
++				return 2;
++			}
++		}
++		check->del(check);
++	}
+@@ -2215,4 +2420,0 @@ void ipatch_convert_custom_filter(ipatch *vals, int nvals, xspect *filt, int cla
+-			if (conv == NULL) {
+-				conv = new_xsp2cie(icxIT_none, 0.0, NULL, icxOT_CIE_1931_2,
+-				                   NULL, icSigXYZData, (icxClamping)clamp);
+-			}
+@@ -2225,0 +2428 @@ void ipatch_convert_custom_filter(ipatch *vals, int nvals, xspect *filt, int cla
++	return 0;

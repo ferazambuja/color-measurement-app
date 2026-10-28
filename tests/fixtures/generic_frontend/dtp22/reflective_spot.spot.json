@@ -1,0 +1,1150 @@
+{
+  "descriptor": {
+    "accepts_correction": false,
+    "baseline_mode_checks": {
+      "checks": [
+        {
+          "mode_word": 65553,
+          "native_code": 0
+        },
+        {
+          "mode_word": 196625,
+          "native_code": 0
+        }
+      ],
+      "mode_capabilities": 196625,
+      "scope": "initialized_before_mode_configuration"
+    },
+    "calibration": {
+      "actions": [
+        "change_filter",
+        "click_reference",
+        "display_patch",
+        "message",
+        "operate_instrument",
+        "present_reference",
+        "set_sensor_position"
+      ],
+      "conditions": [
+        {
+          "acknowledged": true,
+          "action": "operate_instrument",
+          "condition": "uop_ref_white",
+          "instruction": "Do a reflective white calibration on the instrument itself",
+          "reference_id_holds": null,
+          "value": 1
+        },
+        {
+          "acknowledged": true,
+          "action": "operate_instrument",
+          "condition": "uop_trans_white",
+          "instruction": "Do a transmissive white calibration on the instrument itself",
+          "reference_id_holds": null,
+          "value": 2
+        },
+        {
+          "acknowledged": true,
+          "action": "operate_instrument",
+          "condition": "uop_trans_dark",
+          "instruction": "Do a transmissive dark calibration on the instrument itself",
+          "reference_id_holds": null,
+          "value": 3
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_ref_white",
+          "instruction": "Place the instrument on its reflective white reference",
+          "reference_id_holds": "The expected white reference identifier, held by the driver, not read from the reference placed",
+          "value": 16
+        },
+        {
+          "acknowledged": false,
+          "action": "click_reference",
+          "condition": "man_ref_whitek",
+          "instruction": "Click the instrument down on its reflective white reference",
+          "reference_id_holds": "The expected white reference identifier, held by the driver, not read from the reference placed",
+          "value": 32
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_ref_dark",
+          "instruction": "Place the instrument on a light trap, or in the dark and distant from any surface",
+          "reference_id_holds": null,
+          "value": 48
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_dark_gloss",
+          "instruction": "Place the instrument on its black gloss reference",
+          "reference_id_holds": null,
+          "value": 64
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_em_dark",
+          "instruction": "Place the cap on the instrument, or place it on a dark surface or on the calibration reference",
+          "reference_id_holds": null,
+          "value": 80
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_am_dark",
+          "instruction": "Place the ambient adapter and cap on the instrument, or place it on the calibration reference",
+          "reference_id_holds": null,
+          "value": 96
+        },
+        {
+          "acknowledged": true,
+          "action": "set_sensor_position",
+          "condition": "man_cal_smode",
+          "instruction": "Set the instrument sensor to its calibration position",
+          "reference_id_holds": null,
+          "value": 112
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_trans_white",
+          "instruction": "Place the instrument on its transmissive white source",
+          "reference_id_holds": null,
+          "value": 128
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_trans_dark",
+          "instruction": "Block the transmission path with the appropriate transmissive blocking",
+          "reference_id_holds": null,
+          "value": 144
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_white",
+          "instruction": "Display a 100% white test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 256
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_80pc",
+          "instruction": "Display an 80% white test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 512
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_grey",
+          "instruction": "Display a grey test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 768
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_grey_darker",
+          "instruction": "Display a darker grey test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 1024
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_grey_ligher",
+          "instruction": "Display a lighter grey test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 1280
+        },
+        {
+          "acknowledged": true,
+          "action": "change_filter",
+          "condition": "change_filter",
+          "instruction": "Change the filter on the instrument",
+          "reference_id_holds": "The filter to fit",
+          "value": 65536
+        },
+        {
+          "acknowledged": true,
+          "action": "message",
+          "condition": "message",
+          "instruction": "The driver has a message for the operator",
+          "reference_id_holds": "The message text",
+          "value": 131072
+        }
+      ],
+      "deferrable_types": [
+        "emis_int_time",
+        "ref_freq"
+      ],
+      "display_level": "A fraction of full white for the patch the client must display; present only for `display_patch` conditions, and never to be invented by the client",
+      "types": [
+        "wavelength",
+        "ref_white",
+        "ref_dark",
+        "ref_dark_gl",
+        "emis_offset",
+        "emis_ratio",
+        "em_dark",
+        "trans_white",
+        "trans_vwhite",
+        "trans_dark",
+        "emis_int_time",
+        "ref_freq"
+      ]
+    },
+    "calibration_setup": [
+      {
+        "condition": "man_ref_whitek",
+        "document": "X-Rite support FAQ",
+        "location": "https://www.xrite.com/service-support/using_hyperterminal_to_calibrate_a_dtp22",
+        "official": true,
+        "quote": "Immediately after sending the \"ca\" (calibrate) command, press the DTP22 down into its calibration holder.",
+        "text": "Press the DTP22 down into its calibration holder when prompted; its physical read switch starts the white-reference reading."
+      }
+    ],
+    "capability_id": "4f194abb748943465ef6a0290273224d3e96e0b4c28eb2370b94c8a0db95c93c",
+    "capability_source": "instrument capabilities(), decoded; baseline_native_mode reports exact initialized-state checks when observed; acquisition confirms the requested configuration at bind time",
+    "contract": "argyll_generic_instrument_v1",
+    "default_event_contract": "retained_patch_v1",
+    "device": {
+      "backend": "argyll-native",
+      "backend_version": "3.5.0",
+      "device_id": "X-Rite DTP22",
+      "model": "X-Rite DTP22",
+      "serial": null,
+      "serial_encoding": null
+    },
+    "device_id": "X-Rite DTP22",
+    "display_types": {
+      "applied_choice_id": null,
+      "catalogue_id": null,
+      "count": 0,
+      "entries": [],
+      "native_code": 327680,
+      "readback": {
+        "base_calibration_id": null,
+        "native_code": 327680,
+        "refresh_mode": null,
+        "technology_code": null
+      },
+      "status": "unsupported"
+    },
+    "event_contracts": [
+      "patch_v1",
+      "retained_patch_v1"
+    ],
+    "facilities": [
+      "cal_using_switch",
+      "prog_trig",
+      "user_switch_trig",
+      "user_trig"
+    ],
+    "filter_capabilities": 0,
+    "filters": [],
+    "instructions": [
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Present the declared external display stimulus and keep it unchanged during the frequency measurement",
+        "instruction": "refresh_stimulus",
+        "kind": "present_refresh_stimulus"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Prepare the requested strip, then continue",
+        "instruction": "strip_position",
+        "kind": "present_strip"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Position the sample or measurement optics, then continue",
+        "instruction": "sample_position",
+        "kind": "present_sample"
+      },
+      {
+        "answered": true,
+        "carries_calibration": true,
+        "detail": "Set up what the instrument asks for to calibrate, then continue",
+        "instruction": "calibration_setup",
+        "kind": "present_calibration_reference"
+      },
+      {
+        "answered": false,
+        "carries_calibration": true,
+        "detail": "Do what the instrument asks for to calibrate; it continues by itself",
+        "instruction": "calibration_condition",
+        "kind": "notify_calibration_condition"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Place the chart on the table",
+        "instruction": "xy_sheet",
+        "kind": "place_sheet"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Sight a named fiducial so the table can locate the sheet",
+        "instruction": "xy_locate",
+        "kind": "sight_fiducial"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "The sensor, dial, diffuser or adapter is not where this step needs it. Move it, then continue; the step is tried once more",
+        "instruction": "sensor_position",
+        "kind": "reposition_sensor"
+      }
+    ],
+    "limits": {
+      "binding_policy": null,
+      "binding_timeout_seconds": 30.0,
+      "max_event_bytes": 16384,
+      "max_patch_id_bytes": 128,
+      "max_patches": 4096,
+      "max_request_bytes": 16384,
+      "max_response_timeout_seconds": 600,
+      "native_diagnostics": {
+        "available": true,
+        "debug_level_range": [
+          0,
+          8
+        ],
+        "default_debug_level": 0,
+        "default_limit_bytes": 65536,
+        "max_limit_bytes": 1048576,
+        "scope": "Auxiliary stderr provenance; no scientific setting changes",
+        "unavailable_reason": null
+      },
+      "read_allowance_floor_seconds": null,
+      "read_allowance_floor_seconds_by_mode": null
+    },
+    "live": false,
+    "mode_capabilities": 196625,
+    "mode_flags": [
+      "colorimeter",
+      "spectral"
+    ],
+    "modes": [
+      {
+        "available": true,
+        "axes": {
+          "action": "spot",
+          "condition": null,
+          "illumination": "reflective",
+          "mode_flags": [],
+          "modifiers": [],
+          "route": "ref_spot"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 196625,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 65553,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": "man_ref_whitek",
+            "document": "X-Rite support FAQ",
+            "location": "https://www.xrite.com/service-support/using_hyperterminal_to_calibrate_a_dtp22",
+            "official": true,
+            "quote": "Immediately after sending the \"ca\" (calibrate) command, press the DTP22 down into its calibration holder.",
+            "text": "Press the DTP22 down into its calibration holder when prompted; its physical read switch starts the white-reference reading."
+          }
+        ],
+        "canonical": true,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "reflective_spot",
+        "expected_measurement_type": 5,
+        "expected_measurement_type_name": "reflective",
+        "expected_quantities": {
+          "illuminant": "D50",
+          "quantity": "reflectance",
+          "scale": "relative; perfect-diffuser Y=100",
+          "spectrum_unit": "%",
+          "xyz_unit": "1"
+        },
+        "label": "Reflective spot",
+        "mode": "reflective_spot",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": {
+            "document": "ArgyllCMS 3.5.0, spectro/inst.h",
+            "location": "https://www.argyllcms.com/Argyll_V3.5.0_src.zip",
+            "official": true,
+            "quote": "Reflection spot measurement mode",
+            "text": "The native route measures reflection. Patch isolation and operator placement still follow the instrument's setup."
+          },
+          "kind": "reflective"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          }
+        ]
+      }
+    ],
+    "options": [
+      {
+        "allowed_ranges": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            150
+          ]
+        ],
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "reflective_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The configured capability snapshot does not advertise a stored-rate setter"
+          }
+        },
+        "default": null,
+        "id": "refresh_rate",
+        "label": "Stored refresh override (0 invalidates the stored rate)",
+        "maximum": 150,
+        "minimum": 0,
+        "refusal_stage": "refresh_rate_unavailable",
+        "type": "number",
+        "unavailable_reason": "The configured capability snapshot does not advertise a stored-rate setter",
+        "unit": "Hz"
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "reflective_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          }
+        },
+        "default": false,
+        "id": "highres",
+        "label": "High resolution spectral mode",
+        "refusal_stage": "highres_unavailable",
+        "type": "boolean",
+        "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+      },
+      {
+        "applies_to": null,
+        "available": true,
+        "by_mode": {
+          "reflective_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          }
+        },
+        "default": false,
+        "id": "xyz_only",
+        "label": "XYZ only, without the spectrum",
+        "refusal_stage": "xyz_only_unavailable",
+        "type": "boolean",
+        "unavailable_reason": null
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "reflective_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise measurement averaging"
+          }
+        },
+        "default": 0,
+        "id": "averages",
+        "label": "Readings averaged into one (0 = the driver's own)",
+        "maximum": 1000,
+        "minimum": 0,
+        "refusal_stage": "averaging_unavailable",
+        "type": "integer",
+        "unavailable_reason": "The instrument does not advertise measurement averaging"
+      },
+      {
+        "applies_to": [
+          "reflective_spot"
+        ],
+        "available": true,
+        "by_mode": {
+          "reflective_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": null
+          }
+        },
+        "choices": [
+          "gmdi",
+          "native",
+          "none",
+          "xrdi",
+          "xrga"
+        ],
+        "default": "none",
+        "id": "xcalstd",
+        "label": "Reflective calibration standard",
+        "refusal_stage": "set_xcalstd",
+        "type": "choice",
+        "unavailable_reason": null
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "reflective_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [],
+            "unavailable_reason": "No observed display-calibration choices"
+          }
+        },
+        "catalogue_id": null,
+        "choice_details": [],
+        "choices": [],
+        "default": null,
+        "id": "display_type",
+        "label": "Display calibration",
+        "refusal_stage": "display_type_unavailable",
+        "type": "choice",
+        "unavailable_reason": "No observed display-calibration choices"
+      },
+      {
+        "applies_to": [
+          "reflective_spot"
+        ],
+        "available": true,
+        "by_mode": {
+          "reflective_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": null
+          }
+        },
+        "choices": [
+          "unknown"
+        ],
+        "default": null,
+        "id": "filter",
+        "label": "Measurement condition",
+        "refusal_stage": "set_filter",
+        "type": "choice",
+        "unavailable_reason": null
+      },
+      {
+        "alternative_shape": {
+          "text": "string"
+        },
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "reflective_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          }
+        },
+        "default": null,
+        "id": "correction",
+        "kinds": [],
+        "label": "Colorimeter correction (.ccmx or .ccss)",
+        "note": "Without one the driver's factory/display-type calibration remains in use. A suitable correction can reduce display spectral mismatch. The file's CGATS identifier determines the kind. Ambient CCMX availability comes from the backend.",
+        "refusal_stage": "correction_matrix_unavailable",
+        "shape": {
+          "path": "string"
+        },
+        "type": "object",
+        "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+      }
+    ],
+    "provenance": "simulated",
+    "schema_version": 1,
+    "spectral": true,
+    "synthetic": true,
+    "trigger_capabilities": 11008
+  },
+  "events": [
+    {
+      "kind": "started",
+      "operation_id": "5328d22f-7686-446f-9cb5-dc9801a54f3f",
+      "payload": {
+        "capability_id": "4f194abb748943465ef6a0290273224d3e96e0b4c28eb2370b94c8a0db95c93c",
+        "device_id": "X-Rite DTP22",
+        "event_contract": "patch_v1",
+        "provenance": "simulated"
+      },
+      "schema_version": 1,
+      "sequence": 0
+    },
+    {
+      "kind": "instruction_notified",
+      "operation_id": "5328d22f-7686-446f-9cb5-dc9801a54f3f",
+      "payload": {
+        "calibration": {
+          "acknowledged": false,
+          "action": "click_reference",
+          "condition": "man_ref_whitek",
+          "display_level": null,
+          "instruction": "Click the instrument down on its reflective white reference",
+          "needed": [
+            "ref_white"
+          ],
+          "reference": "ref_sn",
+          "reference_id": "22",
+          "reference_id_holds": "The expected white reference identifier, held by the driver, not read from the reference placed",
+          "remaining": [
+            "ref_white"
+          ],
+          "setup": {
+            "document": "X-Rite support FAQ",
+            "location": "https://www.xrite.com/service-support/using_hyperterminal_to_calibrate_a_dtp22",
+            "official": true,
+            "quote": "Immediately after sending the \"ca\" (calibrate) command, press the DTP22 down into its calibration holder.",
+            "text": "Press the DTP22 down into its calibration holder when prompted; its physical read switch starts the white-reference reading."
+          },
+          "skippable": false,
+          "warnings": []
+        },
+        "instruction": "calibration_condition",
+        "native_event": {
+          "acknowledged": false,
+          "calibration_condition": 32,
+          "display_level": null,
+          "event": "calibration_condition",
+          "needed_calibrations": 32,
+          "protocol_version": 1,
+          "provenance": "simulated",
+          "reference_id": "22",
+          "reference_type": 1,
+          "remaining_calibrations": 32,
+          "skippable": false
+        }
+      },
+      "schema_version": 1,
+      "sequence": 1
+    },
+    {
+      "kind": "instruction_required",
+      "operation_id": "5328d22f-7686-446f-9cb5-dc9801a54f3f",
+      "payload": {
+        "allowed_responses": [
+          "accept",
+          "cancel"
+        ],
+        "calibration": null,
+        "kind": "sample_position",
+        "message": "sample_position",
+        "native_event": {
+          "event": "instruction_required",
+          "instruction": "sample_position",
+          "protocol_version": 1,
+          "provenance": "simulated",
+          "request_id": "sample-ready"
+        },
+        "position": null,
+        "request_id": "sample-ready",
+        "response_timeout_seconds": 120.0
+      },
+      "schema_version": 1,
+      "sequence": 2
+    },
+    {
+      "kind": "patch",
+      "operation_id": "5328d22f-7686-446f-9cb5-dc9801a54f3f",
+      "payload": {
+        "index": 0,
+        "observation": {
+          "acquired_at": "2026-10-15T23:53:04.852Z",
+          "actual_mode": "reflective_spot",
+          "backend_reported": {
+            "spectrum": {
+              "quantity": "reflectance",
+              "unit": "%",
+              "values": [
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                5.00000000000001,
+                5.000000000003538,
+                5.000000000750415,
+                5.00000009556534,
+                5.000007306684514,
+                5.000335398785487,
+                5.009243230815769,
+                5.152935142899739,
+                6.519189573391092,
+                14.060200979560802,
+                37.440300973803886,
+                74.73536859949245,
+                95.0,
+                74.73536859949245,
+                37.440300973803886,
+                14.060200979560802,
+                6.519189573391092,
+                5.152935142899739,
+                5.009243230815769,
+                5.000335398785487,
+                5.000007306684514,
+                5.00000009556534,
+                5.000000000750415,
+                5.000000000003538
+              ],
+              "wavelengths_nm": [
+                400.0,
+                410.0,
+                420.0,
+                430.0,
+                440.0,
+                450.0,
+                460.0,
+                470.0,
+                480.0,
+                490.0,
+                500.0,
+                510.0,
+                520.0,
+                530.0,
+                540.0,
+                550.0,
+                560.0,
+                570.0,
+                580.0,
+                590.0,
+                600.0,
+                610.0,
+                620.0,
+                630.0,
+                640.0,
+                650.0,
+                660.0,
+                670.0,
+                680.0,
+                690.0,
+                700.0
+              ]
+            },
+            "xyz": {
+              "illuminant": "D50",
+              "observer": "CIE1931_2",
+              "scale": "relative; perfect-diffuser Y=100",
+              "unit": "1",
+              "values": [
+                32.75932742263112,
+                26.690567443898843,
+                4.163171554924757
+              ]
+            }
+          },
+          "calibration": {
+            "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+            "status": "valid"
+          },
+          "configuration": [
+            [
+              "acquired_at_source",
+              "client receipt; the ladder publishes no instrument clock"
+            ],
+            [
+              "confirmed_routes",
+              "ref_spot"
+            ],
+            [
+              "correction_applied",
+              "none"
+            ],
+            [
+              "native_clamping",
+              "instNoClamp"
+            ],
+            [
+              "native_duration_seconds",
+              "0.0"
+            ],
+            [
+              "native_mcond",
+              "0"
+            ],
+            [
+              "native_mtype",
+              "5"
+            ],
+            [
+              "spectrum_norm",
+              "100.0"
+            ]
+          ],
+          "device": {
+            "backend": "argyll-native",
+            "backend_version": "3.5.0",
+            "device_id": "X-Rite DTP22",
+            "model": "X-Rite DTP22",
+            "serial": null,
+            "serial_encoding": null
+          },
+          "observation_id": "c1b837b9-0f92-4c97-9df2-4c22c83578d7",
+          "operation_id": "5328d22f-7686-446f-9cb5-dc9801a54f3f",
+          "project_computed": {
+            "lab": null,
+            "xyy": null
+          },
+          "provenance": "simulated",
+          "raw_backend_output": "{\"events\":[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"connected\",\"serial\":null,\"serial_encoding\":null,\"mode\":196625,\"mode_capabilities\":196625,\"trigger_capabilities\":11008,\"filter_capabilities\":0,\"trigger\":16,\"spectral\":true,\"ambient_ccmx\":false,\"ambient_matrix_threshold\":null,\"strip_policies\":{\"reflection\":{\"max_patches\":0,\"requirement\":null,\"layout_fields\":[]},\"transmission\":{\"max_patches\":0,\"requirement\":null,\"layout_fields\":[]},\"emission\":{\"max_patches\":0,\"requirement\":null,\"layout_fields\":[]}},\"baseline_mode_checks\":{\"scope\":\"initialized_before_mode_configuration\",\"mode_capabilities\":196625,\"checks\":[{\"mode_word\":65553,\"native_code\":0},{\"mode_word\":196625,\"native_code\":0}]},\"display_types\":{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]},\"refresh_rate_override_hz\":null,\"correction\":\"none\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_condition\",\"calibration_condition\":32,\"reference_type\":1,\"needed_calibrations\":32,\"remaining_calibrations\":32,\"skippable\":false,\"acknowledged\":false,\"display_level\":null,\"reference_id\":\"22\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"skipped\":false,\"needed_calibrations\":32,\"available_calibrations\":32,\"remaining_calibrations\":0,\"performed\":true,\"status_source\":\"driver\",\"initial_calibration_suppressed\":false,\"reference_type\":0,\"reference_id\":null},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"instruction_required\",\"instruction\":\"sample_position\",\"request_id\":\"sample-ready\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"result\",\"argyll_version\":\"3.5.0\",\"backend_reported\":{\"mtype\":5,\"mcond\":0,\"XYZ_v\":1,\"XYZ\":[32.75932742263112,26.690567443898843,4.163171554924757],\"duration\":0,\"spectrum\":{\"spec_n\":31,\"wavelength_start_nm\":400,\"wavelength_end_nm\":700,\"norm\":100,\"samples\":[5,5,5,5,5,5,5,5.00000000000001,5.000000000003538,5.000000000750415,5.00000009556534,5.000007306684514,5.000335398785487,5.009243230815769,5.152935142899739,6.519189573391092,14.060200979560802,37.440300973803886,74.73536859949245,95,74.73536859949245,37.440300973803886,14.060200979560802,6.519189573391092,5.152935142899739,5.009243230815769,5.000335398785487,5.000007306684514,5.00000009556534,5.000000000750415,5.000000000003538]}}},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"terminal\",\"status\":\"completed\",\"instrument_state\":\"unknown\",\"software_stopped\":true}]}",
+          "requested_mode": "reflective_spot",
+          "sample_id": "A1",
+          "schema_version": 1,
+          "warnings": [
+            "SIMULATED: these values did not come from a physical measurement of a physical sample."
+          ]
+        },
+        "patch_id": "A1"
+      },
+      "schema_version": 1,
+      "sequence": 3
+    },
+    {
+      "kind": "terminal",
+      "operation_id": "5328d22f-7686-446f-9cb5-dc9801a54f3f",
+      "payload": {
+        "completed_patches": 1,
+        "error": null,
+        "error_native_code": null,
+        "error_stage": null,
+        "expected_patches": 1,
+        "instrument_state": "not_applicable",
+        "software_stopped": true,
+        "status": "completed"
+      },
+      "schema_version": 1,
+      "sequence": 4
+    }
+  ],
+  "request": {
+    "capability_id": "4f194abb748943465ef6a0290273224d3e96e0b4c28eb2370b94c8a0db95c93c",
+    "device_id": "X-Rite DTP22",
+    "event_contract": "patch_v1",
+    "layout": {},
+    "mode": "reflective_spot",
+    "options": {},
+    "patch_ids": [
+      "A1"
+    ],
+    "schema_version": 1,
+    "workflow": "spot"
+  },
+  "result": {
+    "calibration": {
+      "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+      "status": "valid"
+    },
+    "configuration": [
+      [
+        "calibration_events_json",
+        "[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_condition\",\"calibration_condition\":32,\"reference_type\":1,\"needed_calibrations\":32,\"remaining_calibrations\":32,\"skippable\":false,\"acknowledged\":false,\"display_level\":null,\"reference_id\":\"22\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"skipped\":false,\"needed_calibrations\":32,\"available_calibrations\":32,\"remaining_calibrations\":0,\"performed\":true,\"status_source\":\"driver\",\"initial_calibration_suppressed\":false,\"reference_type\":0,\"reference_id\":null}]"
+      ],
+      [
+        "calibration_outcome_json",
+        "{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"skipped\":false,\"needed_calibrations\":32,\"available_calibrations\":32,\"remaining_calibrations\":0,\"performed\":true,\"status_source\":\"driver\",\"initial_calibration_suppressed\":false,\"reference_type\":0,\"reference_id\":null}"
+      ],
+      [
+        "capability_id",
+        "4f194abb748943465ef6a0290273224d3e96e0b4c28eb2370b94c8a0db95c93c"
+      ],
+      [
+        "capability_source",
+        "instrument capabilities(), decoded; baseline_native_mode reports exact initialized-state checks when observed; acquisition confirms the requested configuration at bind time"
+      ],
+      [
+        "display_types_json",
+        "{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]}"
+      ],
+      [
+        "event_contract",
+        "patch_v1"
+      ],
+      [
+        "filter_capabilities",
+        "0"
+      ],
+      [
+        "mode_capabilities",
+        "196625"
+      ],
+      [
+        "requested_layout_json",
+        "{}"
+      ],
+      [
+        "requested_options_json",
+        "{}"
+      ],
+      [
+        "trigger_capabilities",
+        "11008"
+      ]
+    ],
+    "device": {
+      "backend": "argyll-native",
+      "backend_version": "3.5.0",
+      "device_id": "X-Rite DTP22",
+      "model": "X-Rite DTP22",
+      "serial": null,
+      "serial_encoding": null
+    },
+    "device_id": "X-Rite DTP22",
+    "error": null,
+    "error_native_code": null,
+    "error_stage": null,
+    "expected_patch_ids": [
+      "A1"
+    ],
+    "instrument_state": "not_applicable",
+    "mode": "reflective_spot",
+    "operation_id": "5328d22f-7686-446f-9cb5-dc9801a54f3f",
+    "patches": [
+      {
+        "index": 0,
+        "observation": {
+          "acquired_at": "2026-10-15T23:53:04.852Z",
+          "actual_mode": "reflective_spot",
+          "backend_reported": {
+            "spectrum": {
+              "quantity": "reflectance",
+              "unit": "%",
+              "values": [
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                5.00000000000001,
+                5.000000000003538,
+                5.000000000750415,
+                5.00000009556534,
+                5.000007306684514,
+                5.000335398785487,
+                5.009243230815769,
+                5.152935142899739,
+                6.519189573391092,
+                14.060200979560802,
+                37.440300973803886,
+                74.73536859949245,
+                95.0,
+                74.73536859949245,
+                37.440300973803886,
+                14.060200979560802,
+                6.519189573391092,
+                5.152935142899739,
+                5.009243230815769,
+                5.000335398785487,
+                5.000007306684514,
+                5.00000009556534,
+                5.000000000750415,
+                5.000000000003538
+              ],
+              "wavelengths_nm": [
+                400.0,
+                410.0,
+                420.0,
+                430.0,
+                440.0,
+                450.0,
+                460.0,
+                470.0,
+                480.0,
+                490.0,
+                500.0,
+                510.0,
+                520.0,
+                530.0,
+                540.0,
+                550.0,
+                560.0,
+                570.0,
+                580.0,
+                590.0,
+                600.0,
+                610.0,
+                620.0,
+                630.0,
+                640.0,
+                650.0,
+                660.0,
+                670.0,
+                680.0,
+                690.0,
+                700.0
+              ]
+            },
+            "xyz": {
+              "illuminant": "D50",
+              "observer": "CIE1931_2",
+              "scale": "relative; perfect-diffuser Y=100",
+              "unit": "1",
+              "values": [
+                32.75932742263112,
+                26.690567443898843,
+                4.163171554924757
+              ]
+            }
+          },
+          "calibration": {
+            "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+            "status": "valid"
+          },
+          "configuration": [
+            [
+              "acquired_at_source",
+              "client receipt; the ladder publishes no instrument clock"
+            ],
+            [
+              "confirmed_routes",
+              "ref_spot"
+            ],
+            [
+              "correction_applied",
+              "none"
+            ],
+            [
+              "native_clamping",
+              "instNoClamp"
+            ],
+            [
+              "native_duration_seconds",
+              "0.0"
+            ],
+            [
+              "native_mcond",
+              "0"
+            ],
+            [
+              "native_mtype",
+              "5"
+            ],
+            [
+              "spectrum_norm",
+              "100.0"
+            ]
+          ],
+          "device": {
+            "backend": "argyll-native",
+            "backend_version": "3.5.0",
+            "device_id": "X-Rite DTP22",
+            "model": "X-Rite DTP22",
+            "serial": null,
+            "serial_encoding": null
+          },
+          "observation_id": "c1b837b9-0f92-4c97-9df2-4c22c83578d7",
+          "operation_id": "5328d22f-7686-446f-9cb5-dc9801a54f3f",
+          "project_computed": {
+            "lab": null,
+            "xyy": null
+          },
+          "provenance": "simulated",
+          "raw_backend_output": "{\"events\":[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"connected\",\"serial\":null,\"serial_encoding\":null,\"mode\":196625,\"mode_capabilities\":196625,\"trigger_capabilities\":11008,\"filter_capabilities\":0,\"trigger\":16,\"spectral\":true,\"ambient_ccmx\":false,\"ambient_matrix_threshold\":null,\"strip_policies\":{\"reflection\":{\"max_patches\":0,\"requirement\":null,\"layout_fields\":[]},\"transmission\":{\"max_patches\":0,\"requirement\":null,\"layout_fields\":[]},\"emission\":{\"max_patches\":0,\"requirement\":null,\"layout_fields\":[]}},\"baseline_mode_checks\":{\"scope\":\"initialized_before_mode_configuration\",\"mode_capabilities\":196625,\"checks\":[{\"mode_word\":65553,\"native_code\":0},{\"mode_word\":196625,\"native_code\":0}]},\"display_types\":{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]},\"refresh_rate_override_hz\":null,\"correction\":\"none\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_condition\",\"calibration_condition\":32,\"reference_type\":1,\"needed_calibrations\":32,\"remaining_calibrations\":32,\"skippable\":false,\"acknowledged\":false,\"display_level\":null,\"reference_id\":\"22\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"skipped\":false,\"needed_calibrations\":32,\"available_calibrations\":32,\"remaining_calibrations\":0,\"performed\":true,\"status_source\":\"driver\",\"initial_calibration_suppressed\":false,\"reference_type\":0,\"reference_id\":null},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"instruction_required\",\"instruction\":\"sample_position\",\"request_id\":\"sample-ready\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"result\",\"argyll_version\":\"3.5.0\",\"backend_reported\":{\"mtype\":5,\"mcond\":0,\"XYZ_v\":1,\"XYZ\":[32.75932742263112,26.690567443898843,4.163171554924757],\"duration\":0,\"spectrum\":{\"spec_n\":31,\"wavelength_start_nm\":400,\"wavelength_end_nm\":700,\"norm\":100,\"samples\":[5,5,5,5,5,5,5,5.00000000000001,5.000000000003538,5.000000000750415,5.00000009556534,5.000007306684514,5.000335398785487,5.009243230815769,5.152935142899739,6.519189573391092,14.060200979560802,37.440300973803886,74.73536859949245,95,74.73536859949245,37.440300973803886,14.060200979560802,6.519189573391092,5.152935142899739,5.009243230815769,5.000335398785487,5.000007306684514,5.00000009556534,5.000000000750415,5.000000000003538]}}},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"terminal\",\"status\":\"completed\",\"instrument_state\":\"unknown\",\"software_stopped\":true}]}",
+          "requested_mode": "reflective_spot",
+          "sample_id": "A1",
+          "schema_version": 1,
+          "warnings": [
+            "SIMULATED: these values did not come from a physical measurement of a physical sample."
+          ]
+        },
+        "patch_id": "A1"
+      }
+    ],
+    "provenance": "simulated",
+    "request_json": "{\"schema_version\":1,\"device_id\":\"X-Rite DTP22\",\"capability_id\":\"4f194abb748943465ef6a0290273224d3e96e0b4c28eb2370b94c8a0db95c93c\",\"mode\":\"reflective_spot\",\"workflow\":\"spot\",\"patch_ids\":[\"A1\"],\"options\":{},\"layout\":{},\"event_contract\":\"patch_v1\"}",
+    "schema_version": 1,
+    "software_stopped": true,
+    "status": "completed",
+    "workflow": "spot"
+  }
+}

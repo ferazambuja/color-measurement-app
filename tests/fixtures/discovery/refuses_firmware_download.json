@@ -1,0 +1,51 @@
+{
+  "note": "Listed, identified, and never opened: its init_inst downloads firmware (spyd2.c:2998-3002), which no acknowledgement authorizes",
+  "opening": [
+    {
+      "index": 1,
+      "permitted_without_acknowledgement": false,
+      "requires": "not_permitted"
+    },
+    {
+      "index": 2,
+      "permitted_without_acknowledgement": false,
+      "requires": "not_permitted"
+    }
+  ],
+  "refused": null,
+  "scenario": "spyder1",
+  "units": [
+    {
+      "attachable": false,
+      "identified": true,
+      "index": 1,
+      "initialization_assessed": true,
+      "initialization_refusal": "initialization_downloads_pld",
+      "name": "ColorVision Spyder1",
+      "native_type": 26,
+      "opening_requires": "not_permitted",
+      "path": "fixture:display:1",
+      "symbol": "instSpyder1",
+      "transport": 4,
+      "transports": [
+        "hid"
+      ]
+    },
+    {
+      "attachable": false,
+      "identified": true,
+      "index": 2,
+      "initialization_assessed": true,
+      "initialization_refusal": "initialization_downloads_pld",
+      "name": "ColorVision Spyder1",
+      "native_type": 26,
+      "opening_requires": "not_permitted",
+      "path": "fixture:display:2",
+      "symbol": "instSpyder1",
+      "transport": 4,
+      "transports": [
+        "hid"
+      ]
+    }
+  ]
+}

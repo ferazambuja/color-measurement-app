@@ -1,0 +1,18 @@
+{
+  "source_page": "https://cie.co.at/datatable/cie-1931-colour-matching-functions-2-degree-observer",
+  "files": [
+    {
+      "file": "CIE_xyz_1931_2deg.csv",
+      "url": "https://files.cie.co.at/Publications-datasets/CIE_xyz_1931_2deg.csv",
+      "sha256": "fa663e3535a7e0763a745993a1f0a192eb0275ac46ad2d1befd7626841e713c1",
+      "bytes": 24021
+    },
+    {
+      "file": "CIE_xyz_1931_2deg.csv_metadata.json",
+      "url": "https://files.cie.co.at/Publications-datasets/CIE_xyz_1931_2deg.csv_metadata.json",
+      "sha256": "03abcaecf4e63d77045ef57c4514b52c8bb1a46dd18e1f93a50044a0f4f481c8",
+      "bytes": 3787
+    }
+  ],
+  "initial_error": "Old files.cie.co.at root returned404; corrected URLs are actual links in the retained official page."
+}

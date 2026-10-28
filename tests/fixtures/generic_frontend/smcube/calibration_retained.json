@@ -1,0 +1,215 @@
+{
+  "fixture": "retained_calibration",
+  "routes": {
+    "reflective_spot": [
+      {
+        "available": true,
+        "base_calibration_id": 1,
+        "custom": false,
+        "event": "display_type",
+        "id": "f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d",
+        "identity_scope": "catalogue_metadata",
+        "index": 0,
+        "kind": "builtin",
+        "label": "Simulated display calibration 0",
+        "native_default": false,
+        "native_label_bytes": null,
+        "native_source_path_bytes": null,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_mode": 0,
+        "source_path": null,
+        "technology_code": 0,
+        "unavailable_reason": null
+      },
+      {
+        "available": true,
+        "base_calibration_id": 2,
+        "custom": false,
+        "event": "display_type",
+        "id": "0cfe74f011ec13dcde26243d1551b33b96999465409ab721db083798dc319399",
+        "identity_scope": "catalogue_metadata",
+        "index": 1,
+        "kind": "builtin",
+        "label": "Simulated display calibration 1",
+        "native_default": false,
+        "native_label_bytes": null,
+        "native_source_path_bytes": null,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_mode": 0,
+        "source_path": null,
+        "technology_code": 0,
+        "unavailable_reason": null
+      },
+      {
+        "available": true,
+        "base_calibration_id": 3,
+        "custom": false,
+        "event": "display_type",
+        "id": "eab3d0271a65c7c07486fb76f7eefab0a7c70dd8983547992665b6bc96a4bac4",
+        "identity_scope": "catalogue_metadata",
+        "index": 2,
+        "kind": "builtin",
+        "label": "Simulated display calibration 2",
+        "native_default": false,
+        "native_label_bytes": null,
+        "native_source_path_bytes": null,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_mode": 0,
+        "source_path": null,
+        "technology_code": 0,
+        "unavailable_reason": null
+      },
+      {
+        "ambient_ccmx": false,
+        "ambient_matrix_threshold": null,
+        "baseline_mode_checks": {
+          "checks": [
+            {
+              "mode_word": 65553,
+              "native_code": 0
+            }
+          ],
+          "mode_capabilities": 65553,
+          "scope": "initialized_before_mode_configuration"
+        },
+        "correction": "none",
+        "display_types": {
+          "applied_choice_id": null,
+          "catalogue_id": "1e6e09238937d4b3a1d6f4d341f07d3d320bbc59a786f3912c3ab9db01f26e61",
+          "count": 3,
+          "entries": [
+            {
+              "available": true,
+              "base_calibration_id": 1,
+              "custom": false,
+              "id": "f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d",
+              "identity_scope": "catalogue_metadata",
+              "index": 0,
+              "kind": "builtin",
+              "label": "Simulated display calibration 0",
+              "native_default": false,
+              "native_label_bytes": null,
+              "native_source_path_bytes": null,
+              "refresh_mode": 0,
+              "source_path": null,
+              "technology_code": 0,
+              "unavailable_reason": null
+            },
+            {
+              "available": true,
+              "base_calibration_id": 2,
+              "custom": false,
+              "id": "0cfe74f011ec13dcde26243d1551b33b96999465409ab721db083798dc319399",
+              "identity_scope": "catalogue_metadata",
+              "index": 1,
+              "kind": "builtin",
+              "label": "Simulated display calibration 1",
+              "native_default": false,
+              "native_label_bytes": null,
+              "native_source_path_bytes": null,
+              "refresh_mode": 0,
+              "source_path": null,
+              "technology_code": 0,
+              "unavailable_reason": null
+            },
+            {
+              "available": true,
+              "base_calibration_id": 3,
+              "custom": false,
+              "id": "eab3d0271a65c7c07486fb76f7eefab0a7c70dd8983547992665b6bc96a4bac4",
+              "identity_scope": "catalogue_metadata",
+              "index": 2,
+              "kind": "builtin",
+              "label": "Simulated display calibration 2",
+              "native_default": false,
+              "native_label_bytes": null,
+              "native_source_path_bytes": null,
+              "refresh_mode": 0,
+              "source_path": null,
+              "technology_code": 0,
+              "unavailable_reason": null
+            }
+          ],
+          "native_code": 0,
+          "readback": {
+            "base_calibration_id": 1,
+            "native_code": 0,
+            "refresh_mode": 0,
+            "technology_code": 0
+          },
+          "status": "available"
+        },
+        "event": "connected",
+        "filter_capabilities": 0,
+        "mode": 65553,
+        "mode_capabilities": 65553,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "refresh_rate_override_hz": null,
+        "serial": null,
+        "serial_encoding": null,
+        "spectral": false,
+        "strip_policies": {
+          "emission": {
+            "layout_fields": [],
+            "max_patches": 0,
+            "requirement": null
+          },
+          "reflection": {
+            "layout_fields": [],
+            "max_patches": 0,
+            "requirement": null
+          },
+          "transmission": {
+            "layout_fields": [],
+            "max_patches": 0,
+            "requirement": null
+          }
+        },
+        "trigger": 16,
+        "trigger_capabilities": 33622784
+      },
+      {
+        "available_calibrations": 96,
+        "event": "calibration_ready",
+        "initial_calibration_suppressed": true,
+        "needed_calibrations": 0,
+        "performed": false,
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "remaining_calibrations": 0,
+        "skipped": false,
+        "status_source": "driver"
+      },
+      {
+        "argyll_version": "3.5.0",
+        "backend_reported": {
+          "XYZ": [
+            9.978646388574049,
+            5.680135892009576,
+            31.716355493734618
+          ],
+          "XYZ_v": 1,
+          "duration": 0,
+          "mcond": 0,
+          "mtype": 5,
+          "spectrum": null
+        },
+        "event": "result",
+        "protocol_version": 1,
+        "provenance": "simulated"
+      },
+      {
+        "event": "terminal",
+        "instrument_state": "unknown",
+        "protocol_version": 1,
+        "provenance": "simulated",
+        "software_stopped": true,
+        "status": "completed"
+      }
+    ]
+  }
+}

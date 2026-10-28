@@ -1,0 +1,1 @@
+{"observerId":"CIE1931_2deg","xyzUnits":"1","xyzScale":"relative; perfect-diffuser Y=100","whiteXYZ":[100,100,100],"illuminant":"E","interpretation":"Explicit equal-component white for original analytical synthetic Lab values","meaning":"Synthetic reference illustration only; not a measured specimen or position-test qualification","sourceFields":["LAB_L","LAB_A","LAB_B"]}

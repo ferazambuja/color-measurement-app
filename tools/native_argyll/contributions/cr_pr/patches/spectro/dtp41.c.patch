@@ -1,0 +1,108 @@
+--- a/spectro/dtp41.c
++++ b/spectro/dtp41.c
+@@ -265,2 +265,3 @@ dtp41_init_coms(inst *pp, baud_rate br, flow_control fc, double tout) {
+-/* Build a strip definition as a set of passes, including DS command */
+-static void
++/* Build a strip definition as a set of passes, including DS command. */
++/* Return nz if a value doesn't fit its field. */
++static int
+@@ -278,0 +280,9 @@ double twid			/* Trailer length in mm (DTP41T only) */
++	/* The count has three digits and the lengths are dd.dd */
++	if (!(npatch >= 1 && npatch <= 999
++	   && pwid >= 0.0 && pwid < 100.0 && gwid >= 0.0 && gwid < 100.0))
++		return 1;
++	if (pwid == 0.0)		/* (-0.0 would print a sign) */
++		pwid = 0.0;
++	if (gwid == 0.0)
++		gwid = 0.0;
++
+@@ -284 +294,2 @@ double twid			/* Trailer length in mm (DTP41T only) */
+-	sprintf(tp, "%05.2f",pwid);
++	if (sprintf(tp, "%05.2f",pwid) != 5)		/* Rounded up to 100.00 */
++		return 1;
+@@ -290 +301,2 @@ double twid			/* Trailer length in mm (DTP41T only) */
+-	sprintf(tp, "%05.2f",gwid);
++	if (sprintf(tp, "%05.2f",gwid) != 5)
++		return 1;
+@@ -299 +311 @@ double twid			/* Trailer length in mm (DTP41T only) */
+-	if ((p->mode & inst_mode_illum_mask) == inst_mode_transmission) {
++	if ((p->lastmode & inst_mode_illum_mask) == inst_mode_transmission) {	/* As requested */
+@@ -300,0 +313,4 @@ double twid			/* Trailer length in mm (DTP41T only) */
++		if (!(twid >= 0.0))
++			return 1;
++		if (twid == 0.0)
++			twid = 0.0;
+@@ -314,0 +331 @@ double twid			/* Trailer length in mm (DTP41T only) */
++	return 0;
+@@ -507,0 +525,5 @@ ipatch *vals) {		/* Pointer to array of instrument patch values */
++	/* Build the strip before changing the instrument, so that a value */
++	/* that doesn't fit is refused with nothing sent */
++	if (build_strip(p, tbuf, name, npatch, pname, sguide, pwid, gwid, twid) != 0)
++		return inst_bad_parameter;
++
+@@ -510,3 +532,2 @@ ipatch *vals) {		/* Pointer to array of instrument patch values */
+-	activate_mode(p);
+-
+-	build_strip(p, tbuf, name, npatch, pname, sguide, pwid, gwid, twid);
++	if ((ev = activate_mode(p)) != inst_ok)
++		return ev;
+@@ -664,2 +685,3 @@ ipatch *vals) {		/* Pointer to array of instrument patch values */
+-	ipatch_convert_xrga(vals, npatch, xcalstd_nonpol, p->target_calstd, p->native_calstd,
+-	                    instClamp);
++	if (ipatch_convert_xrga(vals, npatch, xcalstd_nonpol, p->target_calstd, p->native_calstd,
++	                    instClamp) != 0)
++		return inst_internal_error | DTP41_INTERNAL_ERROR;
+@@ -668,2 +690,3 @@ ipatch *vals) {		/* Pointer to array of instrument patch values */
+-	if (p->custfilt_en)
+-		ipatch_convert_custom_filter(vals, npatch, &p->custfilt, instClamp);
++	if (p->custfilt_en &&
++	    ipatch_convert_custom_filter(vals, npatch, &p->custfilt, instClamp) != 0)
++		return inst_internal_error | DTP41_INTERNAL_ERROR;
+@@ -699 +722,2 @@ instClamping clamp) {		/* NZ if clamp XYZ/Lab to be +ve */
+-	activate_mode(p);
++	if ((ev = activate_mode(p)) != inst_ok)
++		return ev;
+@@ -876 +900,2 @@ instClamping clamp) {		/* NZ if clamp XYZ/Lab to be +ve */
+-	ipatch_convert_xrga(val, 1, xcalstd_nonpol, p->target_calstd, p->native_calstd, clamp);
++	if (ipatch_convert_xrga(val, 1, xcalstd_nonpol, p->target_calstd, p->native_calstd, clamp) != 0)
++		return inst_internal_error | DTP41_INTERNAL_ERROR;
+@@ -889 +914 @@ static inst_code dtp41_get_n_a_cals(inst *pp, inst_cal_type *pn_cals, inst_cal_t
+-	if ((p->mode & inst_mode_illum_mask) == inst_mode_transmission) {
++	if ((p->lastmode & inst_mode_illum_mask) == inst_mode_transmission) {	/* As requested */
+@@ -948 +973 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		a1logd(p->log,4,"dtp41_calibrate: doing calt 0x%x\n",calt);
++		a1logd(p->log,4,"dtp41_calibrate: doing calt 0x%x\n",*calt);
+@@ -959 +984 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-	if ((p->mode & inst_mode_illum_mask) == inst_mode_transmission) {
++	if ((p->lastmode & inst_mode_illum_mask) == inst_mode_transmission) {	/* As requested */
+@@ -962 +987 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-			if ((*calc & inst_calc_cond_mask) != inst_calc_uop_trans_white)
++			if ((*calc & inst_calc_cond_mask) != inst_calc_uop_trans_white) {
+@@ -969,0 +995 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
++		}
+@@ -1189 +1215 @@ activate_mode(dtp41 *p)
+-			return rv;
++			goto fail;
+@@ -1194 +1220 @@ activate_mode(dtp41 *p)
+-			return rv;
++			goto fail;
+@@ -1201 +1227 @@ activate_mode(dtp41 *p)
+-			return rv;
++			goto fail;
+@@ -1206 +1232 @@ activate_mode(dtp41 *p)
+-			return rv;
++			goto fail;
+@@ -1211,0 +1238,4 @@ activate_mode(dtp41 *p)
++
++  fail:;
++	p->mode = inst_mode_none;	/* Unknown, so set both again next time */
++	return rv;
+@@ -1283,0 +1314,5 @@ dtp41_get_set_opt(inst *pp, inst_opt_type m, ...)
++		/* The target is a conversion-table index, or native for no conversion. */
++		if (standard != xcalstd_native && standard != xcalstd_xrdi
++		 && standard != xcalstd_gmdi && standard != xcalstd_xrga)
++			return inst_bad_parameter;
++
+@@ -1318,0 +1354,2 @@ dtp41_get_set_opt(inst *pp, inst_opt_type m, ...)
++		} else if (!inst_valid_custom_filter(sp)) {
++			return inst_bad_parameter;	/* Not evaluable by the interpolators */

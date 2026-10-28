@@ -1,0 +1,156 @@
+--- a/numlib/numsup.c
++++ b/numlib/numsup.c
+@@ -3468,0 +3469,2 @@ ORD32 doubletoIEEE754(double d) {
++	if (d != d)				/* NaN has no exponent to compute */
++		return 0x7fc00000;
+@@ -3472,0 +3475,2 @@ ORD32 doubletoIEEE754(double d) {
++	if (d > DBL_MAX)		/* Nor does infinity */
++		return (sn << 31) | 0x7f800000;
+@@ -3474,2 +3478,3 @@ ORD32 doubletoIEEE754(double d) {
+-		int ee;
+-		ee = (int)floor(log(d)/log(2.0));
++		int ee, be;
++		d = frexp(d, &be);
++		ee = be - 1;
+@@ -3478 +3483 @@ ORD32 doubletoIEEE754(double d) {
+-		d *= pow(0.5, (double)(ee - 23));
++		d = ldexp(d, be + 23 - ee);
+@@ -3480 +3485 @@ ORD32 doubletoIEEE754(double d) {
+-		if (ee < 1)				/* Too small */
++		if (d < (double)((ORD32)1 << 23))	/* Too small */
+@@ -3495,0 +3501,31 @@ ORD32 doubletoIEEE754(double d) {
++/* C89 has no INFINITY or NAN. On a native IEEE double host, construct the */
++/* special value by bits, independent of HUGE_VAL and the rounding mode. */
++static double IEEE754_special_value(int is_nan) {
++	double one = 1.0, value;
++	ORD64 onebits, bits;
++	volatile double infinity, max;
++	if (sizeof(double) == sizeof(bits)
++	 && DBL_MANT_DIG == 53 && DBL_MAX_EXP == 1024) {
++		memcpy(&onebits, &one, sizeof(onebits));
++		if (onebits == ((ORD64)0x3ff << 52)) {
++			bits = ((ORD64)0x7ff << 52);
++			if (is_nan)
++				bits |= (ORD64)1 << 51;
++			memcpy(&value, &bits, sizeof(value));
++			return value;
++		}
++	}
++	/* Best effort for a non-IEEE native double representation. */
++	infinity = HUGE_VAL;
++	if (infinity <= DBL_MAX) {
++		max = DBL_MAX;
++		infinity = max * max;
++	}
++	if (is_nan) {
++		value = infinity - infinity;
++		if (value != value)
++			return value;
++	}
++	return infinity;	/* Without a NaN, never a finite zero */
++}
++
+@@ -3508 +3544,3 @@ double IEEE754todouble(ORD32 ip) {
+-	if (ep == 0) { 		/* Zero or denormalised */
++	if (ep == 0xff) {	/* Infinity or NaN: no finite value encodes these */
++		op = IEEE754_special_value(ma != 0);
++	} else if (ep == 0) { 		/* Zero or denormalised */
+@@ -3532,0 +3571,2 @@ ORD64 doubletoIEEE754_64(double d) {
++	if (d != d)				/* NaN has no exponent to compute */
++		return ((ORD64)0x7ff << 52) | ((ORD64)1 << 51);
+@@ -3536,0 +3577,2 @@ ORD64 doubletoIEEE754_64(double d) {
++	if (d > DBL_MAX)		/* Nor does infinity */
++		return ((ORD64)sn << 63) | ((ORD64)0x7ff << 52);
+@@ -3538,2 +3580,3 @@ ORD64 doubletoIEEE754_64(double d) {
+-		int ee;
+-		ee = (int)floor(log(d)/log(2.0));
++		int ee, be;
++		d = frexp(d, &be);
++		ee = be - 1;
+@@ -3542 +3585 @@ ORD64 doubletoIEEE754_64(double d) {
+-		d *= pow(0.5, (double)(ee - 52));
++		d = ldexp(d, be + 52 - ee);
+@@ -3544 +3587 @@ ORD64 doubletoIEEE754_64(double d) {
+-		if (ee < 1)				/* Too small */
++		if (d < (double)((ORD64)1 << 52))	/* Too small */
+@@ -3573 +3616,3 @@ double IEEE754_64todouble(ORD64 ip) {
+-	if (ep == 0) { 		/* Zero or denormalised */
++	if (ep == 0x7ff) {	/* Infinity or NaN: no finite value encodes these */
++		op = IEEE754_special_value(ma != 0);
++	} else if (ep == 0) { 		/* Zero or denormalised */
+@@ -3700,4 +3745,5 @@ int read_INR16_be(ORD8 *p) {
+-	int rv;
+-	rv = (((int)(INR8)p[0]) << 8)
+-	   + (((int)p[1]));
+-	return rv;
++	unsigned int rv;
++	rv = read_ORD16_be(p);
++	if (rv <= 0x7fff)			/* Sign extend without overflow */
++		return (int)rv;
++	return (int)rv - 0x10000;
+@@ -3707,4 +3753,5 @@ int read_INR16_le(ORD8 *p) {
+-	int rv;
+-	rv = (((int)p[0]))
+-	   + (((int)(INR8)p[1]) << 8);
+-	return rv;
++	unsigned int rv;
++	rv = read_ORD16_le(p);
++	if (rv <= 0x7fff)			/* Sign extend without overflow */
++		return (int)rv;
++	return (int)rv - 0x10000;
+@@ -3770,6 +3817,5 @@ int read_INR32_be(ORD8 *p) {
+-	int rv;
+-	rv = (((int)(INR8)p[0]) << 24)
+-	   + (((int)p[1]) << 16)
+-	   + (((int)p[2]) << 8)
+-	   + (((int)p[3]));
+-	return rv;
++	unsigned int rv;
++	rv = read_ORD32_be(p);
++	if (rv <= 0x7fffffff)		/* Convert to signed without overflow */
++		return (int)rv;
++	return -(int)(~rv) - 1;
+@@ -3779,6 +3825,5 @@ int read_INR32_le(ORD8 *p) {
+-	int rv;
+-	rv = (((int)p[0]))
+-	   + (((int)p[1]) << 8)
+-	   + (((int)p[2]) << 16)
+-	   + (((int)(INR8)p[3]) << 24);
+-	return rv;
++	unsigned int rv;
++	rv = read_ORD32_le(p);
++	if (rv <= 0x7fffffff)		/* Convert to signed without overflow */
++		return (int)rv;
++	return -(int)(~rv) - 1;
+@@ -3856,10 +3901,5 @@ INR64 read_INR64_be(ORD8 *p) {
+-	INR64 rv;
+-	rv = (((INR64)(INR8)p[0]) << 56)
+-	   + (((INR64)p[1]) << 48)
+-	   + (((INR64)p[2]) << 40)
+-	   + (((INR64)p[3]) << 32)
+-	   + (((INR64)p[4]) << 24)
+-	   + (((INR64)p[5]) << 16)
+-	   + (((INR64)p[6]) << 8)
+-	   + (((INR64)p[7]));
+-	return rv;
++	ORD64 rv;
++	rv = read_ORD64_be(p);
++	if ((rv >> 63) == 0)		/* Convert to signed without overflow */
++		return (INR64)rv;
++	return -(INR64)(~rv) - 1;
+@@ -3869,10 +3909,5 @@ INR64 read_INR64_le(ORD8 *p) {
+-	INR64 rv;
+-	rv = (((INR64)p[0]))
+-	   + (((INR64)p[1]) << 8)
+-	   + (((INR64)p[2]) << 16)
+-	   + (((INR64)p[3]) << 24)
+-	   + (((INR64)p[4]) << 32)
+-	   + (((INR64)p[5]) << 40)
+-	   + (((INR64)p[6]) << 48)
+-	   + (((INR64)(INR8)p[7]) << 56);
+-	return rv;
++	ORD64 rv;
++	rv = read_ORD64_le(p);
++	if ((rv >> 63) == 0)		/* Convert to signed without overflow */
++		return (INR64)rv;
++	return -(INR64)(~rv) - 1;

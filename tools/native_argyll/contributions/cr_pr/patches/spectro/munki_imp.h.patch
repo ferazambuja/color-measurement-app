@@ -1,0 +1,6 @@
+--- a/spectro/munki_imp.h
++++ b/spectro/munki_imp.h
+@@ -771 +771,2 @@ munki_code munki_conv2XYZ(
+-/* Return nz if any of the transmission wavelengths are low */
++/* Return 1 if any of the transmission wavelengths are low, */
++/* or -1 if the reading can't give usable factors. */

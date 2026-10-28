@@ -1,0 +1,3270 @@
+{
+  "descriptor": {
+    "accepts_correction": false,
+    "baseline_mode_checks": {
+      "checks": [
+        {
+          "mode_word": 65556,
+          "native_code": 0
+        },
+        {
+          "mode_word": 196628,
+          "native_code": 0
+        },
+        {
+          "mode_word": 65560,
+          "native_code": 327680
+        },
+        {
+          "mode_word": 196632,
+          "native_code": 327680
+        },
+        {
+          "mode_word": 65796,
+          "native_code": 0
+        },
+        {
+          "mode_word": 196868,
+          "native_code": 0
+        },
+        {
+          "mode_word": 65800,
+          "native_code": 327680
+        },
+        {
+          "mode_word": 196872,
+          "native_code": 327680
+        },
+        {
+          "mode_word": 66568,
+          "native_code": 0
+        },
+        {
+          "mode_word": 197640,
+          "native_code": 0
+        }
+      ],
+      "mode_capabilities": 222492,
+      "scope": "initialized_before_mode_configuration"
+    },
+    "calibration": {
+      "actions": [
+        "change_filter",
+        "click_reference",
+        "display_patch",
+        "message",
+        "operate_instrument",
+        "present_reference",
+        "set_sensor_position"
+      ],
+      "conditions": [
+        {
+          "acknowledged": true,
+          "action": "operate_instrument",
+          "condition": "uop_ref_white",
+          "instruction": "Do a reflective white calibration on the instrument itself",
+          "reference_id_holds": null,
+          "value": 1
+        },
+        {
+          "acknowledged": true,
+          "action": "operate_instrument",
+          "condition": "uop_trans_white",
+          "instruction": "Do a transmissive white calibration on the instrument itself",
+          "reference_id_holds": null,
+          "value": 2
+        },
+        {
+          "acknowledged": true,
+          "action": "operate_instrument",
+          "condition": "uop_trans_dark",
+          "instruction": "Do a transmissive dark calibration on the instrument itself",
+          "reference_id_holds": null,
+          "value": 3
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_ref_white",
+          "instruction": "Place the instrument on its reflective white reference",
+          "reference_id_holds": "The expected white reference identifier, held by the driver, not read from the reference placed",
+          "value": 16
+        },
+        {
+          "acknowledged": false,
+          "action": "click_reference",
+          "condition": "man_ref_whitek",
+          "instruction": "Click the instrument down on its reflective white reference",
+          "reference_id_holds": "The expected white reference identifier, held by the driver, not read from the reference placed",
+          "value": 32
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_ref_dark",
+          "instruction": "Place the instrument on a light trap, or in the dark and distant from any surface",
+          "reference_id_holds": null,
+          "value": 48
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_dark_gloss",
+          "instruction": "Place the instrument on its black gloss reference",
+          "reference_id_holds": null,
+          "value": 64
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_em_dark",
+          "instruction": "Place the cap on the instrument, or place it on a dark surface or on the calibration reference",
+          "reference_id_holds": null,
+          "value": 80
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_am_dark",
+          "instruction": "Place the ambient adapter and cap on the instrument, or place it on the calibration reference",
+          "reference_id_holds": null,
+          "value": 96
+        },
+        {
+          "acknowledged": true,
+          "action": "set_sensor_position",
+          "condition": "man_cal_smode",
+          "instruction": "Set the instrument sensor to its calibration position",
+          "reference_id_holds": null,
+          "value": 112
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_trans_white",
+          "instruction": "Place the instrument on its transmissive white source",
+          "reference_id_holds": null,
+          "value": 128
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_trans_dark",
+          "instruction": "Block the transmission path with the appropriate transmissive blocking",
+          "reference_id_holds": null,
+          "value": 144
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_white",
+          "instruction": "Display a 100% white test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 256
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_80pc",
+          "instruction": "Display an 80% white test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 512
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_grey",
+          "instruction": "Display a grey test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 768
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_grey_darker",
+          "instruction": "Display a darker grey test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 1024
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_grey_ligher",
+          "instruction": "Display a lighter grey test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 1280
+        },
+        {
+          "acknowledged": true,
+          "action": "change_filter",
+          "condition": "change_filter",
+          "instruction": "Change the filter on the instrument",
+          "reference_id_holds": "The filter to fit",
+          "value": 65536
+        },
+        {
+          "acknowledged": true,
+          "action": "message",
+          "condition": "message",
+          "instruction": "The driver has a message for the operator",
+          "reference_id_holds": "The message text",
+          "value": 131072
+        }
+      ],
+      "deferrable_types": [
+        "emis_int_time",
+        "ref_freq"
+      ],
+      "display_level": "A fraction of full white for the patch the client must display; present only for `display_patch` conditions, and never to be invented by the client",
+      "types": [
+        "wavelength",
+        "ref_white",
+        "ref_dark",
+        "ref_dark_gl",
+        "emis_offset",
+        "emis_ratio",
+        "em_dark",
+        "trans_white",
+        "trans_vwhite",
+        "trans_dark",
+        "emis_int_time",
+        "ref_freq"
+      ]
+    },
+    "calibration_setup": [],
+    "capability_id": "9242a77afeddfac01ffe6c5bed6aa7df439fb385ba9ac6f3db4078b44a8cca9e",
+    "capability_source": "instrument capabilities(), decoded; baseline_native_mode reports exact initialized-state checks when observed; acquisition confirms the requested configuration at bind time",
+    "contract": "argyll_generic_instrument_v1",
+    "default_event_contract": "retained_patch_v1",
+    "device": {
+      "backend": "argyll-native",
+      "backend_version": "3.5.0",
+      "device_id": "JETI spectraval",
+      "model": "JETI spectraval",
+      "serial": "1000011",
+      "serial_encoding": "utf8"
+    },
+    "device_id": "JETI spectraval",
+    "display_types": {
+      "applied_choice_id": null,
+      "catalogue_id": "e0d39f6c1121f84520ef6249718a276decb1c052a80a81f268114903cd87b47d",
+      "count": 2,
+      "entries": [
+        {
+          "available": true,
+          "base_calibration_id": 1,
+          "custom": false,
+          "id": "f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d",
+          "identity_scope": "catalogue_metadata",
+          "index": 0,
+          "kind": "builtin",
+          "label": "Simulated display calibration 0",
+          "native_default": false,
+          "native_label_bytes": null,
+          "native_source_path_bytes": null,
+          "refresh_mode": 0,
+          "source_path": null,
+          "technology_code": 0,
+          "unavailable_reason": null
+        },
+        {
+          "available": true,
+          "base_calibration_id": 2,
+          "custom": false,
+          "id": "87e5fa910c2273a06b05606a05072fad45f32c1db56df3b1a03d1d9206e2a083",
+          "identity_scope": "catalogue_metadata",
+          "index": 1,
+          "kind": "builtin",
+          "label": "Simulated display calibration 1",
+          "native_default": false,
+          "native_label_bytes": null,
+          "native_source_path_bytes": null,
+          "refresh_mode": 1,
+          "source_path": null,
+          "technology_code": 0,
+          "unavailable_reason": null
+        }
+      ],
+      "native_code": 0,
+      "readback": {
+        "base_calibration_id": 1,
+        "native_code": 0,
+        "refresh_mode": 0,
+        "technology_code": 0
+      },
+      "status": "available"
+    },
+    "event_contracts": [
+      "patch_v1",
+      "retained_patch_v1"
+    ],
+    "facilities": [
+      "disptype",
+      "emis_refr_meas",
+      "get_refresh_rate",
+      "has_target",
+      "prog_trig",
+      "set_refresh_rate",
+      "user_trig"
+    ],
+    "filter_capabilities": 1,
+    "filters": [
+      "average"
+    ],
+    "instructions": [
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Present the declared external display stimulus and keep it unchanged during the frequency measurement",
+        "instruction": "refresh_stimulus",
+        "kind": "present_refresh_stimulus"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Prepare the requested strip, then continue",
+        "instruction": "strip_position",
+        "kind": "present_strip"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Position the sample or measurement optics, then continue",
+        "instruction": "sample_position",
+        "kind": "present_sample"
+      },
+      {
+        "answered": true,
+        "carries_calibration": true,
+        "detail": "Set up what the instrument asks for to calibrate, then continue",
+        "instruction": "calibration_setup",
+        "kind": "present_calibration_reference"
+      },
+      {
+        "answered": false,
+        "carries_calibration": true,
+        "detail": "Do what the instrument asks for to calibrate; it continues by itself",
+        "instruction": "calibration_condition",
+        "kind": "notify_calibration_condition"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Place the chart on the table",
+        "instruction": "xy_sheet",
+        "kind": "place_sheet"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Sight a named fiducial so the table can locate the sheet",
+        "instruction": "xy_locate",
+        "kind": "sight_fiducial"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "The sensor, dial, diffuser or adapter is not where this step needs it. Move it, then continue; the step is tried once more",
+        "instruction": "sensor_position",
+        "kind": "reposition_sensor"
+      }
+    ],
+    "limits": {
+      "binding_policy": null,
+      "binding_timeout_seconds": 30.0,
+      "max_event_bytes": 16384,
+      "max_patch_id_bytes": 128,
+      "max_patches": 4096,
+      "max_request_bytes": 16384,
+      "max_response_timeout_seconds": 600,
+      "native_diagnostics": {
+        "available": true,
+        "debug_level_range": [
+          0,
+          8
+        ],
+        "default_debug_level": 0,
+        "default_limit_bytes": 65536,
+        "max_limit_bytes": 1048576,
+        "scope": "Auxiliary stderr provenance; no scientific setting changes",
+        "unavailable_reason": null
+      },
+      "read_allowance_floor_seconds": null,
+      "read_allowance_floor_seconds_by_mode": null
+    },
+    "live": false,
+    "mode_capabilities": 222492,
+    "mode_flags": [
+      "colorimeter",
+      "emis_norefresh_ovd",
+      "spectral"
+    ],
+    "modes": [
+      {
+        "available": true,
+        "axes": {
+          "action": "spot",
+          "condition": null,
+          "illumination": "emissive",
+          "mode_flags": [],
+          "modifiers": [],
+          "route": "emis_spot"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 196632,
+            "native_code": 327680,
+            "reason": "native_mode_rejected",
+            "status": "rejected"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 65560,
+            "native_code": 327680,
+            "reason": "native_mode_rejected",
+            "status": "rejected"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": "emis_80pc",
+            "document": "ArgyllCMS 3.5.0, spectro/specbos.c",
+            "location": "https://www.argyllcms.com/Argyll_V3.5.0_src.zip",
+            "official": true,
+            "quote": "*calc = inst_calc_emis_80pc;",
+            "text": "If the selected display calibration uses refresh and no rate is set, refresh calibration can ask for an 80% white display patch."
+          }
+        ],
+        "canonical": true,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "emissive_spot",
+        "expected_measurement_type": 1,
+        "expected_measurement_type_name": "emission",
+        "expected_quantities": {
+          "illuminant": "none (emissive)",
+          "quantity": "spectral_radiance",
+          "scale": "absolute; Y is luminance",
+          "spectrum_unit": "mW/(m^2 sr nm)",
+          "xyz_unit": "cd/m^2"
+        },
+        "label": "Emissive spot",
+        "mode": "emissive_spot",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "default": false,
+                "help": "Run the ordinary calibration workflow before reading stored device status.",
+                "key": "calibrate",
+                "label": "Calibrate before querying stored state",
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "layout_keys": [
+              "calibrate"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": false,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "stored_refresh"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          },
+          {
+            "available": true,
+            "expected_quantities": {
+              "native_method": "read_refrate",
+              "quantity": "refresh_frequency",
+              "unit": "Hz"
+            },
+            "instruction": "Present the declared external display stimulus and keep it unchanged during the frequency measurement.",
+            "layout_fields": [
+              {
+                "default": null,
+                "encoding": "utf8",
+                "help": "Identify the declared display stimulus.",
+                "key": "stimulus_id",
+                "label": "Stimulus identifier",
+                "max_bytes": 128,
+                "required": true,
+                "type": "text"
+              },
+              {
+                "default": null,
+                "encoding": "utf8",
+                "help": "Describe the display stimulus and keep its declared conditions unchanged.",
+                "key": "stimulus_description",
+                "label": "Stimulus description",
+                "max_bytes": 2048,
+                "required": true,
+                "type": "text"
+              }
+            ],
+            "layout_keys": [
+              "stimulus_description",
+              "stimulus_id"
+            ],
+            "max_patches": 1,
+            "min_patches": 1,
+            "option_ids": [
+              "display_type"
+            ],
+            "required_layout_keys": [
+              "stimulus_description",
+              "stimulus_id"
+            ],
+            "result_kind": "scalar",
+            "unavailable_reason": null,
+            "workflow": "refresh_frequency"
+          }
+        ]
+      },
+      {
+        "available": true,
+        "axes": {
+          "action": "spot",
+          "condition": null,
+          "illumination": "emissive",
+          "mode_flags": [],
+          "modifiers": [
+            "adaptive"
+          ],
+          "route": "emis_spot"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 196632,
+            "native_code": 327680,
+            "reason": "native_mode_rejected",
+            "status": "rejected"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 65560,
+            "native_code": 327680,
+            "reason": "native_mode_rejected",
+            "status": "rejected"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": "emis_80pc",
+            "document": "ArgyllCMS 3.5.0, spectro/specbos.c",
+            "location": "https://www.argyllcms.com/Argyll_V3.5.0_src.zip",
+            "official": true,
+            "quote": "*calc = inst_calc_emis_80pc;",
+            "text": "If the selected display calibration uses refresh and no rate is set, refresh calibration can ask for an 80% white display patch."
+          }
+        ],
+        "canonical": false,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "emissive_spot",
+        "expected_measurement_type": 1,
+        "expected_measurement_type_name": "emission",
+        "expected_quantities": {
+          "illuminant": "none (emissive)",
+          "quantity": "spectral_radiance",
+          "scale": "absolute; Y is luminance",
+          "spectrum_unit": "mW/(m^2 sr nm)",
+          "xyz_unit": "cd/m^2"
+        },
+        "label": "Emissive spot, adaptive acquisition",
+        "mode": "emissive_spot_adaptive",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "default": false,
+                "help": "Run the ordinary calibration workflow before reading stored device status.",
+                "key": "calibrate",
+                "label": "Calibrate before querying stored state",
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "layout_keys": [
+              "calibrate"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": false,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "stored_refresh"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          },
+          {
+            "available": true,
+            "expected_quantities": {
+              "native_method": "read_refrate",
+              "quantity": "refresh_frequency",
+              "unit": "Hz"
+            },
+            "instruction": "Present the declared external display stimulus and keep it unchanged during the frequency measurement.",
+            "layout_fields": [
+              {
+                "default": null,
+                "encoding": "utf8",
+                "help": "Identify the declared display stimulus.",
+                "key": "stimulus_id",
+                "label": "Stimulus identifier",
+                "max_bytes": 128,
+                "required": true,
+                "type": "text"
+              },
+              {
+                "default": null,
+                "encoding": "utf8",
+                "help": "Describe the display stimulus and keep its declared conditions unchanged.",
+                "key": "stimulus_description",
+                "label": "Stimulus description",
+                "max_bytes": 2048,
+                "required": true,
+                "type": "text"
+              }
+            ],
+            "layout_keys": [
+              "stimulus_description",
+              "stimulus_id"
+            ],
+            "max_patches": 1,
+            "min_patches": 1,
+            "option_ids": [
+              "display_type"
+            ],
+            "required_layout_keys": [
+              "stimulus_description",
+              "stimulus_id"
+            ],
+            "result_kind": "scalar",
+            "unavailable_reason": null,
+            "workflow": "refresh_frequency"
+          }
+        ]
+      },
+      {
+        "available": true,
+        "axes": {
+          "action": "spot",
+          "condition": null,
+          "illumination": "transmission",
+          "mode_flags": [],
+          "modifiers": [],
+          "route": "trans_spot"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 196628,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 65556,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": "emis_80pc",
+            "document": "ArgyllCMS 3.5.0, spectro/specbos.c",
+            "location": "https://www.argyllcms.com/Argyll_V3.5.0_src.zip",
+            "official": true,
+            "quote": "*calc = inst_calc_emis_80pc;",
+            "text": "If the selected display calibration uses refresh and no rate is set, refresh calibration can ask for an 80% white display patch."
+          },
+          {
+            "condition": "man_trans_white",
+            "document": "ArgyllCMS 3.5.0, spectro/specbos.c",
+            "location": "https://www.argyllcms.com/Argyll_V3.5.0_src.zip",
+            "official": true,
+            "quote": "*calc = inst_calc_man_trans_white;",
+            "text": "Place the instrument on its transmissive white source"
+          }
+        ],
+        "canonical": true,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "transmission_spot",
+        "expected_measurement_type": 6,
+        "expected_measurement_type_name": "transmissive",
+        "expected_quantities": {
+          "illuminant": "D50",
+          "quantity": "transmittance",
+          "scale": "relative; perfect-transmission Y=100",
+          "spectrum_unit": "%",
+          "xyz_unit": "1"
+        },
+        "label": "Transmission spot",
+        "mode": "transmission_spot",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "default": false,
+                "help": "Run the ordinary calibration workflow before reading stored device status.",
+                "key": "calibrate",
+                "label": "Calibrate before querying stored state",
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "layout_keys": [
+              "calibrate"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": false,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "stored_refresh"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          }
+        ]
+      },
+      {
+        "available": true,
+        "axes": {
+          "action": "ambient",
+          "condition": null,
+          "illumination": "transmission",
+          "mode_flags": [],
+          "modifiers": [],
+          "route": "trans_spot_a"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 196868,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 65796,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": "emis_80pc",
+            "document": "ArgyllCMS 3.5.0, spectro/specbos.c",
+            "location": "https://www.argyllcms.com/Argyll_V3.5.0_src.zip",
+            "official": true,
+            "quote": "*calc = inst_calc_emis_80pc;",
+            "text": "If the selected display calibration uses refresh and no rate is set, refresh calibration can ask for an 80% white display patch."
+          },
+          {
+            "condition": "man_trans_white",
+            "document": "ArgyllCMS 3.5.0, spectro/specbos.c",
+            "location": "https://www.argyllcms.com/Argyll_V3.5.0_src.zip",
+            "official": true,
+            "quote": "*calc = inst_calc_man_trans_white;",
+            "text": "Place the instrument on its transmissive white source"
+          }
+        ],
+        "canonical": true,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "transmission_ambient",
+        "expected_measurement_type": 6,
+        "expected_measurement_type_name": "transmissive",
+        "expected_quantities": {
+          "illuminant": "D50",
+          "quantity": "transmittance",
+          "scale": "relative; perfect-transmission Y=100",
+          "spectrum_unit": "%",
+          "xyz_unit": "1"
+        },
+        "label": "Transmission ambient (90/diffuse)",
+        "mode": "transmission_ambient",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "default": false,
+                "help": "Run the ordinary calibration workflow before reading stored device status.",
+                "key": "calibrate",
+                "label": "Calibrate before querying stored state",
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "layout_keys": [
+              "calibrate"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": false,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "stored_refresh"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          }
+        ]
+      },
+      {
+        "available": true,
+        "axes": {
+          "action": "spot",
+          "condition": null,
+          "illumination": "ambient",
+          "mode_flags": [],
+          "modifiers": [],
+          "route": "emis_ambient"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 196872,
+            "native_code": 327680,
+            "reason": "native_mode_rejected",
+            "status": "rejected"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 65800,
+            "native_code": 327680,
+            "reason": "native_mode_rejected",
+            "status": "rejected"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": "emis_80pc",
+            "document": "ArgyllCMS 3.5.0, spectro/specbos.c",
+            "location": "https://www.argyllcms.com/Argyll_V3.5.0_src.zip",
+            "official": true,
+            "quote": "*calc = inst_calc_emis_80pc;",
+            "text": "If the selected display calibration uses refresh and no rate is set, refresh calibration can ask for an 80% white display patch."
+          }
+        ],
+        "canonical": true,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "ambient_spot",
+        "expected_measurement_type": 2,
+        "expected_measurement_type_name": "ambient",
+        "expected_quantities": {
+          "illuminant": "none (ambient)",
+          "quantity": "spectral_irradiance",
+          "scale": "absolute; Y is illuminance",
+          "spectrum_unit": "mW/(m^2 nm)",
+          "xyz_unit": "lux"
+        },
+        "label": "Ambient spot",
+        "mode": "ambient_spot",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "default": false,
+                "help": "Run the ordinary calibration workflow before reading stored device status.",
+                "key": "calibrate",
+                "label": "Calibrate before querying stored state",
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "layout_keys": [
+              "calibrate"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": false,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "stored_refresh"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          }
+        ]
+      },
+      {
+        "available": true,
+        "axes": {
+          "action": "tele",
+          "condition": null,
+          "illumination": "emissive",
+          "mode_flags": [],
+          "modifiers": [],
+          "route": "emis_tele"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 197640,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 66568,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": "emis_80pc",
+            "document": "ArgyllCMS 3.5.0, spectro/specbos.c",
+            "location": "https://www.argyllcms.com/Argyll_V3.5.0_src.zip",
+            "official": true,
+            "quote": "*calc = inst_calc_emis_80pc;",
+            "text": "If the selected display calibration uses refresh and no rate is set, refresh calibration can ask for an 80% white display patch."
+          }
+        ],
+        "canonical": true,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "emissive_tele",
+        "expected_measurement_type": 1,
+        "expected_measurement_type_name": "emission",
+        "expected_quantities": {
+          "illuminant": "none (emissive)",
+          "quantity": "spectral_radiance",
+          "scale": "absolute; Y is luminance",
+          "spectrum_unit": "mW/(m^2 sr nm)",
+          "xyz_unit": "cd/m^2"
+        },
+        "label": "Emissive telephoto",
+        "mode": "emissive_tele",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "default": false,
+                "help": "Run the ordinary calibration workflow before reading stored device status.",
+                "key": "calibrate",
+                "label": "Calibrate before querying stored state",
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "layout_keys": [
+              "calibrate"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": false,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "stored_refresh"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          },
+          {
+            "available": true,
+            "expected_quantities": {
+              "native_method": "read_refrate",
+              "quantity": "refresh_frequency",
+              "unit": "Hz"
+            },
+            "instruction": "Present the declared external display stimulus and keep it unchanged during the frequency measurement.",
+            "layout_fields": [
+              {
+                "default": null,
+                "encoding": "utf8",
+                "help": "Identify the declared display stimulus.",
+                "key": "stimulus_id",
+                "label": "Stimulus identifier",
+                "max_bytes": 128,
+                "required": true,
+                "type": "text"
+              },
+              {
+                "default": null,
+                "encoding": "utf8",
+                "help": "Describe the display stimulus and keep its declared conditions unchanged.",
+                "key": "stimulus_description",
+                "label": "Stimulus description",
+                "max_bytes": 2048,
+                "required": true,
+                "type": "text"
+              }
+            ],
+            "layout_keys": [
+              "stimulus_description",
+              "stimulus_id"
+            ],
+            "max_patches": 1,
+            "min_patches": 1,
+            "option_ids": [
+              "display_type"
+            ],
+            "required_layout_keys": [
+              "stimulus_description",
+              "stimulus_id"
+            ],
+            "result_kind": "scalar",
+            "unavailable_reason": null,
+            "workflow": "refresh_frequency"
+          }
+        ]
+      },
+      {
+        "available": true,
+        "axes": {
+          "action": "tele",
+          "condition": null,
+          "illumination": "emissive",
+          "mode_flags": [],
+          "modifiers": [
+            "adaptive"
+          ],
+          "route": "emis_tele"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 197640,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": {
+            "mode_word": 66568,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          }
+        },
+        "calibration_setup": [
+          {
+            "condition": "emis_80pc",
+            "document": "ArgyllCMS 3.5.0, spectro/specbos.c",
+            "location": "https://www.argyllcms.com/Argyll_V3.5.0_src.zip",
+            "official": true,
+            "quote": "*calc = inst_calc_emis_80pc;",
+            "text": "If the selected display calibration uses refresh and no rate is set, refresh calibration can ask for an 80% white display patch."
+          }
+        ],
+        "canonical": false,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "emissive_tele",
+        "expected_measurement_type": 1,
+        "expected_measurement_type_name": "emission",
+        "expected_quantities": {
+          "illuminant": "none (emissive)",
+          "quantity": "spectral_radiance",
+          "scale": "absolute; Y is luminance",
+          "spectrum_unit": "mW/(m^2 sr nm)",
+          "xyz_unit": "cd/m^2"
+        },
+        "label": "Emissive telephoto, adaptive acquisition",
+        "mode": "emissive_tele_adaptive",
+        "operator_setup": null,
+        "physical_chart": {
+          "assessment": null,
+          "kind": "unknown"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "spot",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 1,
+            "min_patches": 1,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "spot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [
+              {
+                "default": false,
+                "help": "Run the ordinary calibration workflow before reading stored device status.",
+                "key": "calibrate",
+                "label": "Calibrate before querying stored state",
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "layout_keys": [
+              "calibrate"
+            ],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": false,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "stored_refresh"
+          },
+          {
+            "available": true,
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "required_layout_keys": [],
+            "unavailable_reason": null,
+            "workflow": "calibrate"
+          },
+          {
+            "available": true,
+            "expected_quantities": {
+              "native_method": "read_refrate",
+              "quantity": "refresh_frequency",
+              "unit": "Hz"
+            },
+            "instruction": "Present the declared external display stimulus and keep it unchanged during the frequency measurement.",
+            "layout_fields": [
+              {
+                "default": null,
+                "encoding": "utf8",
+                "help": "Identify the declared display stimulus.",
+                "key": "stimulus_id",
+                "label": "Stimulus identifier",
+                "max_bytes": 128,
+                "required": true,
+                "type": "text"
+              },
+              {
+                "default": null,
+                "encoding": "utf8",
+                "help": "Describe the display stimulus and keep its declared conditions unchanged.",
+                "key": "stimulus_description",
+                "label": "Stimulus description",
+                "max_bytes": 2048,
+                "required": true,
+                "type": "text"
+              }
+            ],
+            "layout_keys": [
+              "stimulus_description",
+              "stimulus_id"
+            ],
+            "max_patches": 1,
+            "min_patches": 1,
+            "option_ids": [
+              "display_type"
+            ],
+            "required_layout_keys": [
+              "stimulus_description",
+              "stimulus_id"
+            ],
+            "result_kind": "scalar",
+            "unavailable_reason": null,
+            "workflow": "refresh_frequency"
+          }
+        ]
+      }
+    ],
+    "options": [
+      {
+        "allowed_ranges": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            150
+          ]
+        ],
+        "applies_to": null,
+        "available": true,
+        "by_mode": {
+          "ambient_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "transmission_ambient": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "transmission_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          }
+        },
+        "default": null,
+        "id": "refresh_rate",
+        "label": "Stored refresh override (0 invalidates the stored rate)",
+        "maximum": 150,
+        "minimum": 0,
+        "refusal_stage": "refresh_rate_unavailable",
+        "type": "number",
+        "unavailable_reason": null,
+        "unit": "Hz"
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "ambient_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          },
+          "emissive_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          },
+          "emissive_spot_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          },
+          "emissive_tele": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          },
+          "emissive_tele_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          },
+          "transmission_ambient": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          },
+          "transmission_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          }
+        },
+        "default": false,
+        "id": "highres",
+        "label": "High resolution spectral mode",
+        "refusal_stage": "highres_unavailable",
+        "type": "boolean",
+        "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+      },
+      {
+        "applies_to": null,
+        "available": true,
+        "by_mode": {
+          "ambient_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "transmission_ambient": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "transmission_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          }
+        },
+        "default": false,
+        "id": "xyz_only",
+        "label": "XYZ only, without the spectrum",
+        "refusal_stage": "xyz_only_unavailable",
+        "type": "boolean",
+        "unavailable_reason": null
+      },
+      {
+        "applies_to": null,
+        "available": true,
+        "by_mode": {
+          "ambient_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_spot_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "emissive_tele_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "transmission_ambient": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          },
+          "transmission_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": null
+          }
+        },
+        "default": 0,
+        "id": "averages",
+        "label": "Readings averaged into one (0 = the driver's own)",
+        "maximum": 1000,
+        "minimum": 0,
+        "refusal_stage": "averaging_unavailable",
+        "type": "integer",
+        "unavailable_reason": null
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "ambient_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          },
+          "emissive_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          },
+          "emissive_spot_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          },
+          "emissive_tele": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          },
+          "emissive_tele_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          },
+          "transmission_ambient": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          },
+          "transmission_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": "Calibration standards apply only to reflective measurements"
+          }
+        },
+        "choices": [
+          "gmdi",
+          "native",
+          "none",
+          "xrdi",
+          "xrga"
+        ],
+        "default": "none",
+        "id": "xcalstd",
+        "label": "Reflective calibration standard",
+        "refusal_stage": "set_xcalstd",
+        "type": "choice",
+        "unavailable_reason": "Calibration standards apply only to reflective measurements"
+      },
+      {
+        "applies_to": null,
+        "available": true,
+        "by_mode": {
+          "ambient_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d",
+              "87e5fa910c2273a06b05606a05072fad45f32c1db56df3b1a03d1d9206e2a083"
+            ],
+            "unavailable_reason": null
+          },
+          "emissive_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d",
+              "87e5fa910c2273a06b05606a05072fad45f32c1db56df3b1a03d1d9206e2a083"
+            ],
+            "unavailable_reason": null
+          },
+          "emissive_spot_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d",
+              "87e5fa910c2273a06b05606a05072fad45f32c1db56df3b1a03d1d9206e2a083"
+            ],
+            "unavailable_reason": null
+          },
+          "emissive_tele": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d",
+              "87e5fa910c2273a06b05606a05072fad45f32c1db56df3b1a03d1d9206e2a083"
+            ],
+            "unavailable_reason": null
+          },
+          "emissive_tele_adaptive": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d",
+              "87e5fa910c2273a06b05606a05072fad45f32c1db56df3b1a03d1d9206e2a083"
+            ],
+            "unavailable_reason": null
+          },
+          "transmission_ambient": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d",
+              "87e5fa910c2273a06b05606a05072fad45f32c1db56df3b1a03d1d9206e2a083"
+            ],
+            "unavailable_reason": null
+          },
+          "transmission_spot": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d",
+              "87e5fa910c2273a06b05606a05072fad45f32c1db56df3b1a03d1d9206e2a083"
+            ],
+            "unavailable_reason": null
+          }
+        },
+        "catalogue_id": "e0d39f6c1121f84520ef6249718a276decb1c052a80a81f268114903cd87b47d",
+        "choice_details": [
+          {
+            "available": true,
+            "base_calibration_id": 1,
+            "custom": false,
+            "id": "f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d",
+            "identity_scope": "catalogue_metadata",
+            "index": 0,
+            "kind": "builtin",
+            "label": "Simulated display calibration 0",
+            "native_default": false,
+            "native_label_bytes": null,
+            "native_source_path_bytes": null,
+            "presentation_label": "Simulated display calibration 0",
+            "refresh_mode": 0,
+            "source_path": null,
+            "technology_code": 0,
+            "unavailable_reason": null
+          },
+          {
+            "available": true,
+            "base_calibration_id": 2,
+            "custom": false,
+            "id": "87e5fa910c2273a06b05606a05072fad45f32c1db56df3b1a03d1d9206e2a083",
+            "identity_scope": "catalogue_metadata",
+            "index": 1,
+            "kind": "builtin",
+            "label": "Simulated display calibration 1",
+            "native_default": false,
+            "native_label_bytes": null,
+            "native_source_path_bytes": null,
+            "presentation_label": "Simulated display calibration 1",
+            "refresh_mode": 1,
+            "source_path": null,
+            "technology_code": 0,
+            "unavailable_reason": null
+          }
+        ],
+        "choices": [
+          "f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d",
+          "87e5fa910c2273a06b05606a05072fad45f32c1db56df3b1a03d1d9206e2a083"
+        ],
+        "default": null,
+        "id": "display_type",
+        "label": "Display calibration",
+        "refusal_stage": "display_type_unavailable",
+        "type": "choice",
+        "unavailable_reason": null
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "ambient_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          },
+          "emissive_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          },
+          "emissive_spot_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          },
+          "emissive_tele": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          },
+          "emissive_tele_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          },
+          "transmission_ambient": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          },
+          "transmission_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": "This instrument advertises no reflective mode"
+          }
+        },
+        "choices": [
+          "unknown"
+        ],
+        "default": null,
+        "id": "filter",
+        "label": "Measurement condition",
+        "refusal_stage": "set_filter",
+        "type": "choice",
+        "unavailable_reason": "This instrument advertises no reflective mode"
+      },
+      {
+        "alternative_shape": {
+          "text": "string"
+        },
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "ambient_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          },
+          "emissive_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          },
+          "emissive_spot_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          },
+          "emissive_tele": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          },
+          "emissive_tele_adaptive": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          },
+          "transmission_ambient": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          },
+          "transmission_spot": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          }
+        },
+        "default": null,
+        "id": "correction",
+        "kinds": [],
+        "label": "Colorimeter correction (.ccmx or .ccss)",
+        "note": "Without one the driver's factory/display-type calibration remains in use. A suitable correction can reduce display spectral mismatch. The file's CGATS identifier determines the kind. Ambient CCMX availability comes from the backend.",
+        "refusal_stage": "correction_matrix_unavailable",
+        "shape": {
+          "path": "string"
+        },
+        "type": "object",
+        "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+      }
+    ],
+    "provenance": "simulated",
+    "schema_version": 1,
+    "spectral": true,
+    "synthetic": true,
+    "trigger_capabilities": 37749728
+  },
+  "events": [
+    {
+      "kind": "started",
+      "operation_id": "6dae71c6-93f4-4319-bd68-3e462d570b51",
+      "payload": {
+        "capability_id": "9242a77afeddfac01ffe6c5bed6aa7df439fb385ba9ac6f3db4078b44a8cca9e",
+        "device_id": "JETI spectraval",
+        "event_contract": "retained_patch_v1",
+        "provenance": "simulated"
+      },
+      "schema_version": 1,
+      "sequence": 0
+    },
+    {
+      "kind": "instruction_required",
+      "operation_id": "6dae71c6-93f4-4319-bd68-3e462d570b51",
+      "payload": {
+        "allowed_responses": [
+          "accept",
+          "cancel"
+        ],
+        "calibration": {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_trans_white",
+          "display_level": null,
+          "instruction": "Place the instrument on its transmissive white source",
+          "needed": [
+            "trans_vwhite"
+          ],
+          "reference": "none",
+          "reference_id": null,
+          "reference_id_holds": null,
+          "remaining": [
+            "trans_vwhite"
+          ],
+          "setup": null,
+          "skippable": false,
+          "warnings": []
+        },
+        "kind": "calibration_setup",
+        "message": "calibration_setup",
+        "native_event": {
+          "acknowledged": true,
+          "calibration_condition": 128,
+          "display_level": null,
+          "event": "instruction_required",
+          "instruction": "calibration_setup",
+          "needed_calibrations": 4096,
+          "protocol_version": 1,
+          "provenance": "simulated",
+          "reference_id": null,
+          "reference_type": 0,
+          "remaining_calibrations": 4096,
+          "request_id": "calibration-0",
+          "skippable": false
+        },
+        "position": null,
+        "request_id": "calibration-0",
+        "response_timeout_seconds": 120.0
+      },
+      "schema_version": 1,
+      "sequence": 1
+    },
+    {
+      "kind": "instruction_required",
+      "operation_id": "6dae71c6-93f4-4319-bd68-3e462d570b51",
+      "payload": {
+        "allowed_responses": [
+          "accept",
+          "cancel"
+        ],
+        "calibration": null,
+        "kind": "sample_position",
+        "message": "sample_position",
+        "native_event": {
+          "event": "instruction_required",
+          "instruction": "sample_position",
+          "protocol_version": 1,
+          "provenance": "simulated",
+          "request_id": "sample-ready"
+        },
+        "position": null,
+        "request_id": "sample-ready",
+        "response_timeout_seconds": 120.0
+      },
+      "schema_version": 1,
+      "sequence": 2
+    },
+    {
+      "kind": "patch_reference",
+      "operation_id": "6dae71c6-93f4-4319-bd68-3e462d570b51",
+      "payload": {
+        "index": 0,
+        "observation_id": "2c775a8a-2131-435a-9e5d-77127d4564a6",
+        "patch_id": "A1"
+      },
+      "schema_version": 1,
+      "sequence": 3
+    },
+    {
+      "kind": "terminal",
+      "operation_id": "6dae71c6-93f4-4319-bd68-3e462d570b51",
+      "payload": {
+        "completed_patches": 1,
+        "error": null,
+        "error_native_code": null,
+        "error_stage": null,
+        "expected_patches": 1,
+        "instrument_state": "not_applicable",
+        "software_stopped": true,
+        "status": "completed"
+      },
+      "schema_version": 1,
+      "sequence": 4
+    }
+  ],
+  "request": {
+    "capability_id": "9242a77afeddfac01ffe6c5bed6aa7df439fb385ba9ac6f3db4078b44a8cca9e",
+    "device_id": "JETI spectraval",
+    "event_contract": "retained_patch_v1",
+    "layout": {},
+    "mode": "transmission_spot",
+    "options": {},
+    "patch_ids": [
+      "A1"
+    ],
+    "schema_version": 1,
+    "workflow": "spot"
+  },
+  "result": {
+    "calibration": {
+      "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+      "status": "valid"
+    },
+    "configuration": [
+      [
+        "calibration_events_json",
+        "[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"instruction_required\",\"instruction\":\"calibration_setup\",\"request_id\":\"calibration-0\",\"calibration_condition\":128,\"reference_type\":0,\"needed_calibrations\":4096,\"remaining_calibrations\":4096,\"skippable\":false,\"acknowledged\":true,\"display_level\":null,\"reference_id\":null},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"skipped\":false,\"needed_calibrations\":4096,\"available_calibrations\":4096,\"remaining_calibrations\":0,\"performed\":true,\"status_source\":\"driver\",\"initial_calibration_suppressed\":false,\"reference_type\":0,\"reference_id\":null}]"
+      ],
+      [
+        "calibration_outcome_json",
+        "{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"skipped\":false,\"needed_calibrations\":4096,\"available_calibrations\":4096,\"remaining_calibrations\":0,\"performed\":true,\"status_source\":\"driver\",\"initial_calibration_suppressed\":false,\"reference_type\":0,\"reference_id\":null}"
+      ],
+      [
+        "capability_id",
+        "9242a77afeddfac01ffe6c5bed6aa7df439fb385ba9ac6f3db4078b44a8cca9e"
+      ],
+      [
+        "capability_source",
+        "instrument capabilities(), decoded; baseline_native_mode reports exact initialized-state checks when observed; acquisition confirms the requested configuration at bind time"
+      ],
+      [
+        "display_types_json",
+        "{\"status\":\"available\",\"native_code\":0,\"count\":2,\"catalogue_id\":\"e0d39f6c1121f84520ef6249718a276decb1c052a80a81f268114903cd87b47d\",\"applied_choice_id\":null,\"readback\":{\"native_code\":0,\"technology_code\":0,\"refresh_mode\":0,\"base_calibration_id\":1},\"entries\":[{\"index\":0,\"id\":\"f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d\",\"label\":\"Simulated display calibration 0\",\"available\":true,\"unavailable_reason\":null,\"native_default\":false,\"native_label_bytes\":null,\"native_source_path_bytes\":null,\"technology_code\":0,\"refresh_mode\":0,\"base_calibration_id\":1,\"kind\":\"builtin\",\"identity_scope\":\"catalogue_metadata\",\"source_path\":null,\"custom\":false},{\"index\":1,\"id\":\"87e5fa910c2273a06b05606a05072fad45f32c1db56df3b1a03d1d9206e2a083\",\"label\":\"Simulated display calibration 1\",\"available\":true,\"unavailable_reason\":null,\"native_default\":false,\"native_label_bytes\":null,\"native_source_path_bytes\":null,\"technology_code\":0,\"refresh_mode\":1,\"base_calibration_id\":2,\"kind\":\"builtin\",\"identity_scope\":\"catalogue_metadata\",\"source_path\":null,\"custom\":false}]}"
+      ],
+      [
+        "event_contract",
+        "retained_patch_v1"
+      ],
+      [
+        "filter_capabilities",
+        "1"
+      ],
+      [
+        "mode_capabilities",
+        "222492"
+      ],
+      [
+        "requested_layout_json",
+        "{}"
+      ],
+      [
+        "requested_options_json",
+        "{}"
+      ],
+      [
+        "trigger_capabilities",
+        "37749728"
+      ]
+    ],
+    "device": {
+      "backend": "argyll-native",
+      "backend_version": "3.5.0",
+      "device_id": "JETI spectraval",
+      "model": "JETI spectraval",
+      "serial": "1000011",
+      "serial_encoding": "utf8"
+    },
+    "device_id": "JETI spectraval",
+    "error": null,
+    "error_native_code": null,
+    "error_stage": null,
+    "expected_patch_ids": [
+      "A1"
+    ],
+    "instrument_state": "not_applicable",
+    "mode": "transmission_spot",
+    "operation_id": "6dae71c6-93f4-4319-bd68-3e462d570b51",
+    "patches": [
+      {
+        "index": 0,
+        "observation": {
+          "acquired_at": "2026-10-15T23:53:03.718Z",
+          "actual_mode": "transmission_spot",
+          "backend_reported": {
+            "spectrum": {
+              "quantity": "transmittance",
+              "unit": "%",
+              "values": [
+                33.27462275124269,
+                33.65017028509418,
+                34.02851083889338,
+                34.4096237043676,
+                34.79348726759591,
+                35.18007900369899,
+                35.56937547180614,
+                35.961352310305244,
+                36.355984232381786,
+                36.75324502185225,
+                37.15310752929807,
+                37.555543668505365,
+                37.96052441321615,
+                38.368019794196364,
+                38.77799889662596,
+                39.19042985781637,
+                39.60527986526041,
+                40.02251515501948,
+                40.44210101045311,
+                40.86400176129533,
+                41.2881807830828,
+                41.71460049693888,
+                42.14322236971806,
+                42.574006914515046,
+                43.006913691542415,
+                43.44190130938094,
+                43.87892742660598,
+                44.317948753794,
+                44.7589210559121,
+                45.20179915509455,
+                45.646536933808534,
+                46.09308733841285,
+                46.541402383111794,
+                46.991433154306996,
+                47.44312981534958,
+                47.89644161169491,
+                48.351316876461674,
+                48.80770303639745,
+                49.26554661825221,
+                49.724793255561146,
+                50.1853876958381,
+                50.64727380818067,
+                51.110394591287566,
+                51.57469218188908,
+                52.04010786359095,
+                52.50658207613165,
+                52.97405442505319,
+                53.4424636917852,
+                53.91174784414157,
+                54.38184404722925,
+                54.85268867476778,
+                55.32421732081905,
+                55.79636481192517,
+                56.269065219653285,
+                56.74225187354538,
+                57.21585737447067,
+                57.689813608378806,
+                58.16405176045072,
+                58.638502329644766,
+                59.11309514363477,
+                59.58775937413701,
+                60.06242355262241,
+                60.53701558641028,
+                61.01146277513948,
+                61.48569182761312,
+                61.959628879011895,
+                62.4331995084718,
+                62.906328757020795,
+                63.37894114586994,
+                63.850960695052876,
+                64.32231094240862,
+                64.7929149629015,
+                65.26269538827214,
+                65.73157442701364,
+                66.19947388466566,
+                66.66631518442051,
+                67.13201938803354,
+                67.59650721703127,
+                68.05969907420939,
+                68.52151506541338,
+                68.98187502159365,
+                69.44069852112756,
+                69.8979049123997,
+                70.35341333663217,
+                70.80714275095664,
+                71.25901195171856,
+                71.70893959800556,
+                72.15684423538984,
+                72.60264431987633,
+                73.04625824204597,
+                73.48760435138534,
+                73.92660098079233,
+                74.36316647124795,
+                74.79721919664425,
+                75.22867758875785,
+                75.65746016235872,
+                76.0834855404438,
+                76.50667247958455,
+                76.92693989537742,
+                77.34420688798679,
+                77.75839276776892,
+                78.16941708096586,
+                78.57719963545776,
+                78.98166052656288,
+                79.38272016287297,
+                79.7802992921132,
+                80.17431902701449,
+                80.56470087118684,
+                80.95136674498185,
+                81.33423901133244,
+                81.71324050155812,
+                82.08829454112374,
+                82.45932497533992,
+                82.82625619499304,
+                83.1890131618927,
+                83.54752143432515,
+                83.90170719239985,
+                84.25149726327794,
+                84.59681914627005,
+                84.93760103779182,
+                85.2737718561647,
+                85.60526126625078,
+                85.93199970390893,
+                86.25391840026104,
+                86.57094940575615,
+                86.88302561402097,
+                87.19008078548471,
+                87.49204957076722,
+                87.78886753381836,
+                88.08047117479722,
+                88.36679795268023,
+                88.64778630758641,
+                88.92337568280894,
+                89.193506546542,
+                89.4581204132917,
+                89.71715986496069,
+                89.9705685715958,
+                90.21829131178767,
+                90.46027399271296,
+                90.6964636698081,
+                90.92680856606509,
+                91.15125809093936,
+                91.36976285885987,
+                91.58227470733235,
+                91.78874671462597,
+                91.98913321703463,
+                92.18338982570396,
+                92.37147344301508,
+                92.55334227851716,
+                92.72895586440004,
+                92.89827507049901,
+                93.0612621188245,
+                93.21788059760797,
+                93.36809547485807,
+                93.51187311141894,
+                93.64918127352426,
+                93.77998914484068,
+                93.90426733799377,
+                94.02198790557114,
+                94.13312435059639,
+                94.23765163646858,
+                94.33554619636233,
+                94.42678594208296,
+                94.51135027237268,
+                94.58922008066293,
+                94.6603777622691,
+                94.72480722102377,
+                94.78249387534491,
+                94.8334246637358,
+                94.87758804971398,
+                94.91497402616633,
+                94.94557411912832,
+                94.96938139098505,
+                94.98639044309263,
+                94.99659741781858,
+                95.0,
+                94.99659741781858,
+                94.98639044309263,
+                94.96938139098505,
+                94.94557411912832,
+                94.91497402616633,
+                94.87758804971398,
+                94.8334246637358,
+                94.78249387534491,
+                94.72480722102377,
+                94.6603777622691,
+                94.58922008066293,
+                94.51135027237268,
+                94.42678594208296,
+                94.33554619636233,
+                94.23765163646858,
+                94.13312435059639,
+                94.02198790557114,
+                93.90426733799377,
+                93.77998914484068,
+                93.64918127352426,
+                93.51187311141894,
+                93.36809547485807,
+                93.21788059760797,
+                93.0612621188245,
+                92.89827507049901,
+                92.72895586440004,
+                92.55334227851716,
+                92.37147344301508,
+                92.18338982570396,
+                91.98913321703463,
+                91.78874671462597,
+                91.58227470733235,
+                91.36976285885987,
+                91.15125809093936,
+                90.92680856606509,
+                90.6964636698081,
+                90.46027399271296,
+                90.21829131178767,
+                89.9705685715958,
+                89.71715986496069,
+                89.4581204132917,
+                89.193506546542,
+                88.92337568280894,
+                88.64778630758641,
+                88.36679795268023,
+                88.08047117479722,
+                87.78886753381836,
+                87.49204957076722,
+                87.19008078548471,
+                86.88302561402097,
+                86.57094940575615,
+                86.25391840026104,
+                85.93199970390893,
+                85.60526126625078,
+                85.2737718561647,
+                84.93760103779182,
+                84.59681914627005,
+                84.25149726327794,
+                83.90170719239985,
+                83.54752143432515,
+                83.1890131618927,
+                82.82625619499304,
+                82.45932497533992,
+                82.08829454112374,
+                81.71324050155812,
+                81.33423901133244,
+                80.95136674498185,
+                80.56470087118684,
+                80.17431902701449,
+                79.7802992921132,
+                79.38272016287297,
+                78.98166052656288,
+                78.57719963545776,
+                78.16941708096586,
+                77.75839276776892,
+                77.34420688798679,
+                76.92693989537742,
+                76.50667247958455,
+                76.0834855404438,
+                75.65746016235872,
+                75.22867758875785,
+                74.79721919664425,
+                74.36316647124795,
+                73.92660098079233,
+                73.48760435138534,
+                73.04625824204597,
+                72.60264431987633,
+                72.15684423538984,
+                71.70893959800556,
+                71.25901195171856,
+                70.80714275095664,
+                70.35341333663217,
+                69.8979049123997,
+                69.44069852112756,
+                68.98187502159365,
+                68.52151506541338,
+                68.05969907420939,
+                67.59650721703127,
+                67.13201938803354,
+                66.66631518442051,
+                66.19947388466566,
+                65.73157442701364,
+                65.26269538827214,
+                64.7929149629015,
+                64.32231094240862,
+                63.850960695052876,
+                63.37894114586994,
+                62.906328757020795,
+                62.4331995084718,
+                61.959628879011895,
+                61.48569182761312,
+                61.01146277513948,
+                60.53701558641028,
+                60.06242355262241,
+                59.58775937413701,
+                59.11309514363477,
+                58.638502329644766,
+                58.16405176045072,
+                57.689813608378806,
+                57.21585737447067,
+                56.74225187354538,
+                56.269065219653285,
+                55.79636481192517,
+                55.32421732081905,
+                54.85268867476778,
+                54.38184404722925,
+                53.91174784414157,
+                53.4424636917852,
+                52.97405442505319,
+                52.50658207613165,
+                52.04010786359095,
+                51.57469218188908,
+                51.110394591287566,
+                50.64727380818067,
+                50.1853876958381,
+                49.724793255561146,
+                49.26554661825221,
+                48.80770303639745,
+                48.351316876461674,
+                47.89644161169491,
+                47.44312981534958,
+                46.991433154306996,
+                46.541402383111794,
+                46.09308733841285,
+                45.646536933808534,
+                45.20179915509455,
+                44.7589210559121,
+                44.317948753794,
+                43.87892742660598,
+                43.44190130938094,
+                43.006913691542415,
+                42.574006914515046,
+                42.14322236971806,
+                41.71460049693888,
+                41.2881807830828,
+                40.86400176129533,
+                40.44210101045311,
+                40.02251515501948,
+                39.60527986526041,
+                39.19042985781637,
+                38.77799889662596,
+                38.368019794196364,
+                37.96052441321615,
+                37.555543668505365,
+                37.15310752929807,
+                36.75324502185225,
+                36.355984232381786,
+                35.961352310305244,
+                35.56937547180614,
+                35.18007900369899,
+                34.79348726759591,
+                34.4096237043676,
+                34.02851083889338,
+                33.65017028509418,
+                33.27462275124269,
+                32.90188804554466,
+                32.53198508198521,
+                32.16493188643427,
+                31.80074560300461,
+                31.439442500656703,
+                31.081037980043785,
+                30.72554658059097,
+                30.372981987802014,
+                30.023357040787467,
+                29.676683740007697,
+                29.332973255224257,
+                28.992235933653458,
+                28.654481308315304,
+                28.319718106571603,
+                27.987954258846568,
+                27.659196907523445,
+                27.333452416010854,
+                27.010726377972006,
+                26.69102362671062,
+                26.374348244706923,
+                26.060703573297225,
+                25.750092222490743,
+                25.442516080917198,
+                25.137976325898727,
+                24.83647343363981,
+                24.538007189528937,
+                24.242576698545466,
+                23.950180395765784,
+                23.660816056962172,
+                23.374480809288436,
+                23.091171142046147,
+                22.81088291752532,
+                22.533611381913563,
+                22.25935117626777,
+                21.988096347542392,
+                21.71984035966843,
+                21.454576104677486,
+                21.19229591386496,
+                20.932991568986957,
+                20.676654313485173,
+                20.423274863734378,
+                20.172843420306965,
+                19.925349679249333,
+                19.680782843364728,
+                19.439131633497475,
+                19.20038429981338,
+                18.964528633071374,
+                18.731551975881487,
+                18.5014412339442,
+                18.274182887266583
+              ],
+              "wavelengths_nm": [
+                380.0,
+                381.0,
+                382.0,
+                383.0,
+                384.0,
+                385.0,
+                386.0,
+                387.0,
+                388.0,
+                389.0,
+                390.0,
+                391.0,
+                392.0,
+                393.0,
+                394.0,
+                395.0,
+                396.0,
+                397.0,
+                398.0,
+                399.0,
+                400.0,
+                401.0,
+                402.0,
+                403.0,
+                404.0,
+                405.0,
+                406.0,
+                407.0,
+                408.0,
+                409.0,
+                410.0,
+                411.0,
+                412.0,
+                413.0,
+                414.0,
+                415.0,
+                416.0,
+                417.0,
+                418.0,
+                419.0,
+                420.0,
+                421.0,
+                422.0,
+                423.0,
+                424.0,
+                425.0,
+                426.0,
+                427.0,
+                428.0,
+                429.0,
+                430.0,
+                431.0,
+                432.0,
+                433.0,
+                434.0,
+                435.0,
+                436.0,
+                437.0,
+                438.0,
+                439.0,
+                440.0,
+                441.0,
+                442.0,
+                443.0,
+                444.0,
+                445.0,
+                446.0,
+                447.0,
+                448.0,
+                449.0,
+                450.0,
+                451.0,
+                452.0,
+                453.0,
+                454.0,
+                455.0,
+                456.0,
+                457.0,
+                458.0,
+                459.0,
+                460.0,
+                461.0,
+                462.0,
+                463.0,
+                464.0,
+                465.0,
+                466.0,
+                467.0,
+                468.0,
+                469.0,
+                470.0,
+                471.0,
+                472.0,
+                473.0,
+                474.0,
+                475.0,
+                476.0,
+                477.0,
+                478.0,
+                479.0,
+                480.0,
+                481.0,
+                482.0,
+                483.0,
+                484.0,
+                485.0,
+                486.0,
+                487.0,
+                488.0,
+                489.0,
+                490.0,
+                491.0,
+                492.0,
+                493.0,
+                494.0,
+                495.0,
+                496.0,
+                497.0,
+                498.0,
+                499.0,
+                500.0,
+                501.0,
+                502.0,
+                503.0,
+                504.0,
+                505.0,
+                506.0,
+                507.0,
+                508.0,
+                509.0,
+                510.0,
+                511.0,
+                512.0,
+                513.0,
+                514.0,
+                515.0,
+                516.0,
+                517.0,
+                518.0,
+                519.0,
+                520.0,
+                521.0,
+                522.0,
+                523.0,
+                524.0,
+                525.0,
+                526.0,
+                527.0,
+                528.0,
+                529.0,
+                530.0,
+                531.0,
+                532.0,
+                533.0,
+                534.0,
+                535.0,
+                536.0,
+                537.0,
+                538.0,
+                539.0,
+                540.0,
+                541.0,
+                542.0,
+                543.0,
+                544.0,
+                545.0,
+                546.0,
+                547.0,
+                548.0,
+                549.0,
+                550.0,
+                551.0,
+                552.0,
+                553.0,
+                554.0,
+                555.0,
+                556.0,
+                557.0,
+                558.0,
+                559.0,
+                560.0,
+                561.0,
+                562.0,
+                563.0,
+                564.0,
+                565.0,
+                566.0,
+                567.0,
+                568.0,
+                569.0,
+                570.0,
+                571.0,
+                572.0,
+                573.0,
+                574.0,
+                575.0,
+                576.0,
+                577.0,
+                578.0,
+                579.0,
+                580.0,
+                581.0,
+                582.0,
+                583.0,
+                584.0,
+                585.0,
+                586.0,
+                587.0,
+                588.0,
+                589.0,
+                590.0,
+                591.0,
+                592.0,
+                593.0,
+                594.0,
+                595.0,
+                596.0,
+                597.0,
+                598.0,
+                599.0,
+                600.0,
+                601.0,
+                602.0,
+                603.0,
+                604.0,
+                605.0,
+                606.0,
+                607.0,
+                608.0,
+                609.0,
+                610.0,
+                611.0,
+                612.0,
+                613.0,
+                614.0,
+                615.0,
+                616.0,
+                617.0,
+                618.0,
+                619.0,
+                620.0,
+                621.0,
+                622.0,
+                623.0,
+                624.0,
+                625.0,
+                626.0,
+                627.0,
+                628.0,
+                629.0,
+                630.0,
+                631.0,
+                632.0,
+                633.0,
+                634.0,
+                635.0,
+                636.0,
+                637.0,
+                638.0,
+                639.0,
+                640.0,
+                641.0,
+                642.0,
+                643.0,
+                644.0,
+                645.0,
+                646.0,
+                647.0,
+                648.0,
+                649.0,
+                650.0,
+                651.0,
+                652.0,
+                653.0,
+                654.0,
+                655.0,
+                656.0,
+                657.0,
+                658.0,
+                659.0,
+                660.0,
+                661.0,
+                662.0,
+                663.0,
+                664.0,
+                665.0,
+                666.0,
+                667.0,
+                668.0,
+                669.0,
+                670.0,
+                671.0,
+                672.0,
+                673.0,
+                674.0,
+                675.0,
+                676.0,
+                677.0,
+                678.0,
+                679.0,
+                680.0,
+                681.0,
+                682.0,
+                683.0,
+                684.0,
+                685.0,
+                686.0,
+                687.0,
+                688.0,
+                689.0,
+                690.0,
+                691.0,
+                692.0,
+                693.0,
+                694.0,
+                695.0,
+                696.0,
+                697.0,
+                698.0,
+                699.0,
+                700.0,
+                701.0,
+                702.0,
+                703.0,
+                704.0,
+                705.0,
+                706.0,
+                707.0,
+                708.0,
+                709.0,
+                710.0,
+                711.0,
+                712.0,
+                713.0,
+                714.0,
+                715.0,
+                716.0,
+                717.0,
+                718.0,
+                719.0,
+                720.0,
+                721.0,
+                722.0,
+                723.0,
+                724.0,
+                725.0,
+                726.0,
+                727.0,
+                728.0,
+                729.0,
+                730.0,
+                731.0,
+                732.0,
+                733.0,
+                734.0,
+                735.0,
+                736.0,
+                737.0,
+                738.0,
+                739.0,
+                740.0,
+                741.0,
+                742.0,
+                743.0,
+                744.0,
+                745.0,
+                746.0,
+                747.0,
+                748.0,
+                749.0,
+                750.0,
+                751.0,
+                752.0,
+                753.0,
+                754.0,
+                755.0,
+                756.0,
+                757.0,
+                758.0,
+                759.0,
+                760.0,
+                761.0,
+                762.0,
+                763.0,
+                764.0,
+                765.0,
+                766.0,
+                767.0,
+                768.0,
+                769.0,
+                770.0,
+                771.0,
+                772.0,
+                773.0,
+                774.0,
+                775.0,
+                776.0,
+                777.0,
+                778.0,
+                779.0,
+                780.0
+              ]
+            },
+            "xyz": {
+              "illuminant": "D50",
+              "observer": "CIE1931_2",
+              "scale": "relative; perfect-transmission Y=100",
+              "unit": "1",
+              "values": [
+                80.4438250177209,
+                89.63294779044828,
+                55.613685636420975
+              ]
+            }
+          },
+          "calibration": {
+            "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+            "status": "valid"
+          },
+          "configuration": [
+            [
+              "acquired_at_source",
+              "client receipt; the ladder publishes no instrument clock"
+            ],
+            [
+              "confirmed_routes",
+              "trans_spot"
+            ],
+            [
+              "correction_applied",
+              "none"
+            ],
+            [
+              "native_clamping",
+              "instNoClamp"
+            ],
+            [
+              "native_duration_seconds",
+              "0.0"
+            ],
+            [
+              "native_mcond",
+              "0"
+            ],
+            [
+              "native_mtype",
+              "6"
+            ],
+            [
+              "spectrum_norm",
+              "100.0"
+            ]
+          ],
+          "device": {
+            "backend": "argyll-native",
+            "backend_version": "3.5.0",
+            "device_id": "JETI spectraval",
+            "model": "JETI spectraval",
+            "serial": "1000011",
+            "serial_encoding": "utf8"
+          },
+          "observation_id": "2c775a8a-2131-435a-9e5d-77127d4564a6",
+          "operation_id": "6dae71c6-93f4-4319-bd68-3e462d570b51",
+          "project_computed": {
+            "lab": null,
+            "xyy": null
+          },
+          "provenance": "simulated",
+          "raw_backend_output": "{\"events\":[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"display_type\",\"index\":0,\"id\":\"f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d\",\"label\":\"Simulated display calibration 0\",\"available\":true,\"unavailable_reason\":null,\"native_default\":false,\"native_label_bytes\":null,\"native_source_path_bytes\":null,\"technology_code\":0,\"refresh_mode\":0,\"base_calibration_id\":1,\"kind\":\"builtin\",\"identity_scope\":\"catalogue_metadata\",\"source_path\":null,\"custom\":false},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"display_type\",\"index\":1,\"id\":\"87e5fa910c2273a06b05606a05072fad45f32c1db56df3b1a03d1d9206e2a083\",\"label\":\"Simulated display calibration 1\",\"available\":true,\"unavailable_reason\":null,\"native_default\":false,\"native_label_bytes\":null,\"native_source_path_bytes\":null,\"technology_code\":0,\"refresh_mode\":1,\"base_calibration_id\":2,\"kind\":\"builtin\",\"identity_scope\":\"catalogue_metadata\",\"source_path\":null,\"custom\":false},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"connected\",\"serial\":\"1000011\",\"serial_encoding\":\"utf8\",\"mode\":196628,\"mode_capabilities\":222492,\"trigger_capabilities\":37749728,\"filter_capabilities\":1,\"trigger\":16,\"spectral\":true,\"ambient_ccmx\":false,\"ambient_matrix_threshold\":null,\"strip_policies\":{\"reflection\":{\"max_patches\":0,\"requirement\":null,\"layout_fields\":[]},\"transmission\":{\"max_patches\":0,\"requirement\":null,\"layout_fields\":[]},\"emission\":{\"max_patches\":0,\"requirement\":null,\"layout_fields\":[]}},\"baseline_mode_checks\":{\"scope\":\"initialized_before_mode_configuration\",\"mode_capabilities\":222492,\"checks\":[{\"mode_word\":65556,\"native_code\":0},{\"mode_word\":196628,\"native_code\":0},{\"mode_word\":65560,\"native_code\":327680},{\"mode_word\":196632,\"native_code\":327680},{\"mode_word\":65796,\"native_code\":0},{\"mode_word\":196868,\"native_code\":0},{\"mode_word\":65800,\"native_code\":327680},{\"mode_word\":196872,\"native_code\":327680},{\"mode_word\":66568,\"native_code\":0},{\"mode_word\":197640,\"native_code\":0}]},\"display_types\":{\"status\":\"available\",\"native_code\":0,\"count\":2,\"catalogue_id\":\"e0d39f6c1121f84520ef6249718a276decb1c052a80a81f268114903cd87b47d\",\"applied_choice_id\":null,\"readback\":{\"native_code\":0,\"technology_code\":0,\"refresh_mode\":0,\"base_calibration_id\":1},\"entries\":[{\"index\":0,\"id\":\"f5c3976e2e0a51dcfa206b493dfdb7bccc69fb1e18a09430573dea2a6be9f50d\",\"label\":\"Simulated display calibration 0\",\"available\":true,\"unavailable_reason\":null,\"native_default\":false,\"native_label_bytes\":null,\"native_source_path_bytes\":null,\"technology_code\":0,\"refresh_mode\":0,\"base_calibration_id\":1,\"kind\":\"builtin\",\"identity_scope\":\"catalogue_metadata\",\"source_path\":null,\"custom\":false},{\"index\":1,\"id\":\"87e5fa910c2273a06b05606a05072fad45f32c1db56df3b1a03d1d9206e2a083\",\"label\":\"Simulated display calibration 1\",\"available\":true,\"unavailable_reason\":null,\"native_default\":false,\"native_label_bytes\":null,\"native_source_path_bytes\":null,\"technology_code\":0,\"refresh_mode\":1,\"base_calibration_id\":2,\"kind\":\"builtin\",\"identity_scope\":\"catalogue_metadata\",\"source_path\":null,\"custom\":false}]},\"refresh_rate_override_hz\":null,\"correction\":\"none\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"instruction_required\",\"instruction\":\"calibration_setup\",\"request_id\":\"calibration-0\",\"calibration_condition\":128,\"reference_type\":0,\"needed_calibrations\":4096,\"remaining_calibrations\":4096,\"skippable\":false,\"acknowledged\":true,\"display_level\":null,\"reference_id\":null},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"skipped\":false,\"needed_calibrations\":4096,\"available_calibrations\":4096,\"remaining_calibrations\":0,\"performed\":true,\"status_source\":\"driver\",\"initial_calibration_suppressed\":false,\"reference_type\":0,\"reference_id\":null},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"instruction_required\",\"instruction\":\"sample_position\",\"request_id\":\"sample-ready\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"result\",\"argyll_version\":\"3.5.0\",\"backend_reported\":{\"mtype\":6,\"mcond\":0,\"XYZ_v\":1,\"XYZ\":[80.4438250177209,89.63294779044828,55.613685636420975],\"duration\":0,\"spectrum\":{\"spec_n\":401,\"wavelength_start_nm\":380,\"wavelength_end_nm\":780,\"norm\":100,\"samples\":[33.27462275124269,33.65017028509418,34.02851083889338,34.4096237043676,34.79348726759591,35.18007900369899,35.56937547180614,35.961352310305244,36.355984232381786,36.75324502185225,37.15310752929807,37.555543668505365,37.96052441321615,38.368019794196364,38.77799889662596,39.19042985781637,39.60527986526041,40.02251515501948,40.44210101045311,40.86400176129533,41.2881807830828,41.71460049693888,42.14322236971806,42.574006914515046,43.006913691542415,43.44190130938094,43.87892742660598,44.317948753794,44.7589210559121,45.20179915509455,45.646536933808534,46.09308733841285,46.541402383111794,46.991433154306996,47.44312981534958,47.89644161169491,48.351316876461674,48.80770303639745,49.26554661825221,49.724793255561146,50.1853876958381,50.64727380818067,51.110394591287566,51.57469218188908,52.04010786359095,52.50658207613165,52.97405442505319,53.4424636917852,53.91174784414157,54.38184404722925,54.85268867476778,55.32421732081905,55.79636481192517,56.269065219653285,56.74225187354538,57.21585737447067,57.689813608378806,58.16405176045072,58.638502329644766,59.11309514363477,59.58775937413701,60.06242355262241,60.53701558641028,61.01146277513948,61.48569182761312,61.959628879011895,62.4331995084718,62.906328757020795,63.37894114586994,63.850960695052876,64.32231094240862,64.7929149629015,65.26269538827214,65.73157442701364,66.19947388466566,66.66631518442051,67.13201938803354,67.59650721703127,68.05969907420939,68.52151506541338,68.98187502159365,69.44069852112756,69.8979049123997,70.35341333663217,70.80714275095664,71.25901195171856,71.70893959800556,72.15684423538984,72.60264431987633,73.04625824204597,73.48760435138534,73.92660098079233,74.36316647124795,74.79721919664425,75.22867758875785,75.65746016235872,76.0834855404438,76.50667247958455,76.92693989537742,77.34420688798679,77.75839276776892,78.16941708096586,78.57719963545776,78.98166052656288,79.38272016287297,79.7802992921132,80.17431902701449,80.56470087118684,80.95136674498185,81.33423901133244,81.71324050155812,82.08829454112374,82.45932497533992,82.82625619499304,83.1890131618927,83.54752143432515,83.90170719239985,84.25149726327794,84.59681914627005,84.93760103779182,85.2737718561647,85.60526126625078,85.93199970390893,86.25391840026104,86.57094940575615,86.88302561402097,87.19008078548471,87.49204957076722,87.78886753381836,88.08047117479722,88.36679795268023,88.64778630758641,88.92337568280894,89.193506546542,89.4581204132917,89.71715986496069,89.9705685715958,90.21829131178767,90.46027399271296,90.6964636698081,90.92680856606509,91.15125809093936,91.36976285885987,91.58227470733235,91.78874671462597,91.98913321703463,92.18338982570396,92.37147344301508,92.55334227851716,92.72895586440004,92.89827507049901,93.0612621188245,93.21788059760797,93.36809547485807,93.51187311141894,93.64918127352426,93.77998914484068,93.90426733799377,94.02198790557114,94.13312435059639,94.23765163646858,94.33554619636233,94.42678594208296,94.51135027237268,94.58922008066293,94.6603777622691,94.72480722102377,94.78249387534491,94.8334246637358,94.87758804971398,94.91497402616633,94.94557411912832,94.96938139098505,94.98639044309263,94.99659741781858,95,94.99659741781858,94.98639044309263,94.96938139098505,94.94557411912832,94.91497402616633,94.87758804971398,94.8334246637358,94.78249387534491,94.72480722102377,94.6603777622691,94.58922008066293,94.51135027237268,94.42678594208296,94.33554619636233,94.23765163646858,94.13312435059639,94.02198790557114,93.90426733799377,93.77998914484068,93.64918127352426,93.51187311141894,93.36809547485807,93.21788059760797,93.0612621188245,92.89827507049901,92.72895586440004,92.55334227851716,92.37147344301508,92.18338982570396,91.98913321703463,91.78874671462597,91.58227470733235,91.36976285885987,91.15125809093936,90.92680856606509,90.6964636698081,90.46027399271296,90.21829131178767,89.9705685715958,89.71715986496069,89.4581204132917,89.193506546542,88.92337568280894,88.64778630758641,88.36679795268023,88.08047117479722,87.78886753381836,87.49204957076722,87.19008078548471,86.88302561402097,86.57094940575615,86.25391840026104,85.93199970390893,85.60526126625078,85.2737718561647,84.93760103779182,84.59681914627005,84.25149726327794,83.90170719239985,83.54752143432515,83.1890131618927,82.82625619499304,82.45932497533992,82.08829454112374,81.71324050155812,81.33423901133244,80.95136674498185,80.56470087118684,80.17431902701449,79.7802992921132,79.38272016287297,78.98166052656288,78.57719963545776,78.16941708096586,77.75839276776892,77.34420688798679,76.92693989537742,76.50667247958455,76.0834855404438,75.65746016235872,75.22867758875785,74.79721919664425,74.36316647124795,73.92660098079233,73.48760435138534,73.04625824204597,72.60264431987633,72.15684423538984,71.70893959800556,71.25901195171856,70.80714275095664,70.35341333663217,69.8979049123997,69.44069852112756,68.98187502159365,68.52151506541338,68.05969907420939,67.59650721703127,67.13201938803354,66.66631518442051,66.19947388466566,65.73157442701364,65.26269538827214,64.7929149629015,64.32231094240862,63.850960695052876,63.37894114586994,62.906328757020795,62.4331995084718,61.959628879011895,61.48569182761312,61.01146277513948,60.53701558641028,60.06242355262241,59.58775937413701,59.11309514363477,58.638502329644766,58.16405176045072,57.689813608378806,57.21585737447067,56.74225187354538,56.269065219653285,55.79636481192517,55.32421732081905,54.85268867476778,54.38184404722925,53.91174784414157,53.4424636917852,52.97405442505319,52.50658207613165,52.04010786359095,51.57469218188908,51.110394591287566,50.64727380818067,50.1853876958381,49.724793255561146,49.26554661825221,48.80770303639745,48.351316876461674,47.89644161169491,47.44312981534958,46.991433154306996,46.541402383111794,46.09308733841285,45.646536933808534,45.20179915509455,44.7589210559121,44.317948753794,43.87892742660598,43.44190130938094,43.006913691542415,42.574006914515046,42.14322236971806,41.71460049693888,41.2881807830828,40.86400176129533,40.44210101045311,40.02251515501948,39.60527986526041,39.19042985781637,38.77799889662596,38.368019794196364,37.96052441321615,37.555543668505365,37.15310752929807,36.75324502185225,36.355984232381786,35.961352310305244,35.56937547180614,35.18007900369899,34.79348726759591,34.4096237043676,34.02851083889338,33.65017028509418,33.27462275124269,32.90188804554466,32.53198508198521,32.16493188643427,31.80074560300461,31.439442500656703,31.081037980043785,30.72554658059097,30.372981987802014,30.023357040787467,29.676683740007697,29.332973255224257,28.992235933653458,28.654481308315304,28.319718106571603,27.987954258846568,27.659196907523445,27.333452416010854,27.010726377972006,26.69102362671062,26.374348244706923,26.060703573297225,25.750092222490743,25.442516080917198,25.137976325898727,24.83647343363981,24.538007189528937,24.242576698545466,23.950180395765784,23.660816056962172,23.374480809288436,23.091171142046147,22.81088291752532,22.533611381913563,22.25935117626777,21.988096347542392,21.71984035966843,21.454576104677486,21.19229591386496,20.932991568986957,20.676654313485173,20.423274863734378,20.172843420306965,19.925349679249333,19.680782843364728,19.439131633497475,19.20038429981338,18.964528633071374,18.731551975881487,18.5014412339442,18.274182887266583]}}},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"terminal\",\"status\":\"completed\",\"instrument_state\":\"unknown\",\"software_stopped\":true}]}",
+          "requested_mode": "transmission_spot",
+          "sample_id": "A1",
+          "schema_version": 1,
+          "warnings": [
+            "SIMULATED: these values did not come from a physical measurement of a physical sample."
+          ]
+        },
+        "patch_id": "A1"
+      }
+    ],
+    "provenance": "simulated",
+    "request_json": "{\"schema_version\":1,\"device_id\":\"JETI spectraval\",\"capability_id\":\"9242a77afeddfac01ffe6c5bed6aa7df439fb385ba9ac6f3db4078b44a8cca9e\",\"mode\":\"transmission_spot\",\"workflow\":\"spot\",\"patch_ids\":[\"A1\"],\"options\":{},\"layout\":{},\"event_contract\":\"retained_patch_v1\"}",
+    "schema_version": 1,
+    "software_stopped": true,
+    "status": "completed",
+    "workflow": "spot"
+  }
+}

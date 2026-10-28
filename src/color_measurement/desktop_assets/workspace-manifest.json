@@ -1,0 +1,31 @@
+{
+  "compiler": {
+    "package": "@esbuild/darwin-arm64",
+    "version": "0.28.2",
+    "archive_url": "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.28.2.tgz",
+    "archive_integrity": "sha512-n4KqkOQrraxHJcgjM1RvwbigfQKIKJVpM7xp+KsxiyUSrRdIXnt73VhrPAx0fV44hgfmIVKjxMN9J1t5jySVkw==",
+    "binary_path": "bin/esbuild",
+    "binary_sha256": "10b6243df618d374bb2d5c9cfbe7052e1405f6aa4e53a6164f11a91b9f2e1384"
+  },
+  "format": "iife",
+  "target": "safari17",
+  "resources": {
+    "nominal-chart-guides.json": "e6be3b9cf4b8743c0d5b0998e9f927ead3c51a018b81882c31b1919b43736183"
+  },
+  "inputs": {
+    "activity-panel.js": "165f2bc0c44d0e4cea5bb015730e0395e06c7bb9108507716e9dd541a353529c",
+    "app.js": "5e8ae108f42217165f8a38b63dedeae239d7cf09dfb98edf9796a479145436a1",
+    "chart-guide.js": "5b436d9ab11184936571108aa3f50ee6dae759dc1ba4599b9b61736dd506b362",
+    "equipment.js": "c41597aeb3eb7d472598d2e5ac3eac3592d1773fb6a1e52a883ec0c017fe422c",
+    "owner.js": "c05bf45695b2c8fd35786ce03d49dc624f5447e7875a7c8355e92d3901dcf006",
+    "presentation.js": "a9c275e43b05df274162c339b839387e4145c29fd447f72b5d3ca242c5f3546a",
+    "science-panel.js": "33b3cd3a1e9d1cafaca8d014a36033881c53f13fef624f664f10843b117b0f5b",
+    "space-view.js": "07b295d8fdf894e71f45f537d574a6562152524a1083fa351e8d13510a9e6cf4",
+    "vendor/ColorSpaces.js": "9fb4b47ea2c416a02fe6787c94e79c54a2edf7c2d32e059031d0aba0b639959c",
+    "vendor/OrbitControls.js": "30386f7141d5ce5d5e0a3ab643e4eb16265f4564466108105ce449857f62fdda",
+    "vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+    "vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+    "workflow-fields.js": "c043d73778b012fe15010eeea1573f67c957d1022d60dd74d8a1d4ab58beafc0"
+  },
+  "output_sha256": "e19bf443068f711cbc2029fd35e0249873a253661a2fb699d53e48a2a1c7796e"
+}

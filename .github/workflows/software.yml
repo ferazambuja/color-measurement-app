@@ -1,0 +1,51 @@
+name: Software checks
+
+# Main/PR checks use Linux at the supported Python endpoints. Scheduled/manual
+# jobs cover Linux and Windows across every supported Python version.
+# These are partial hardware-free checks; the separate native workflow builds
+# the selected Argyll source and joins its substituted workers to the tests.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # A newer push supersedes an unfinished check of the same kind on the same ref.
+  group: software-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  software:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    # Private repositories run only on explicit dispatch to protect the minute allowance.
+    if: github.event_name == 'workflow_dispatch' || !github.event.repository.private
+    runs-on: ${{ matrix.os }}
+    # Allow setup, the bounded 30-minute pytest stage and package checks while
+    # still capping a hung job below GitHub's 360-minute default.
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{ fromJSON((github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && '["ubuntu-latest", "windows-latest"]' || '["ubuntu-latest"]') }}
+        python: ${{ fromJSON((github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && '["3.11", "3.12", "3.13", "3.14"]' || '["3.11", "3.14"]') }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install uv and select Python
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.12.15"
+          python-version: ${{ matrix.python }}
+      - name: Select supported Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+      - name: Install locked renderer test dependencies
+        run: npm ci --prefix tools/desktop_builder --ignore-scripts --no-audit --no-fund
+      - name: Run partial hardware-free checks
+        run: uv run --locked --extra mat python tools/test_all.py --require-mat

@@ -1,0 +1,157 @@
+--- a/spectro/inst.c
++++ b/spectro/inst.c
+@@ -906,2 +906,2 @@ static inst_disptypesel *expand_dlist(inst_disptypesel *list, int nlist, int *na
+-	NOTE that we assume that we cannot exaust the single letter
+-	selectors via hard coded, ccmx or ccss calibrations.
++	If both selector pools are exhausted, retain the remaining
++	calibrations without selectors.
+@@ -923 +923 @@ int doccmx						/* Add matching installed ccmx files */
+-	int fail = 0;
++	int nosel = 0;
+@@ -997 +997 @@ int doccmx						/* Add matching installed ccmx files */
+-			free(list);
++			inst_del_disptype_list(list, nlist);	/* CM: CCSS entries own their path and sets */
+@@ -1066,0 +1067,2 @@ int doccmx						/* Add matching installed ccmx files */
++		if (list[i].sel[0] != '\000')
++			continue;	/* Preserve selectors assigned in the earlier passes */
+@@ -1077,0 +1080 @@ int doccmx						/* Add matching installed ccmx files */
++			list[i].sel[1] = '\000';
+@@ -1079,3 +1082,3 @@ int doccmx						/* Add matching installed ccmx files */
+-			if (list[i].sel[0] == '\000') {	/* Ran out of two letter selectors! */
+-				fail = 1;
+-				break;
++			if (list[i].sel[1] == '\000') {	/* Ran out of two letter selectors */
++				list[i].sel[0] = '\000';
++				nosel++;
+@@ -1110,4 +1113,2 @@ int doccmx						/* Add matching installed ccmx files */
+-	if (fail) {
+-		a1loge(p->log, 1, "inst_creat_disptype_list: run out of selectors\n");
+-		return inst_internal_error;
+-	}
++	if (nosel)
++		a1logw(p->log, "inst_creat_disptype_list: %d calibration(s) have no selectors\n",nosel);
+@@ -2184,0 +2186,31 @@ int sym_to_inst_mode(inst_mode *mode, const char *sym) {
++/* A finite double, without relying on C99 isfinite() */
++static int inst_double_finite(double value) {
++	return value >= -DBL_MAX && value <= DBL_MAX;
++}
++
++/* Return NZ if a supplied custom filter can be evaluated by the spectral */
++/* interpolators and normalised: a finite, ordered wavelength range, enough */
++/* samples for interpolation (the composed cubic helper uses linear */
++/* interpolation below four samples), and finite, */
++/* positive normalisation and finite samples. Applied divisors must be positive. */
++int inst_valid_custom_filter(xspect *sp) {
++	int i;
++	double spcg;
++
++	if (sp == NULL || sp->spec_n < 2 || sp->spec_n > XSPECT_MAX_BANDS)
++		return 0;
++	if (!inst_double_finite(sp->spec_wl_short) || !inst_double_finite(sp->spec_wl_long)
++	 || sp->spec_wl_long <= sp->spec_wl_short)
++		return 0;
++	spcg = (sp->spec_wl_long - sp->spec_wl_short)/(sp->spec_n - 1.0);
++	if (!inst_double_finite(spcg) || spcg <= 0.0)
++		return 0;
++	if (!inst_double_finite(sp->norm) || sp->norm <= 0.0)
++		return 0;
++	for (i = 0; i < sp->spec_n; i++) {
++		if (!inst_double_finite(sp->spec[i]))
++			return 0;
++	}
++	return 1;
++}
++
+@@ -2187 +2219 @@ int sym_to_inst_mode(inst_mode *mode, const char *sym) {
+-void ipatch_convert_custom_filter(ipatch *vals, int nvals, xspect *filt, int clamp) {
++int ipatch_convert_custom_filter(ipatch *vals, int nvals, xspect *filt, int clamp) {
+@@ -2194 +2226,81 @@ void ipatch_convert_custom_filter(ipatch *vals, int nvals, xspect *filt, int cla
+-		return;
++		return 0;
++
++	/* The filter must be evaluable, with finite positive divisors and finite */
++	/* quotients before any patch changes: an unusable filter is refused */
++	/* whole rather than applied to some bands or some patches. */
++	if (!inst_valid_custom_filter(filt))
++		return 2;
++	for (i = 0; i < nvals; i++) {
++		if ((   vals[i].mtype != inst_mrt_emission
++		     && vals[i].mtype != inst_mrt_ambient
++		     && vals[i].mtype != inst_mrt_emission_flash
++		     && vals[i].mtype != inst_mrt_ambient_flash)
++		 || vals[i].sp.spec_n <= 0) {
++			continue;
++		}
++		for (j = 0; j < vals[i].sp.spec_n; j++) {
++			double nm = XSPECT_XWL(&vals[i].sp, j);
++			double fw, quotient;
++			getval_xspec(filt, &fw, nm);
++			/* Refuse the divisor before dividing by it. */
++			if (!inst_double_finite(fw) || fw <= 0.0)
++				return 2;
++			quotient = vals[i].sp.spec[j] / fw;
++			if (!inst_double_finite(quotient))
++				return 2;
++		}
++	}
++
++	/* Create the XYZ converter before modifying any patch. */
++	for (i = 0; i < nvals; i++) {
++		if ((   vals[i].mtype != inst_mrt_emission
++		     && vals[i].mtype != inst_mrt_ambient
++		     && vals[i].mtype != inst_mrt_emission_flash
++		     && vals[i].mtype != inst_mrt_ambient_flash)
++		 || vals[i].sp.spec_n <= 0) {
++			continue;
++		}
++		if (vals[i].XYZ_v) {
++			conv = new_xsp2cie(icxIT_none, 0.0, NULL, icxOT_CIE_1931_2,
++			                   NULL, icSigXYZData, (icxClamping)clamp);
++			if (conv == NULL)
++				return 1;
++			break;
++		}
++	}
++
++	/* Check the corrected XYZ on scratch spectra before changing any patch. */
++	/* Finite individual bands can still overflow during CIE integration. The */
++	/* check converts unclamped: clamping would turn -inf into a finite 0. */
++	if (conv != NULL) {
++		xsp2cie *check = new_xsp2cie(icxIT_none, 0.0, NULL, icxOT_CIE_1931_2,
++		                             NULL, icSigXYZData, icxNoClamp);
++		if (check == NULL) {
++			conv->del(conv);
++			return 1;
++		}
++		for (i = 0; i < nvals; i++) {
++			double xyz[3];
++			if (!vals[i].XYZ_v
++			 || (vals[i].mtype != inst_mrt_emission
++			  && vals[i].mtype != inst_mrt_ambient
++			  && vals[i].mtype != inst_mrt_emission_flash
++			  && vals[i].mtype != inst_mrt_ambient_flash)
++			 || vals[i].sp.spec_n <= 0)
++				continue;
++			tmp = vals[i].sp;
++			for (j = 0; j < tmp.spec_n; j++) {
++				double fw;
++				getval_xspec(filt, &fw, XSPECT_XWL(&tmp, j));
++				tmp.spec[j] /= fw;
++			}
++			check->convert(check, xyz, &tmp);
++			if (!inst_double_finite(xyz[0]) || !inst_double_finite(xyz[1])
++			 || !inst_double_finite(xyz[2])) {
++				check->del(check);
++				conv->del(conv);
++				return 2;
++			}
++		}
++		check->del(check);
++	}
+@@ -2215,4 +2326,0 @@ void ipatch_convert_custom_filter(ipatch *vals, int nvals, xspect *filt, int cla
+-			if (conv == NULL) {
+-				conv = new_xsp2cie(icxIT_none, 0.0, NULL, icxOT_CIE_1931_2,
+-				                   NULL, icSigXYZData, (icxClamping)clamp);
+-			}
+@@ -2225,0 +2334 @@ void ipatch_convert_custom_filter(ipatch *vals, int nvals, xspect *filt, int cla
++	return 0;

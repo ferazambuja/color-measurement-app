@@ -1,0 +1,364 @@
+{
+  "catalog": "catalog.json: native_type -> instType symbol, from the build's own driver manifest. An ordinal is a position upstream may reorder, so this is a build artifact and never a table in client code.",
+  "catalog_without_contribution": "catalog-without-contribution.json",
+  "enumerations": [
+    {
+      "capture": "two_of_one_model",
+      "note": "Two units, same model, different paths: what a device picker must tell apart",
+      "refused": false,
+      "scenario": "success",
+      "units": 2
+    },
+    {
+      "capture": "same_path_twice",
+      "note": "Two candidates at one path, which is the enumeration being wrong rather than two instruments",
+      "refused": false,
+      "scenario": "duplicate_path",
+      "units": 2
+    },
+    {
+      "capture": "nothing_attached",
+      "note": "An empty list is an answer, not a failure: the helper ran and found nothing",
+      "refused": false,
+      "scenario": "no_candidates",
+      "units": 0
+    },
+    {
+      "capture": "enumeration_failed",
+      "note": "The enumeration itself failed; no list is produced and none is invented",
+      "refused": true,
+      "scenario": "enumeration_failure",
+      "units": 0
+    },
+    {
+      "capture": "discloses_led_flash",
+      "note": "Listed, identified, and NOT attachable: opening it flashes the LED (i1d3.c:3079)",
+      "refused": false,
+      "scenario": "i1d3_flash",
+      "units": 2
+    },
+    {
+      "capture": "discloses_led_flash_colorhug",
+      "note": "As above for colorhug.c:653-666",
+      "refused": false,
+      "scenario": "colorhug_flash",
+      "units": 2
+    },
+    {
+      "capture": "discloses_led_flash_huey",
+      "note": "As above for huey.c:1145-1168, an eight-step sequence with 50 ms sleeps",
+      "refused": false,
+      "scenario": "huey_flash",
+      "units": 2
+    },
+    {
+      "capture": "refuses_firmware_download",
+      "note": "Listed, identified, and never opened: its init_inst downloads firmware (spyd2.c:2998-3002), which no acknowledgement authorizes",
+      "refused": false,
+      "scenario": "spyder1",
+      "units": 2
+    }
+  ],
+  "native_messages": {
+    "discloses_led_flash": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/discloses_led_flash/describe-1.json",
+          "without_acknowledgement": "native/discloses_led_flash/describe-1-unacknowledged.json"
+        },
+        {
+          "path": "fixture:display:2",
+          "response": "native/discloses_led_flash/describe-2.json",
+          "without_acknowledgement": "native/discloses_led_flash/describe-2-unacknowledged.json"
+        }
+      ],
+      "listing": "native/discloses_led_flash/list.json",
+      "scenario": "i1d3_flash"
+    },
+    "discloses_led_flash_colorhug": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/discloses_led_flash_colorhug/describe-1.json",
+          "without_acknowledgement": "native/discloses_led_flash_colorhug/describe-1-unacknowledged.json"
+        },
+        {
+          "path": "fixture:display:2",
+          "response": "native/discloses_led_flash_colorhug/describe-2.json",
+          "without_acknowledgement": "native/discloses_led_flash_colorhug/describe-2-unacknowledged.json"
+        }
+      ],
+      "listing": "native/discloses_led_flash_colorhug/list.json",
+      "scenario": "colorhug_flash"
+    },
+    "discloses_led_flash_colorhug_no_serial": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/discloses_led_flash_colorhug_no_serial/describe-1.json",
+          "without_acknowledgement": "native/discloses_led_flash_colorhug_no_serial/describe-1-unacknowledged.json"
+        },
+        {
+          "path": "fixture:display:2",
+          "response": "native/discloses_led_flash_colorhug_no_serial/describe-2.json",
+          "without_acknowledgement": "native/discloses_led_flash_colorhug_no_serial/describe-2-unacknowledged.json"
+        }
+      ],
+      "listing": "native/discloses_led_flash_colorhug_no_serial/list.json",
+      "scenario": "colorhug_flash__no_serial"
+    },
+    "discloses_led_flash_colorhug_reordered": {
+      "descriptions": [
+        {
+          "path": "fixture:display:2",
+          "response": "native/discloses_led_flash_colorhug_reordered/describe-1.json",
+          "without_acknowledgement": "native/discloses_led_flash_colorhug_reordered/describe-1-unacknowledged.json"
+        },
+        {
+          "path": "fixture:display:1",
+          "response": "native/discloses_led_flash_colorhug_reordered/describe-2.json",
+          "without_acknowledgement": "native/discloses_led_flash_colorhug_reordered/describe-2-unacknowledged.json"
+        }
+      ],
+      "listing": "native/discloses_led_flash_colorhug_reordered/list.json",
+      "scenario": "colorhug_flash__reordered"
+    },
+    "discloses_led_flash_colorhug_shared_serial": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/discloses_led_flash_colorhug_shared_serial/describe-1.json",
+          "without_acknowledgement": "native/discloses_led_flash_colorhug_shared_serial/describe-1-unacknowledged.json"
+        },
+        {
+          "path": "fixture:display:2",
+          "response": "native/discloses_led_flash_colorhug_shared_serial/describe-2.json",
+          "without_acknowledgement": "native/discloses_led_flash_colorhug_shared_serial/describe-2-unacknowledged.json"
+        }
+      ],
+      "listing": "native/discloses_led_flash_colorhug_shared_serial/list.json",
+      "scenario": "colorhug_flash__shared_serial"
+    },
+    "discloses_led_flash_huey": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/discloses_led_flash_huey/describe-1.json",
+          "without_acknowledgement": "native/discloses_led_flash_huey/describe-1-unacknowledged.json"
+        },
+        {
+          "path": "fixture:display:2",
+          "response": "native/discloses_led_flash_huey/describe-2.json",
+          "without_acknowledgement": "native/discloses_led_flash_huey/describe-2-unacknowledged.json"
+        }
+      ],
+      "listing": "native/discloses_led_flash_huey/list.json",
+      "scenario": "huey_flash"
+    },
+    "discloses_led_flash_huey_no_serial": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/discloses_led_flash_huey_no_serial/describe-1.json",
+          "without_acknowledgement": "native/discloses_led_flash_huey_no_serial/describe-1-unacknowledged.json"
+        },
+        {
+          "path": "fixture:display:2",
+          "response": "native/discloses_led_flash_huey_no_serial/describe-2.json",
+          "without_acknowledgement": "native/discloses_led_flash_huey_no_serial/describe-2-unacknowledged.json"
+        }
+      ],
+      "listing": "native/discloses_led_flash_huey_no_serial/list.json",
+      "scenario": "huey_flash__no_serial"
+    },
+    "discloses_led_flash_huey_reordered": {
+      "descriptions": [
+        {
+          "path": "fixture:display:2",
+          "response": "native/discloses_led_flash_huey_reordered/describe-1.json",
+          "without_acknowledgement": "native/discloses_led_flash_huey_reordered/describe-1-unacknowledged.json"
+        },
+        {
+          "path": "fixture:display:1",
+          "response": "native/discloses_led_flash_huey_reordered/describe-2.json",
+          "without_acknowledgement": "native/discloses_led_flash_huey_reordered/describe-2-unacknowledged.json"
+        }
+      ],
+      "listing": "native/discloses_led_flash_huey_reordered/list.json",
+      "scenario": "huey_flash__reordered"
+    },
+    "discloses_led_flash_huey_shared_serial": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/discloses_led_flash_huey_shared_serial/describe-1.json",
+          "without_acknowledgement": "native/discloses_led_flash_huey_shared_serial/describe-1-unacknowledged.json"
+        },
+        {
+          "path": "fixture:display:2",
+          "response": "native/discloses_led_flash_huey_shared_serial/describe-2.json",
+          "without_acknowledgement": "native/discloses_led_flash_huey_shared_serial/describe-2-unacknowledged.json"
+        }
+      ],
+      "listing": "native/discloses_led_flash_huey_shared_serial/list.json",
+      "scenario": "huey_flash__shared_serial"
+    },
+    "discloses_led_flash_no_serial": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/discloses_led_flash_no_serial/describe-1.json",
+          "without_acknowledgement": "native/discloses_led_flash_no_serial/describe-1-unacknowledged.json"
+        },
+        {
+          "path": "fixture:display:2",
+          "response": "native/discloses_led_flash_no_serial/describe-2.json",
+          "without_acknowledgement": "native/discloses_led_flash_no_serial/describe-2-unacknowledged.json"
+        }
+      ],
+      "listing": "native/discloses_led_flash_no_serial/list.json",
+      "scenario": "i1d3_flash__no_serial"
+    },
+    "discloses_led_flash_reordered": {
+      "descriptions": [
+        {
+          "path": "fixture:display:2",
+          "response": "native/discloses_led_flash_reordered/describe-1.json",
+          "without_acknowledgement": "native/discloses_led_flash_reordered/describe-1-unacknowledged.json"
+        },
+        {
+          "path": "fixture:display:1",
+          "response": "native/discloses_led_flash_reordered/describe-2.json",
+          "without_acknowledgement": "native/discloses_led_flash_reordered/describe-2-unacknowledged.json"
+        }
+      ],
+      "listing": "native/discloses_led_flash_reordered/list.json",
+      "scenario": "i1d3_flash__reordered"
+    },
+    "discloses_led_flash_shared_serial": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/discloses_led_flash_shared_serial/describe-1.json",
+          "without_acknowledgement": "native/discloses_led_flash_shared_serial/describe-1-unacknowledged.json"
+        },
+        {
+          "path": "fixture:display:2",
+          "response": "native/discloses_led_flash_shared_serial/describe-2.json",
+          "without_acknowledgement": "native/discloses_led_flash_shared_serial/describe-2-unacknowledged.json"
+        }
+      ],
+      "listing": "native/discloses_led_flash_shared_serial/list.json",
+      "scenario": "i1d3_flash__shared_serial"
+    },
+    "enumeration_failed": {
+      "descriptions": [],
+      "listing": "native/enumeration_failed/list.json",
+      "scenario": "enumeration_failure"
+    },
+    "nothing_attached": {
+      "descriptions": [],
+      "listing": "native/nothing_attached/list.json",
+      "scenario": "no_candidates"
+    },
+    "refuses_firmware_download": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/refuses_firmware_download/describe-1.json"
+        },
+        {
+          "path": "fixture:display:2",
+          "response": "native/refuses_firmware_download/describe-2.json"
+        }
+      ],
+      "listing": "native/refuses_firmware_download/list.json",
+      "scenario": "spyder1"
+    },
+    "same_path_twice": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/same_path_twice/describe-1.json"
+        },
+        {
+          "path": "fixture:display:1",
+          "response": "native/same_path_twice/describe-2.json"
+        }
+      ],
+      "listing": "native/same_path_twice/list.json",
+      "scenario": "duplicate_path"
+    },
+    "two_of_one_model": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/two_of_one_model/describe-1.json"
+        },
+        {
+          "path": "fixture:display:2",
+          "response": "native/two_of_one_model/describe-2.json"
+        }
+      ],
+      "listing": "native/two_of_one_model/list.json",
+      "scenario": "success"
+    },
+    "two_of_one_model_no_serial": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/two_of_one_model_no_serial/describe-1.json"
+        },
+        {
+          "path": "fixture:display:2",
+          "response": "native/two_of_one_model_no_serial/describe-2.json"
+        }
+      ],
+      "listing": "native/two_of_one_model_no_serial/list.json",
+      "scenario": "success__no_serial"
+    },
+    "two_of_one_model_reordered": {
+      "descriptions": [
+        {
+          "path": "fixture:display:2",
+          "response": "native/two_of_one_model_reordered/describe-1.json"
+        },
+        {
+          "path": "fixture:display:1",
+          "response": "native/two_of_one_model_reordered/describe-2.json"
+        }
+      ],
+      "listing": "native/two_of_one_model_reordered/list.json",
+      "scenario": "success__reordered"
+    },
+    "two_of_one_model_shared_serial": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/two_of_one_model_shared_serial/describe-1.json"
+        },
+        {
+          "path": "fixture:display:2",
+          "response": "native/two_of_one_model_shared_serial/describe-2.json"
+        }
+      ],
+      "listing": "native/two_of_one_model_shared_serial/list.json",
+      "scenario": "success__shared_serial"
+    },
+    "typed_cr250": {
+      "descriptions": [
+        {
+          "path": "fixture:display:1",
+          "response": "native/typed_cr250/describe-1.json"
+        }
+      ],
+      "expected_initialized_dtype": 39,
+      "listing": "native/typed_cr250/list.json",
+      "scenario": "cr250_typed__single"
+    }
+  },
+  "origin": "tools/generate_frontend_fixtures.py",
+  "provenance": "simulated; substituted description worker only, no hardware",
+  "what_this_is": "One capture per enumeration scenario -- the result of a 'Refresh devices' action. Enumerating opens nothing: on macOS every transport is read out of the IORegistry (usbio_ox.c:34-98, hidio.c:288-297, icoms_ux.c). Each unit carries what a picker must show, including units it must NOT open silently. Each unit's `opening_requires` is the argument describe needs first: null when it needs none, `expect` for an unidentified path, or not_permitted when nothing opens it. `opening` repeats it per index."
+}

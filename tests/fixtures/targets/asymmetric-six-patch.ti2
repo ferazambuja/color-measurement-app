@@ -1,0 +1,27 @@
+CTI2
+# Original synthetic validation input; no measured or third-party reference data.
+DESCRIPTOR "Synthetic asymmetric six-patch target"
+ORIGINATOR "Color Measurement validation fixture"
+KEYWORD "CHART_ID"
+CHART_ID "synthetic-asymmetric-six-v1"
+KEYWORD "TARGET_INSTRUMENT"
+TARGET_INSTRUMENT "Advisory fixture metadata; never select an instrument"
+COLOR_REP "RGB"
+STEPS_IN_PASS 3
+PASSES_IN_STRIPS2 2
+STRIP_INDEX_PATTERN "A-Z, A-Z"
+PATCH_INDEX_PATTERN "@-9,0-9;01-99"
+INDEX_ORDER "PATCH_THEN_STRIP"
+NUMBER_OF_FIELDS 8
+BEGIN_DATA_FORMAT
+SAMPLE_ID SAMPLE_LOC RGB_R RGB_G RGB_B XYZ_X XYZ_Y XYZ_Z
+END_DATA_FORMAT
+NUMBER_OF_SETS 6
+BEGIN_DATA
+"blk-41" "02B" 23.0 47.0 61.0 999.0 888.0 777.0
+"007" "01A" 0.0 0.0 0.0 901.0 802.0 703.0
+"=fixture()" "03A" 80.0 10.0 55.0 911.0 822.0 733.0
+"patch-X" "01B" 23.0 47.0 61.0 921.0 842.0 763.0
+"run-99" "03B" 10.0 100.0 0.0 931.0 862.0 793.0
+"patch-R" "02A" 40.0 65.0 90.0 941.0 882.0 723.0
+END_DATA

@@ -1,0 +1,7 @@
+--- a/spectro/xrga.h
++++ b/spectro/xrga.h
+@@ -37 +37,3 @@ void xspec_convert_xrga(xspect *dst, xspect *srcp, xcalpol pol, xcalstd dsp, xca
+-void ipatch_convert_xrga(ipatch *vals, int nvals,
++/* Return 0 on success, 1 if the XYZ converter cannot be created. */
++/* On allocation failure this call leaves the patch array unchanged. */
++int ipatch_convert_xrga(ipatch *vals, int nvals,

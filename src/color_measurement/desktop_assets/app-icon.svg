@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+<title>Color Measurement</title>
+<g transform="translate(0 1024) scale(1 -1)">
+<rect x="64" y="64" width="896" height="896" rx="196" fill="#181a1e"/>
+<rect x="232" y="260" width="88" height="190" rx="28" fill="#6b65e8"/>
+<rect x="350" y="260" width="88" height="330" rx="28" fill="#38bad1"/>
+<rect x="468" y="260" width="88" height="448" rx="28" fill="#63ca85"/>
+<rect x="586" y="260" width="88" height="300" rx="28" fill="#efc15b"/>
+<rect x="704" y="260" width="88" height="178" rx="28" fill="#e477a9"/>
+<path d="M 192 220 H 832" stroke="#626770" stroke-width="24" stroke-linecap="round"/>
+<path d="M 180 342 C 310 342 332 736 496 744 C 602 750 624 342 844 342" fill="none" stroke="#f4f5f7" stroke-width="36" stroke-linecap="round"/>
+<circle cx="496" cy="744" r="32" fill="#f4f5f7"/>
+</g>
+</svg>

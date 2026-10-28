@@ -1,0 +1,5 @@
+--- a/spectro/smcube.c
++++ b/spectro/smcube.c
+@@ -648 +648 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		a1logd(p->log,4,"smcube_calibrate: doing calt 0x%x\n",calt);
++		a1logd(p->log,4,"smcube_calibrate: doing calt 0x%x\n",*calt);

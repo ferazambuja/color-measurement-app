@@ -1,0 +1,7 @@
+{
+  "note": "An empty list is an answer, not a failure: the helper ran and found nothing",
+  "opening": [],
+  "refused": null,
+  "scenario": "no_candidates",
+  "units": []
+}

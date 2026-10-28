@@ -1,0 +1,8 @@
+{
+  "inputs": {
+    "science.py": "888cec4e7835656efbe99ae6f8983eb8ed3e8a529e4b00b4841cfbade4856606",
+    "presentation.py": "5ef31800c65da1056f407685492f155f6330e71d13baa1e36f45670f3273ff4a",
+    "resources/CIE_xyz_1931_2deg.csv": "fa663e3535a7e0763a745993a1f0a192eb0275ac46ad2d1befd7626841e713c1"
+  },
+  "output_sha256": "f9a99484652567201c56438410a9d47fd0c0d726506f4f7404712339ed3305f6"
+}

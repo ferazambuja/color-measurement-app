@@ -1,0 +1,1587 @@
+{
+  "descriptor": {
+    "accepts_correction": false,
+    "baseline_mode_checks": {
+      "checks": [
+        {
+          "mode_word": 65569,
+          "native_code": 0
+        }
+      ],
+      "mode_capabilities": 65569,
+      "scope": "initialized_before_mode_configuration"
+    },
+    "calibration": {
+      "actions": [
+        "change_filter",
+        "click_reference",
+        "display_patch",
+        "message",
+        "operate_instrument",
+        "present_reference",
+        "set_sensor_position"
+      ],
+      "conditions": [
+        {
+          "acknowledged": true,
+          "action": "operate_instrument",
+          "condition": "uop_ref_white",
+          "instruction": "Do a reflective white calibration on the instrument itself",
+          "reference_id_holds": null,
+          "value": 1
+        },
+        {
+          "acknowledged": true,
+          "action": "operate_instrument",
+          "condition": "uop_trans_white",
+          "instruction": "Do a transmissive white calibration on the instrument itself",
+          "reference_id_holds": null,
+          "value": 2
+        },
+        {
+          "acknowledged": true,
+          "action": "operate_instrument",
+          "condition": "uop_trans_dark",
+          "instruction": "Do a transmissive dark calibration on the instrument itself",
+          "reference_id_holds": null,
+          "value": 3
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_ref_white",
+          "instruction": "Place the instrument on its reflective white reference",
+          "reference_id_holds": "The expected white reference identifier, held by the driver, not read from the reference placed",
+          "value": 16
+        },
+        {
+          "acknowledged": false,
+          "action": "click_reference",
+          "condition": "man_ref_whitek",
+          "instruction": "Click the instrument down on its reflective white reference",
+          "reference_id_holds": "The expected white reference identifier, held by the driver, not read from the reference placed",
+          "value": 32
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_ref_dark",
+          "instruction": "Place the instrument on a light trap, or in the dark and distant from any surface",
+          "reference_id_holds": null,
+          "value": 48
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_dark_gloss",
+          "instruction": "Place the instrument on its black gloss reference",
+          "reference_id_holds": null,
+          "value": 64
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_em_dark",
+          "instruction": "Place the cap on the instrument, or place it on a dark surface or on the calibration reference",
+          "reference_id_holds": null,
+          "value": 80
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_am_dark",
+          "instruction": "Place the ambient adapter and cap on the instrument, or place it on the calibration reference",
+          "reference_id_holds": null,
+          "value": 96
+        },
+        {
+          "acknowledged": true,
+          "action": "set_sensor_position",
+          "condition": "man_cal_smode",
+          "instruction": "Set the instrument sensor to its calibration position",
+          "reference_id_holds": null,
+          "value": 112
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_trans_white",
+          "instruction": "Place the instrument on its transmissive white source",
+          "reference_id_holds": null,
+          "value": 128
+        },
+        {
+          "acknowledged": true,
+          "action": "present_reference",
+          "condition": "man_trans_dark",
+          "instruction": "Block the transmission path with the appropriate transmissive blocking",
+          "reference_id_holds": null,
+          "value": 144
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_white",
+          "instruction": "Display a 100% white test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 256
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_80pc",
+          "instruction": "Display an 80% white test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 512
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_grey",
+          "instruction": "Display a grey test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 768
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_grey_darker",
+          "instruction": "Display a darker grey test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 1024
+        },
+        {
+          "acknowledged": true,
+          "action": "display_patch",
+          "condition": "emis_grey_ligher",
+          "instruction": "Display a lighter grey test patch for the instrument",
+          "reference_id_holds": null,
+          "value": 1280
+        },
+        {
+          "acknowledged": true,
+          "action": "change_filter",
+          "condition": "change_filter",
+          "instruction": "Change the filter on the instrument",
+          "reference_id_holds": "The filter to fit",
+          "value": 65536
+        },
+        {
+          "acknowledged": true,
+          "action": "message",
+          "condition": "message",
+          "instruction": "The driver has a message for the operator",
+          "reference_id_holds": "The message text",
+          "value": 131072
+        }
+      ],
+      "deferrable_types": [
+        "emis_int_time",
+        "ref_freq"
+      ],
+      "display_level": "A fraction of full white for the patch the client must display; present only for `display_patch` conditions, and never to be invented by the client",
+      "types": [
+        "wavelength",
+        "ref_white",
+        "ref_dark",
+        "ref_dark_gl",
+        "emis_offset",
+        "emis_ratio",
+        "em_dark",
+        "trans_white",
+        "trans_vwhite",
+        "trans_dark",
+        "emis_int_time",
+        "ref_freq"
+      ]
+    },
+    "calibration_setup": [
+      {
+        "condition": "uop_ref_white",
+        "document": "X-Rite DTP 50 Series AutoScan Colorimeter Operation Manual (DTP51 & DTP52)",
+        "location": "PDF p. 25",
+        "official": true,
+        "quote": "Insert the Auto-Cal strip into the 35mm slot until it stops against the drive rollers.",
+        "text": "Press cal, then insert the Auto-Cal strip into the 35 mm slot until it stops."
+      }
+    ],
+    "capability_id": "31c84278038deff4a3e854e829c88bc35e4c64375f133af2f82137ca0e7e06b1",
+    "capability_source": "instrument capabilities(), decoded; baseline_native_mode reports exact initialized-state checks when observed; acquisition confirms the requested configuration at bind time",
+    "contract": "argyll_generic_instrument_v1",
+    "default_event_contract": "retained_patch_v1",
+    "device": {
+      "backend": "argyll-native",
+      "backend_version": "3.5.0",
+      "device_id": "X-Rite DTP51",
+      "model": "X-Rite DTP51",
+      "serial": "CM-CHART-0001",
+      "serial_encoding": "utf8"
+    },
+    "device_id": "X-Rite DTP51",
+    "display_types": {
+      "applied_choice_id": null,
+      "catalogue_id": null,
+      "count": 0,
+      "entries": [],
+      "native_code": 327680,
+      "readback": {
+        "base_calibration_id": null,
+        "native_code": 327680,
+        "refresh_mode": null,
+        "technology_code": null
+      },
+      "status": "unsupported"
+    },
+    "event_contracts": [
+      "patch_v1",
+      "retained_patch_v1"
+    ],
+    "facilities": [
+      "switch_trig"
+    ],
+    "filter_capabilities": 0,
+    "filters": [],
+    "instructions": [
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Present the declared external display stimulus and keep it unchanged during the frequency measurement",
+        "instruction": "refresh_stimulus",
+        "kind": "present_refresh_stimulus"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Prepare the requested strip, then continue",
+        "instruction": "strip_position",
+        "kind": "present_strip"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Position the sample or measurement optics, then continue",
+        "instruction": "sample_position",
+        "kind": "present_sample"
+      },
+      {
+        "answered": true,
+        "carries_calibration": true,
+        "detail": "Set up what the instrument asks for to calibrate, then continue",
+        "instruction": "calibration_setup",
+        "kind": "present_calibration_reference"
+      },
+      {
+        "answered": false,
+        "carries_calibration": true,
+        "detail": "Do what the instrument asks for to calibrate; it continues by itself",
+        "instruction": "calibration_condition",
+        "kind": "notify_calibration_condition"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Place the chart on the table",
+        "instruction": "xy_sheet",
+        "kind": "place_sheet"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "Sight a named fiducial so the table can locate the sheet",
+        "instruction": "xy_locate",
+        "kind": "sight_fiducial"
+      },
+      {
+        "answered": true,
+        "carries_calibration": false,
+        "detail": "The sensor, dial, diffuser or adapter is not where this step needs it. Move it, then continue; the step is tried once more",
+        "instruction": "sensor_position",
+        "kind": "reposition_sensor"
+      }
+    ],
+    "limits": {
+      "binding_policy": null,
+      "binding_timeout_seconds": 30.0,
+      "max_event_bytes": 16384,
+      "max_patch_id_bytes": 128,
+      "max_patches": 4096,
+      "max_request_bytes": 16384,
+      "max_response_timeout_seconds": 600,
+      "native_diagnostics": {
+        "available": true,
+        "debug_level_range": [
+          0,
+          8
+        ],
+        "default_debug_level": 0,
+        "default_limit_bytes": 65536,
+        "max_limit_bytes": 1048576,
+        "scope": "Auxiliary stderr provenance; no scientific setting changes",
+        "unavailable_reason": null
+      },
+      "read_allowance_floor_seconds": null,
+      "read_allowance_floor_seconds_by_mode": null
+    },
+    "live": false,
+    "mode_capabilities": 65569,
+    "mode_flags": [
+      "colorimeter"
+    ],
+    "modes": [
+      {
+        "available": true,
+        "axes": {
+          "action": "strip",
+          "condition": null,
+          "illumination": "reflective",
+          "mode_flags": [],
+          "modifiers": [],
+          "route": "ref_strip"
+        },
+        "baseline_native_mode": {
+          "default": {
+            "mode_word": 65569,
+            "native_code": 0,
+            "reason": null,
+            "status": "confirmed"
+          },
+          "scope": "initialized_before_mode_configuration",
+          "xyz_only": null
+        },
+        "calibration_setup": [
+          {
+            "condition": "uop_ref_white",
+            "document": "X-Rite DTP 50 Series AutoScan Colorimeter Operation Manual (DTP51 & DTP52)",
+            "location": "PDF p. 25",
+            "official": true,
+            "quote": "Insert the Auto-Cal strip into the 35mm slot until it stops against the drive rollers.",
+            "text": "Press cal, then insert the Auto-Cal strip into the 35 mm slot until it stops."
+          }
+        ],
+        "canonical": true,
+        "capability_snapshot": null,
+        "correction_matrix_diagonal_mean": null,
+        "correction_required": false,
+        "equivalent_to": "reflective_strip",
+        "expected_measurement_type": 5,
+        "expected_measurement_type_name": "reflective",
+        "expected_quantities": {
+          "illuminant": "D50",
+          "quantity": "reflectance",
+          "scale": "relative; perfect-diffuser Y=100",
+          "spectrum_unit": "%",
+          "xyz_unit": "1"
+        },
+        "label": "Reflective strip",
+        "mode": "reflective_strip",
+        "operator_setup": {
+          "document": "X-Rite DTP 50 Series AutoScan Colorimeter Operation Manual (DTP51 & DTP52)",
+          "location": "PDF p. 19",
+          "official": true,
+          "quote": "the strip guide pointer must be positioned to the corresponding stop location number appearing in the instrument display.",
+          "text": "Set the strip guide to the stop number on the display and feed the strip after a 1.2 in leader."
+        },
+        "physical_chart": {
+          "assessment": {
+            "document": "ArgyllCMS 3.5.0, spectro/inst.h",
+            "location": "https://www.argyllcms.com/Argyll_V3.5.0_src.zip",
+            "official": true,
+            "quote": "Reflection strip measurement mode",
+            "text": "The native route measures reflection. Patch isolation and operator placement still follow the instrument's setup."
+          },
+          "kind": "reflective"
+        },
+        "requires_positioning": false,
+        "stored": false,
+        "unavailable_reason": null,
+        "workflow": "strip",
+        "workflows": [
+          {
+            "available": true,
+            "layout_fields": [
+              {
+                "default": "STRIP",
+                "encoding": "ascii_printable",
+                "help": "Name sent to the driver; omission sends STRIP. This is not target recognition.",
+                "key": "strip_name",
+                "label": "Strip name",
+                "max_bytes": 7,
+                "required": false,
+                "type": "text"
+              },
+              {
+                "default": "1",
+                "encoding": "ascii_printable",
+                "help": "Pass label sent to the driver; omission sends 1.",
+                "key": "pass_name",
+                "label": "Pass name",
+                "max_bytes": 3,
+                "required": false,
+                "type": "text"
+              },
+              {
+                "default": null,
+                "exclusive_minimum": false,
+                "help": "Guide number sent unchanged to the instrument. Use the guide position for this strip.",
+                "key": "guide",
+                "label": "Guide number",
+                "maximum": 99,
+                "minimum": 0,
+                "required": true,
+                "type": "integer",
+                "unit": ""
+              },
+              {
+                "choices": [
+                  "forward"
+                ],
+                "default": "forward",
+                "help": "Forward preserves driver order; reverse reverses positional association. No target recognition is performed.",
+                "key": "direction",
+                "label": "Returned patch order",
+                "required": false,
+                "type": "choice"
+              }
+            ],
+            "layout_keys": [
+              "direction",
+              "guide",
+              "pass_name",
+              "strip_name"
+            ],
+            "max_patches": 99,
+            "min_patches": 1,
+            "patch_association": "manual_returned_positions",
+            "required_layout_keys": [
+              "guide"
+            ],
+            "strip_requirement": "Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.",
+            "unavailable_reason": null,
+            "workflow": "strip"
+          },
+          {
+            "available": true,
+            "expected_quantities": {},
+            "layout_fields": [],
+            "layout_keys": [],
+            "max_patches": 0,
+            "min_patches": 0,
+            "non_acquiring": true,
+            "option_ids": [
+              "refresh_rate",
+              "display_type",
+              "highres",
+              "xyz_only",
+              "averages",
+              "xcalstd",
+              "filter",
+              "correction"
+            ],
+            "passive": false,
+            "required_layout_keys": [],
+            "result_kind": "configuration",
+            "unavailable_reason": null,
+            "workflow": "mode_snapshot"
+          }
+        ]
+      }
+    ],
+    "options": [
+      {
+        "allowed_ranges": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            150
+          ]
+        ],
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "reflective_strip": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The configured capability snapshot does not advertise a stored-rate setter"
+          }
+        },
+        "default": null,
+        "id": "refresh_rate",
+        "label": "Stored refresh override (0 invalidates the stored rate)",
+        "maximum": 150,
+        "minimum": 0,
+        "refusal_stage": "refresh_rate_unavailable",
+        "type": "number",
+        "unavailable_reason": "The configured capability snapshot does not advertise a stored-rate setter",
+        "unit": "Hz"
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "reflective_strip": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+          }
+        },
+        "default": false,
+        "id": "highres",
+        "label": "High resolution spectral mode",
+        "refusal_stage": "highres_unavailable",
+        "type": "boolean",
+        "unavailable_reason": "The instrument does not advertise high-resolution spectral measurements"
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "reflective_strip": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument returns no spectrum to leave out"
+          }
+        },
+        "default": false,
+        "id": "xyz_only",
+        "label": "XYZ only, without the spectrum",
+        "refusal_stage": "xyz_only_unavailable",
+        "type": "boolean",
+        "unavailable_reason": "The instrument returns no spectrum to leave out"
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "reflective_strip": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "unavailable_reason": "The instrument does not advertise measurement averaging"
+          }
+        },
+        "default": 0,
+        "id": "averages",
+        "label": "Readings averaged into one (0 = the driver's own)",
+        "maximum": 1000,
+        "minimum": 0,
+        "refusal_stage": "averaging_unavailable",
+        "type": "integer",
+        "unavailable_reason": "The instrument does not advertise measurement averaging"
+      },
+      {
+        "applies_to": [
+          "reflective_strip"
+        ],
+        "available": true,
+        "by_mode": {
+          "reflective_strip": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "gmdi",
+              "native",
+              "none",
+              "xrdi",
+              "xrga"
+            ],
+            "unavailable_reason": null
+          }
+        },
+        "choices": [
+          "gmdi",
+          "native",
+          "none",
+          "xrdi",
+          "xrga"
+        ],
+        "default": "none",
+        "id": "xcalstd",
+        "label": "Reflective calibration standard",
+        "refusal_stage": "set_xcalstd",
+        "type": "choice",
+        "unavailable_reason": null
+      },
+      {
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "reflective_strip": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [],
+            "unavailable_reason": "No observed display-calibration choices"
+          }
+        },
+        "catalogue_id": null,
+        "choice_details": [],
+        "choices": [],
+        "default": null,
+        "id": "display_type",
+        "label": "Display calibration",
+        "refusal_stage": "display_type_unavailable",
+        "type": "choice",
+        "unavailable_reason": "No observed display-calibration choices"
+      },
+      {
+        "applies_to": [
+          "reflective_strip"
+        ],
+        "available": true,
+        "by_mode": {
+          "reflective_strip": {
+            "available": true,
+            "capability_source": "initialized_before_mode_configuration",
+            "choices": [
+              "unknown"
+            ],
+            "unavailable_reason": null
+          }
+        },
+        "choices": [
+          "unknown"
+        ],
+        "default": null,
+        "id": "filter",
+        "label": "Measurement condition",
+        "refusal_stage": "set_filter",
+        "type": "choice",
+        "unavailable_reason": null
+      },
+      {
+        "alternative_shape": {
+          "text": "string"
+        },
+        "applies_to": null,
+        "available": false,
+        "by_mode": {
+          "reflective_strip": {
+            "available": false,
+            "capability_source": "initialized_before_mode_configuration",
+            "kinds": [],
+            "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+          }
+        },
+        "default": null,
+        "id": "correction",
+        "kinds": [],
+        "label": "Colorimeter correction (.ccmx or .ccss)",
+        "note": "Without one the driver's factory/display-type calibration remains in use. A suitable correction can reduce display spectral mismatch. The file's CGATS identifier determines the kind. Ambient CCMX availability comes from the backend.",
+        "refusal_stage": "correction_matrix_unavailable",
+        "shape": {
+          "path": "string"
+        },
+        "type": "object",
+        "unavailable_reason": "The instrument does not advertise colorimeter correction support"
+      }
+    ],
+    "provenance": "simulated",
+    "schema_version": 1,
+    "spectral": false,
+    "synthetic": true,
+    "trigger_capabilities": 1024
+  },
+  "events": [
+    {
+      "kind": "started",
+      "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+      "payload": {
+        "capability_id": "31c84278038deff4a3e854e829c88bc35e4c64375f133af2f82137ca0e7e06b1",
+        "device_id": "X-Rite DTP51",
+        "event_contract": "patch_v1",
+        "provenance": "simulated"
+      },
+      "schema_version": 1,
+      "sequence": 0
+    },
+    {
+      "kind": "instruction_required",
+      "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+      "payload": {
+        "allowed_responses": [
+          "accept",
+          "cancel"
+        ],
+        "calibration": null,
+        "kind": "strip_position",
+        "message": "Present the strip in forward order. Patch IDs follow that declared order; no target recognition is performed. After continuing, feed the strip into the instrument to activate its feed microswitch.",
+        "native_event": {
+          "effective_trigger": "instrument_switch",
+          "event": "instruction_required",
+          "instruction": "strip_position",
+          "protocol_version": 1,
+          "provenance": "simulated",
+          "request_id": "strip-ready",
+          "trigger_guidance": "After continuing, feed the strip into the instrument to activate its feed microswitch."
+        },
+        "position": null,
+        "request_id": "strip-ready",
+        "response_timeout_seconds": 120.0
+      },
+      "schema_version": 1,
+      "sequence": 1
+    },
+    {
+      "kind": "patch",
+      "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+      "payload": {
+        "index": 0,
+        "observation": {
+          "acquired_at": "2026-10-15T23:52:35.478Z",
+          "actual_mode": "reflective_strip",
+          "backend_reported": {
+            "spectrum": null,
+            "xyz": {
+              "illuminant": "D50",
+              "observer": "CIE1931_2",
+              "scale": "relative; perfect-diffuser Y=100",
+              "unit": "1",
+              "values": [
+                68.96592575731717,
+                74.67557369436535,
+                46.24275747523888
+              ]
+            }
+          },
+          "calibration": {
+            "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+            "status": "valid"
+          },
+          "configuration": [
+            [
+              "acquired_at_source",
+              "client receipt; the ladder publishes no instrument clock"
+            ],
+            [
+              "confirmed_routes",
+              "ref_strip"
+            ],
+            [
+              "correction_applied",
+              "none"
+            ],
+            [
+              "native_clamping",
+              "driver-defined"
+            ],
+            [
+              "native_duration_seconds",
+              "0.0"
+            ],
+            [
+              "native_mcond",
+              "0"
+            ],
+            [
+              "native_mtype",
+              "5"
+            ],
+            [
+              "native_patch_index",
+              "0"
+            ],
+            [
+              "strip_direction",
+              "forward"
+            ],
+            [
+              "strip_direction_source",
+              "operator-declared; no target recognition"
+            ]
+          ],
+          "device": {
+            "backend": "argyll-native",
+            "backend_version": "3.5.0",
+            "device_id": "X-Rite DTP51",
+            "model": "X-Rite DTP51",
+            "serial": "CM-CHART-0001",
+            "serial_encoding": "utf8"
+          },
+          "observation_id": "09b729bf-d447-434e-b18d-5be3c241728c",
+          "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+          "project_computed": {
+            "lab": null,
+            "xyy": null
+          },
+          "provenance": "simulated",
+          "raw_backend_output": "{\"events\":[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"connected\",\"serial\":\"CM-CHART-0001\",\"serial_encoding\":\"utf8\",\"mode\":65569,\"mode_capabilities\":65569,\"trigger_capabilities\":1024,\"filter_capabilities\":0,\"trigger\":18,\"spectral\":false,\"ambient_ccmx\":false,\"ambient_matrix_threshold\":null,\"strip_policies\":{\"reflection\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"transmission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"emission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]}},\"baseline_mode_checks\":{\"scope\":\"initialized_before_mode_configuration\",\"mode_capabilities\":65569,\"checks\":[{\"mode_word\":65569,\"native_code\":0}]},\"display_types\":{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]},\"refresh_rate_override_hz\":null,\"correction\":\"none\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"needed_calibrations\":0,\"available_calibrations\":32,\"remaining_calibrations\":0,\"status_source\":\"driver\",\"skipped\":false,\"performed\":false,\"initial_calibration_suppressed\":false},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"instruction_required\",\"instruction\":\"strip_position\",\"request_id\":\"strip-ready\",\"effective_trigger\":\"instrument_switch\",\"trigger_guidance\":\"After continuing, feed the strip into the instrument to activate its feed microswitch.\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"strip_patch\",\"index\":0,\"patch_count\":4,\"argyll_version\":\"3.5.0\",\"backend_reported\":{\"mtype\":5,\"mcond\":0,\"XYZ_v\":1,\"XYZ\":[68.96592575731717,74.67557369436535,46.24275747523888],\"duration\":0,\"spectrum\":null}},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"terminal\",\"status\":\"completed\",\"instrument_state\":\"unknown\",\"software_stopped\":true}]}",
+          "requested_mode": "reflective_strip",
+          "sample_id": "P1",
+          "schema_version": 1,
+          "warnings": [
+            "SIMULATED: these values did not come from a physical measurement of a physical sample."
+          ]
+        },
+        "patch_id": "P1"
+      },
+      "schema_version": 1,
+      "sequence": 2
+    },
+    {
+      "kind": "patch",
+      "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+      "payload": {
+        "index": 1,
+        "observation": {
+          "acquired_at": "2026-10-15T23:52:35.478Z",
+          "actual_mode": "reflective_strip",
+          "backend_reported": {
+            "spectrum": null,
+            "xyz": {
+              "illuminant": "D50",
+              "observer": "CIE1931_2",
+              "scale": "relative; perfect-diffuser Y=100",
+              "unit": "1",
+              "values": [
+                62.104169553735325,
+                69.25422233883624,
+                42.90979030112563
+              ]
+            }
+          },
+          "calibration": {
+            "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+            "status": "valid"
+          },
+          "configuration": [
+            [
+              "acquired_at_source",
+              "client receipt; the ladder publishes no instrument clock"
+            ],
+            [
+              "confirmed_routes",
+              "ref_strip"
+            ],
+            [
+              "correction_applied",
+              "none"
+            ],
+            [
+              "native_clamping",
+              "driver-defined"
+            ],
+            [
+              "native_duration_seconds",
+              "0.0"
+            ],
+            [
+              "native_mcond",
+              "0"
+            ],
+            [
+              "native_mtype",
+              "5"
+            ],
+            [
+              "native_patch_index",
+              "1"
+            ],
+            [
+              "strip_direction",
+              "forward"
+            ],
+            [
+              "strip_direction_source",
+              "operator-declared; no target recognition"
+            ]
+          ],
+          "device": {
+            "backend": "argyll-native",
+            "backend_version": "3.5.0",
+            "device_id": "X-Rite DTP51",
+            "model": "X-Rite DTP51",
+            "serial": "CM-CHART-0001",
+            "serial_encoding": "utf8"
+          },
+          "observation_id": "a5313d26-d39d-4280-ac34-9156e66250c6",
+          "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+          "project_computed": {
+            "lab": null,
+            "xyy": null
+          },
+          "provenance": "simulated",
+          "raw_backend_output": "{\"events\":[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"connected\",\"serial\":\"CM-CHART-0001\",\"serial_encoding\":\"utf8\",\"mode\":65569,\"mode_capabilities\":65569,\"trigger_capabilities\":1024,\"filter_capabilities\":0,\"trigger\":18,\"spectral\":false,\"ambient_ccmx\":false,\"ambient_matrix_threshold\":null,\"strip_policies\":{\"reflection\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"transmission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"emission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]}},\"baseline_mode_checks\":{\"scope\":\"initialized_before_mode_configuration\",\"mode_capabilities\":65569,\"checks\":[{\"mode_word\":65569,\"native_code\":0}]},\"display_types\":{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]},\"refresh_rate_override_hz\":null,\"correction\":\"none\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"needed_calibrations\":0,\"available_calibrations\":32,\"remaining_calibrations\":0,\"status_source\":\"driver\",\"skipped\":false,\"performed\":false,\"initial_calibration_suppressed\":false},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"instruction_required\",\"instruction\":\"strip_position\",\"request_id\":\"strip-ready\",\"effective_trigger\":\"instrument_switch\",\"trigger_guidance\":\"After continuing, feed the strip into the instrument to activate its feed microswitch.\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"strip_patch\",\"index\":1,\"patch_count\":4,\"argyll_version\":\"3.5.0\",\"backend_reported\":{\"mtype\":5,\"mcond\":0,\"XYZ_v\":1,\"XYZ\":[62.104169553735325,69.25422233883624,42.90979030112563],\"duration\":0,\"spectrum\":null}},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"terminal\",\"status\":\"completed\",\"instrument_state\":\"unknown\",\"software_stopped\":true}]}",
+          "requested_mode": "reflective_strip",
+          "sample_id": "P2",
+          "schema_version": 1,
+          "warnings": [
+            "SIMULATED: these values did not come from a physical measurement of a physical sample."
+          ]
+        },
+        "patch_id": "P2"
+      },
+      "schema_version": 1,
+      "sequence": 3
+    },
+    {
+      "kind": "patch",
+      "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+      "payload": {
+        "index": 2,
+        "observation": {
+          "acquired_at": "2026-10-15T23:52:35.478Z",
+          "actual_mode": "reflective_strip",
+          "backend_reported": {
+            "spectrum": null,
+            "xyz": {
+              "illuminant": "D50",
+              "observer": "CIE1931_2",
+              "scale": "relative; perfect-diffuser Y=100",
+              "unit": "1",
+              "values": [
+                49.48488446853466,
+                54.91520593901248,
+                54.125111914696774
+              ]
+            }
+          },
+          "calibration": {
+            "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+            "status": "valid"
+          },
+          "configuration": [
+            [
+              "acquired_at_source",
+              "client receipt; the ladder publishes no instrument clock"
+            ],
+            [
+              "confirmed_routes",
+              "ref_strip"
+            ],
+            [
+              "correction_applied",
+              "none"
+            ],
+            [
+              "native_clamping",
+              "driver-defined"
+            ],
+            [
+              "native_duration_seconds",
+              "0.0"
+            ],
+            [
+              "native_mcond",
+              "0"
+            ],
+            [
+              "native_mtype",
+              "5"
+            ],
+            [
+              "native_patch_index",
+              "2"
+            ],
+            [
+              "strip_direction",
+              "forward"
+            ],
+            [
+              "strip_direction_source",
+              "operator-declared; no target recognition"
+            ]
+          ],
+          "device": {
+            "backend": "argyll-native",
+            "backend_version": "3.5.0",
+            "device_id": "X-Rite DTP51",
+            "model": "X-Rite DTP51",
+            "serial": "CM-CHART-0001",
+            "serial_encoding": "utf8"
+          },
+          "observation_id": "b83e1865-7c3b-4b40-b19d-c47079779e7e",
+          "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+          "project_computed": {
+            "lab": null,
+            "xyy": null
+          },
+          "provenance": "simulated",
+          "raw_backend_output": "{\"events\":[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"connected\",\"serial\":\"CM-CHART-0001\",\"serial_encoding\":\"utf8\",\"mode\":65569,\"mode_capabilities\":65569,\"trigger_capabilities\":1024,\"filter_capabilities\":0,\"trigger\":18,\"spectral\":false,\"ambient_ccmx\":false,\"ambient_matrix_threshold\":null,\"strip_policies\":{\"reflection\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"transmission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"emission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]}},\"baseline_mode_checks\":{\"scope\":\"initialized_before_mode_configuration\",\"mode_capabilities\":65569,\"checks\":[{\"mode_word\":65569,\"native_code\":0}]},\"display_types\":{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]},\"refresh_rate_override_hz\":null,\"correction\":\"none\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"needed_calibrations\":0,\"available_calibrations\":32,\"remaining_calibrations\":0,\"status_source\":\"driver\",\"skipped\":false,\"performed\":false,\"initial_calibration_suppressed\":false},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"instruction_required\",\"instruction\":\"strip_position\",\"request_id\":\"strip-ready\",\"effective_trigger\":\"instrument_switch\",\"trigger_guidance\":\"After continuing, feed the strip into the instrument to activate its feed microswitch.\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"strip_patch\",\"index\":2,\"patch_count\":4,\"argyll_version\":\"3.5.0\",\"backend_reported\":{\"mtype\":5,\"mcond\":0,\"XYZ_v\":1,\"XYZ\":[49.48488446853466,54.91520593901248,54.125111914696774],\"duration\":0,\"spectrum\":null}},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"terminal\",\"status\":\"completed\",\"instrument_state\":\"unknown\",\"software_stopped\":true}]}",
+          "requested_mode": "reflective_strip",
+          "sample_id": "P3",
+          "schema_version": 1,
+          "warnings": [
+            "SIMULATED: these values did not come from a physical measurement of a physical sample."
+          ]
+        },
+        "patch_id": "P3"
+      },
+      "schema_version": 1,
+      "sequence": 4
+    },
+    {
+      "kind": "patch",
+      "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+      "payload": {
+        "index": 3,
+        "observation": {
+          "acquired_at": "2026-10-15T23:52:35.478Z",
+          "actual_mode": "reflective_strip",
+          "backend_reported": {
+            "spectrum": null,
+            "xyz": {
+              "illuminant": "D50",
+              "observer": "CIE1931_2",
+              "scale": "relative; perfect-diffuser Y=100",
+              "unit": "1",
+              "values": [
+                70.17553659549561,
+                65.44341734649983,
+                18.501896296911617
+              ]
+            }
+          },
+          "calibration": {
+            "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+            "status": "valid"
+          },
+          "configuration": [
+            [
+              "acquired_at_source",
+              "client receipt; the ladder publishes no instrument clock"
+            ],
+            [
+              "confirmed_routes",
+              "ref_strip"
+            ],
+            [
+              "correction_applied",
+              "none"
+            ],
+            [
+              "native_clamping",
+              "driver-defined"
+            ],
+            [
+              "native_duration_seconds",
+              "0.0"
+            ],
+            [
+              "native_mcond",
+              "0"
+            ],
+            [
+              "native_mtype",
+              "5"
+            ],
+            [
+              "native_patch_index",
+              "3"
+            ],
+            [
+              "strip_direction",
+              "forward"
+            ],
+            [
+              "strip_direction_source",
+              "operator-declared; no target recognition"
+            ]
+          ],
+          "device": {
+            "backend": "argyll-native",
+            "backend_version": "3.5.0",
+            "device_id": "X-Rite DTP51",
+            "model": "X-Rite DTP51",
+            "serial": "CM-CHART-0001",
+            "serial_encoding": "utf8"
+          },
+          "observation_id": "281c4e49-0847-4ac4-8104-5859934eb8e9",
+          "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+          "project_computed": {
+            "lab": null,
+            "xyy": null
+          },
+          "provenance": "simulated",
+          "raw_backend_output": "{\"events\":[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"connected\",\"serial\":\"CM-CHART-0001\",\"serial_encoding\":\"utf8\",\"mode\":65569,\"mode_capabilities\":65569,\"trigger_capabilities\":1024,\"filter_capabilities\":0,\"trigger\":18,\"spectral\":false,\"ambient_ccmx\":false,\"ambient_matrix_threshold\":null,\"strip_policies\":{\"reflection\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"transmission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"emission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]}},\"baseline_mode_checks\":{\"scope\":\"initialized_before_mode_configuration\",\"mode_capabilities\":65569,\"checks\":[{\"mode_word\":65569,\"native_code\":0}]},\"display_types\":{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]},\"refresh_rate_override_hz\":null,\"correction\":\"none\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"needed_calibrations\":0,\"available_calibrations\":32,\"remaining_calibrations\":0,\"status_source\":\"driver\",\"skipped\":false,\"performed\":false,\"initial_calibration_suppressed\":false},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"instruction_required\",\"instruction\":\"strip_position\",\"request_id\":\"strip-ready\",\"effective_trigger\":\"instrument_switch\",\"trigger_guidance\":\"After continuing, feed the strip into the instrument to activate its feed microswitch.\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"strip_patch\",\"index\":3,\"patch_count\":4,\"argyll_version\":\"3.5.0\",\"backend_reported\":{\"mtype\":5,\"mcond\":0,\"XYZ_v\":1,\"XYZ\":[70.17553659549561,65.44341734649983,18.501896296911617],\"duration\":0,\"spectrum\":null}},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"terminal\",\"status\":\"completed\",\"instrument_state\":\"unknown\",\"software_stopped\":true}]}",
+          "requested_mode": "reflective_strip",
+          "sample_id": "P4",
+          "schema_version": 1,
+          "warnings": [
+            "SIMULATED: these values did not come from a physical measurement of a physical sample."
+          ]
+        },
+        "patch_id": "P4"
+      },
+      "schema_version": 1,
+      "sequence": 5
+    },
+    {
+      "kind": "terminal",
+      "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+      "payload": {
+        "completed_patches": 4,
+        "error": null,
+        "error_native_code": null,
+        "error_stage": null,
+        "expected_patches": 4,
+        "instrument_state": "not_applicable",
+        "software_stopped": true,
+        "status": "completed"
+      },
+      "schema_version": 1,
+      "sequence": 6
+    }
+  ],
+  "request": {
+    "capability_id": "31c84278038deff4a3e854e829c88bc35e4c64375f133af2f82137ca0e7e06b1",
+    "device_id": "X-Rite DTP51",
+    "event_contract": "patch_v1",
+    "layout": {
+      "guide": 15,
+      "pass_name": "B",
+      "strip_name": "STRIP"
+    },
+    "mode": "reflective_strip",
+    "options": {},
+    "patch_ids": [
+      "P1",
+      "P2",
+      "P3",
+      "P4"
+    ],
+    "schema_version": 1,
+    "workflow": "strip"
+  },
+  "result": {
+    "calibration": {
+      "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+      "status": "valid"
+    },
+    "configuration": [
+      [
+        "calibration_events_json",
+        "[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"needed_calibrations\":0,\"available_calibrations\":32,\"remaining_calibrations\":0,\"status_source\":\"driver\",\"skipped\":false,\"performed\":false,\"initial_calibration_suppressed\":false}]"
+      ],
+      [
+        "calibration_outcome_json",
+        "{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"needed_calibrations\":0,\"available_calibrations\":32,\"remaining_calibrations\":0,\"status_source\":\"driver\",\"skipped\":false,\"performed\":false,\"initial_calibration_suppressed\":false}"
+      ],
+      [
+        "capability_id",
+        "31c84278038deff4a3e854e829c88bc35e4c64375f133af2f82137ca0e7e06b1"
+      ],
+      [
+        "capability_source",
+        "instrument capabilities(), decoded; baseline_native_mode reports exact initialized-state checks when observed; acquisition confirms the requested configuration at bind time"
+      ],
+      [
+        "display_types_json",
+        "{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]}"
+      ],
+      [
+        "event_contract",
+        "patch_v1"
+      ],
+      [
+        "filter_capabilities",
+        "0"
+      ],
+      [
+        "mode_capabilities",
+        "65569"
+      ],
+      [
+        "requested_layout_json",
+        "{\"strip_name\":\"STRIP\",\"pass_name\":\"B\",\"guide\":15}"
+      ],
+      [
+        "requested_options_json",
+        "{}"
+      ],
+      [
+        "trigger_capabilities",
+        "1024"
+      ]
+    ],
+    "device": {
+      "backend": "argyll-native",
+      "backend_version": "3.5.0",
+      "device_id": "X-Rite DTP51",
+      "model": "X-Rite DTP51",
+      "serial": "CM-CHART-0001",
+      "serial_encoding": "utf8"
+    },
+    "device_id": "X-Rite DTP51",
+    "error": null,
+    "error_native_code": null,
+    "error_stage": null,
+    "expected_patch_ids": [
+      "P1",
+      "P2",
+      "P3",
+      "P4"
+    ],
+    "instrument_state": "not_applicable",
+    "mode": "reflective_strip",
+    "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+    "patches": [
+      {
+        "index": 0,
+        "observation": {
+          "acquired_at": "2026-10-15T23:52:35.478Z",
+          "actual_mode": "reflective_strip",
+          "backend_reported": {
+            "spectrum": null,
+            "xyz": {
+              "illuminant": "D50",
+              "observer": "CIE1931_2",
+              "scale": "relative; perfect-diffuser Y=100",
+              "unit": "1",
+              "values": [
+                68.96592575731717,
+                74.67557369436535,
+                46.24275747523888
+              ]
+            }
+          },
+          "calibration": {
+            "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+            "status": "valid"
+          },
+          "configuration": [
+            [
+              "acquired_at_source",
+              "client receipt; the ladder publishes no instrument clock"
+            ],
+            [
+              "confirmed_routes",
+              "ref_strip"
+            ],
+            [
+              "correction_applied",
+              "none"
+            ],
+            [
+              "native_clamping",
+              "driver-defined"
+            ],
+            [
+              "native_duration_seconds",
+              "0.0"
+            ],
+            [
+              "native_mcond",
+              "0"
+            ],
+            [
+              "native_mtype",
+              "5"
+            ],
+            [
+              "native_patch_index",
+              "0"
+            ],
+            [
+              "strip_direction",
+              "forward"
+            ],
+            [
+              "strip_direction_source",
+              "operator-declared; no target recognition"
+            ]
+          ],
+          "device": {
+            "backend": "argyll-native",
+            "backend_version": "3.5.0",
+            "device_id": "X-Rite DTP51",
+            "model": "X-Rite DTP51",
+            "serial": "CM-CHART-0001",
+            "serial_encoding": "utf8"
+          },
+          "observation_id": "09b729bf-d447-434e-b18d-5be3c241728c",
+          "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+          "project_computed": {
+            "lab": null,
+            "xyy": null
+          },
+          "provenance": "simulated",
+          "raw_backend_output": "{\"events\":[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"connected\",\"serial\":\"CM-CHART-0001\",\"serial_encoding\":\"utf8\",\"mode\":65569,\"mode_capabilities\":65569,\"trigger_capabilities\":1024,\"filter_capabilities\":0,\"trigger\":18,\"spectral\":false,\"ambient_ccmx\":false,\"ambient_matrix_threshold\":null,\"strip_policies\":{\"reflection\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"transmission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"emission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]}},\"baseline_mode_checks\":{\"scope\":\"initialized_before_mode_configuration\",\"mode_capabilities\":65569,\"checks\":[{\"mode_word\":65569,\"native_code\":0}]},\"display_types\":{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]},\"refresh_rate_override_hz\":null,\"correction\":\"none\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"needed_calibrations\":0,\"available_calibrations\":32,\"remaining_calibrations\":0,\"status_source\":\"driver\",\"skipped\":false,\"performed\":false,\"initial_calibration_suppressed\":false},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"instruction_required\",\"instruction\":\"strip_position\",\"request_id\":\"strip-ready\",\"effective_trigger\":\"instrument_switch\",\"trigger_guidance\":\"After continuing, feed the strip into the instrument to activate its feed microswitch.\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"strip_patch\",\"index\":0,\"patch_count\":4,\"argyll_version\":\"3.5.0\",\"backend_reported\":{\"mtype\":5,\"mcond\":0,\"XYZ_v\":1,\"XYZ\":[68.96592575731717,74.67557369436535,46.24275747523888],\"duration\":0,\"spectrum\":null}},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"terminal\",\"status\":\"completed\",\"instrument_state\":\"unknown\",\"software_stopped\":true}]}",
+          "requested_mode": "reflective_strip",
+          "sample_id": "P1",
+          "schema_version": 1,
+          "warnings": [
+            "SIMULATED: these values did not come from a physical measurement of a physical sample."
+          ]
+        },
+        "patch_id": "P1"
+      },
+      {
+        "index": 1,
+        "observation": {
+          "acquired_at": "2026-10-15T23:52:35.478Z",
+          "actual_mode": "reflective_strip",
+          "backend_reported": {
+            "spectrum": null,
+            "xyz": {
+              "illuminant": "D50",
+              "observer": "CIE1931_2",
+              "scale": "relative; perfect-diffuser Y=100",
+              "unit": "1",
+              "values": [
+                62.104169553735325,
+                69.25422233883624,
+                42.90979030112563
+              ]
+            }
+          },
+          "calibration": {
+            "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+            "status": "valid"
+          },
+          "configuration": [
+            [
+              "acquired_at_source",
+              "client receipt; the ladder publishes no instrument clock"
+            ],
+            [
+              "confirmed_routes",
+              "ref_strip"
+            ],
+            [
+              "correction_applied",
+              "none"
+            ],
+            [
+              "native_clamping",
+              "driver-defined"
+            ],
+            [
+              "native_duration_seconds",
+              "0.0"
+            ],
+            [
+              "native_mcond",
+              "0"
+            ],
+            [
+              "native_mtype",
+              "5"
+            ],
+            [
+              "native_patch_index",
+              "1"
+            ],
+            [
+              "strip_direction",
+              "forward"
+            ],
+            [
+              "strip_direction_source",
+              "operator-declared; no target recognition"
+            ]
+          ],
+          "device": {
+            "backend": "argyll-native",
+            "backend_version": "3.5.0",
+            "device_id": "X-Rite DTP51",
+            "model": "X-Rite DTP51",
+            "serial": "CM-CHART-0001",
+            "serial_encoding": "utf8"
+          },
+          "observation_id": "a5313d26-d39d-4280-ac34-9156e66250c6",
+          "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+          "project_computed": {
+            "lab": null,
+            "xyy": null
+          },
+          "provenance": "simulated",
+          "raw_backend_output": "{\"events\":[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"connected\",\"serial\":\"CM-CHART-0001\",\"serial_encoding\":\"utf8\",\"mode\":65569,\"mode_capabilities\":65569,\"trigger_capabilities\":1024,\"filter_capabilities\":0,\"trigger\":18,\"spectral\":false,\"ambient_ccmx\":false,\"ambient_matrix_threshold\":null,\"strip_policies\":{\"reflection\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"transmission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"emission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]}},\"baseline_mode_checks\":{\"scope\":\"initialized_before_mode_configuration\",\"mode_capabilities\":65569,\"checks\":[{\"mode_word\":65569,\"native_code\":0}]},\"display_types\":{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]},\"refresh_rate_override_hz\":null,\"correction\":\"none\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"needed_calibrations\":0,\"available_calibrations\":32,\"remaining_calibrations\":0,\"status_source\":\"driver\",\"skipped\":false,\"performed\":false,\"initial_calibration_suppressed\":false},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"instruction_required\",\"instruction\":\"strip_position\",\"request_id\":\"strip-ready\",\"effective_trigger\":\"instrument_switch\",\"trigger_guidance\":\"After continuing, feed the strip into the instrument to activate its feed microswitch.\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"strip_patch\",\"index\":1,\"patch_count\":4,\"argyll_version\":\"3.5.0\",\"backend_reported\":{\"mtype\":5,\"mcond\":0,\"XYZ_v\":1,\"XYZ\":[62.104169553735325,69.25422233883624,42.90979030112563],\"duration\":0,\"spectrum\":null}},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"terminal\",\"status\":\"completed\",\"instrument_state\":\"unknown\",\"software_stopped\":true}]}",
+          "requested_mode": "reflective_strip",
+          "sample_id": "P2",
+          "schema_version": 1,
+          "warnings": [
+            "SIMULATED: these values did not come from a physical measurement of a physical sample."
+          ]
+        },
+        "patch_id": "P2"
+      },
+      {
+        "index": 2,
+        "observation": {
+          "acquired_at": "2026-10-15T23:52:35.478Z",
+          "actual_mode": "reflective_strip",
+          "backend_reported": {
+            "spectrum": null,
+            "xyz": {
+              "illuminant": "D50",
+              "observer": "CIE1931_2",
+              "scale": "relative; perfect-diffuser Y=100",
+              "unit": "1",
+              "values": [
+                49.48488446853466,
+                54.91520593901248,
+                54.125111914696774
+              ]
+            }
+          },
+          "calibration": {
+            "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+            "status": "valid"
+          },
+          "configuration": [
+            [
+              "acquired_at_source",
+              "client receipt; the ladder publishes no instrument clock"
+            ],
+            [
+              "confirmed_routes",
+              "ref_strip"
+            ],
+            [
+              "correction_applied",
+              "none"
+            ],
+            [
+              "native_clamping",
+              "driver-defined"
+            ],
+            [
+              "native_duration_seconds",
+              "0.0"
+            ],
+            [
+              "native_mcond",
+              "0"
+            ],
+            [
+              "native_mtype",
+              "5"
+            ],
+            [
+              "native_patch_index",
+              "2"
+            ],
+            [
+              "strip_direction",
+              "forward"
+            ],
+            [
+              "strip_direction_source",
+              "operator-declared; no target recognition"
+            ]
+          ],
+          "device": {
+            "backend": "argyll-native",
+            "backend_version": "3.5.0",
+            "device_id": "X-Rite DTP51",
+            "model": "X-Rite DTP51",
+            "serial": "CM-CHART-0001",
+            "serial_encoding": "utf8"
+          },
+          "observation_id": "b83e1865-7c3b-4b40-b19d-c47079779e7e",
+          "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+          "project_computed": {
+            "lab": null,
+            "xyy": null
+          },
+          "provenance": "simulated",
+          "raw_backend_output": "{\"events\":[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"connected\",\"serial\":\"CM-CHART-0001\",\"serial_encoding\":\"utf8\",\"mode\":65569,\"mode_capabilities\":65569,\"trigger_capabilities\":1024,\"filter_capabilities\":0,\"trigger\":18,\"spectral\":false,\"ambient_ccmx\":false,\"ambient_matrix_threshold\":null,\"strip_policies\":{\"reflection\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"transmission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"emission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]}},\"baseline_mode_checks\":{\"scope\":\"initialized_before_mode_configuration\",\"mode_capabilities\":65569,\"checks\":[{\"mode_word\":65569,\"native_code\":0}]},\"display_types\":{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]},\"refresh_rate_override_hz\":null,\"correction\":\"none\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"needed_calibrations\":0,\"available_calibrations\":32,\"remaining_calibrations\":0,\"status_source\":\"driver\",\"skipped\":false,\"performed\":false,\"initial_calibration_suppressed\":false},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"instruction_required\",\"instruction\":\"strip_position\",\"request_id\":\"strip-ready\",\"effective_trigger\":\"instrument_switch\",\"trigger_guidance\":\"After continuing, feed the strip into the instrument to activate its feed microswitch.\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"strip_patch\",\"index\":2,\"patch_count\":4,\"argyll_version\":\"3.5.0\",\"backend_reported\":{\"mtype\":5,\"mcond\":0,\"XYZ_v\":1,\"XYZ\":[49.48488446853466,54.91520593901248,54.125111914696774],\"duration\":0,\"spectrum\":null}},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"terminal\",\"status\":\"completed\",\"instrument_state\":\"unknown\",\"software_stopped\":true}]}",
+          "requested_mode": "reflective_strip",
+          "sample_id": "P3",
+          "schema_version": 1,
+          "warnings": [
+            "SIMULATED: these values did not come from a physical measurement of a physical sample."
+          ]
+        },
+        "patch_id": "P3"
+      },
+      {
+        "index": 3,
+        "observation": {
+          "acquired_at": "2026-10-15T23:52:35.478Z",
+          "actual_mode": "reflective_strip",
+          "backend_reported": {
+            "spectrum": null,
+            "xyz": {
+              "illuminant": "D50",
+              "observer": "CIE1931_2",
+              "scale": "relative; perfect-diffuser Y=100",
+              "unit": "1",
+              "values": [
+                70.17553659549561,
+                65.44341734649983,
+                18.501896296911617
+              ]
+            }
+          },
+          "calibration": {
+            "detail": "Driver reports no outstanding non-deferrable calibration; optional work may remain. This is not physical validation",
+            "status": "valid"
+          },
+          "configuration": [
+            [
+              "acquired_at_source",
+              "client receipt; the ladder publishes no instrument clock"
+            ],
+            [
+              "confirmed_routes",
+              "ref_strip"
+            ],
+            [
+              "correction_applied",
+              "none"
+            ],
+            [
+              "native_clamping",
+              "driver-defined"
+            ],
+            [
+              "native_duration_seconds",
+              "0.0"
+            ],
+            [
+              "native_mcond",
+              "0"
+            ],
+            [
+              "native_mtype",
+              "5"
+            ],
+            [
+              "native_patch_index",
+              "3"
+            ],
+            [
+              "strip_direction",
+              "forward"
+            ],
+            [
+              "strip_direction_source",
+              "operator-declared; no target recognition"
+            ]
+          ],
+          "device": {
+            "backend": "argyll-native",
+            "backend_version": "3.5.0",
+            "device_id": "X-Rite DTP51",
+            "model": "X-Rite DTP51",
+            "serial": "CM-CHART-0001",
+            "serial_encoding": "utf8"
+          },
+          "observation_id": "281c4e49-0847-4ac4-8104-5859934eb8e9",
+          "operation_id": "7a70e583-92e0-43c3-b217-0193ccb50a96",
+          "project_computed": {
+            "lab": null,
+            "xyy": null
+          },
+          "provenance": "simulated",
+          "raw_backend_output": "{\"events\":[{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"connected\",\"serial\":\"CM-CHART-0001\",\"serial_encoding\":\"utf8\",\"mode\":65569,\"mode_capabilities\":65569,\"trigger_capabilities\":1024,\"filter_capabilities\":0,\"trigger\":18,\"spectral\":false,\"ambient_ccmx\":false,\"ambient_matrix_threshold\":null,\"strip_policies\":{\"reflection\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"transmission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]},\"emission\":{\"max_patches\":99,\"requirement\":\"Patch IDs name returned positions, including any padding. DTP51 chart alignment and target recognition are not performed.\",\"layout_fields\":[{\"key\":\"strip_name\",\"label\":\"Strip name\",\"type\":\"text\",\"required\":false,\"default\":\"STRIP\",\"max_bytes\":7,\"encoding\":\"ascii_printable\",\"help\":\"Name sent to the driver; omission sends STRIP. This is not target recognition.\"},{\"key\":\"pass_name\",\"label\":\"Pass name\",\"type\":\"text\",\"required\":false,\"default\":\"1\",\"max_bytes\":3,\"encoding\":\"ascii_printable\",\"help\":\"Pass label sent to the driver; omission sends 1.\"},{\"key\":\"guide\",\"label\":\"Guide number\",\"type\":\"integer\",\"required\":true,\"default\":null,\"minimum\":0,\"exclusive_minimum\":false,\"maximum\":99,\"unit\":\"\",\"help\":\"Guide number sent unchanged to the instrument. Use the guide position for this strip.\"}]}},\"baseline_mode_checks\":{\"scope\":\"initialized_before_mode_configuration\",\"mode_capabilities\":65569,\"checks\":[{\"mode_word\":65569,\"native_code\":0}]},\"display_types\":{\"status\":\"unsupported\",\"native_code\":327680,\"count\":0,\"catalogue_id\":null,\"applied_choice_id\":null,\"readback\":{\"native_code\":327680,\"technology_code\":null,\"refresh_mode\":null,\"base_calibration_id\":null},\"entries\":[]},\"refresh_rate_override_hz\":null,\"correction\":\"none\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"calibration_ready\",\"needed_calibrations\":0,\"available_calibrations\":32,\"remaining_calibrations\":0,\"status_source\":\"driver\",\"skipped\":false,\"performed\":false,\"initial_calibration_suppressed\":false},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"instruction_required\",\"instruction\":\"strip_position\",\"request_id\":\"strip-ready\",\"effective_trigger\":\"instrument_switch\",\"trigger_guidance\":\"After continuing, feed the strip into the instrument to activate its feed microswitch.\"},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"strip_patch\",\"index\":3,\"patch_count\":4,\"argyll_version\":\"3.5.0\",\"backend_reported\":{\"mtype\":5,\"mcond\":0,\"XYZ_v\":1,\"XYZ\":[70.17553659549561,65.44341734649983,18.501896296911617],\"duration\":0,\"spectrum\":null}},{\"protocol_version\":1,\"provenance\":\"simulated\",\"event\":\"terminal\",\"status\":\"completed\",\"instrument_state\":\"unknown\",\"software_stopped\":true}]}",
+          "requested_mode": "reflective_strip",
+          "sample_id": "P4",
+          "schema_version": 1,
+          "warnings": [
+            "SIMULATED: these values did not come from a physical measurement of a physical sample."
+          ]
+        },
+        "patch_id": "P4"
+      }
+    ],
+    "provenance": "simulated",
+    "request_json": "{\"schema_version\":1,\"device_id\":\"X-Rite DTP51\",\"capability_id\":\"31c84278038deff4a3e854e829c88bc35e4c64375f133af2f82137ca0e7e06b1\",\"mode\":\"reflective_strip\",\"workflow\":\"strip\",\"patch_ids\":[\"P1\",\"P2\",\"P3\",\"P4\"],\"options\":{},\"layout\":{\"strip_name\":\"STRIP\",\"pass_name\":\"B\",\"guide\":15},\"event_contract\":\"patch_v1\"}",
+    "schema_version": 1,
+    "software_stopped": true,
+    "status": "completed",
+    "workflow": "strip"
+  }
+}

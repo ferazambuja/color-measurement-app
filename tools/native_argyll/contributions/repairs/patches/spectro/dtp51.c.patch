@@ -1,0 +1,5 @@
+--- a/spectro/dtp51.c
++++ b/spectro/dtp51.c
+@@ -628 +628 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		a1logd(p->log,4,"dtp51_calibrate: doing calt 0x%x\n",calt);
++		a1logd(p->log,4,"dtp51_calibrate: doing calt 0x%x\n",*calt);

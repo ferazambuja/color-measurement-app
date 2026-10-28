@@ -1,0 +1,89 @@
+--- a/spectro/i1d3.c
++++ b/spectro/i1d3.c
+@@ -40,0 +41 @@
++#include <limits.h>
+@@ -402 +403 @@ static int buf2int(unsigned char *buf) {
+-	int val;
++	unsigned int val;
+@@ -407 +408,3 @@ static int buf2int(unsigned char *buf) {
+-	return val;
++	if (val <= 0x7fffffff)		/* Convert to signed without overflow */
++		return (int)val;
++	return -(int)(~val) - 1;
+@@ -3400 +3403 @@ char id[CALIDLEN]		/* Condition identifier (ie. white reference ID) */
+-		a1logd(p->log,4,"i1d3_calibrate: doing calt 0x%x\n",calt);
++		a1logd(p->log,4,"i1d3_calibrate: doing calt 0x%x\n",*calt);
+@@ -3470 +3473 @@ int *pinstmsec) {    /* Return instrument reaction time in msec */
+-	double putime, cutime;
++	double sutime, putime, cutime, delayms;
+@@ -3506 +3509,6 @@ int *pinstmsec) {    /* Return instrument reaction time in msec */
+-	putime = usec_time() / 1000000.0;
++	sutime = putime = usec_time() / 1000000.0;
++	if (!(sutime >= 0.0 && sutime <= DBL_MAX)) {
++		p->log->debug = isdeb;
++		p->th_en = isth;
++		return inst_internal_error;
++	}
+@@ -3513,0 +3522,7 @@ int *pinstmsec) {    /* Return instrument reaction time in msec */
++		if (!(samp[i].rgb[0] >= -DBL_MAX && samp[i].rgb[0] <= DBL_MAX
++		   && samp[i].rgb[1] >= -DBL_MAX && samp[i].rgb[1] <= DBL_MAX
++		   && samp[i].rgb[2] >= -DBL_MAX && samp[i].rgb[2] <= DBL_MAX)) {
++			p->log->debug = isdeb;
++			p->th_en = isth;
++			return inst_misread;
++		}
+@@ -3514,0 +3530,5 @@ int *pinstmsec) {    /* Return instrument reaction time in msec */
++		if (!(cutime >= 0.0 && cutime <= DBL_MAX)) {
++			p->log->debug = isdeb;
++			p->th_en = isth;
++			return inst_internal_error;
++		}
+@@ -3518 +3538,7 @@ int *pinstmsec) {    /* Return instrument reaction time in msec */
+-		if (cutime > NDMXTIME)
++		if (!(samp[i].sec >= -DBL_MAX && samp[i].sec <= DBL_MAX
++		   && samp[i].tot >= -DBL_MAX && samp[i].tot <= DBL_MAX)) {
++			p->log->debug = isdeb;
++			p->th_en = isth;
++			return inst_misread;
++		}
++		if (cutime - sutime > NDMXTIME)
+@@ -3521 +3547 @@ int *pinstmsec) {    /* Return instrument reaction time in msec */
+-	ndsamps = i;
++	ndsamps = i < NDSAMPS ? i + 1 : i;
+@@ -3532 +3558 @@ int *pinstmsec) {    /* Return instrument reaction time in msec */
+-	if (p->whitestamp < 0.0) {
++	if (!(p->whitestamp >= 0.0 && p->whitestamp <= DBL_MAX)) {
+@@ -3591 +3617,4 @@ int *pinstmsec) {    /* Return instrument reaction time in msec */
+-	if (del < 10.0) {
++	if (!(stot >= -DBL_MAX && stot <= DBL_MAX
++	   && etot >= -DBL_MAX && etot <= DBL_MAX
++	   && del >= 10.0 && del <= DBL_MAX
++	   && thr >= -DBL_MAX && thr <= DBL_MAX)) {
+@@ -3597 +3626 @@ int *pinstmsec) {    /* Return instrument reaction time in msec */
+-	for (i = 0; i < (ndsamps-1); i++) {
++	for (i = 0; i < ndsamps; i++) {
+@@ -3600,0 +3630,2 @@ int *pinstmsec) {    /* Return instrument reaction time in msec */
++	if (i == ndsamps)
++		return inst_misread;
+@@ -3605 +3636,4 @@ int *pinstmsec) {    /* Return instrument reaction time in msec */
+-	dispmsec = (int)(samp[i].sec * 1000.0 + 0.5);
++	delayms = samp[i].sec * 1000.0 + 0.5;
++	if (!(delayms >= (double)INT_MIN && delayms <= (double)INT_MAX))
++		return inst_internal_error;
++	dispmsec = (int)delayms;
+@@ -4570,2 +4604,2 @@ static void get_escape_code(i1d3 *p) {
+-			k0 = (k[0] << 24) | (k[1] << 16) | (k[2] << 8) | k[3],
+-			k1 = (k[4] << 24) | (k[5] << 16) | (k[6] << 8) | k[7];
++			k0 = ((unsigned int)k[0] << 24) | (k[1] << 16) | (k[2] << 8) | k[3],
++			k1 = ((unsigned int)k[4] << 24) | (k[5] << 16) | (k[6] << 8) | k[7];
+@@ -4596,2 +4630,2 @@ static void get_escape_code(i1d3 *p) {
+-			k0 = (k[0] << 24) | (k[1] << 16) | (k[2] << 8) | k[3],
+-			k1 = (k[4] << 24) | (k[5] << 16) | (k[6] << 8) | k[7];
++			k0 = ((unsigned int)k[0] << 24) | (k[1] << 16) | (k[2] << 8) | k[3],
++			k1 = ((unsigned int)k[4] << 24) | (k[5] << 16) | (k[6] << 8) | k[7];
+@@ -4675 +4709 @@ static void create_unlock_response(unsigned int *k, unsigned char *c, unsigned c
+-		ci[0] = (sc[3] << 24)
++		ci[0] = ((unsigned int)sc[3] << 24)
+@@ -4680 +4714 @@ static void create_unlock_response(unsigned int *k, unsigned char *c, unsigned c
+-		ci[1] = (sc[1] << 24)
++		ci[1] = ((unsigned int)sc[1] << 24)

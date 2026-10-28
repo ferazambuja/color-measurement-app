@@ -1,0 +1,6 @@
+--- a/spectro/insttypeinst.h
++++ b/spectro/insttypeinst.h
+@@ -24,0 +25 @@
++# include "cr250.h"
+@@ -27,0 +29 @@
++# include "pr655.h"

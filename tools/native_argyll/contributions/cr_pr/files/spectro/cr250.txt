@@ -1,0 +1,412 @@
+Colorimetry Research CR family driver (CR-250, CR-100 and CR-300 registered)
+
+Implementation status
+
+This driver has been exercised with synthetic serial replies and an isolated
+spotread executable only. Physical operation, accuracy, USB serial timing,
+spectral units and cross-platform transport behavior have not been validated.
+Three exact models have rows: the CR-250 (spectroradiometer, firmware 1.26 or
+later, InstrumentType 2) and the CR-100 (colorimeter, firmware 1.17 or later,
+InstrumentType 0 or 1), and CR-300 (spectroradiometer, firmware 1.26 or later,
+InstrumentType 2). Variants are not accepted. These firmware floors establish
+the implemented command policy, not manufacturer minimum firmware. The source is
+one protocol implementation (cr250_imp.c, cr250.c) plus a table of model rows.
+See "Model policy" below.
+
+Selection and operation
+
+Build with ENABLE_FAST_SERIAL (the standard Jam instrument library includes it).
+Generic fast-serial identification (fast_ser_dev_type in inst.c) recognises a
+registered model at 115200 baud from one read-only "RC Model" query. The reply
+must be exactly OK:0:RC Model:<model> (cr250_model_reply), so a registered CR
+appears in the -c port list of every tool. With the instrument's echo on (E,
+4.1) the query comes back first; one exact echo, with or without the '>'
+prompt, is accepted before the reply. Additional reads use only the remaining
+probe allowance. The initial transport helper has separate write/read timeouts
+and a pre-write flush, so 0.1 seconds is not a bound on the whole transaction.
+Unrelated text already buffered after the reply is refused; later chunks can
+remain unread. Initialization calls set_ser_port to flush before identifying.
+The driver never sends E. Like the other fast-serial probes,
+that query reaches each fast-serial port discovery examines; Bluetooth ports are
+skipped. There is no USB product-ID match. Whether an instrument answers within
+that function's 0.1 second reply timeout has not been validated. Identification
+is not verification: init_coms still checks RC Model, RC ID, RC Firmware and
+RC InstrumentType.
+A client that must not probe other ports can instead pass a serial icompath
+with dtype instCR250, instCR100 or instCR300 to new_inst, which then needs no
+port discovery. Initialization still verifies the selected model. The fork's
+spotread option -Y I:instrument-name:serial-port-path does this using the
+canonical Argyll name, for example -Y "I:Colorimetry Research CR-300:port".
+Quote the argument containing spaces. This is a shared tool patch, not part
+of the CR protocol driver; use -e for absolute emission or -p for telephoto
+emission. It cannot be combined with -c or another typed-port selection.
+No family-specific direct-port alias is retained.
+
+The driver opens the selected port at 115200 baud, 8 data bits, one stop bit,
+no parity and no flow control. This is a host policy pending physical validation;
+the remote-command manual does not establish USB-adapter behavior. Other flow
+control requests are refused. init_coms and init_inst read identity only and
+change nothing on the instrument.
+
+Settings
+
+Each read_sample reads every setting of the model row with RS before M and
+again with RM after it; RM must repeat the accepted value. The driver sets a
+setting only at the start of a read, and only when RS shows a value other
+than the one that read needs. Before any SM, it reads the setup, resolves the
+planned settings against their required inventories, checks the current numeric
+capabilities and planned values, and validates the measurement deadline:
+  UserCalibMode follows the selected stored calibration (None by default),
+    and on the spectroradiometers CMF 0 (CIE 1931) is fixed by the contract;
+  ExposureMode follows the Argyll mode: Auto, or Fixed for
+    inst_mode_emis_nonadaptive (CR-250 and CR-300);
+  ExposureX follows inst_opt_set_averages when a caller set one;
+  SyncMode follows the refresh overrides and set_refr_rate (see below).
+A write is "SM <key> <ID or number>" (4.2.1), with the ID taken from the RC list
+for listed settings. RS is then read again and must show the target, or the read
+is refused, naming the setting and both values. An instrument keeps setup values
+until it is powered down (CR app manual 1.5.10, 5.2); the driver does not
+restore them. The engine refuses every other SM key before dispatch: the optics
+declarations Accessory, Filter1-3 and Aperture tell the instrument what is
+fitted, and this driver does not select physical optics; SM Reset would discard
+the operator's setup. No computation (SC) or calibration (CC) command is sent.
+
+The operator's remaining settings are accepted within the instrument's own
+limits and recorded: Fixed exposure time (RS Exposure, within RC Min/
+MaxExposure), ExposureX (within RC Min/MaxExposureX), RangeMode Auto or Fixed
+with a listed RS Range, SyncMode from RC SyncMode with, in Manual, RS SyncFreq
+within RC Min/MaxSyncFreq, and on the spectroradiometers Speed from RC Speed. Mode must be
+Colorimeter, or the only entry of a one-entry RC Mode list. RS Filter must show
+three declared slots, or a single None for no filters. Every active name must
+identify exactly one RC Filter record of type Radiance (4.3.2.5). One inventory
+snapshot validates all slots; their IDs, names and types remain in capture.filters,
+with id -1 for None. Active slots must have distinct IDs; Remote 4.5 defines
+error -505 as Duplicate Filter selection. Invalid declarations refuse before
+any SM or M. RM Filter must contain exactly the active names, with
+matching multiplicity and None slots omitted, or None when none are active.
+Its documented reply has no slot/order guarantee; native text remains in
+capture.used_filters (4.3.3.2 and 4.3.1.5).
+The accessory must match exactly one RC Accessory record of type
+Radiance, and the aperture exactly one RC Aperture record. Inventory names are
+configuration data, not evidence that a physical accessory is fitted correctly.
+
+Numeric settings are compared at their printed precision: a Fixed exposure
+must be repeated by RM Exposure within 0.05 ms or 0.1 %, and under sync may
+run up to one sync period longer; a Manual SyncFreq within 0.011 Hz. SyncFreq
+is read only when SyncMode is not None (4.3.1.14); in Auto, NTSC, PAL or
+CINEMA the RM value records the frequency used. A synchronized capture
+integrates whole periods within its M budget, so a period longer than that
+budget is refused rather than allowed as rounding. RM MaxAutoExposure is read in
+Auto from firmware 1.26 as a consistency check; a model that does not report it
+is accepted.
+
+The CR app manual's CR-250 setup (1.5.10, 5.10) shows no Mode, Range or Sync
+setting. On that row those settings are optional: a setting is not applicable
+only when both RS and RM answer "ER:-500" (Invalid command, 4.5) or "NA" (the
+manual's not-available value, 4.3.1.3), and that answer must hold for the whole
+connection. Any other error, a mismatch between RS and RM, or a change of answer
+refuses the read, so a single corrupted reply cannot switch a check off. A
+refresh request on an instrument without SyncMode is refused. Once a read has
+found it without SyncMode, the driver withdraws inst2_set_refresh_rate and
+check_mode/set_mode reject a refresh override for the connection. A no-refresh
+request holds as found, with nothing written. The mode capability word still
+contains the refresh override bit: Argyll's no-refresh value (0x6000) contains
+that bit (0x2000), so clearing it would also remove no-refresh. Call check_mode
+for a specific override after the first read establishes SyncMode availability.
+For spotread -Yr, the initial capability check can pass before SyncMode is
+known; if the first read finds no SyncMode, that read is refused rather than
+silently treating the refresh request as optional.
+
+Argyll controls
+
+  inst_mode_spectral (CR-250 and CR-300): read the spectrum (below).
+  inst_mode_emis_nonadaptive (CR-250 and CR-300): Fixed exposure at the operator's
+    exposure time. Not offered on the CR-100, whose manual exposure needs
+    Range D (CR app manual 5.8).
+  inst_mode_emis_norefresh_ovd: SyncMode None, and cancels a refresh rate.
+  inst_mode_emis_refresh_ovd: SyncMode Auto.
+  set_refr_rate (inst2_set_refresh_rate): SyncMode Manual at that rate, which
+    must be within Argyll's 5 to 150 Hz and RC Min/MaxSyncFreq; refused while
+    no-refresh is selected; 0 clears it. No refresh rate is read back.
+  inst_opt_set_averages (inst3_average): ExposureX, which must be within RC
+    Min/MaxExposureX when set; 0 leaves the instrument's value.
+  get_disptypesel/set_disptype (inst2_disptype): implicit, stored calibration
+    selections. None is the default. Match profiles come from RC Match; Matrix
+    profiles come from RC Matrix only on a CR-100 reporting type 1 (Colorimeter).
+    No profile data is loaded or multiplied on the host, no display technology
+    is inferred, and no external CCMX/CCSS calibration base is advertised.
+    Lists and selections send no SM or M. Selection is applied during the next
+    read after all capability/budget checks. The fresh inventory must still
+    contain the same ID and name, and a Matrix requires the same declared
+    accessory for which it was selected (Remote 4.3.2.15; CRI App pp. 78-79).
+    Recreate and reselect after an accessory or profile change. The list covers
+    the current accessory even when allconfig is requested; other accessories'
+    matrices cannot be enumerated without changing instrument declarations.
+    Profile selection precedes UserCalibMode activation. RS profile readback
+    is queried only while that mode is active (Remote 4.3.3.14-15); RM must
+    report the selected ID as well as the selected mode (4.3.1.17-19).
+Options are checked against the instrument when they are set, so a bad value
+fails the option rather than replacing an accepted host value. The capture checks
+fresh limits again before applying the option or any other setting. Every required
+numeric interval must have positive, ordered endpoints; one permitted positive
+value is valid. ExposureX must be a positive integer. Manual SyncFreq must be
+positive, within its interval, and have a period that fits the measurement
+deadline. A parsed zero setup frequency that is not being kept may be replaced
+by an explicitly requested positive Manual target; the target and positive
+contained readback must validate before M. Requested refresh rates and their actual two-decimal SM representation
+must fit the bounds; an unchanged RS frequency must also fit, even when it is
+within readback tolerance of the request. A setter's readback remains range-checked.
+No bounds are guessed, sorted or clamped. Complete but unusable values refuse the
+operation without marking the framed link uncertain; transport and framing
+failures retain the engine's existing refusal and uncertainty behavior.
+
+Without an override the instrument's valid sync is accepted as found and recorded.
+Auto sync does not require Manual-only frequency limits, and its RM SyncFreq of
+zero remains a native no-sync observation. The native capture still requires a
+positive exposure ceiling and multiplier to derive its deadline, and validates
+ExposureX against its required limits. Missing or unusable required facts refuse
+the capture; availability of a host's setup control is not native capture proof.
+
+Measurement
+
+A request sends at most one M. After successful completion it verifies the
+recorded RM settings, model/serial, zero RM Warnings, the radiometric type
+(CR-250 and CR-300: 0, radiance), the measured exposure against RC MaxExposure and the
+checks above, and resolves the realised range against its inventory. Only then
+can RM XYZ produce an ipatch. Decimal parsing refuses trailing data, non-finite
+numbers and numeric range errors. Native XYZ uses the 2-degree observer; Y is
+luminance in cd/m^2 for this radiance contract. Argyll callers may request
+clamping of negative XYZ; the original values remain in capture.xyz.
+
+Spectra (CR-250 and CR-300)
+
+In spectral mode the driver reads "RM Spectrum" (4.3.1.37) after RM XYZ: the
+header start,end,step,count and then one value per line. The engine retains a
+complete finite header and 1 to 10000 finite bins, independently of whether the
+declared grid can form usable wavelengths. A usable axis needs at least two
+positive, finite, strictly increasing calculated wavelengths; start plus
+(count-1) steps must differ from the reported end by no more than
+1e-8 * max(1,end). A derived-grid refusal retains those complete original bins
+and header with an explicit problem; incomplete or malformed numeric bodies do
+not claim a complete parsed spectrum. Exact received bytes remain in last_raw.
+
+Argyll publication separately needs 4 to XSPECT_MAX_BANDS points between 200
+and 1100 nm and a step of at least 0.1 nm, followed by the unit checks below.
+These are host publication policies, not manufacturer output limits. The
+manual's example is 380 to 780 nm at 2 nm. ASCII lines are bounded to 4096 bytes,
+actual received exchanges to 1 MiB, and inventories to 256 rows. Raw bytes also
+include preflight framing received during that attempt; a delayed LF completing
+an earlier CR belongs to the attempt that actually reads it.
+
+The whole body shares one 5-second deadline; the manual's 200 ms pacing note is
+waited out before the check for leftover input, so an uncounted line fails RM
+Spectrum rather than the next request. A header that is not four numbers (the
+manual's "NA", for example), a complete but unusable body or an ER header
+refuse the read and keep the link; a short, slow or oversized body, or an extra
+line, closes it.
+
+The manual states no unit for the spectrum. The CR app manual gives radiance in
+W/(sr.m^2) (1.5.10, measurement data), and the driver checks an inferred
+W/(sr.m^2.nm) model. Only a CONSISTENT same-capture verdict may publish the
+model-dependent density in Argyll's emission unit, mW/(m^2.sr.nm), with norm 1.
+The original density unit remains unknown; same-device consistency does not
+establish manufacturer-confirmed units or independent physical qualification.
+The instrument's original values remain in capture.spectrum. Every
+spectral read compares the spectrum with the instrument's own totals for the
+same capture:
+  radiant power: the spectrum's sum times its step against the RM Radiometric
+    power, which is independent of any colour-matching function;
+  wavelength axis: the spectrum's power-weighted mean wavelength against
+    h c N / P from RM Radiometric's photon rate N and power P;
+  colorimetry, only with UserCalibMode None: the CIE 1931 2-degree XYZ of the published spectrum,
+    integrated over its own band, against the unclamped native XYZ: the Y
+    ratio, and the X and Z differences as a fraction of X+Y+Z, each term
+    quartered first so that no finite values overflow the total.
+With Match active, native XYZ can contain a user correction (CRI App pp. 79,
+83-85); the manuals do not guarantee that every RM quantity receives an equal
+correction. The colorimetric comparisons are therefore disabled, while power,
+wavelength-axis checks, finite-value guards and diagnostic integrated XYZ remain.
+capture.correction_mode and capture.correction preserve mode, ID and name.
+No host transform attempts to reverse the instrument's calibration.
+A ratio outside 0.9 to 1.1, a mean wavelength more than 5 nm away or a
+chromaticity error above 0.05 refuses the read with CR250_SPECTRUM_MISMATCH,
+naming the nearest factor (1, 1000, 1/1000, 2 or 1/2). So does a comparison made
+that has no finite value: a ratio to a native total that is not positive, or a
+spectrum summing to zero against a native mean wavelength. These catch a wrong
+power of ten, per-bin rather than per-nm values and a misread axis; the bounds
+are host policy to be refined at the bench. A comparison is made when either
+side is bright enough for it to discriminate (power 3e-4 W/(sr.m^2), Y 0.2
+cd/m^2), so a dim native total does not excuse a spectrum claiming far more
+light; the wavelength-axis and chromaticity comparisons also need the native
+side above its floor. Spectrum values that overflow once scaled to mW, summed
+or integrated refuse the read the same way, whatever the light level; the
+values as sent stay in capture.spectrum and nothing derived from them is
+published. capture.unit.discriminating names the comparisons made and
+capture.unit.computed the values that hold a result (CR250_UNIT_* bits); a
+value whose computed bit is clear was not calculated or has no finite value,
+and its 0 means nothing.
+When both sides are below both floors, capture.unit.verdict records
+CR250_UNIT_INCONCLUSIVE and the requested spectral read is refused with
+CR250_SPECTRUM_UNVERIFIED. The error asks the caller to request XYZ-only.
+All-zero spectra and dim spectra a thousand times too large or small can be
+ambiguous; no earlier reading qualifies this capture's scaling. INCONCLUSIVE,
+NOT_CHECKED and MISMATCH never publish a requested ipatch spectrum or XYZ.
+Native spectrum/grid, XYZ, radiometric totals and diagnostics remain in capture.
+There is no automatic XYZ-only downgrade or fitted scale. Explicit XYZ-only
+requests remain available for dark readings on every model, including CR-100.
+When an ipatch is published, its XYZ remains the instrument's RM XYZ.
+
+Timing
+
+Individual metadata reads have a 3-second deadline. M has a deadline of
+max(120 seconds, 3 * T / 1000 * ExposureX + 5 seconds), where T in ms is
+RC MaxExposure in Auto and the RS Exposure in Fixed. The constants are host
+policy. Firmware >=1.26 documents RC MaxExposure as an Auto exposure ceiling,
+not a guaranteed total capture duration or readback of the currently
+configured Auto limit. The 3x factor also covers sync rounding.
+
+Failure handling and retained data
+
+An incomplete/expired exchange closes the port and invalidates identity. No M is
+retried automatically. Recovery requires deliberate init_coms followed by
+init_inst (or a new session); closing a port does not abort a physical exposure.
+The host-user callback can cancel before preflight. It is not polled during M
+or its metadata reads, so an in-flight cancellation cannot be acknowledged by
+this driver. A caller that terminates its worker must treat device completion
+as unknown; worker exit is not a confirmed instrument abort.
+Strict framing rejects undocumented blank lines/control bytes and queued extra
+data. The bounded 1 ms idle check and CR/LF splitting remain physically untested.
+Without wire transaction identifiers, an arbitrarily delayed identical response
+cannot be distinguished from a current one. Exclusive instrument control is
+required; concurrent vendor sessions can invalidate capture correspondence.
+
+Warnings never publish a valid ipatch. Device status codes and context remain
+available through engine.last_reply; interp_error includes the check that
+refused, with both values, and the last native response. RM Warnings text is
+retained without inventing an undocumented warning-list grammar. capture keeps
+what the checks used: the accepted value of every setting, the fixed exposure,
+multiplier and sync, the realised range, unclamped XYZ, RM Radiometric, the
+spectrum and the unit check. Each read clears it under the final acquisition
+lock after any unlocked trigger wait, including a failed readiness check, so
+an interleaved read cannot lend retained facts to the failed transaction.
+ipatch cannot express all of
+this; the CR-specific structures hold it for callers, and spotread's ordinary
+text log does not show it.
+
+The driver advertises no ambient/irradiance, flash, intensity or flux mode,
+hardware triggers or calibration creation/modification operations. An
+empty needed/available calibration mask means no host calibration workflow is
+implemented. It does not certify factory calibration or its current validity.
+
+Model policy
+
+Remote Communication 1.36 is one manual for the family, and several entries
+are marked valid only when RC InstrumentType is 2: SM/RS/RM/RC Speed, SM/SC/
+RS/RM CMF and the 10-degree channels (4.2.1.19, 4.2.1.22, 4.2.3.1, 4.3.1.20,
+4.3.1.22, .24, .26, .28, .30, 4.3.1.41, 4.3.2.26, 4.3.3.16, 4.3.3.19).
+The differences are held in one cr250_model row (cr250.h), selected by the
+Argyll instrument type in new_cr250:
+  dtype and the exact RC Model text (4.3.2.2; variants such as CR-250-RH are
+    refused because the text must match exactly);
+  the RC InstrumentType values accepted from firmware 1.17 (4.3.2.3);
+  the firmware floor, chosen so that every command the row always issues is
+    documented at that firmware;
+  the settings read as RS before M and re-read as RM after it, each with its
+    rule, whether it is optional and whether the driver sets it;
+  whether RM Radiometric is read and which type it must report (4.3.1.36);
+  whether spectra and Fixed exposure are offered.
+init_coms applies the row's identity to the engine, init_inst applies its
+floor, and read_sample walks its setting table.
+
+CR-250 row: model "CR-250", type 2, floor 1.26 (SM/RS CMF and RM
+MaxAutoExposure appear at 1.26, and 4.2.1.9 gives RC MaxExposure its
+Auto-ceiling meaning from there), settings CMF, UserCalibMode, Mode (optional),
+ExposureMode, ExposureX, RangeMode (optional), SyncMode (optional), Speed,
+Filter, Accessory (one Radiance record) and Aperture (one RC Aperture record),
+RM Radiometric type 0, spectra and Fixed exposure offered.
+
+CR-100 row: model "CR-100". The manual never says which InstrumentType a CR-100
+reports, and the CR app manual heads it "Tristimulus Colorimeter/Photometer"
+(5.8), so 0 and 1 are accepted and the value recorded; 2 is refused. Floor 1.17
+for RC InstrumentType (SM/RS Mode and UserCalibMode need 1.16); RM
+MaxAutoExposure is read only from 1.26. Settings UserCalibMode, Mode,
+ExposureMode, ExposureX, RangeMode, SyncMode, Filter and Accessory (one Radiance
+record); no CMF, Speed, Aperture, RM Radiometric or spectrum, and none of the
+InstrumentType-2 commands. No Fixed exposure route.
+
+A table may contain at most CR250_MAX_SETUP settings followed by a NULL key.
+Oversized policies are refused before any command.
+
+CR-300 row: exact model "CR-300", reported type 2, floor 1.26, with the same
+shared spectroradiometer command policy as CR-250. The CR-300 2023 brochure
+pp. 1/4 identifies a spectroradiometer, fixed aperture, custom synchronization
+and exposure controls. Remote 1.36 section 4.3.2.3 defines category 2, which
+must be read from the actual device. Model-specific and transport behavior
+remain physically unqualified. No output grid follows from the brochure's
+2 nm optical bandwidth or 0.8 nm/pixel detector resolution: RM Spectrum owns
+the returned start/end/step/count. Optional Mode/Range/Sync queries remain
+strictly paired RS/RM checks; a missing SyncMode cannot satisfy a refresh request.
+
+Sources
+
+Colorimetry Research, Remote Communication, revision 1.36 (2018): sections
+2.2.1-2 (status and timing), 4.2.1 (measurement setup writes), 4.2.3.1 (CMF
+indices), 4.3.1 (last-capture metadata, XYZ, warnings, radiometric type and
+spectrum), 4.3.2 (identity and inventories), 4.3.3 (current setup), 4.3.4.1
+(M), 4.5 (status codes), and the "only valid if RC InstrumentType is 2" notes
+listed under "Model policy". The RM CMF entry's syntax line says RM CMFv, but
+its title and example say RM CMF; this implementation follows the
+title/example. The SM SyncFreq entry's syntax line says SM SyncMode; its example
+says SM SyncFreq, which this implementation follows. CRI App manual 1.5.10:
+5.2 (setup persists until power-down), 5.8 (CR-100 setup), 5.10 (CR-250 setup),
+and the measurement data descriptions (radiometric units). These manuals
+specify behavior; synthetic fixtures do not establish the behavior of a
+physical instrument.
+
+Offline verification (macOS)
+
+These need the driver's test files (cr250_test.c, cr250_test.ksh,
+cr250_driver_test.c, cr250_driver_test.py, cr250_fake.c and cr250_fake.h),
+which the source distribution (afiles) leaves out; the driver builds without
+them.
+
+  sh spectro/cr250_test.ksh
+  jam -f Jambase -j4 '<spectro>spotread'
+  python3 spectro/cr250_driver_test.py --build .
+
+cr250_test.ksh drives the engine alone over a scripted transport: framing,
+echo and stale input, identity, inventories, M and its budget, the setting
+writes' permitted keys, argument form and reply contexts, and the spectrum's
+header, body, grid, byte and line bounds and pacing note.
+The Jam command only compiles/links; do not run the resulting ordinary spotread
+as an offline test. The Python test instead links production inst and spotread
+source with a synthetic icoms factory, rejecting discovery and all foreign
+driver constructors. No icoms, USB or HID implementation is linked into that
+test executable. Its synthetic instrument (cr250_fake.c, usable by any other
+synthetic harness) keeps setup state, so writes change what it reports, and
+serves a spectrum built to agree with its own XYZ and radiometric replies. It
+checks XYZ and spectral reads, the unit comparisons (each on its own, values
+that overflow on either side, native totals of zero or below, and a narrow
+555 nm line against 683 lm/W), setting writes and their readback, exposure,
+averaging, sync and range, optional settings, both model rows, native warnings,
+identity/firmware refusals, framing, recovery and optional clamping under ASan
+and UBSan, the discovery probe with and without echo, and spotread's spectral
+output, typed CR-100 path, refresh, rate, averaging and Fixed options, the
+exact settings each case writes, and a refresh request refused on a CR-250
+without SyncMode. It runs its checks a second time with the driver rebuilt to
+format as the Windows C library's _snprintf does (numsup.h maps snprintf to
+it), which leaves a full buffer unterminated, so every text cut to size must
+stay a string. These checks do not operate hardware or establish physical
+support.
+
+Licence
+
+SPDX-License-Identifier: GPL-2.0-or-later
+
+Copyright 2026 Fernando Voltolini de Azambuja. This driver, its engine, its
+tests and this document are licenced under the GNU GENERAL PUBLIC LICENSE
+Version 2 or later, the terms of the spectro drivers they sit beside; see the
+License2.txt file for licencing details. The changes this series makes to
+existing Argyll files carry the same terms. It was written from the
+manufacturer's Remote Communication manual 1.36 (2018): the protocol facts it
+implements come from that document, and its text does not reproduce it.

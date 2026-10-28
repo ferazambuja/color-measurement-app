@@ -1,0 +1,1129 @@
+{
+  "archive_sha256": "f8576ce5589fd15620abb73ff049ea31f55ddbd1bba6d1ffa87452658e7bc85f",
+  "license": "GPL-2.0-or-later; individual source notices retained",
+  "notice_sha256": "b1a57182be3d861afec10c3541c213257cd3af7b9ef576be3641a689aa7bd7b7",
+  "origin": "ArgyllCMS 3.5.0 and named prerequisite repairs; predecessor source frozen at fixture introduction. Historical derivation is retained privately.",
+  "proofs": {
+    "calibration_repairs": {
+      "spectro/dtp41.c": {
+        "archive_path": "spectro/dtp41.c",
+        "sha256": "7de062ca76cc153de32b8fff0c031d12fd9f7918882993a201ae72b740c4220e",
+        "stage": "before calibration_repairs"
+      },
+      "spectro/dtp92.c": {
+        "archive_path": "spectro/dtp92.c",
+        "sha256": "d717cbd8af5fbd2d3d1954cd95ae4825749ac11e7a0dc6dd1a2df1bd607b1456",
+        "stage": "before calibration_repairs"
+      },
+      "spectro/specbos.c": {
+        "archive_path": "spectro/specbos.c",
+        "sha256": "c7e17ec2634d257385ce1b5075b579ed735264fba21e745d7d2d354590f33438",
+        "stage": "before calibration_repairs"
+      }
+    },
+    "ccss_cgats": {
+      "xicc/ccss.c": {
+        "archive_path": "xicc/ccss.c",
+        "sha256": "9d14e965c1ca61d8fde62b931f624261dffb069d3a9341d102cc8ae0b04607ef",
+        "stage": "before ccss_cgats"
+      }
+    },
+    "conversion_allocation": {
+      "spectro/dtp20.c": {
+        "blob": "7f55f230f8e9923f6a1b3d5ebe90335bc3584f9a9837d804e9ca21723987081f.gz",
+        "blob_sha256": "0d936cabeeabc0af239049000c18651111c5f8b9d504f88cde4f10fcbd4c1cbd",
+        "sha256": "7f55f230f8e9923f6a1b3d5ebe90335bc3584f9a9837d804e9ca21723987081f",
+        "stage": "before conversion_allocation"
+      },
+      "spectro/dtp22.c": {
+        "blob": "31681323e9dd477e8ff59476ead773857c2a676e9d57196b7d680a0da8f338bb.gz",
+        "blob_sha256": "56898d7d7efa90e6a64814a7310d064f84267f04d639b132f9acf17f41cbd97e",
+        "sha256": "31681323e9dd477e8ff59476ead773857c2a676e9d57196b7d680a0da8f338bb",
+        "stage": "before conversion_allocation"
+      },
+      "spectro/dtp41.c": {
+        "blob": "6cebf4ce21df6fe01350f9f8d88ae7255c63604eab1a9cddca6c41e508672216.gz",
+        "blob_sha256": "da1dc329bf4fbda98c4b93682e2494a2e2c719d6b6ac2b13d33708595e98dae8",
+        "sha256": "6cebf4ce21df6fe01350f9f8d88ae7255c63604eab1a9cddca6c41e508672216",
+        "stage": "before conversion_allocation"
+      },
+      "spectro/i1pro3_imp.c": {
+        "blob": "24b58ec748954f935b6cc295793dd4ed386ca5c2c9c2247f9befdfef32a89b3b.gz",
+        "blob_sha256": "8054e66cf225cd91a92b8080395595472204623450060ba687cf2a2545d9de27",
+        "sha256": "24b58ec748954f935b6cc295793dd4ed386ca5c2c9c2247f9befdfef32a89b3b",
+        "stage": "before conversion_allocation"
+      },
+      "spectro/i1pro_imp.c": {
+        "blob": "ea78f60091a1eec4a770389c389db51eab2e429ed5cf070736331ca59244baa4.gz",
+        "blob_sha256": "fee06e083292ac9cadb552ede1e78ce96f8ea4a8436db8611ad5e1621132c3f9",
+        "sha256": "ea78f60091a1eec4a770389c389db51eab2e429ed5cf070736331ca59244baa4",
+        "stage": "before conversion_allocation"
+      },
+      "spectro/inst.c": {
+        "blob": "2b4af534ac0f3ee50c4ac225db83697b0ac630f1d233c0444f0210a471f00523.gz",
+        "blob_sha256": "56c3e5b9ed3a478abae862d0d5b8bdc0e1feecbe4e0d33a70c9234b37409dcc4",
+        "sha256": "2b4af534ac0f3ee50c4ac225db83697b0ac630f1d233c0444f0210a471f00523",
+        "stage": "before conversion_allocation"
+      },
+      "spectro/inst.h": {
+        "archive_path": "spectro/inst.h",
+        "sha256": "8f0c69beee979a003464707e53a9fe73f6c2f7bc03d444f7e4dd8588ab124c8a",
+        "stage": "before conversion_allocation"
+      },
+      "spectro/munki_imp.c": {
+        "blob": "a89d4154139ddf853bc43a3b2250cadc12072a423482b858002e8033cd854c20.gz",
+        "blob_sha256": "7e3a5052abd02cb207da6aaf691fa7bd9060bdac2b0bab1d052edcb8484913b3",
+        "sha256": "a89d4154139ddf853bc43a3b2250cadc12072a423482b858002e8033cd854c20",
+        "stage": "before conversion_allocation"
+      },
+      "spectro/ss.c": {
+        "blob": "ce9925be72783fab90851cacfee6355868a7fcbc2e87d3c70c74a9a2292657db.gz",
+        "blob_sha256": "eafd25dd4b01b65e29dc1fd1a4c4655325676e06a9be33acf6b160b4ddb15e36",
+        "sha256": "ce9925be72783fab90851cacfee6355868a7fcbc2e87d3c70c74a9a2292657db",
+        "stage": "before conversion_allocation"
+      },
+      "spectro/xrga.c": {
+        "archive_path": "spectro/xrga.c",
+        "sha256": "088ec6bdfb88d651c9b2810c8a9157e176a12115b0030c717b2e0fc93d13956b",
+        "stage": "before conversion_allocation"
+      },
+      "spectro/xrga.h": {
+        "archive_path": "spectro/xrga.h",
+        "sha256": "b315a13a2066a30138e4add92b1380ed6418ee2e8d26f4857d54fcaa7e1e520c",
+        "stage": "before conversion_allocation"
+      }
+    },
+    "display_timing": {
+      "spectro/i1d3.c": {
+        "archive_path": "spectro/i1d3.c",
+        "sha256": "65839017319d335ae4de270fd9c882ca0d504afe4863f5cd72cf08df5d0c1a6a",
+        "stage": "before display_timing"
+      },
+      "spectro/kleink10.c": {
+        "blob": "f2c8d38be503f93b7f815a6f5dce06131be70e32f23586a340f2ead243f7476d.gz",
+        "blob_sha256": "cea3481ecfe7040483e53debd165df295b91e71118e87b0e83aa9b280189e1a9",
+        "sha256": "f2c8d38be503f93b7f815a6f5dce06131be70e32f23586a340f2ead243f7476d",
+        "stage": "before display_timing"
+      }
+    },
+    "display_timing_spectral": {
+      "spectro/i1pro3_imp.c": {
+        "blob": "bbb671ec517a1584d81feb3c65c5f3641b709d98547569c1ec0b57b53993eb29.gz",
+        "blob_sha256": "c4f51f2f0711ac3f9c10658addd5114fb02b833a14bb21c73e843193f449ddac",
+        "sha256": "bbb671ec517a1584d81feb3c65c5f3641b709d98547569c1ec0b57b53993eb29",
+        "stage": "before display_timing_spectral"
+      },
+      "spectro/i1pro_imp.c": {
+        "blob": "d2d5059ded65279ebfa9b6f8e2c48433e669581ed1b6d4b3e74078a625b1a1c3.gz",
+        "blob_sha256": "dca31f27eebadccb394846b9d943360eb9962e9c1e0de761a5140ded6f949e87",
+        "sha256": "d2d5059ded65279ebfa9b6f8e2c48433e669581ed1b6d4b3e74078a625b1a1c3",
+        "stage": "before display_timing_spectral"
+      },
+      "spectro/munki_imp.c": {
+        "blob": "fa7df7c4dacd59e914ceb99229c2849a8a45062854ff4da7a96361db8cb208a1.gz",
+        "blob_sha256": "7ab4cd927380b9c411cb8691d680631f0c94b874724f63f5977bbfc27636231f",
+        "sha256": "fa7df7c4dacd59e914ceb99229c2849a8a45062854ff4da7a96361db8cb208a1",
+        "stage": "before display_timing_spectral"
+      }
+    },
+    "disptype_list_member_release": {
+      "spectro/inst.c": {
+        "archive_path": "spectro/inst.c",
+        "sha256": "5c57222a05ce6dc574789cced23dfa478f9d6099b12bad286c8e4b0aa77d9fbc",
+        "stage": "before disptype_list_member_release"
+      }
+    },
+    "disptype_list_release": {
+      "spectro/kleink10.c": {
+        "archive_path": "spectro/kleink10.c",
+        "sha256": "aa0c3d46052800c6d92e3123767dbb56196c2987fc18fdce290520d9b56a11a3",
+        "stage": "before disptype_list_release"
+      },
+      "spectro/spydX.c": {
+        "archive_path": "spectro/spydX.c",
+        "sha256": "21c52591efbd0b92e725128897ae6a349f5f298582d51658c7d5bed7ca867177",
+        "stage": "before disptype_list_release"
+      },
+      "spectro/spydX2.c": {
+        "blob": "ebbf8f0a72162287188a80276aa4c23c1412cc56ac409fe39c3e5fb9a4f39c8a.gz",
+        "blob_sha256": "57090ced3c3d9923799d8d97fd94d6e9c75f1ed63782552490d7096770b31690",
+        "sha256": "ebbf8f0a72162287188a80276aa4c23c1412cc56ac409fe39c3e5fb9a4f39c8a",
+        "stage": "before disptype_list_release"
+      }
+    },
+    "filter_values": {
+      "spectro/dtp20.c": {
+        "blob": "a6bd0c81055711d704e145d8d220759bbf124914634b67ab33f6e79d274e3baf.gz",
+        "blob_sha256": "fe1d36904b33646eccb4318ff29e8831947154561c55309a062f85f7c2ad1816",
+        "sha256": "a6bd0c81055711d704e145d8d220759bbf124914634b67ab33f6e79d274e3baf",
+        "stage": "before filter_values"
+      },
+      "spectro/dtp22.c": {
+        "blob": "a9a095aaab0eb23f634f404b10fc0cf130c029bebb420fa467853813623bb7f6.gz",
+        "blob_sha256": "b9ecab3727f64f748d161c7b99ff8dd0e614a74e0609b7e2c98e6a3bbeacd893",
+        "sha256": "a9a095aaab0eb23f634f404b10fc0cf130c029bebb420fa467853813623bb7f6",
+        "stage": "before filter_values"
+      },
+      "spectro/dtp41.c": {
+        "blob": "94749a5d945a947f58ec4bc428e5df28ca68565d425d805facf17f61349c9414.gz",
+        "blob_sha256": "a43bd1436b2dfe518410a9cba33353a893bd85141a5a66c8792d6ef913884b21",
+        "sha256": "94749a5d945a947f58ec4bc428e5df28ca68565d425d805facf17f61349c9414",
+        "stage": "before filter_values"
+      },
+      "spectro/i1pro.c": {
+        "blob": "001749df13e3fa722ddd719e486ea71c715402ea6bfae7a073f578b3fb859a13.gz",
+        "blob_sha256": "435c57ffc9f36fb4cd1e5f2de191dc20eba4a3ad7ae5eee02bdeccc7301aa6e1",
+        "sha256": "001749df13e3fa722ddd719e486ea71c715402ea6bfae7a073f578b3fb859a13",
+        "stage": "before filter_values"
+      },
+      "spectro/i1pro3.c": {
+        "blob": "d2f2d7e2b037f71f00b1b457e73b01233d91709ceec2dd6216e6941e1022243b.gz",
+        "blob_sha256": "561d90849f7e701805fe295675d152e24127115eb90d6bdb1c3c629c7e052e75",
+        "sha256": "d2f2d7e2b037f71f00b1b457e73b01233d91709ceec2dd6216e6941e1022243b",
+        "stage": "before filter_values"
+      },
+      "spectro/inst.c": {
+        "blob": "138ebc5328a0a998012b7dbf82c6830728875ad6f0e46383b8494ca3976c3210.gz",
+        "blob_sha256": "a6b9ef2ea097a4d2fb0d254e42a84ac797dda7381b6d15b6cf262b814692f0ad",
+        "sha256": "138ebc5328a0a998012b7dbf82c6830728875ad6f0e46383b8494ca3976c3210",
+        "stage": "before filter_values"
+      },
+      "spectro/inst.h": {
+        "blob": "d032f1490610dae541496f6e65ac54ff769c0e24139332c1aa0127ce5b3c971d.gz",
+        "blob_sha256": "c18731fcbe453b05be77c6f1d52da6f88a332c6e6515d3fe0d56ae6d6b192da6",
+        "sha256": "d032f1490610dae541496f6e65ac54ff769c0e24139332c1aa0127ce5b3c971d",
+        "stage": "before filter_values"
+      },
+      "spectro/munki.c": {
+        "blob": "226c93c4158ae2f2e7a2ceae0c3225b0c70285acfdffe65d1087d73e999900c2.gz",
+        "blob_sha256": "82ce9a074580aefa8b1e1dcbd040b5de71970a44da253202ca036afe0849e0cb",
+        "sha256": "226c93c4158ae2f2e7a2ceae0c3225b0c70285acfdffe65d1087d73e999900c2",
+        "stage": "before filter_values"
+      },
+      "spectro/ss.c": {
+        "blob": "07355b6154f8add705d9305258bab63e9bc90bf0b0dbd00aa54aa5b178db0aff.gz",
+        "blob_sha256": "2ef7680d57a189cdf5333cad8e654e7379409293ddab1117145ade328fe1c773",
+        "sha256": "07355b6154f8add705d9305258bab63e9bc90bf0b0dbd00aa54aa5b178db0aff",
+        "stage": "before filter_values"
+      }
+    },
+    "flash_capture": {
+      "spectro/i1pro3_imp.c": {
+        "blob": "acc51580690e65c7ab961e9149e228492033e74e246c1afd63e8361fd177799d.gz",
+        "blob_sha256": "ad9a532d8f41a1c4d4ef04dfc852bc73299f93db68f3ab35b26ad3ce2c81c0ee",
+        "sha256": "acc51580690e65c7ab961e9149e228492033e74e246c1afd63e8361fd177799d",
+        "stage": "before flash_capture"
+      }
+    },
+    "flash_endpoints": {
+      "spectro/i1pro_imp.c": {
+        "archive_path": "spectro/i1pro_imp.c",
+        "sha256": "8b8516cdd89e21de7ded3d58e1b03663c9908a343c82d393fedf9d1960ee6de6",
+        "stage": "before flash_endpoints"
+      },
+      "spectro/munki_imp.c": {
+        "archive_path": "spectro/munki_imp.c",
+        "sha256": "1086372fd9cfbd4229b0affc04337a10ce81bf1e139faa46df4cb5030d984ebe",
+        "stage": "before flash_endpoints"
+      }
+    },
+    "i1pro3_wavelength_finite": {
+      "spectro/i1pro3_imp.c": {
+        "blob": "d92489bd5fe5c4bfe7272886ce7dde8734d9ae8b21a6fd36895843b966493da2.gz",
+        "blob_sha256": "fbf152d8c1616086e70757b39d2612f2f6cd16250d9d5dc4ed45d8b28f4063d1",
+        "sha256": "d92489bd5fe5c4bfe7272886ce7dde8734d9ae8b21a6fd36895843b966493da2",
+        "stage": "before i1pro3_wavelength_finite"
+      }
+    },
+    "i1pro_flash_saturation": {
+      "spectro/i1pro_imp.c": {
+        "blob": "abbb1689e0ade8dd0803481c56a9ae0869780589dc02e778595e6f247f3eaaca.gz",
+        "blob_sha256": "7856747e0778c457f949457627207fbdf521a7b5da092c90a01a37fb28c26f86",
+        "sha256": "abbb1689e0ade8dd0803481c56a9ae0869780589dc02e778595e6f247f3eaaca",
+        "stage": "before i1pro_flash_saturation"
+      }
+    },
+    "ieee754_special": {
+      "numlib/numsup.c": {
+        "archive_path": "numlib/numsup.c",
+        "sha256": "cf361c4acf302de8ab112f5da90e62943ffa5ff664fbe2eae4646f438a49e4f5",
+        "stage": "before ieee754_special"
+      }
+    },
+    "legacy_nonadaptive_calibration": {
+      "spectro/i1pro_imp.c": {
+        "archive_path": "spectro/i1pro_imp.c",
+        "sha256": "8b8516cdd89e21de7ded3d58e1b03663c9908a343c82d393fedf9d1960ee6de6",
+        "stage": "before legacy_nonadaptive_calibration"
+      }
+    },
+    "legacy_scan_recognition": {
+      "spectro/i1pro_imp.c": {
+        "blob": "26a845395ec68ef3e171f1c0c1b47fd7e48378dc4a6a060eb60cc2d3cf9f0159.gz",
+        "blob_sha256": "8a50b212841660969a30c9a43bcf2a65545dea85e880be53f5a3d051fd86487f",
+        "sha256": "26a845395ec68ef3e171f1c0c1b47fd7e48378dc4a6a060eb60cc2d3cf9f0159",
+        "stage": "before legacy_scan_recognition"
+      }
+    },
+    "munki_curve_release": {
+      "spectro/munki_imp.c": {
+        "blob": "1521da4736d8f440d9e12f4048667028b6e5e896343093c2b25329b795b5ade5.gz",
+        "blob_sha256": "b39cea2780c04d91218f403a4442598abb42271292dfb094dee465764c72ed41",
+        "sha256": "1521da4736d8f440d9e12f4048667028b6e5e896343093c2b25329b795b5ade5",
+        "stage": "before munki_curve_release"
+      }
+    },
+    "munki_dark_copy": {
+      "spectro/munki_imp.c": {
+        "blob": "22301e42a81551ef9232b400debdcb84d666c13091fbfddb3c26cf919ea98385.gz",
+        "blob_sha256": "7fc65d2f88f18b6728d1fe0aa58505793dbaa00f032c6ce74ca5b72b3fbdb9af",
+        "sha256": "22301e42a81551ef9232b400debdcb84d666c13091fbfddb3c26cf919ea98385",
+        "stage": "before munki_dark_copy"
+      }
+    },
+    "munki_ledtemp_slope": {
+      "spectro/munki_imp.c": {
+        "blob": "3921478a06e4458a7e98d825ac721c1594699b4e6976b54cf665c6ffdd84e47a.gz",
+        "blob_sha256": "1bc6c7ed282b1046269bb510dd41d46a82db414dafce17b03ce4d2142d90e668",
+        "sha256": "3921478a06e4458a7e98d825ac721c1594699b4e6976b54cf665c6ffdd84e47a",
+        "stage": "before munki_ledtemp_slope"
+      }
+    },
+    "munki_nonadaptive_calibration": {
+      "spectro/munki_imp.c": {
+        "blob": "3ed587355460faff06544dceb4c04c2c3a3f2d7edb47d6994d528c247219b2ad.gz",
+        "blob_sha256": "190714bc0acafd707434c8f7897551f6498fffd1d311bc200f34073378d7477f",
+        "sha256": "3ed587355460faff06544dceb4c04c2c3a3f2d7edb47d6994d528c247219b2ad",
+        "stage": "before munki_nonadaptive_calibration"
+      }
+    },
+    "munki_scan_margin": {
+      "spectro/munki_imp.c": {
+        "blob": "7778bd4af5f068c7c321f05987d7badb70e2375909ae1430c6cbe2b004de3423.gz",
+        "blob_sha256": "b246da0665e47ff4505e58847b95d67bf71221611ea3146f564d1e7b8ec59987",
+        "sha256": "7778bd4af5f068c7c321f05987d7badb70e2375909ae1430c6cbe2b004de3423",
+        "stage": "before munki_scan_margin"
+      }
+    },
+    "munki_white_buffer_release": {
+      "spectro/munki_imp.c": {
+        "blob": "99605ed8b835cbe9464764d7f8753b5c1b56cbed8b6d8226c2013b0a9d9fa31c.gz",
+        "blob_sha256": "4c593f2c4d724f9d05e1a3eaf088363dbd4b1202e4e59da79c928cdea6e4adc1",
+        "sha256": "99605ed8b835cbe9464764d7f8753b5c1b56cbed8b6d8226c2013b0a9d9fa31c",
+        "stage": "before munki_white_buffer_release"
+      }
+    },
+    "native_resync": {
+      "cgats/cgats.c": {
+        "archive_path": "cgats/cgats.c",
+        "sha256": "71ab80027ca714868b4c3ac755a217de28be91191d39c3e86b6c2f475c3f1c53",
+        "stage": "before native_resync"
+      },
+      "numlib/numsup.c": {
+        "blob": "087ab81dbbe1cd3d68a461f02f1e5b2d21aa7b6ba4d180587264338b7d997a60.gz",
+        "blob_sha256": "93fd7502d49f97854ba8c1894174fafd01710d858356cc22c807df890df27cd4",
+        "sha256": "087ab81dbbe1cd3d68a461f02f1e5b2d21aa7b6ba4d180587264338b7d997a60",
+        "stage": "before native_resync"
+      },
+      "spectro/colorhug.c": {
+        "archive_path": "spectro/colorhug.c",
+        "sha256": "e0e9f66251fbdf007464ceebc5739d8b4d86920daf547c7a2f74bd29de17f581",
+        "stage": "before native_resync"
+      },
+      "spectro/dtp20.c": {
+        "blob": "4ce5ae6a9199da73f2456331d433b930a4be12fe203a69ac5cfd63f83fc5bae7.gz",
+        "blob_sha256": "1763f2842ea2b3b77cd838709aea6ab608e058525a072da20d6b4efc91170f7d",
+        "sha256": "4ce5ae6a9199da73f2456331d433b930a4be12fe203a69ac5cfd63f83fc5bae7",
+        "stage": "before native_resync"
+      },
+      "spectro/dtp22.c": {
+        "blob": "0aba29f82f8766cf9ffc367eda65fcefae31cb48d1f6c2c163b6a3e7ad6d81cf.gz",
+        "blob_sha256": "675495dcbd610589967eee813e73fc8681a0e9219684fc3605ff74616f22b4c1",
+        "sha256": "0aba29f82f8766cf9ffc367eda65fcefae31cb48d1f6c2c163b6a3e7ad6d81cf",
+        "stage": "before native_resync"
+      },
+      "spectro/dtp41.c": {
+        "blob": "eb9352aa48d83ebe2a88f361e8c628a7f3fbb39e7b3c634cb34da019a293e454.gz",
+        "blob_sha256": "ca92659996461fba803599891274f42ee029308209c40577dc2151147d39ecbc",
+        "sha256": "eb9352aa48d83ebe2a88f361e8c628a7f3fbb39e7b3c634cb34da019a293e454",
+        "stage": "before native_resync"
+      },
+      "spectro/dtp51.c": {
+        "archive_path": "spectro/dtp51.c",
+        "sha256": "a938a8c294849ea6096f8fc8262b5d11df14a2fb0896e34ca179cc491e5c9c5d",
+        "stage": "before native_resync"
+      },
+      "spectro/dtp92.c": {
+        "blob": "d9c3bd022d63cd560eed0b7a5d3fa102f3357905d989146b5588515d60027a1c.gz",
+        "blob_sha256": "0e9740f2d0dc324b027aec31677e5fa45a77278a85e24a7575bd990bb60351a1",
+        "sha256": "d9c3bd022d63cd560eed0b7a5d3fa102f3357905d989146b5588515d60027a1c",
+        "stage": "before native_resync"
+      },
+      "spectro/ex1.c": {
+        "archive_path": "spectro/ex1.c",
+        "sha256": "b440a4723cf72c9ec13296533bee339bfecd600e48bf6e65470cf478465c561f",
+        "stage": "before native_resync"
+      },
+      "spectro/huey.c": {
+        "blob": "22b997e1da99f26a6e8f0d4d7b88aad077d180a5cc6cd0121b1598e4ded59044.gz",
+        "blob_sha256": "340d40f6f44a30d853bf72d3e53bc4a94bcb52dbc10a4be33764c510347fb89c",
+        "sha256": "22b997e1da99f26a6e8f0d4d7b88aad077d180a5cc6cd0121b1598e4ded59044",
+        "stage": "before native_resync"
+      },
+      "spectro/i1d3.c": {
+        "blob": "a838b9bce5fd6755d57e1c1d51ab6514bd93bf4605c8fd17223a5057a17ac10d.gz",
+        "blob_sha256": "43bf84a4a019ac644b48efc2b25c21fae80f79c0c9bb99c75c70d0d7a19c9607",
+        "sha256": "a838b9bce5fd6755d57e1c1d51ab6514bd93bf4605c8fd17223a5057a17ac10d",
+        "stage": "before native_resync"
+      },
+      "spectro/i1disp.c": {
+        "archive_path": "spectro/i1disp.c",
+        "sha256": "5363429e9e0b56383d922e3d5e11e6ddd4212f84358d9d7690fa532445e090d2",
+        "stage": "before native_resync"
+      },
+      "spectro/i1pro.c": {
+        "blob": "5c12fb5c403b649fe8543b02666120f3e5f69b314a9d4a24d2a9f6051e341e6b.gz",
+        "blob_sha256": "422f4f4f371f981d6b6ae3447c56fb3389fcc64806ad8872798574ad1714365f",
+        "sha256": "5c12fb5c403b649fe8543b02666120f3e5f69b314a9d4a24d2a9f6051e341e6b",
+        "stage": "before native_resync"
+      },
+      "spectro/i1pro3.c": {
+        "blob": "866dbbe1544768f40c62cac8e2e8658051a5f192820b735be11c894405a17bef.gz",
+        "blob_sha256": "529f6b74884364896a8b61102672992c23896e639ff8102d8e9691212c1652b7",
+        "sha256": "866dbbe1544768f40c62cac8e2e8658051a5f192820b735be11c894405a17bef",
+        "stage": "before native_resync"
+      },
+      "spectro/i1pro3_imp.c": {
+        "blob": "a868f80f1a2aed14ba87c12adad25f671c8b8b5f993cd923717827b734dfa7aa.gz",
+        "blob_sha256": "773d0ffecdb8c891a4df60b096ec9b0dd602868352dc9951d7f6425dc30608ae",
+        "sha256": "a868f80f1a2aed14ba87c12adad25f671c8b8b5f993cd923717827b734dfa7aa",
+        "stage": "before native_resync"
+      },
+      "spectro/i1pro_imp.c": {
+        "blob": "fe445f67f385a39637001d684ebf26974a5b66fc838cb6a135f2548f0975ed3a.gz",
+        "blob_sha256": "6a8329d22fc3d02567340ecece5e50f565944f8dbe2400c2bcbe47c1689a313d",
+        "sha256": "fe445f67f385a39637001d684ebf26974a5b66fc838cb6a135f2548f0975ed3a",
+        "stage": "before native_resync"
+      },
+      "spectro/inst.c": {
+        "blob": "b595b0e94b9bba8d966993e0f44ac1a6c05b93453e82d0ec16c5413d48a0da63.gz",
+        "blob_sha256": "d32b1f2c37374a8bef9b425a0e2c8d75d8ca279a790d209ebbec518022b45bab",
+        "sha256": "b595b0e94b9bba8d966993e0f44ac1a6c05b93453e82d0ec16c5413d48a0da63",
+        "stage": "before native_resync"
+      },
+      "spectro/kleink10.c": {
+        "blob": "e6e3d50b6ba67f13538da9c32d34e882aefd4068276cdf48909f9d6642e71f37.gz",
+        "blob_sha256": "e1e3d95ec030b1c89a7a7f794bfa0375e4bd50d691cb0a4d08d8da6b2489b200",
+        "sha256": "e6e3d50b6ba67f13538da9c32d34e882aefd4068276cdf48909f9d6642e71f37",
+        "stage": "before native_resync"
+      },
+      "spectro/munki.c": {
+        "blob": "5a1952402efd154d05cfcb20c70a954492403964e91a8f4e49552e446dac98c6.gz",
+        "blob_sha256": "27f913c3c951690389421673188e76262523662d3368beb6247927434106ca47",
+        "sha256": "5a1952402efd154d05cfcb20c70a954492403964e91a8f4e49552e446dac98c6",
+        "stage": "before native_resync"
+      },
+      "spectro/munki_imp.c": {
+        "blob": "46d02e942a2de44bd8c79d81fdd36a45c6fcb548d7c4ce6afcaecbcff7ea50b0.gz",
+        "blob_sha256": "24a656b2b4aec1eca85119e7f59142fc9ef5684d3f6edc41311d1bf7344cc1aa",
+        "sha256": "46d02e942a2de44bd8c79d81fdd36a45c6fcb548d7c4ce6afcaecbcff7ea50b0",
+        "stage": "before native_resync"
+      },
+      "spectro/munki_imp.h": {
+        "archive_path": "spectro/munki_imp.h",
+        "sha256": "8901bd6bb0649edaaa02acf7fea9e3b852a221a74a2cdaff9a0ad3bdb776b5da",
+        "stage": "before native_resync"
+      },
+      "spectro/rspec.c": {
+        "archive_path": "spectro/rspec.c",
+        "sha256": "05adc19bb0df58a7e0d216e819958e301882677124661ee6a91d4048820825da",
+        "stage": "before native_resync"
+      },
+      "spectro/sa_conv.c": {
+        "archive_path": "spectro/sa_conv.c",
+        "sha256": "a1042fec995dd14bfe8ce3481210d6823510934dc60872cbfa7a1c819c473be7",
+        "stage": "before native_resync"
+      },
+      "spectro/smcube.c": {
+        "archive_path": "spectro/smcube.c",
+        "sha256": "b52bb0c8bfcb98bcc56cebb5b3de420ae89a18dbc4d8ffbe70f879625944f5c0",
+        "stage": "before native_resync"
+      },
+      "spectro/specbos.c": {
+        "blob": "e22c1bab79874db81b17e7d171f0617ddeca2d88f836416cb1cda1dcd367782f.gz",
+        "blob_sha256": "4740843c21ed9119c2e5679bd0c60b6dc2f42e300ab231a90a4028aac841af1b",
+        "sha256": "e22c1bab79874db81b17e7d171f0617ddeca2d88f836416cb1cda1dcd367782f",
+        "stage": "before native_resync"
+      },
+      "spectro/spyd2.c": {
+        "archive_path": "spectro/spyd2.c",
+        "sha256": "2e2db1744774740436071a4806ab1142e064b0cf8f7332f8b5b38ee3252a025a",
+        "stage": "before native_resync"
+      },
+      "spectro/spydX.c": {
+        "blob": "ce1fb7d604be8542cae3c962abbed0cb2a12900d118ad5b76041906a2bfe59a1.gz",
+        "blob_sha256": "b10f476a01386bf7a47d7e1d7e7b87bc58f1414fe983d1c673f8cbcd4571b610",
+        "sha256": "ce1fb7d604be8542cae3c962abbed0cb2a12900d118ad5b76041906a2bfe59a1",
+        "stage": "before native_resync"
+      },
+      "spectro/spydX2.c": {
+        "blob": "39e0eb6f11ae21d11e28431aeac68545e959e42a320f26f9a4a11a3db15d6261.gz",
+        "blob_sha256": "b58d29529c4e0454699ef7a281dfaccc86cbcba2675ed0919b74f5c97f681a1e",
+        "sha256": "39e0eb6f11ae21d11e28431aeac68545e959e42a320f26f9a4a11a3db15d6261",
+        "stage": "before native_resync"
+      },
+      "xicc/ccmx.c": {
+        "archive_path": "xicc/ccmx.c",
+        "sha256": "efacd1f04ba9e524287532db984222de7b2f34537ef4583931615fa303b9725d",
+        "stage": "before native_resync"
+      },
+      "xicc/xspect.c": {
+        "archive_path": "xicc/xspect.c",
+        "sha256": "ec494fe4a87f3498c95692b2339824d952beebe2fbf67f2a8c7d92051dbab0c5",
+        "stage": "before native_resync"
+      },
+      "xicc/xspect.h": {
+        "archive_path": "xicc/xspect.h",
+        "sha256": "10d1adf61cd5e247d39d14e40b0ccab31527ff0bb91c0506bc1bf18fd9c2612f",
+        "stage": "before native_resync"
+      }
+    },
+    "nonadaptive_calibration": {
+      "spectro/i1pro3_imp.c": {
+        "archive_path": "spectro/i1pro3_imp.c",
+        "sha256": "42c684afa3bbb15dbbb880820c55a17f32d79ceaa7f8cbcf07cddaf3f2073e32",
+        "stage": "before nonadaptive_calibration"
+      }
+    },
+    "scan_finite": {
+      "spectro/i1pro_imp.c": {
+        "blob": "2a290cb7d26b73c62d20794fc40e3a876a74133b5606143642394d5744b10eb8.gz",
+        "blob_sha256": "27b54dcbd85d03d40abb9541173b990fd7465bf076f1e8f823f8c9a4750545b1",
+        "sha256": "2a290cb7d26b73c62d20794fc40e3a876a74133b5606143642394d5744b10eb8",
+        "stage": "before scan_finite"
+      },
+      "spectro/munki_imp.c": {
+        "blob": "96d0fa9d87304079862c3e2f5c4591d8c628aa850ccdfaa0d40cc79b8bbff9e7.gz",
+        "blob_sha256": "3dc3be24654604a49de22858fb5b7fd54d0e911861556e5c7be4d0fdab901bbb",
+        "sha256": "96d0fa9d87304079862c3e2f5c4591d8c628aa850ccdfaa0d40cc79b8bbff9e7",
+        "stage": "before scan_finite"
+      }
+    },
+    "scan_normalization": {
+      "spectro/i1pro3_imp.c": {
+        "blob": "9eca875bc2d74574189ef7fe74505dfb9fe0da29fb0edc0042893a6f74737ff6.gz",
+        "blob_sha256": "7f9f928954ca5d369f6c74962cc281a8d7629657cb59e64e58a635d1e17892b1",
+        "sha256": "9eca875bc2d74574189ef7fe74505dfb9fe0da29fb0edc0042893a6f74737ff6",
+        "stage": "before scan_normalization"
+      }
+    },
+    "scan_tolerance_option": {
+      "spectro/i1pro.c": {
+        "archive_path": "spectro/i1pro.c",
+        "sha256": "ac75b6e3f47537b87ba7ae2b84a5cfdd84047413bdf0235114d4a489562a0bc5",
+        "stage": "before scan_tolerance_option"
+      },
+      "spectro/i1pro3.c": {
+        "archive_path": "spectro/i1pro3.c",
+        "sha256": "9c4b1ac9f8af507a2f79de12e51ee89c090ad4d2d0e5557544bc37467c0c535c",
+        "stage": "before scan_tolerance_option"
+      },
+      "spectro/munki.c": {
+        "archive_path": "spectro/munki.c",
+        "sha256": "775ba17c71e42d9c931a91d4e66965a7077ce5c7a6b3edb845dcbbf5b3cecad6",
+        "stage": "before scan_tolerance_option"
+      }
+    },
+    "spyder_black_cache": {
+      "spectro/spydX2.c": {
+        "archive_path": "spectro/spydX2.c",
+        "sha256": "0605716f89cdd2986a342245c1e60e901314306cde6dcf63cd0dfb4d37113668",
+        "stage": "before spyder_black_cache"
+      }
+    },
+    "spyder_calibration_slots": {
+      "spectro/spydX2.h": {
+        "archive_path": "spectro/spydX2.h",
+        "sha256": "8a6732a325c6a16c7b0a6644cfc83225bbdd3da84c9f51b38a0f5844f55289e6",
+        "stage": "before spyder_calibration_slots"
+      }
+    },
+    "spyder_selection_path": {
+      "spectro/spydX2.c": {
+        "archive_path": "spectro/spydX2.c",
+        "sha256": "0605716f89cdd2986a342245c1e60e901314306cde6dcf63cd0dfb4d37113668",
+        "stage": "before spyder_selection_path"
+      }
+    },
+    "ss_protocol": {
+      "spectro/ss_imp.c": {
+        "archive_path": "spectro/ss_imp.c",
+        "sha256": "22533a5cadbc2bce29aed1aacef671548f8d1dfb8e9d53a12f8acd0a70734fdb",
+        "stage": "before ss_protocol"
+      },
+      "spectro/ss_imp.h": {
+        "archive_path": "spectro/ss_imp.h",
+        "sha256": "9860268d0a59c798e758a0d43b22f8c4d3d19a73727d88140804de84dd4c258d",
+        "stage": "before ss_protocol"
+      }
+    },
+    "ss_xy_metadata": {
+      "spectro/ss.c": {
+        "archive_path": "spectro/ss.c",
+        "sha256": "594dfa78d9611dc2bc26496f775f854813a8bc77fd966ecaf746bb07433a6642",
+        "stage": "before ss_xy_metadata"
+      }
+    },
+    "xcalstd_option": {
+      "spectro/dtp20.c": {
+        "archive_path": "spectro/dtp20.c",
+        "sha256": "e2f15f0814b37aec262d3a818598386d2fa72568e612fad7e15ffb2a840a5bb6",
+        "stage": "before xcalstd_option"
+      },
+      "spectro/dtp22.c": {
+        "archive_path": "spectro/dtp22.c",
+        "sha256": "6abedc3c8dad7f44757f9479feec6a4ee6524e41f4cc88369b0f36b6b1624746",
+        "stage": "before xcalstd_option"
+      },
+      "spectro/dtp41.c": {
+        "archive_path": "spectro/dtp41.c",
+        "sha256": "7de062ca76cc153de32b8fff0c031d12fd9f7918882993a201ae72b740c4220e",
+        "stage": "before xcalstd_option"
+      },
+      "spectro/i1pro.c": {
+        "archive_path": "spectro/i1pro.c",
+        "sha256": "ac75b6e3f47537b87ba7ae2b84a5cfdd84047413bdf0235114d4a489562a0bc5",
+        "stage": "before xcalstd_option"
+      },
+      "spectro/i1pro3.c": {
+        "archive_path": "spectro/i1pro3.c",
+        "sha256": "9c4b1ac9f8af507a2f79de12e51ee89c090ad4d2d0e5557544bc37467c0c535c",
+        "stage": "before xcalstd_option"
+      },
+      "spectro/munki.c": {
+        "archive_path": "spectro/munki.c",
+        "sha256": "775ba17c71e42d9c931a91d4e66965a7077ce5c7a6b3edb845dcbbf5b3cecad6",
+        "stage": "before xcalstd_option"
+      },
+      "spectro/ss.c": {
+        "archive_path": "spectro/ss.c",
+        "sha256": "594dfa78d9611dc2bc26496f775f854813a8bc77fd966ecaf746bb07433a6642",
+        "stage": "before xcalstd_option"
+      }
+    },
+    "xyz_only_conversion": {
+      "spectro/i1pro3_imp.c": {
+        "blob": "a1188ddb3853b766c60ac7532715c36a1f792f5bb15dbb3da8ca3dae4d78f6b5.gz",
+        "blob_sha256": "1105f2ca0e1219c1efe867e1730480ade15799aee52241127f700cc6a478bcf0",
+        "sha256": "a1188ddb3853b766c60ac7532715c36a1f792f5bb15dbb3da8ca3dae4d78f6b5",
+        "stage": "before xyz_only_conversion"
+      },
+      "spectro/i1pro_imp.c": {
+        "blob": "629b1cc6863671eddbd63308236807fb18c8c192f5c98db7d22cc6e910508d93.gz",
+        "blob_sha256": "48bace95375df744aa5349fef5693a0700e16f1e0ad04dda952c8e803a672907",
+        "sha256": "629b1cc6863671eddbd63308236807fb18c8c192f5c98db7d22cc6e910508d93",
+        "stage": "before xyz_only_conversion"
+      },
+      "spectro/munki_imp.c": {
+        "blob": "30fafd5e07538905802eefc0479b0ff50187008f0c69eddfd9c32427b05a4ea7.gz",
+        "blob_sha256": "4bf9c7e3b8aaa4e83b4247d6eb22aaf3d81742c6c8b35ad6470731ecf3e034dc",
+        "sha256": "30fafd5e07538905802eefc0479b0ff50187008f0c69eddfd9c32427b05a4ea7",
+        "stage": "before xyz_only_conversion"
+      }
+    }
+  },
+  "repair_ids": {
+    "native-resync:activate-mode": {
+      "function": "activate_mode",
+      "paths": [
+        "spectro/dtp41.c"
+      ]
+    },
+    "native-resync:buf2int": {
+      "function": "buf2int",
+      "paths": [
+        "spectro/colorhug.c",
+        "spectro/i1pro_imp.c",
+        "spectro/munki_imp.c",
+        "spectro/spyd2.c"
+      ]
+    },
+    "native-resync:build-strip": {
+      "function": "build_strip",
+      "paths": [
+        "spectro/dtp41.c"
+      ]
+    },
+    "native-resync:calf-rstrz": {
+      "function": "calf_rstrz",
+      "paths": [
+        "spectro/rspec.c"
+      ]
+    },
+    "native-resync:calibration-diagnostic": {
+      "function": "calibration diagnostic",
+      "paths": [
+        "spectro/dtp20.c",
+        "spectro/dtp22.c",
+        "spectro/dtp41.c",
+        "spectro/dtp51.c",
+        "spectro/dtp92.c",
+        "spectro/ex1.c",
+        "spectro/i1d3.c",
+        "spectro/i1disp.c",
+        "spectro/smcube.c",
+        "spectro/specbos.c"
+      ]
+    },
+    "native-resync:cgats-read": {
+      "function": "cgats_read",
+      "paths": [
+        "cgats/cgats.c"
+      ]
+    },
+    "native-resync:cgats-write": {
+      "function": "cgats_write",
+      "paths": [
+        "cgats/cgats.c"
+      ]
+    },
+    "native-resync:copyright-notice": {
+      "function": "copyright notice",
+      "paths": [
+        "spectro/rspec.c"
+      ]
+    },
+    "native-resync:dtp41-calibrate": {
+      "function": "dtp41_calibrate",
+      "paths": [
+        "spectro/dtp41.c"
+      ]
+    },
+    "native-resync:dtp41-get-n-a-cals": {
+      "function": "dtp41_get_n_a_cals",
+      "paths": [
+        "spectro/dtp41.c"
+      ]
+    },
+    "native-resync:dtp41-read-sample": {
+      "function": "dtp41_read_sample",
+      "paths": [
+        "spectro/dtp41.c"
+      ]
+    },
+    "native-resync:dtp41-read-strip": {
+      "function": "dtp41_read_strip",
+      "paths": [
+        "spectro/dtp41.c"
+      ]
+    },
+    "native-resync:dtp92-get-refr-rate": {
+      "function": "dtp92_get_refr_rate",
+      "paths": [
+        "spectro/dtp92.c"
+      ]
+    },
+    "native-resync:getval-raw-xspec-poly3-ex": {
+      "function": "getval_raw_xspec_poly3_ex",
+      "paths": [
+        "xicc/xspect.c"
+      ]
+    },
+    "native-resync:good-upsample": {
+      "function": "good_upsample",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:guess-type": {
+      "function": "guess_type",
+      "paths": [
+        "cgats/cgats.c"
+      ]
+    },
+    "native-resync:header": {
+      "function": "header",
+      "paths": [
+        "spectro/i1d3.c",
+        "spectro/kleink10.c"
+      ]
+    },
+    "native-resync:huey-decode": {
+      "function": "huey_decode",
+      "paths": [
+        "spectro/huey.c"
+      ]
+    },
+    "native-resync:i1d3-decode": {
+      "function": "i1d3_decode",
+      "paths": [
+        "spectro/i1d3.c"
+      ]
+    },
+    "native-resync:i1disp-decode": {
+      "function": "i1disp_decode",
+      "paths": [
+        "spectro/i1disp.c"
+      ]
+    },
+    "native-resync:i1pro-average-multimeas": {
+      "function": "i1pro_average_multimeas",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro-compute-wav-filters": {
+      "function": "i1pro_compute_wav_filters",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro-compute-white-cal": {
+      "function": "i1pro_compute_white_cal",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro-conv2xyz": {
+      "function": "i1pro_conv2XYZ",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro-create-hr-calfactors": {
+      "function": "i1pro_create_hr_calfactors",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro-extract-patches-multimeas": {
+      "function": "i1pro_extract_patches_multimeas",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro-imp-calibrate": {
+      "function": "i1pro_imp_calibrate",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro-imp-init": {
+      "function": "i1pro_imp_init",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro-interp-error": {
+      "function": "i1pro_interp_error",
+      "paths": [
+        "spectro/i1pro.c"
+      ]
+    },
+    "native-resync:i1pro-read-patches-2": {
+      "function": "i1pro_read_patches_2",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro-read-patches-2a": {
+      "function": "i1pro_read_patches_2a",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro-restore-calibration": {
+      "function": "i1pro_restore_calibration",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro-restore-refspot-cal": {
+      "function": "i1pro_restore_refspot_cal",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro-sub-absraw": {
+      "function": "i1pro_sub_absraw",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro-trigger-one-measure": {
+      "function": "i1pro_trigger_one_measure",
+      "paths": [
+        "spectro/i1pro_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-compute-wav-filter": {
+      "function": "i1pro3_compute_wav_filter",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-conv2xyz": {
+      "function": "i1pro3_conv2XYZ",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-filter-uvmux": {
+      "function": "i1pro3_filter_uvmux",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-imp-calibrate": {
+      "function": "i1pro3_imp_calibrate",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-imp-init": {
+      "function": "i1pro3_imp_init",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-interp-error": {
+      "function": "i1pro3_interp_error",
+      "paths": [
+        "spectro/i1pro3.c"
+      ]
+    },
+    "native-resync:i1pro3-locate-patches": {
+      "function": "i1pro3_locate_patches",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-multimeas-check-raw-consistency": {
+      "function": "i1pro3_multimeas_check_raw_consistency",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-pol-refl-cal": {
+      "function": "i1pro3_pol_refl_cal",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-pol-strip-refl-meas": {
+      "function": "i1pro3_pol_strip_refl_meas",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-pol-strip-refl-meas-plot-cleanup": {
+      "function": "i1pro3_pol_strip_refl_meas plot cleanup",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-restore-calibration": {
+      "function": "i1pro3_restore_calibration",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-scan-emis-meas": {
+      "function": "i1pro3_scan_emis_meas",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-strip-refl-meas": {
+      "function": "i1pro3_strip_refl_meas",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:i1pro3-strip-refl-meas-plot-cleanup": {
+      "function": "i1pro3_strip_refl_meas plot cleanup",
+      "paths": [
+        "spectro/i1pro3_imp.c"
+      ]
+    },
+    "native-resync:inst-creat-disptype-list": {
+      "function": "inst_creat_disptype_list",
+      "paths": [
+        "spectro/inst.c"
+      ]
+    },
+    "native-resync:inst-valid-custom-filter": {
+      "function": "inst_valid_custom_filter",
+      "paths": [
+        "spectro/inst.c"
+      ]
+    },
+    "native-resync:k10-calibrate": {
+      "function": "k10_calibrate",
+      "paths": [
+        "spectro/kleink10.c"
+      ]
+    },
+    "native-resync:munki-average-multimeas": {
+      "function": "munki_average_multimeas",
+      "paths": [
+        "spectro/munki_imp.c"
+      ]
+    },
+    "native-resync:munki-compute-white-cal": {
+      "function": "munki_compute_white_cal",
+      "paths": [
+        "spectro/munki_imp.c",
+        "spectro/munki_imp.h"
+      ]
+    },
+    "native-resync:munki-conv2xyz": {
+      "function": "munki_conv2XYZ",
+      "paths": [
+        "spectro/munki_imp.c"
+      ]
+    },
+    "native-resync:munki-create-hr": {
+      "function": "munki_create_hr",
+      "paths": [
+        "spectro/munki_imp.c"
+      ]
+    },
+    "native-resync:munki-extract-patches-multimeas": {
+      "function": "munki_extract_patches_multimeas",
+      "paths": [
+        "spectro/munki_imp.c"
+      ]
+    },
+    "native-resync:munki-imp-calibrate": {
+      "function": "munki_imp_calibrate",
+      "paths": [
+        "spectro/munki_imp.c"
+      ]
+    },
+    "native-resync:munki-imp-init": {
+      "function": "munki_imp_init",
+      "paths": [
+        "spectro/munki_imp.c"
+      ]
+    },
+    "native-resync:munki-interp-error": {
+      "function": "munki_interp_error",
+      "paths": [
+        "spectro/munki.c"
+      ]
+    },
+    "native-resync:munki-ledtemp-whitemeasure": {
+      "function": "munki_ledtemp_whitemeasure",
+      "paths": [
+        "spectro/munki_imp.c"
+      ]
+    },
+    "native-resync:munki-read-patches-2": {
+      "function": "munki_read_patches_2",
+      "paths": [
+        "spectro/munki_imp.c"
+      ]
+    },
+    "native-resync:munki-read-patches-2a": {
+      "function": "munki_read_patches_2a",
+      "paths": [
+        "spectro/munki_imp.c"
+      ]
+    },
+    "native-resync:munki-restore-calibration": {
+      "function": "munki_restore_calibration",
+      "paths": [
+        "spectro/munki_imp.c"
+      ]
+    },
+    "native-resync:munki-trigger-one-measure": {
+      "function": "munki_trigger_one_measure",
+      "paths": [
+        "spectro/munki_imp.c"
+      ]
+    },
+    "native-resync:numsup-read-inr": {
+      "function": "numsup_read_INR",
+      "paths": [
+        "numlib/numsup.c"
+      ]
+    },
+    "native-resync:plot-header": {
+      "function": "plot header",
+      "paths": [
+        "spectro/i1pro3_imp.c",
+        "spectro/i1pro_imp.c",
+        "spectro/munki_imp.c"
+      ]
+    },
+    "native-resync:read-ccmx": {
+      "function": "read_ccmx",
+      "paths": [
+        "xicc/ccmx.c"
+      ]
+    },
+    "native-resync:real-format": {
+      "function": "real_format",
+      "paths": [
+        "cgats/cgats.c"
+      ]
+    },
+    "native-resync:sa-md5-accume": {
+      "function": "sa_MD5_accume",
+      "paths": [
+        "spectro/sa_conv.c"
+      ]
+    },
+    "native-resync:specbos-init-inst": {
+      "function": "specbos_init_inst",
+      "paths": [
+        "spectro/specbos.c"
+      ]
+    },
+    "native-resync:spyd2-calibrate": {
+      "function": "spyd2_calibrate",
+      "paths": [
+        "spectro/spyd2.c"
+      ]
+    },
+    "native-resync:spyd2-set-refr-rate": {
+      "function": "spyd2_set_refr_rate",
+      "paths": [
+        "spectro/spyd2.c"
+      ]
+    },
+    "native-resync:spydx-calibrate": {
+      "function": "spydX_calibrate",
+      "paths": [
+        "spectro/spydX.c"
+      ]
+    },
+    "native-resync:spydx2-calibrate": {
+      "function": "spydX2_calibrate",
+      "paths": [
+        "spectro/spydX2.c"
+      ]
+    },
+    "native-resync:spydx2-restore-calibration": {
+      "function": "spydX2_restore_calibration",
+      "paths": [
+        "spectro/spydX2.c"
+      ]
+    },
+    "native-resync:spydx2-save-calibration": {
+      "function": "spydX2_save_calibration",
+      "paths": [
+        "spectro/spydX2.c"
+      ]
+    },
+    "native-resync:xspect-read-number": {
+      "function": "xspect_read_number",
+      "paths": [
+        "xicc/xspect.c",
+        "xicc/xspect.h"
+      ]
+    }
+  },
+  "schema_version": 1
+}

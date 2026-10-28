@@ -1,0 +1,137 @@
+name: Offline native checks
+
+on:
+  push:
+    branches: [main]
+    paths: &native-inputs
+      - 'src/**'
+      - 'tools/**'
+      - 'tests/**'
+      - 'examples/**'
+      - '.github/workflows/**'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.python-version'
+      - 'package_backend.py'
+  pull_request:
+    paths: *native-inputs
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: native-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux-broad:
+    name: Linux broad catalog / scripted CR and PR drivers
+    # Private repositories run only on explicit dispatch to protect the minute allowance.
+    if: github.event_name == 'workflow_dispatch' || !github.event.repository.private
+    runs-on: ubuntu-latest
+    # Allow native builds and package checks around the bounded 30-minute pytest stage.
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.12.15"
+          python-version: "3.11"
+      - name: Obtain pinned upstream source
+        run: |
+          mkdir -p local/argyll-audit
+          curl --fail --location --retry 2 --output local/argyll-audit/Argyll_V3.5.0_src.zip https://www.argyllcms.com/Argyll_V3.5.0_src.zip
+          echo 'f8576ce5589fd15620abb73ff049ea31f55ddbd1bba6d1ffa87452658e7bc85f  local/argyll-audit/Argyll_V3.5.0_src.zip' | sha256sum --check
+      - name: Build broad workers without production execution and run substituted checks
+        run: uv run --locked python tools/argyll_native_check.py --contribution tools/native_argyll/contributions/cr_pr --archive local/argyll-audit/Argyll_V3.5.0_src.zip --output local/native-feasibility/linux-broad-01
+      - name: Select supported Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+      - name: Install locked renderer test dependencies
+        run: npm ci --prefix tools/desktop_builder --ignore-scripts --no-audit --no-fund
+      - name: Software gate including broad description and binding joins
+        env:
+          CM_RENDERER_NATIVE_REPORT: local/native-feasibility/linux-broad-01/report.json
+        run: uv run --locked --extra mat --extra app python tools/test_all.py --require-mat --generic-stub local/native-feasibility/linux-broad-01/generic-session-stub-worker --chart-stub local/native-feasibility/linux-broad-01/generic-chart-stub-worker
+      - name: Retain build diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linux-broad-native-evidence
+          retention-days: 7
+          if-no-files-found: warn
+          path: |
+            local/native-feasibility/linux-broad-01/*.log
+  windows-broad:
+    name: Windows x64 broad catalog / scripted CR and PR drivers
+    # Private repositories run only on explicit dispatch to protect the minute allowance.
+    if: github.event_name == 'workflow_dispatch' || !github.event.repository.private
+    runs-on: windows-latest
+    # Include toolchain/native setup, the 30-minute pytest bound and package checks.
+    timeout-minutes: 50
+    env:
+      PYTHONUTF8: "1"
+      CC: "clang"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.12.15"
+          python-version: "3.11"
+      - name: Provision native Windows Clang toolchain and sanitizer runtime
+        id: msys2
+        uses: msys2/setup-msys2@66cd2cce69caa17b53920067426061ca1de3a884 # v2
+        with:
+          msystem: CLANG64
+          release: true
+          update: true
+          install: >-
+            mingw-w64-clang-x86_64-clang
+            mingw-w64-clang-x86_64-compiler-rt
+            mingw-w64-clang-x86_64-binutils
+      - name: Expose only native compiler tools to Windows Python
+        shell: pwsh
+        env:
+          MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
+        run: |
+          $compilerBin = Join-Path $env:MSYS2_LOCATION "clang64/bin"
+          if (!(Test-Path (Join-Path $compilerBin "clang.exe"))) { throw "Missing CLANG64 compiler" }
+          Add-Content $env:GITHUB_PATH $compilerBin
+          New-Item -ItemType Directory -Force local/native-feasibility | Out-Null
+          & (Join-Path $env:MSYS2_LOCATION "usr/bin/pacman.exe") -Q | Set-Content local/native-feasibility/windows-toolchain.txt
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Obtain pinned upstream source
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force local/argyll-audit | Out-Null
+          curl.exe --fail --location --retry 2 --output local/argyll-audit/Argyll_V3.5.0_src.zip https://www.argyllcms.com/Argyll_V3.5.0_src.zip
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $archiveHash = (Get-FileHash local/argyll-audit/Argyll_V3.5.0_src.zip -Algorithm SHA256).Hash.ToLowerInvariant()
+          if ($archiveHash -ne "f8576ce5589fd15620abb73ff049ea31f55ddbd1bba6d1ffa87452658e7bc85f") { throw "Source digest mismatch" }
+      - name: Build broad workers without production execution and run substituted checks
+        shell: pwsh
+        run: uv run --locked python tools/argyll_native_check.py --contribution tools/native_argyll/contributions/cr_pr --archive local/argyll-audit/Argyll_V3.5.0_src.zip --output local/native-feasibility/windows-broad-01
+      - name: Select supported Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+      - name: Install locked renderer test dependencies
+        shell: pwsh
+        run: npm ci --prefix tools/desktop_builder --ignore-scripts --no-audit --no-fund
+      - name: Software gate including broad description and binding joins
+        shell: pwsh
+        env:
+          CM_RENDERER_NATIVE_REPORT: local/native-feasibility/windows-broad-01/report.json
+        run: uv run --locked --extra mat --extra app python tools/test_all.py --require-mat --generic-stub local/native-feasibility/windows-broad-01/generic-session-stub-worker.exe --chart-stub local/native-feasibility/windows-broad-01/generic-chart-stub-worker.exe
+      - name: Retain build diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: windows-broad-native-evidence
+          retention-days: 7
+          if-no-files-found: warn
+          path: |
+            local/native-feasibility/windows-toolchain.txt
+            local/native-feasibility/windows-broad-01/*.log

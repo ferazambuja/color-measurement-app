@@ -1,0 +1,91 @@
+--- a/xicc/ccss.c
++++ b/xicc/ccss.c
+@@ -28,0 +29,2 @@
++#include <ctype.h>
++#include <errno.h>
+@@ -257,0 +260,14 @@ size_t *len					/* Return length */
++/* CM: CGATS keywords must be complete numbers, not atoi/atof prefixes. */
++static int cm_ccss_number(const char *text, double *number) {
++    char *end;
++    double value;
++    errno = 0;
++    value = strtod(text, &end);
++    if (end == text) return 1;
++    while (*end != '\0' && isspace((unsigned char)*end)) end++;
++    if (*end != '\0' || (errno == ERANGE && (value == HUGE_VAL || value == -HUGE_VAL)))
++        return 1;
++    *number = value;
++    return 0;
++}
++
+@@ -350 +366,13 @@ cgats *icg		/* input cgats structure */
+-	sp.spec_n = atoi(icg->t[0].kdata[ii]);
++	{
++		double bands;
++		if (cm_ccss_number(icg->t[0].kdata[ii], &bands)) {
++			sprintf(p->e.m,"Input file SPECTRAL_BANDS is not a number");
++			return 1;
++		}
++		/* CM: bound before integer conversion, and do not truncate fractions. */
++		if (!(bands >= 2.0 && bands <= XSPECT_MAX_BANDS && (int)bands == bands)) {
++			sprintf(p->e.m,"Input file SPECTRAL_BANDS %.17g is outside 2 to %d",bands,XSPECT_MAX_BANDS);
++			return 1;
++		}
++		sp.spec_n = (int)bands;
++	}
+@@ -355 +383,4 @@ cgats *icg		/* input cgats structure */
+-	sp.spec_wl_short = atof(icg->t[0].kdata[ii]);
++	if (cm_ccss_number(icg->t[0].kdata[ii], &sp.spec_wl_short)) {
++		sprintf(p->e.m,"Input file spectral start wavelength is not a number");
++		return 1;
++	}
+@@ -360 +391,15 @@ cgats *icg		/* input cgats structure */
+-	sp.spec_wl_long = atof(icg->t[0].kdata[ii]);
++	if (cm_ccss_number(icg->t[0].kdata[ii], &sp.spec_wl_long)) {
++		sprintf(p->e.m,"Input file spectral end wavelength is not a number");
++		return 1;
++	}
++	/* CM: each band's nearest nm is converted to int below. */
++	if (!(sp.spec_wl_short >= -1e9 && sp.spec_wl_short <= 1e9
++	   && sp.spec_wl_long >= -1e9 && sp.spec_wl_long <= 1e9)) {
++		sprintf(p->e.m,"Input file spectral wavelength range is not usable");
++		return 1;
++	}
++	/* A multi-band grid must have positive spacing. */
++	if (!(sp.spec_wl_long > sp.spec_wl_short)) {
++		sprintf(p->e.m,"Input file spectral grid is not ordered");
++		return 1;
++	}
+@@ -365 +410,9 @@ cgats *icg		/* input cgats structure */
+-		sp.norm = atof(icg->t[0].kdata[ii]);
++		if (cm_ccss_number(icg->t[0].kdata[ii], &sp.norm)) {
++			sprintf(p->e.m,"Input file SPECTRAL_NORM is not a number");
++			return 1;
++		}
++	}
++	/* CM: every consumer divides by the norm; x - x is 0 only when x is finite. */
++	if (!(sp.norm > 0.0 && sp.norm - sp.norm == 0.0)) {
++		sprintf(p->e.m,"Input file SPECTRAL_NORM is not a positive number");
++		return 1;
+@@ -382,0 +436,5 @@ cgats *icg		/* input cgats structure */
++		/* CM: an all-integer column is stored as int (cgats.c:731-739). */
++		if (icg->t[0].ftype[spi[j]] != r_t && icg->t[0].ftype[spi[j]] != i_t) {
++			sprintf(p->e.m,"Input file field %s is not numeric",buf);
++			return 1;
++		}
+@@ -405 +463,14 @@ cgats *icg		/* input cgats structure */
+-			p->samples[i].spec[j] = *((double *)icg->t[0].fdata[i][spi[j]]);
++			if (icg->t[0].ftype[spi[j]] == i_t)
++				p->samples[i].spec[j] = (double)*((int *)icg->t[0].fdata[i][spi[j]]);
++			else
++				p->samples[i].spec[j] = *((double *)icg->t[0].fdata[i][spi[j]]);
++			/* CM: do not admit a nonfinite correction into display calibration. */
++			/* Every consumer reads the band divided by the positive, finite norm, */
++			/* so a nonfinite band or an overflowing quotient is refused here. */
++			{
++				double normalized = p->samples[i].spec[j] / sp.norm;
++				if (normalized - normalized != 0.0) {
++					sprintf(p->e.m,"Input file normalized spectral sample %d band %d is not finite",i,j);
++					return 1;
++				}
++			}

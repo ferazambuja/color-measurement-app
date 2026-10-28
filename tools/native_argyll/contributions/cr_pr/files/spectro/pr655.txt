@@ -1,0 +1,269 @@
+Photo Research PR-655 and PR-670 Argyll instrument driver
+=======================================================
+
+Scope
+-----
+
+This driver implements exact PR-655 and PR-670 models through Argyll's inst
+interface and icoms serial transport. It supports emission spot/telephoto and
+ambient illuminance, native XYZ, experimental native radiance/irradiance spectra,
+user/programmatic triggers, averaging
+and refresh synchronization overrides. No physical instrument has been tested.
+Software tests do not qualify firmware, USB/RS-232 timing, accuracy, optics or
+another platform's transport. No upstream acceptance is claimed.
+
+The source consists of pr655.c/pr655.h (inst interface and publication policy)
+and pr655_imp.c/pr655_imp.h (bounded protocol transactions). One engine serves
+both exact models. There is no file writer, plotting, measurement history,
+external Python runtime, direct OS serial implementation or vendor framework.
+
+Selection and initialization
+----------------------------
+
+An explicit selected path avoids discovery probes. The ordinary spotread route
+uses the canonical long name, for example:
+
+  spotread -Y "I:Photo Research PR-655:COM3" -e -s
+  spotread -Y "I:Photo Research PR-670:/dev/cu.usbmodem101" -e -s
+
+These are instrument-operation examples, not offline tests. The driver does
+not add PHOTO/Q probing to generic fast-serial discovery. The ordinary dispread
+and dispcal executables can link the driver, but this contribution does not
+add their explicit selection route. Do not infer practical selection there
+from successful linking.
+
+new_pr655 allocates the standard inst object without I/O. init_coms configures
+the given host port at nominal115200baud,8N1,no flow control. It sends Q without
+CR, waits500ms, sends PHOTO without CR, requires REMOTE MODE, then D111 with CR.
+Input an earlier session left before or after that Q is discarded, as the
+MATLAB and earlier direct drivers do, and counted in discarded_bytes; more than
+1 MiB refuses. The PHOTO reply must still match exactly.
+It refuses any other exact model, including PR-650 or emulation. USB's nominal
+serial rate is distinct from actual RS-232 configuration; this policy remains
+physically unqualified. No blind baud search occurs.
+
+Remote mode disables the touch screen. Q on a clean close leaves remote mode;
+an uncertain exchange prevents Q and can leave the screen disabled until a
+deliberate recovery or power cycle. Closing a host port is not a hardware abort.
+
+init_inst reads D110 serial, D114 firmware and D120 hardware/grid facts, then
+D601/D602 setup and D112/D116 calibrated accessory inventory. Identity is
+owned by this connection. No exposure or acquisition-setting write occurs in
+initialization. Accessory IDs describe configured optics, not physically
+verified fitted optics. Factory calibration validity remains unknown.
+
+Framing and acquisition
+-----------------------
+
+The manual requires character-wise commands. The engine uses50ms character
+pacing, a host policy also used by the existing remote-control implementation.
+Q and PHOTO have no CR; ordinary commands have CR. Each write is bounded and
+must report the confirmed requested byte count. A failed write is never retried.
+
+Replies can arrive as fragments with CR,LF or CRLF terminators. An exact echo
+of the outstanding command is allowed once. Native status/count/ID tokens must
+be exact decimal integers before conversion; rounding a fractional token to
+an integer is not accepted. Scientific values use strict finite decimal ASCII,
+including exponent notation and signed samples. Resource and monotonic deadline
+bounds cover entire responses; an empty buffer does not mean completion.
+The host admits up to 1,024 accessory/aperture rows, 4,096 bytes per line and
+1 MiB per reply. These are host resource limits, not manufacturer limits.
+Replies and inventories use bounded heap allocations sized to retained data.
+Initialize engine and capture owners before use, and call pr655_imp_dispose and
+pr655_capture_clear before their storage is released or reused. Raw and inventory
+owners must not be copied by value; the provided copy helpers create independent
+snapshots. Setup reports remain value types. Complete unsupported D112/D116
+responses retain the native error and unavailable flags separately from a known
+empty list. They do not erase the independent D601/D602 setup. Argyll publication
+still requires sufficient reported geometry; optical setters require known IDs.
+
+M5 returns status,quantity code,peak wavelength,integrated radiometric value and
+integrated photon value, followed by native wavelength/value rows. The header
+contains no count. D120 must agree with the exact model output grid:
+
+  PR-655:101 samples,380..780nm inclusive,4nm increment;128 detector pixels.
+  PR-670:201 samples,380..780nm inclusive,2nm increment;256 detector pixels.
+
+Optical bandwidth and detector pixels are separate facts. Every returned row
+must match its expected wavelength; missing,duplicate,extra or malformed data
+refuses the exchange. The acquired grid is never resampled or normalized.
+
+Spectral mode sends one M5 and then D2 to retrieve the same exposure's native
+XYZ. It never sends M2 after M5. XYZ-only mode sends one M2. B00 precedes the
+exposure; its matching acknowledgement is required before any M command.
+A complete native B00 refusal is retained and starts no exposure or B100.
+An incomplete or malformed exchange forbids further writes.
+After complete native results, B100 requests100% backlight; it does not restore
+a queried original level. Complete native components survive a later D2,
+backlight or setup failure, independently of successful ipatch publication.
+A complete standalone negative M5/M2/D2 reply is a final command error. After
+framing and surplus checks succeed, the engine requests B100 once and retains
+the original measurement/report error even if brightness cleanup also fails.
+Malformed, incomplete or surplus replies still forbid subsequent writes. This
+protocol policy does not establish physical idle or recovery of a failed exposure.
+
+D601/D602 are current setup reports, not atomic exposure snapshots. D601's
+bare SyncPeriod has no inferred Hertz unit. The explicitly labelled D602 Hertz
+field owns configured User frequency. Auto synchronization may report a new
+frequency after exposure. D13 last exposure and D14 stored synchronization are
+different quantities; this driver does not advertise fresh frequency measurement.
+
+Publication and units
+---------------------
+
+Argyll emission ipatch values have Y in cd/m2 and spectra in mW/(m2 sr nm),
+norm1. Ambient values have Y in lux and spectra in mW/(m2 nm), norm1.
+Publication requires the reported2-degree observer and configured primary plus
+every active add-on declaring the requested quantity in D116: Luminance/Radiance
+for spot/tele emission, Illuminance/Irradiance for ambient. A contradictory active
+add-on refuses publication even if the primary matches. Configured declarations
+do not prove physical optics. No SU/SO/optics write manufactures a compatible setup.
+
+The manual defines the M5 integrated radiometric value as the native spectral
+sum weighted by wavelength increment, and Table9 defines radiance in W/(sr m2).
+Together with the configured accessory's reported geometry, this supports a
+declared W/(sr m2 nm) spectral-density interpretation. Code0 in the manual's
+examples remains undefined; the driver records it, rather than treating it as
+the independent source of units. M5 code0,11 or111 is admitted under that
+geometry; other codes refuse. Native D2 code0 or111 is admitted as luminance
+under the separately reported English/Metric setup; a radiometric D2 code does
+not establish luminance XYZ.
+
+For ambient, Table9 declares irradiance code12 in W/m2 and illuminance code112
+in footcandles or lux. Its M5 integral definition establishes W/(m2 nm) density.
+Ambient M5 requires explicit code12; undefined code0 and radiance codes do not
+qualify an ambient spectrum. M2/D2 code112 or the retained undefined0 is admitted
+only under the verified Illuminance/Irradiance declaration and current unit
+system. Code0 is never the independent source of units. Ambient is a separate
+measurement geometry, without converting radiance by an assumed solid angle.
+
+The actual implemented conversions in pr655.c are:
+
+  xyz[i] = native->xyz[i] * scale;
+  spectrum->spec[i] = 1000.0 * native->spectrum[i];
+  power += step * native->spectrum[i];
+
+Metric XYZ scale is1. English emission XYZ scale is1/(pi*0.09290304): the international
+foot is exactly0.3048m and one foot-lambert is1/pi cd/ft2. English ambient XYZ
+scale is1/0.09290304 because one footcandle is one lumen/ft2. These binary64 factors
+are rounded, not exact finite decimals. The driver's unit-check record owns the
+selected XYZ scale for consumers. Spectral W-to-mW conversion is1000;
+2nm/4nm spacing is an integral weight, not another spectrum multiplier.
+Overflow in scaled or integrated values refuses publication. Native originals
+remain separately retained. Optional Argyll XYZ clamping changes only ipatch,
+never native XYZ or signed spectral samples.
+
+Each spectral capture compares two native quantities:
+
+  P_check = delta_lambda * sum(S_i), against the M5 radiometric integral;
+  Y_check = k_Argyll * delta_lambda * sum(S_i * ybar_i), against native D2 Y.
+
+The Y diagnostic reuses new_xsp2cie with the existing CIE1931 2-degree observer,
+icxIT_none and icxNoClamp. set_int_steps uses the native step and380..780nm;
+this is an inclusive rectangle diagnostic on the acquired grid. Argyll's source
+normalizer is0.683002lm/mW, approximately683lm/W. No duplicated observer table
+or MATLAB integrator is used. Native D2 remains the published XYZ source.
+
+Host policy compares ratios within0.9..1.1 when either side exceeds3e-4W/(sr m2)
+for radiance power,3e-4W/m2 for irradiance power, or0.2cd/m2 for luminance and
+0.2lux for illuminance. It refuses gross disagreement or an
+unformable discriminating ratio and reports the nearest scale factor, including
+1000,2,4 and the foot-lambert or footcandle conversion as applicable.
+If both comparisons are below their floors,
+the check is inconclusive and the declared spectrum may still be published,
+with that verdict retained. Dim agreement cannot determine scale. The manual
+defines the M5 integral from the same reported samples, so P_check agreement
+cannot determine scale either; it guards parsing and that definition, and its
+disagreement still refuses. Only a discriminating Y_check against native D2
+makes the verdict consistent; agreement on P_check alone is inconclusive. These floors
+and tolerances are host policy, not optical accuracy or manufacturer guarantees.
+
+Example: a constructed PR-670 radiance spectrum containing1e-4W/(sr m2 nm) at every one
+of201 samples has an inclusive radiometric check of0.0402W/(sr m2). Argyll
+receives0.1mW/(sr m2 nm) at each native bin. Matching M5/D2 values can establish
+software consistency under this interpretation, not physical calibration.
+For ambient, the same numeric bins instead declare1e-4W/(m2 nm), yield an
+inclusive0.0402W/m2 integral and publish0.1mW/(m2 nm) per bin. Its Argyll observer
+integral is compared with same-exposure native illuminance in lux, using the
+footcandle factor when SU reports English. No extra exposure is requested.
+
+The capture keeps native parsed/complete flags, raw replies, reported setup,
+independent comparison results, refusal text and successful-publication state.
+No missing component is a valid zero. A complete native observation with refused
+mapping is not an exposure failure, although read_sample cannot publish ipatch.
+
+Settings and timing
+-------------------
+
+The normal read preserves exposure and existing synchronization unless Argyll
+explicitly requests an override. inst_opt_set_averages sets SN1..99; zero clears
+the host override and never sends SN0. Refresh/no-refresh modes select SS1/SS0;
+an explicit integral20..150Hz set_refr_rate selects SK plus SS3. The narrower
+range follows Argyll's generic contract. Zero invalidates a host rate without
+sending SK000. Fractional59.94Hz is refused, not silently rounded.
+
+Nonadaptive mode requires an already reported Fixed exposure, and the default
+adaptive spot/tele mode an already reported Adaptive one. Ambient carries no
+adaptivity promise and honors either reported Fixed or Adaptive exposure under
+the same budget rules; an explicit nonadaptive modifier is unsupported there.
+The driver never writes SE, so
+an operator's exposure is never silently replaced. The generic
+minimum-integration-time API is not misused as a fixed exposure setter. Optics,
+aperture, sensitivity,Smart Dark,units,observer and shutter controls are not
+new application-only vtable extensions. Calibration masks describe no implemented
+host calibration operation, not verified factory calibration.
+
+Read preflight validates the complete target, geometry and known budget before
+the first setter. Each setter has independent D601/D602 readback. Collateral
+publication-context changes refuse the remaining plan. Final geometry and the
+effective target are revalidated before M. After M, reported optics,observer,
+units,exposure,averaging,opaque Gain and configured User frequency must retain
+their material declarations. A changed D116 row cannot evade the geometry gate
+merely because its ID stayed the same.
+
+The baseline measurement allowance is300s. Host budget policy is at least
+cycles*(2*exposure_seconds + sync_period_seconds)+5s. Count a dark per cycle:
+SZ has no independent implemented readback, and Smart Dark does not prove SZ1.
+Auto sync uses the documented20Hz lower bound for its period. Adaptive exposure
+uses6s for PR-655 and confirmed Standard PR-670,30s for Extended or unknown
+PR-670 sensitivity. Fixed exposure above6000ms requires known Extended state.
+These are conservative host policies; firmware detection,dark and transfer
+timing remain unqualified. The native driver can choose a larger budget; an
+enclosing consumer must admit that allowance before settings or exposure.
+
+No automatic retry, sync-mode recovery, error clearing, echo toggle, factory
+reset, calibration-data write or undocumented abort occurs. Partial writes,
+incomplete/malformed replies and uncertain exposure failures quarantine the
+connection. A new deliberate connection is required before another request.
+
+Sources and software checks
+---------------------------
+
+Photo Research, PR-655/PR-670 User Manual, document9903-0006-65 Rev.B,2009-07-29:
+printed pp.98,102-104,107-116,118-122,126-127. Source facts are paraphrased;
+the manufacturer's text, example tables and manual are not redistributed.
+The existing MATLAB driver's behavior was inspected; its implementation and
+third-party MATLAB mathematical expressions were not copied into this code.
+
+ArgyllCMS3.5.0 inst.h,icoms.h and xicc/xspect.h define the interface and emission
+units; xicc/xspect.c owns observer data and the diagnostic integral. Existing
+driver allocation,error,trigger and locking patterns inform this inst adapter.
+BIPM/CIE, Principles Governing Photometry,G1-2019, sections3,6 and8-9 describe
+the photometric convention. NIST Special Publication811 describes conventional
+photometric units, including foot-lambert and international-foot conversion.
+
+  https://www.bipm.org/documents/20126/52718503/G1-2019.pdf
+  https://www.nist.gov/pml/special-publication-811
+
+The isolated engine and driver tests use production C over constructed icoms
+transcripts and an injected monotonic clock. They link no OS instrument transport.
+They are software tests only. Normal Jam compilation may link spotread,dispread
+and dispcal without executing any of them. Consult the test runners' exact
+scope before calling a build a platform or physical qualification.
+
+Licence
+
+Copyright 2026 Fernando Voltolini de Azambuja.
+SPDX-License-Identifier: GPL-2.0-or-later
+This material is licensed under the GNU GENERAL PUBLIC LICENSE Version 2 or
+later; see License2.txt. The manufacturer manual is not included.
