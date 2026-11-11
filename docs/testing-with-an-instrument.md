@@ -106,6 +106,7 @@ paths. Share a minimal redacted copy, retain the original locally, and do not
 claim a manually redacted hash-bound record still authenticates. Send serials
 only through an agreed private channel when specifically needed.
 
-Use the instrument-result issue template in this repository when hosting exists.
+Use the [instrument-result issue template](https://github.com/ferazambuja/color-measurement-app/issues/new?template=instrument-result.md)
+in this repository.
 Report bundled-driver problems here, not to ArgyllCMS upstream. Security reports
 follow [SECURITY.md](../SECURITY.md).

@@ -5,17 +5,17 @@ instrument use are separate facts. None establishes optical accuracy.
 
 | Platform | Application route | Native backend recipe | Physical qualification |
 | --- | --- | --- | --- |
-| Apple silicon/macOS 27+ | Planned standalone download; source desktop host | macOS USB/HID/serial | None |
+| Apple silicon/macOS 27+ | [Standalone beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.1); source desktop host | macOS USB/HID/serial | None |
 | Intel/older macOS | Attempt source setup; host/dependency compatibility unqualified | macOS recipe, target result must be reported | None |
-| Linux x64 | Qt desktop source, CLI and Python API; binary qualification pending | USB and serial, no separate HID enumerator | None |
-| Windows x64 | Qt desktop source, CLI and Python API; binary qualification pending | Windows-GNU/MinGW-w64, libusb0, HID, serial | None |
+| Linux x64 | Experimental Qt desktop source, CLI and Python API; no download | USB and serial, no separate HID enumerator | None |
+| Windows x64 | Experimental Qt desktop source, CLI and Python API; no download | Windows-GNU/MinGW-w64, libusb0, HID, serial | None |
 | Other architectures/toolchains | Source investigation; no claimed backend qualification | Not established by another target's result | None |
 
 The stock catalog has 38 names; with the combined CR/PR contribution, the catalog has 43
 names. These are recognized names, not physical qualification.
 
-No binary release or community target report is published yet. CI configuration
-is a recipe, not proof of a successful run. Historical results apply to their
+The current binary release covers Apple silicon Macs only. No community target
+report is published yet. CI configuration is a recipe, not proof of a successful run. Historical results apply to their
 original source/target; they are not silently promoted to a new revision.
 
 ## Send a software report

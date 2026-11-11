@@ -5,8 +5,9 @@ and reviewing saved results. Feedback on installation, clear instructions and
 ordinary use is welcome. You do not need an instrument to try Demo.
 
 For installation and platform requirements, start with
-[getting started](getting-started.md). The desktop workspace currently runs on
-macOS; Windows and Linux use the command line and Python interfaces.
+[getting started](getting-started.md). The downloadable beta covers Apple silicon
+Macs. Windows and Linux have an experimental desktop source route, alongside
+the command-line and Python interfaces.
 
 ## Take your first Demo reading
 
@@ -116,7 +117,8 @@ We need reports about Demo, confusing controls, installation, saved-data review
 and instrument use. A short unsuccessful attempt can be as useful as a success.
 You do not need to run a compiler or the software test suite to report an app bug.
 
-Once repository hosting is available, choose **Software bug** for an application
+In the [issue chooser](https://github.com/ferazambuja/color-measurement-app/issues/new/choose),
+choose **Software bug** for an application
 problem, **Instrument session result** for an authorized equipment test, or
 **Platform software report** if you built and checked another platform.
 

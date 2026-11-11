@@ -1,16 +1,19 @@
 # Getting started
 
 This is a beta looking for testers. Start with Demo before connecting equipment.
-No binary release is published at present; the source route below is available now.
+The [macOS beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.1)
+is available for Apple silicon Macs. Windows and Linux users can try the
+experimental source route below.
 
 ## Standalone macOS test release
 
-The planned prebuilt target is Apple silicon on macOS 27 or later. It includes
+The prebuilt target is Apple silicon on macOS 27 or later. It includes
 Python, the workspace, numerical libraries and authenticated instrument workers.
 It does not need a development checkout for ordinary use.
 
-When a release exists, obtain its app ZIP and checksum from that release's
-approved assets. Verify the downloaded bytes before extraction:
+Download the [app ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.1/Color-Measurement-0.1.0-macos-arm64.zip)
+and [SHA256SUMS](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.1/SHA256SUMS)
+from the beta release. Verify the downloaded bytes before extraction:
 
 ```sh
 shasum -a 256 Color-Measurement-0.1.0-macos-arm64.zip
@@ -19,7 +22,7 @@ shasum -a 256 Color-Measurement-0.1.0-macos-arm64.zip
 Compare the entire result with the published SHA-256 from a trusted release
 page; the release's `SHA256SUMS` lists the value for each asset. A checksum
 detects changed bytes relative to that value; it does not identify a publisher.
-Extract the ZIP and put the app in a suitable local folder.
+Extract the ZIP and move **Color Measurement.app** to your Applications folder.
 
 The bounded test release is ad-hoc signed, not Developer ID signed or notarized.
 If macOS blocks launch, first try opening the app, then use System Settings >
@@ -63,7 +66,7 @@ uv run --locked --extra app color-measurement-app
 ```
 
 The same Qt host is implemented for macOS, Windows and Linux. Windows/Linux
-packaging is under test, and no binary download is published. Check the
+desktop builds are experimental, and no Windows/Linux binary download is published. Check the
 [platform requirements](platforms.md#desktop-runtime-requirements) first.
 Node.js is needed for software tests
 and renderer regeneration, not normal runtime.

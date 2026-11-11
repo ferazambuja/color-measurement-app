@@ -25,12 +25,14 @@ use real equipment only after reading the [instrument guide](docs/testing-with-a
 
 ## Try it
 
-- **Apple silicon Mac, macOS 27 or later:** a standalone beta download is planned.
-  No binary download is published yet. Follow [getting started](docs/getting-started.md)
-  for the source route and, when a download is available, verification and first launch.
+- **Apple silicon Mac, macOS 27 or later:** download the
+  [macOS beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.1).
+  Follow [getting started](docs/getting-started.md) to verify the download and open it.
+  This early beta is ad-hoc signed and is not notarized; macOS may require a
+  one-time approval for this app.
 - **Build and report:** Windows and Linux now have the same desktop workspace
-  in source, alongside the CLI and Python API. These desktop targets are under
-  test; no Windows/Linux binary is published yet. Other Macs can attempt the source route; compatibility with Intel Macs or older
+  in source, alongside the CLI and Python API. These desktop targets are experimental;
+  no Windows/Linux binary is published. Other Macs can attempt the source route; compatibility with Intel Macs or older
   macOS is not confirmed. See [platforms and reporting](docs/platforms.md).
 - **Contribute:** use the [setup checklist and contribution workflow](CONTRIBUTING.md).
 
@@ -57,9 +59,9 @@ reopen the saved folder. Tell us which instructions were unclear, whether the
 plots and controls worked, and whether your saved results reopened correctly.
 Setup failures and confusing behavior are useful reports too.
 
-Use the [feedback checklist](docs/user-guide.md#send-beta-feedback). Once repository
-hosting is available, the issue templates cover software bugs, platform reports
-and instrument tests. Remove personal paths, names, notes, serial numbers and
+Use the [feedback checklist](docs/user-guide.md#send-beta-feedback) and choose an
+[issue template](https://github.com/ferazambuja/color-measurement-app/issues/new/choose)
+for a software bug, platform report or instrument test. Remove personal paths, names, notes, serial numbers and
 confidential measurements from any screenshots or files you share.
 
 ### Test with an instrument
@@ -93,7 +95,8 @@ also include Qt/PySide and Python/numerical runtimes with their own
 [notices and source requirements](tools/desktop_runtime_licenses/NOTICE.md). Source distributions
 and packaged runtimes have different component inventories. Retain their notices.
 
-Report this application's problems to its hosting repository when available.
+Report this application's problems in
+[this repository](https://github.com/ferazambuja/color-measurement-app/issues).
 That includes the bundled CR/PR drivers and Argyll repairs; do not report them to
 ArgyllCMS upstream. Read [security reporting](SECURITY.md) before posting sensitive
 information. Neither the included driver contributions nor an application release
