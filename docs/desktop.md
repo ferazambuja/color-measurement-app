@@ -124,7 +124,7 @@ the measurement dock points to recovery without repeating the technical error.
 
 ## Inspect saved data and export
 
-In **Batch**, choose **Open saved data** and select a batch folder or a declared
+In **Batch**, choose **Open saved batch…** and select a batch folder or a declared
 whole-batch MAT archive. Readings appear in the same plots and table. The header
 names the read-only review and offers **Return to live**; your live batch,
 annotation drafts and save recovery remain with their original owner.
@@ -184,7 +184,13 @@ receives an ad-hoc signature without recursively changing worker signatures.
 and portable worker-report digest. The builder checks every application code
 object and resource against its source without executing that code. Application
 bytecode uses PyInstaller's relative filenames; old interpreter caches are not
-copied. For the ad-hoc beta, the Qt renderer helper retains Qt's original non-hardened
+copied. A uv-managed interpreter records its home-folder install location in
+Python's frozen `sysconfig` data; after checking that module against the
+interpreter's source, the builder restores python-build-standalone's `/install`
+placeholder there. It then refuses a package whose files record a home-folder
+interpreter or environment location.
+
+For the ad-hoc beta, the Qt renderer helper retains Qt's original non-hardened
 ad-hoc signing policy; PyInstaller otherwise adds library validation without a
 Team ID, which prevents that helper from loading the bundled Qt framework. This
 affects only the packaged helper and its framework. Notarization requires the

@@ -22,7 +22,10 @@ Windows GUI executable by running PyInstaller against Mac libraries.
 Use `tools/build_desktop_app.py` as described in the [desktop reference](desktop.md#build-a-standalone-application).
 The builder uses the same host on every OS, checks application code/resources,
 and authenticates both workers and their notices without executing them.
-A real package launch and Demo session still need their own target result.
+Build a delivered package without `tools/build_desktop_app.py --candidate`: that option
+names a side-by-side candidate, and renaming its bundle afterwards keeps the
+candidate executable name. A real package launch and Demo session still need
+their own target result.
 Check a normal user account without development paths or installed Python.
 Keep this separate from testing physical equipment.
 

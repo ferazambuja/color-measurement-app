@@ -55,8 +55,9 @@ needs its actual reason recorded. Missing compilers/sanitizers/dependencies,
 unexplained skips or missing inputs remain findings. Do not rename a partial
 result "full form passed" or suppress skips to obtain a preferred label.
 
-Submit through the platform-report issue template once repository hosting is
-available. Reports remain unverified until reviewed. With consent, a reviewed
+Submit through the
+[platform-report issue template](https://github.com/ferazambuja/color-measurement-app/issues/new?template=platform-report.md).
+Reports remain unverified until reviewed. With consent, a reviewed
 entry can credit the reporter's chosen public handle and exact tested commit.
 An instrument report uses the separate [instrument procedure](testing-with-an-instrument.md).
 

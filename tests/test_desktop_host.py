@@ -2,6 +2,7 @@
 
 import json
 import math
+import sys
 from copy import deepcopy
 from uuid import uuid4
 
@@ -2833,6 +2834,86 @@ def test_frozen_code_is_checked_against_source_without_import_or_execution(tmp_p
     else:
         with pytest.raises(ValueError):
             functions["verify_package_code"](app, source)
+
+
+@pytest.mark.parametrize("fault", [None, "changed", "symlink"])
+def test_frozen_sysconfig_drops_a_home_interpreter_prefix_and_refuses_build_paths(
+    tmp_path, fault
+):
+    import importlib.util
+    import marshal
+    import runpy
+    from pathlib import Path
+
+    functions = runpy.run_path(
+        str(Path(__file__).resolve().parents[1] / "tools/build_desktop_app.py")
+    )
+    prefix = "/home/builder/.local/share/uv/python/cpython-3.11-linux"
+    source = (
+        "build_time_vars = {'prefix': %r, 'LIBDIR': %r, 'CC': 'clang'}\n"
+        % (prefix, prefix + "/lib")
+    ).encode()
+    app = tmp_path / "application"
+    (app / "_internal").mkdir(parents=True)
+    frozen = app / "_internal/_sysconfigdata__linux_x86_64-linux-gnu.pyc"
+    compiled = source if fault != "changed" else source.replace(b"clang", b"gcc")
+    frozen.write_bytes(
+        importlib.util.MAGIC_NUMBER
+        + (1).to_bytes(4, "little")
+        + importlib.util.source_hash(compiled)
+        + marshal.dumps(compile(compiled, frozen.with_suffix(".py").name, "exec"))
+    )
+    with pytest.raises(ValueError, match="build-host path: _internal/_sysconfigdata_"):
+        functions["refuse_build_paths"](app, [prefix])
+    if fault == "symlink":
+        external = tmp_path / "external.pyc"
+        frozen.rename(external)
+        try:
+            frozen.symlink_to(external)
+        except OSError as error:
+            pytest.skip(f"Account cannot create source-escape fixture: {error}")
+    if fault:
+        with pytest.raises(ValueError, match="sysconfig data"):
+            functions["replace_frozen_prefix"](frozen, source, prefix)
+        return
+    functions["replace_frozen_prefix"](frozen, source, prefix)
+    functions["refuse_build_paths"](app, [prefix])
+    raw = frozen.read_bytes()
+    namespace = {}
+    exec(marshal.loads(raw[16:]), namespace)
+    assert namespace["build_time_vars"] == {
+        "prefix": "/install", "LIBDIR": "/install/lib", "CC": "clang"
+    }
+    patched = source.replace(prefix.encode(), b"/install")
+    assert raw[4:16] == (1).to_bytes(4, "little") + importlib.util.source_hash(patched)
+
+
+@pytest.mark.skipif(sys.platform == "win32", reason="Windows sysconfig has no data module")
+def test_frozen_sysconfig_of_this_interpreter_keeps_no_home_prefix(tmp_path):
+    import importlib.util
+    import marshal
+    import runpy
+    from pathlib import Path
+
+    functions = runpy.run_path(
+        str(Path(__file__).resolve().parents[1] / "tools/build_desktop_app.py")
+    )
+    data = functions["sysconfig_data"]()
+    source = Path(data.__file__).read_bytes()
+    app = tmp_path / "application"
+    (app / "_internal").mkdir(parents=True)
+    frozen = app / "_internal" / (data.__name__ + ".pyc")
+    frozen.write_bytes(
+        importlib.util.MAGIC_NUMBER
+        + (1).to_bytes(4, "little")
+        + importlib.util.source_hash(source)
+        + marshal.dumps(compile(source, frozen.with_suffix(".py").name, "exec"))
+    )
+    functions["neutralize_sysconfig"](app)
+    prefix = data.build_time_vars["prefix"].encode()
+    home = prefix in [p.encode() for p in functions["home_interpreter_prefixes"]()]
+    assert (prefix in frozen.read_bytes()) is not home
+    functions["refuse_build_paths"](app, functions["home_interpreter_prefixes"]())
 
 
 def test_repeated_renderer_crashes_stop_reloading_and_keep_the_owner(tmp_path, harness):

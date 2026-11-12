@@ -13,23 +13,33 @@ It does not need a development checkout for ordinary use.
 
 Download the [app ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.1/Color-Measurement-0.1.0-macos-arm64.zip)
 and [SHA256SUMS](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.1/SHA256SUMS)
-from the beta release. Verify the downloaded bytes before extraction:
+from the beta release. Verify the ZIP before extracting it. Safari opens
+downloaded ZIP files by default: it extracts the app and moves the ZIP to the
+Trash. To verify first, turn off **Open “safe” files after downloading** in
+Safari Settings > General before downloading, or drag the ZIP back from the
+Trash. In the folder that holds both downloads, run:
 
 ```sh
-shasum -a 256 Color-Measurement-0.1.0-macos-arm64.zip
+shasum -a 256 -c --ignore-missing SHA256SUMS
 ```
 
-Compare the entire result with the published SHA-256 from a trusted release
-page; the release's `SHA256SUMS` lists the value for each asset. A checksum
-detects changed bytes relative to that value; it does not identify a publisher.
-Extract the ZIP and move **Color Measurement.app** to your Applications folder.
+It must print `Color-Measurement-0.1.0-macos-arm64.zip: OK`; it fails when no
+listed file is present. You can also compare the output of
+`shasum -a 256 Color-Measurement-0.1.0-macos-arm64.zip` with the SHA-256 shown
+beside that asset on the release page. A checksum detects changed bytes relative
+to the published value; it does not identify a publisher. Extract the ZIP and
+move **Color Measurement.app** to your Applications folder before opening it.
 
-The bounded test release is ad-hoc signed, not Developer ID signed or notarized.
-If macOS blocks launch, first try opening the app, then use System Settings >
-Privacy & Security > Open Anyway and confirm the identified app. See
-[Apple's instructions](https://support.apple.com/en-us/102445). Stop if its origin
-or checksum is uncertain. Do not disable Gatekeeper, remove quarantine recursively
-or run the app with `sudo`. Notarization is required before wider distribution.
+This test release is ad-hoc signed, not Developer ID signed or notarized, so
+macOS blocks the first launch of a downloaded copy. Open the app once. When
+macOS says it could not verify **Color Measurement.app**, choose **Done**, not
+**Move to Trash**. Then open System Settings > Privacy & Security, scroll down
+and choose **Open Anyway** for Color Measurement. When the warning reappears,
+choose **Open** only if the app came from this release and its checksum matched.
+See [Apple's instructions](https://support.apple.com/en-us/102445). Stop if its
+origin or checksum is uncertain. Do not disable Gatekeeper, remove quarantine
+recursively or run the app with `sudo`. Notarization is required before wider
+distribution.
 
 Choose **Try Demo**, select the Demo instrument and a mode, then **Create batch**
 in a new folder. Acquire a simulated reading,

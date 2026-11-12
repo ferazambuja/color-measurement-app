@@ -249,6 +249,83 @@ def verify_package_code(application, source, *, report_sha256=None):
     return inventory
 
 
+def sysconfig_data():
+    """The interpreter's generated build-data module; Windows has none."""
+    import sysconfig
+
+    if os.name == "nt":
+        return None
+    return importlib.import_module(sysconfig._get_sysconfigdata_name())
+
+
+def home_interpreter_prefixes():
+    """Interpreter/environment locations in the builder's home, e.g. uv-managed Python."""
+    data = sysconfig_data()
+    prefixes = {sys.prefix, sys.base_prefix}
+    if data is not None:
+        prefixes.add(data.build_time_vars["prefix"])
+    home = Path.home().resolve()
+    return sorted(p for p in prefixes if p and Path(p).resolve().is_relative_to(home))
+
+
+def neutralize_sysconfig(application):
+    """Remove a home-folder interpreter prefix from the frozen sysconfig data module.
+
+    uv records its managed interpreter's install location there, and PyInstaller
+    freezes the module unchanged, so the package would publish the builder's home
+    path. The frozen runtime does not use those build-time paths. Restore the
+    python-build-standalone placeholder only after the frozen code is shown to
+    equal the interpreter's own source, so nothing else is rewritten.
+    """
+    data = sysconfig_data()
+    if data is None:
+        return
+    frozen = package_root(application) / (data.__name__ + ".pyc")
+    if not frozen.exists() and not frozen.is_symlink():
+        return
+    prefix = data.build_time_vars["prefix"]
+    if prefix in home_interpreter_prefixes():
+        replace_frozen_prefix(frozen, Path(data.__file__).read_bytes(), prefix)
+
+
+def replace_frozen_prefix(frozen, source, prefix, neutral="/install"):
+    """Rewrite one frozen module's string paths after checking it against its source."""
+    import importlib.util
+
+    frozen = Path(frozen)
+    if frozen.is_symlink():
+        raise ValueError("Frozen sysconfig data must not be a symlink")
+    raw = frozen.read_bytes()
+    filename = frozen.with_suffix(".py").name
+    stream = io.BytesIO(raw[16:])
+    if (
+        raw[:4] != importlib.util.MAGIC_NUMBER
+        or marshal.load(stream) != compile(source, filename, "exec", optimize=0)
+        or stream.read()
+    ):
+        raise ValueError("Frozen sysconfig data differs from the build interpreter")
+    patched = source.replace(prefix.encode("utf-8"), neutral.encode("utf-8"))
+    # Hash-based pycs (flag bit 0) carry the source hash; timestamp pycs keep theirs.
+    flags = raw[4:8]
+    check = importlib.util.source_hash(patched) if flags[0] & 1 else raw[8:16]
+    code = compile(patched, filename, "exec", optimize=0)
+    frozen.write_bytes(raw[:4] + flags + check + marshal.dumps(code))
+
+
+def refuse_build_paths(application, paths):
+    """Refuse a package whose files record any of these build-host paths."""
+    application = Path(application)
+    markers = sorted({os.fsencode(str(path)) for path in paths if str(path)})
+    for path in sorted(application.rglob("*")):
+        if path.is_symlink() or not path.is_file():
+            continue
+        content = path.read_bytes()
+        if any(marker in content for marker in markers):
+            raise ValueError(
+                "Package records a build-host path: " + path.relative_to(application).as_posix()
+            )
+
+
 def runtime_notices(root, destination):
     """Retain actual wheel notices and the authenticated Qt/Python license texts."""
     destination.mkdir(parents=True)
@@ -454,6 +531,7 @@ def main():
             ]
         command += [str(root / "tools" / "desktop_entry.py")]
         subprocess.run(command, cwd=staging, check=True)
+        neutralize_sysconfig(application)
         inventory = verify_package_code(
             application, root / "src" / "color_measurement", report_sha256=prepared["report_sha256"]
         )
@@ -486,6 +564,9 @@ def main():
             )
             path.write_bytes(plistlib.dumps(info))
         install_instrument_software(application, prepared)
+        # Exact home-folder interpreter/environment paths only: a short checkout
+        # path such as the Linux container's /project also occurs in wheels.
+        refuse_build_paths(application, home_interpreter_prefixes())
         if sys.platform == "darwin":
             # BUNDLE has copied the owned COLLECT directory. Keep one application.
             shutil.rmtree(output / name)
