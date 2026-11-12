@@ -629,3 +629,216 @@ def test_a_failed_gate_offers_to_stop_the_device(owners, tmp_path):
     steps = [record["step"] for record in bench.read_records(tmp_path / "g")]
     assert steps == ["preflight", "initialize"]
     assert any("Stopped this device" in line for line in said)
+
+
+@pytest.mark.parametrize("fault", [None, "candidate", "executable", "bundle_id", "version"])
+def test_release_preparation_refuses_renamed_or_inconsistent_distribution(tmp_path, fault):
+    import prepare_beta_assets as prepare
+
+    app = tmp_path / "Color Measurement.app"
+    contents = app / "Contents"
+    (contents / "MacOS").mkdir(parents=True)
+    (contents / "MacOS/Color Measurement").write_bytes(b"inert, never run")
+    metadata = dict(application_name="Color Measurement", version="0.1.0", system="Darwin",
+                    instrument_report_sha256="a" * 64)
+    info = dict(CFBundleName="Color Measurement", CFBundleExecutable="Color Measurement",
+                CFBundleIdentifier="io.github.ferazambuja.colormeasurement",
+                CFBundleVersion="0.1.0", CFBundleShortVersionString="0.1.0",
+                LSMinimumSystemVersion="27.0",
+                CMInstrumentSoftwareReportSHA256="a" * 64)
+    if fault == "candidate":
+        metadata["application_name"] = "Color Measurement Candidate"
+    elif fault == "executable":
+        info["CFBundleExecutable"] = "Color Measurement Candidate"
+    elif fault == "bundle_id":
+        info["CFBundleIdentifier"] += ".candidate"
+    elif fault == "version":
+        info["CFBundleVersion"] = "unrelated"
+    (contents / "Info.plist").write_bytes(plistlib.dumps(info))
+    if fault:
+        with pytest.raises(ValueError, match="distribution|Distribution"):
+            prepare.verify_distribution_identity(app, metadata)
+    else:
+        prepare.verify_distribution_identity(app, metadata)
+
+
+@pytest.mark.parametrize("fault", [
+    None, "missing", "extra", "changed", "duplicate", "link", "directory_escape",
+])
+def test_release_source_check_compares_all_tracked_bytes(tmp_path, fault):
+    import io
+    import subprocess
+    import tarfile
+
+    import prepare_beta_assets as prepare
+
+    root = tmp_path / "source"
+    root.mkdir()
+    subprocess.run(["git", "init", "-q", str(root)], check=True)
+    files = {".gitignore": b"local/\n", "module.py": b"value = 1\n"}
+    for name, data in {**files, ".gitattributes": b"* text=auto\n"}.items():
+        (root / name).write_bytes(data)
+    subprocess.run(["git", "add", "."], cwd=root, check=True)
+    archived = {**files, "PKG-INFO": b"Name: synthetic\n"}
+    if fault == "missing":
+        archived.pop(".gitignore")
+    elif fault == "extra":
+        archived["unexpected.py"] = b"pass\n"
+    elif fault == "changed":
+        archived["module.py"] = b"value = 2\n"
+    archive = tmp_path / "color_measurement-0.1.0.tar.gz"
+    with tarfile.open(archive, "w:gz") as stream:
+        for name, data in archived.items():
+            entry = tarfile.TarInfo("color_measurement-0.1.0/" + name)
+            entry.size = len(data)
+            stream.addfile(entry, io.BytesIO(data))
+        if fault in {"duplicate", "link"}:
+            entry = tarfile.TarInfo("color_measurement-0.1.0/module.py")
+            if fault == "link":
+                entry.type = tarfile.SYMTYPE
+                entry.linkname = "/outside"
+            stream.addfile(entry)
+        if fault == "directory_escape":
+            entry = tarfile.TarInfo("color_measurement-0.1.0/../../outside")
+            entry.type = tarfile.DIRTYPE
+            stream.addfile(entry)
+    if fault:
+        with pytest.raises(ValueError, match="Source distribution"):
+            prepare.verify_source_distribution(archive, root)
+    else:
+        prepare.verify_source_distribution(archive, root)
+
+
+@pytest.mark.parametrize("fault", [None, "identity", "source_receipt"])
+def test_release_assets_bind_code_workers_sources_and_generated_records(
+    tmp_path, monkeypatch, packaged_app, fault,
+):
+    import marshal
+    import platform
+    import shutil
+
+    import prepare_beta_assets as prepare
+
+    app, report = packaged_app
+    app = app.rename(app.with_name("Color Measurement.app"))
+    resources = app / "Contents/Resources"
+    report = resources / "instrument-software/report.json"
+    original = tmp_path / "original-report.json"
+    original.write_text('{"original": "native receipt"}\n')
+    receipt = json.loads(report.read_bytes())
+    receipt["source_report_sha256"] = prepare.sha256(original)
+    report.write_text(json.dumps(receipt))
+    digest = prepare.sha256(report)
+    metadata_path = resources / "PACKAGE.json"
+    metadata = json.loads(metadata_path.read_bytes())
+    metadata.update(application_name="Color Measurement", version="0.1.0",
+                    system=platform.system(), architecture=platform.machine(),
+                    instrument_report_sha256=digest)
+    metadata_path.write_text(json.dumps(metadata))
+    info = dict(CFBundleName="Color Measurement", CFBundleExecutable="Color Measurement",
+                CFBundleIdentifier="io.github.ferazambuja.colormeasurement",
+                CFBundleVersion="0.1.0", CFBundleShortVersionString="0.1.0",
+                LSMinimumSystemVersion="27.0",
+                CMInstrumentSoftwareReportSHA256=digest)
+    (app / "Contents/Info.plist").write_bytes(plistlib.dumps(info))
+    (app / "Contents/MacOS").mkdir()
+    (app / "Contents/MacOS/Color Measurement").write_bytes(b"inert, never run")
+    identity = app / "Contents/Frameworks/color_measurement/_packaged_identity.pyc"
+    code = "REPORT_SHA256 = " + repr("b" * 64 if fault == "identity" else digest) + "\n"
+    identity.write_bytes(importlib.util.MAGIC_NUMBER + b"\0" * 12 +
+                         marshal.dumps(compile(code, "_packaged_identity.py", "exec")))
+    if fault == "source_receipt":
+        original.write_text("changed receipt")
+    sources = tmp_path / "sources"
+    sources.mkdir()
+    names = ["color_measurement-0.1.0.tar.gz", "Argyll_V3.5.0_src.zip",
+             "qt-source.tar.xz", "pyside-source.tar.xz"]
+    for name in names:
+        (sources / name).write_bytes(b"synthetic attachment")
+    # Archive verification has its own byte-comparison tests. This exercises the
+    # real package authentication, compiled identity, archiver and emitted records.
+    monkeypatch.setattr(prepare, "corresponding_sources",
+                        lambda directory, version: [sources / name for name in names])
+    monkeypatch.setattr(prepare, "home_interpreter_prefixes", lambda: [])
+    if platform.system() != "Darwin":
+        app = app.rename(app.with_name("Color Measurement"))
+        contents = app / "Contents"
+        resources = contents / "Resources"
+        shutil.copytree(contents / "Frameworks/color_measurement",
+                        resources / "color_measurement", dirs_exist_ok=True)
+        resources.rename(app / "_internal")
+        shutil.rmtree(contents)
+        executable = "Color Measurement" + (".exe" if sys.platform == "win32" else "")
+        (app / executable).write_bytes(b"inert, never run")
+    monkeypatch.setattr(prepare.subprocess, "check_output", lambda command, **kwargs:
+                        "" if "status" in command else "a" * 40 + "\n")
+    output = tmp_path / "assets"
+    monkeypatch.setattr(sys, "argv", ["prepare_beta_assets.py", "--application", str(app),
+                        "--native-report", str(original), "--source-directory", str(sources),
+                        "--output", str(output)])
+    # Use the standard library archiver so this inert test also runs off macOS.
+    def archive_application(command, **kwargs):
+        import zipfile
+        with zipfile.ZipFile(command[-1], "w") as zipped:
+            for path in app.rglob("*"):
+                if path.is_file():
+                    zipped.write(path, path.relative_to(app.parent))
+    monkeypatch.setattr(prepare.subprocess, "run", archive_application)
+    if fault:
+        with pytest.raises(ValueError, match="worker identity|Original native report"):
+            prepare.main()
+        assert not output.exists()
+        return
+    prepare.main()
+    assert len(list(output.iterdir())) == 8
+    assert not (output / "README.txt").exists()
+    manifest = json.loads((output / "SOURCE-MANIFEST.json").read_bytes())
+    system = {"Darwin": "macos"}.get(platform.system(), platform.system().lower())
+    architecture = {"amd64": "x86_64", "aarch64": "arm64"}.get(
+        platform.machine().lower(), platform.machine().lower())
+    extension = ".zip" if platform.system() in {"Darwin", "Windows"} else ".tar.gz"
+    assert manifest["archive"] == f"Color-Measurement-0.1.0-{system}-{architecture}{extension}"
+    assert manifest["archive_sha256"] == prepare.sha256(output / manifest["archive"])
+    assert manifest["corresponding_source"] == {
+        name: prepare.sha256(sources / name) for name in names
+    }
+    assert manifest["package"]["instrument_report_sha256"] == digest
+    if platform.system() == "Darwin":
+        assert manifest["minimum_macos"] == "27.0"
+        assert manifest["signing"] == "ad-hoc" and manifest["notarized"] is False
+    release = (output / "RELEASE.txt").read_text()
+    assert manifest["commit"] in release and manifest["tree"] in release
+    checksums = (output / "SHA256SUMS").read_text().splitlines()
+    assert len(checksums) == 7
+    for line in checksums:
+        expected, name = line.split("  ", 1)
+        assert prepare.sha256(output / name) == expected
+
+
+@pytest.mark.parametrize("changed", [False, True])
+def test_release_source_set_requires_the_pinned_argyll_archive(tmp_path, monkeypatch, changed):
+    import prepare_beta_assets as prepare
+
+    from color_measurement import argyll_source
+
+    app = tmp_path / "color_measurement-0.1.0.tar.gz"
+    app.write_bytes(b"synthetic sdist")
+    argyll = tmp_path / "Argyll_V3.5.0_src.zip"
+    argyll.write_bytes(b"synthetic pinned Argyll")
+    monkeypatch.setattr(argyll_source, "ARCHIVE_SHA256", prepare.sha256(argyll))
+    if changed:
+        argyll.write_bytes(b"changed archive")
+    monkeypatch.setattr(prepare, "verify_sources", lambda directory: {"archives": [
+        {"filename": "qt.tar.xz"}, {"filename": "pyside.tar.xz"}]})
+    compared = []
+    monkeypatch.setattr(prepare, "verify_source_distribution",
+                        lambda archive, root: compared.append(archive))
+    if changed:
+        with pytest.raises(ValueError, match="Argyll source archive differs"):
+            prepare.corresponding_sources(tmp_path, "0.1.0")
+        assert compared == []
+    else:
+        paths = prepare.corresponding_sources(tmp_path, "0.1.0")
+        assert [path.name for path in paths] == [app.name, argyll.name,
+                                               "qt.tar.xz", "pyside.tar.xz"]
+        assert compared == [app]

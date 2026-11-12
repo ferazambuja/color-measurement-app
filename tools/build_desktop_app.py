@@ -541,6 +541,7 @@ def main():
                 dict(
                     format=1,
                     version=importlib.metadata.version("color-measurement"),
+                    application_name=name,
                     system=platform.system(),
                     architecture=platform.machine(),
                     python=platform.python_version(),

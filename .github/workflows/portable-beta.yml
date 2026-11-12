@@ -58,6 +58,10 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Build fixed Linux environment
         run: docker build --platform linux/amd64 -t cm-beta-linux -f tools/desktop_builder/linux.Dockerfile .
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: corresponding-source-${{ github.sha }}
+          path: local/beta/sources
       - name: Full software gate and target package without production execution
         run: |
           mkdir -p local/beta
@@ -68,15 +72,20 @@ jobs:
             echo "f8576ce5589fd15620abb73ff049ea31f55ddbd1bba6d1ffa87452658e7bc85f  local/beta/Argyll_V3.5.0_src.zip" | sha256sum --check
             uv run --locked --extra app python tools/test_all.py --require-mat --jobs 4 --argyll-archive local/beta/Argyll_V3.5.0_src.zip --argyll-contribution tools/native_argyll/contributions/cr_pr --native-output local/beta/native
             uv run --locked --extra app --group app-build python tools/build_desktop_app.py --instrument-build-report local/beta/native/report.json --output local/beta/application --build local/beta/build
-            uv run --locked python tools/prepare_beta_assets.py --application "local/beta/application/Color Measurement" --native-report local/beta/native/report.json --output local/beta/assets
+            uv run --locked python tools/prepare_beta_assets.py --application "local/beta/application/Color Measurement" --native-report local/beta/native/report.json --source-directory local/beta/sources --output local/beta/assets
           '
-      - name: Retain complete candidate and original gate report
+      # The corresponding-source artifact already retains the four large source
+      # attachments. Combine both artifacts before delivery; do not upload them twice.
+      - name: Retain candidate records and original gate report
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: linux-x64-candidate-${{ github.sha }}
           path: |
-            local/beta/assets/*
+            local/beta/assets/Color-Measurement-*
+            local/beta/assets/RELEASE.txt
+            local/beta/assets/SOURCE-MANIFEST.json
+            local/beta/assets/SHA256SUMS
             local/beta/native/report.json
             local/beta/native/**/*.log
           retention-days: 1
@@ -127,20 +136,29 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Full software gate without production execution
         run: uv run --locked --extra app python tools/test_all.py --require-mat --jobs 4 --argyll-archive local/beta/Argyll_V3.5.0_src.zip --argyll-contribution tools/native_argyll/contributions/cr_pr --native-output local/beta/native
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: corresponding-source-${{ github.sha }}
+          path: local/beta/sources
       - name: Freeze and source-check the target package
         shell: pwsh
         run: |
           uv run --locked --extra app --group app-build python tools/build_desktop_app.py --instrument-build-report local/beta/native/report.json --output local/beta/application --build local/beta/build
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          uv run --locked python tools/prepare_beta_assets.py --application "local/beta/application/Color Measurement" --native-report local/beta/native/report.json --output local/beta/assets
+          uv run --locked python tools/prepare_beta_assets.py --application "local/beta/application/Color Measurement" --native-report local/beta/native/report.json --source-directory local/beta/sources --output local/beta/assets
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - name: Retain complete candidate and original gate report
+      # The corresponding-source artifact already retains the four large source
+      # attachments. Combine both artifacts before delivery; do not upload them twice.
+      - name: Retain candidate records and original gate report
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: windows-x64-candidate-${{ github.sha }}
           path: |
-            local/beta/assets/*
+            local/beta/assets/Color-Measurement-*
+            local/beta/assets/RELEASE.txt
+            local/beta/assets/SOURCE-MANIFEST.json
+            local/beta/assets/SHA256SUMS
             local/beta/native/report.json
             local/beta/native/**/*.log
           retention-days: 1

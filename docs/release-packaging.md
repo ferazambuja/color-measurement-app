@@ -63,10 +63,39 @@ Qt, PySide, Python or native code rather than presenting modified dependencies
 as untouched upstream binaries. The imported Argyll and application components
 retain their separate license terms.
 
+## Prepare the complete asset set
+
+Use the same build interpreter, a clean committed checkout and an unused output
+folder. Put the matching app sdist, pinned Argyll ZIP and verified Qt/PySide source
+archives together in one source directory, then run:
+
+```sh
+uv run --locked --extra app --group app-build python tools/prepare_beta_assets.py \
+  --application "/path/to/Color Measurement.app" \
+  --native-report /path/to/production-build/report.json \
+  --source-directory /path/to/sources --output /path/to/assets
+```
+
+On Windows/Linux, select the complete `Color Measurement` application folder.
+The tool rejects Candidate builds, checks the frozen worker identity and compares
+the sdist with all included tracked source bytes. It authenticates workers
+without executing them, verifies the pinned dependency archives and includes all
+four source attachments. Unchanged large source archives can share storage by
+hard link. Keep their verified bytes immutable.
+
+The tool writes `RELEASE.txt`, `SOURCE-MANIFEST.json` and `SHA256SUMS` from the
+verified inputs. The manifest binds the app archive, source commit/tree, package
+inventory, worker report and all source-archive digests. Use those generated files
+for delivery; do not replace them with hand-written parallel records. This
+command prepares local files and never publishes them. In Actions, the candidate
+records and the `corresponding-source-<commit>` artifact are retained separately
+to avoid storing the large source archives twice. Combine them in one directory
+and verify `SHA256SUMS` before delivery.
+
 ## Inspect and release manually
 
-Verify the checksum file after extracting. Confirm the app opens without the
-checkout, that Demo can create, finish, reopen and export a batch, and that
+Verify the application archive against the checksum file before extracting.
+Confirm the app opens without the checkout, that Demo can create, finish, reopen and export a batch, and that
 Close handles pending changes and cleanup failures. Test renderer-crash
 recovery through a controlled software test. This does not authorize running
 production workers or using connected equipment.

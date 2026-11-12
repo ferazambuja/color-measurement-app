@@ -9,12 +9,20 @@ import hashlib
 import json
 import os
 import platform
+import plistlib
 import shutil
 import subprocess
+import tarfile
 import tomllib
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
-from build_desktop_app import package_root, verify_package_code
+from build_desktop_app import (
+    home_interpreter_prefixes,
+    package_root,
+    refuse_build_paths,
+    verify_package_code,
+)
+from collect_runtime_sources import verify_sources
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -24,10 +32,87 @@ def sha256(path):
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
+def verify_distribution_identity(application, metadata):
+    """A candidate renamed after freezing is not a distribution build."""
+    name = "Color Measurement"
+    if metadata.get("application_name") != name:
+        raise ValueError("Build a distribution without --candidate; do not rename it afterwards")
+    application = Path(application)
+    if (metadata["system"] == "Darwin") != (application.suffix == ".app"):
+        raise ValueError("Distribution layout differs from its target operating system")
+    if application.suffix == ".app":
+        info = plistlib.loads((application / "Contents/Info.plist").read_bytes())
+        expected = dict(
+            CFBundleExecutable=name,
+            CFBundleName=name,
+            CFBundleIdentifier="io.github.ferazambuja.colormeasurement",
+            CFBundleVersion=metadata["version"],
+            CFBundleShortVersionString=metadata["version"],
+            CMInstrumentSoftwareReportSHA256=metadata["instrument_report_sha256"],
+        )
+        if application.name != name + ".app" or any(
+            info.get(key) != value for key, value in expected.items()
+        ):
+            raise ValueError("Distribution bundle identity differs from its package metadata")
+        executable = application / "Contents/MacOS" / name
+    else:
+        if application.name != name:
+            raise ValueError("Distribution application folder has the wrong name")
+        executable = application / (name + (".exe" if metadata["system"] == "Windows" else ""))
+    if executable.is_symlink() or not executable.is_file():
+        raise ValueError("Distribution executable is missing or a symlink")
+
+
+def verify_source_distribution(archive, root):
+    """Compare archived bytes with every included tracked file, without extraction."""
+    root = Path(root)
+    tracked = subprocess.check_output(["git", "ls-files", "-z"], cwd=root).decode().split("\0")
+    expected = {name for name in tracked if name and name != ".gitattributes"}
+    with tarfile.open(archive, "r:gz") as source:
+        files = {}
+        prefix = Path(archive).name.removesuffix(".tar.gz") + "/"
+        for entry in source.getmembers():
+            if (entry.name != prefix.rstrip("/") and not entry.name.startswith(prefix)
+                    or ".." in PurePosixPath(entry.name).parts):
+                raise ValueError("Source distribution has an unexpected path")
+            if entry.isdir():
+                continue
+            if not entry.isfile() or not entry.name.startswith(prefix):
+                raise ValueError("Source distribution has an unexpected entry")
+            name = entry.name[len(prefix):]
+            if name in files:
+                raise ValueError("Source distribution has a duplicate entry")
+            files[name] = entry
+        if set(files) != expected | {"PKG-INFO"}:
+            raise ValueError("Source distribution inventory differs from tracked source")
+        for name in sorted(expected):
+            path = root / name
+            if path.is_symlink() or source.extractfile(files[name]).read() != path.read_bytes():
+                raise ValueError("Source distribution differs from this checkout: " + name)
+
+
+def corresponding_sources(directory, version, root=ROOT):
+    """Verify all four required source attachments before creating any assets."""
+    from color_measurement.argyll_source import ARCHIVE_SHA256
+
+    directory = Path(directory)
+    origin = verify_sources(directory)
+    argyll = directory / "Argyll_V3.5.0_src.zip"
+    if argyll.is_symlink() or sha256(argyll) != ARCHIVE_SHA256:
+        raise ValueError("Argyll source archive differs from the pinned archive")
+    app = directory / f"color_measurement-{version}.tar.gz"
+    if app.is_symlink():
+        raise ValueError("Application source archive must not be a symlink")
+    verify_source_distribution(app, root)
+    return [app, argyll, *(directory / item["filename"] for item in origin["archives"])]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--application", type=Path, required=True)
     parser.add_argument("--native-report", type=Path, required=True)
+    parser.add_argument("--source-directory", type=Path, required=True,
+                        help="Matching app sdist, pinned Argyll ZIP and Qt/PySide archives")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
@@ -48,8 +133,10 @@ def main():
             or metadata.get("system") != platform.system()
             or metadata.get("architecture") != platform.machine()):
         raise ValueError("Application metadata must match this source and target")
+    verify_distribution_identity(application, metadata)
     if metadata["package_sha256"] != verify_package_code(
-        application, ROOT / "src/color_measurement"
+        application, ROOT / "src/color_measurement",
+        report_sha256=metadata["instrument_report_sha256"],
     ):
         raise ValueError("Packaged source differs from this checkout")
     report = resources / "instrument-software/report.json"
@@ -58,10 +145,16 @@ def main():
     InstrumentBuild.from_report(report)  # Authentication only, never worker execution.
     if json.loads(report.read_bytes())["source_report_sha256"] != sha256(args.native_report):
         raise ValueError("Original native report differs from the package's retained identity")
+    refuse_build_paths(application, home_interpreter_prefixes())
+    sources = corresponding_sources(args.source_directory, version)
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     tree = subprocess.check_output(["git", "rev-parse", "HEAD^{tree}"], cwd=ROOT, text=True).strip()
     args.output.mkdir(parents=True)
-    target = metadata["system"].lower() + "-" + metadata["architecture"].lower()
+    system = {"Darwin": "macos"}.get(metadata["system"], metadata["system"].lower())
+    architecture = {"amd64": "x86_64", "aarch64": "arm64"}.get(
+        metadata["architecture"].lower(), metadata["architecture"].lower()
+    )
+    target = system + "-" + architecture
     name = f"Color-Measurement-{metadata['version']}-{target}"
     if platform.system() == "Darwin":
         archive = args.output / (name + ".zip")
@@ -87,6 +180,7 @@ def main():
             )
         )
     manifest = dict(
+        format=1,
         beta=True,
         commit=commit,
         tree=tree,
@@ -95,16 +189,40 @@ def main():
         archive_sha256=sha256(archive),
         native_report_sha256=sha256(args.native_report),
         production_workers_executed=False,
-        corresponding_source_artifact="corresponding-source-" + commit,
+        corresponding_source={path.name: sha256(path) for path in sources},
         corresponding_source_required=True,
     )
+    target_notice = "Windows/Linux packages are experimental.\n"
+    if metadata["system"] == "Darwin":
+        info = plistlib.loads((application / "Contents/Info.plist").read_bytes())
+        manifest.update(minimum_macos=info["LSMinimumSystemVersion"],
+                        signing="ad-hoc", notarized=False)
+        target_notice = (
+            f"Requires macOS {manifest['minimum_macos']} or later.\n"
+            "This beta is ad-hoc signed and is not notarized.\n"
+        )
+    for path in sources:
+        target_path = args.output / path.name
+        try:
+            os.link(path, target_path)
+        except OSError:
+            shutil.copy2(path, target_path)
     (args.output / "SOURCE-MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    (args.output / "README.txt").write_text(
-        "Color Measurement beta candidate. No physical instrument qualification.\n"
+    (args.output / "RELEASE.txt").write_text(
+        f"Color Measurement {version} beta ({target}). Testers wanted.\n"
+        f"Source commit: {commit}\nSource tree: {tree}\n\n"
+        + target_notice +
+        "Verify the application archive against SHA256SUMS before extracting.\n"
         "Keep the complete application folder together.\n"
-        "This binary is incomplete for distribution without the matching app, Argyll and "
-        "Qt/PySide Corresponding Source set named in SOURCE-MANIFEST.json.\n"
-        "No release was published by this preparation command.\n"
+        "Start with Demo; it is simulated and needs no instrument.\n"
+        "Physical instrument operation and accuracy have not been validated.\n"
+        "Unsigned/ad-hoc packages may be blocked by Gatekeeper or SmartScreen.\n"
+        "Use only app-specific approval; never disable system protections.\n"
+        "Guide: https://github.com/ferazambuja/color-measurement-app/blob/main/"
+        "docs/getting-started.md\n"
+        "Feedback: https://github.com/ferazambuja/color-measurement-app/issues/new/choose\n\n"
+        "Distribute all matching app, Argyll and Qt/PySide source attachments together.\n"
+        "SOURCE-MANIFEST.json binds their digests to this application archive.\n"
     )
     paths = sorted(args.output.iterdir())
     (args.output / "SHA256SUMS").write_text(
