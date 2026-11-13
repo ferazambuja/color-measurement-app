@@ -43,19 +43,25 @@ Each binary delivery must include these files together:
 - The complete runtime/application/native notices, a source manifest naming the
   commit/tree and worker report, and SHA-256 checksums for every asset.
 
-Download the runtime source set once and reuse it for both target packages:
+Collect the four source attachments in one new directory for each delivery
+commit, from that clean commit:
 
 ```sh
-uv run --locked python tools/collect_runtime_sources.py /path/to/runtime-sources
-uv run --locked python tools/collect_runtime_sources.py /path/to/runtime-sources --check
-uv build --sdist --out-dir /path/to/assets
+uv run --locked python tools/collect_runtime_sources.py /path/to/sources
+uv build --sdist --out-dir /path/to/sources
+cp /path/to/Argyll_V3.5.0_src.zip /path/to/sources/
 ```
 
-The Qt source archive is large. Keep one verified source set. Actions artifact
-storage can incur charges, including in public projects; the manual workflow
-retains candidate artifacts for one day. Public-repository artifacts are readable
-to repository readers. They are not private staging. A binary without its
-required source set is an incomplete candidate and must not be published.
+The Argyll ZIP is the pinned archive used by the native check. The Qt source
+archive is large: the collector downloads only missing archives, so hard-link
+already verified Qt/PySide archives into the new directory first. Never rebuild an
+sdist into an older set; its bytes may already be linked into earlier assets.
+
+Actions artifact storage can incur charges, including in public projects; the
+manual workflow retains candidate artifacts for one day. Public-repository
+artifacts are readable to repository readers. They are not private staging. A
+binary without its required source set is an incomplete candidate and must not
+be published.
 
 Qt is distributed as replaceable shared libraries. Retain that layout, the
 license/source notices and the right to debug modifications. Record changes to
@@ -79,9 +85,11 @@ uv run --locked --extra app --group app-build python tools/prepare_beta_assets.p
 On Windows/Linux, select the complete `Color Measurement` application folder.
 The tool rejects Candidate builds, checks the frozen worker identity and compares
 the sdist with all included tracked source bytes. It authenticates workers
-without executing them, verifies the pinned dependency archives and includes all
-four source attachments. Unchanged large source archives can share storage by
-hard link. Keep their verified bytes immutable.
+without executing them. On macOS it requires an intact ad-hoc seal over the whole
+bundle, the only post-build check of third-party runtime files. It verifies the
+pinned dependency archives and includes all four source attachments, refusing a
+delivered copy whose bytes differ from the verified ones. Unchanged large source
+archives can share storage by hard link. Keep their verified bytes immutable.
 
 The tool writes `RELEASE.txt`, `SOURCE-MANIFEST.json` and `SHA256SUMS` from the
 verified inputs. The manifest binds the app archive, source commit/tree, package
@@ -89,8 +97,8 @@ inventory, worker report and all source-archive digests. Use those generated fil
 for delivery; do not replace them with hand-written parallel records. This
 command prepares local files and never publishes them. In Actions, the candidate
 records and the `corresponding-source-<commit>` artifact are retained separately
-to avoid storing the large source archives twice. Combine them in one directory
-and verify `SHA256SUMS` before delivery.
+to avoid storing the large source archives twice. Put the candidate's `assets/`
+files beside the source archives and verify `SHA256SUMS` before delivery.
 
 ## Inspect and release manually
 
@@ -107,6 +115,8 @@ Code signing/notarization remains a separate release task.
 
 Publication is manual. Review the final payload, sources, checksums, beta label,
 known limits, feedback links and current download statements before publishing.
+Push the manifest's source commit and create the release tag on that commit;
+the attachments and `RELEASE.txt` name it.
 After publication, update all statements that say a binary is unavailable,
 including `SECURITY.md`, using the actual URL and qualified target. Never expose
 private development history by changing an old repository's visibility.

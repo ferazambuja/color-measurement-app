@@ -25,6 +25,9 @@ from build_desktop_app import (
 from collect_runtime_sources import verify_sources
 
 ROOT = Path(__file__).resolve().parents[1]
+# The distribution identity written by build_desktop_app.py without --candidate.
+APPLICATION_NAME = "Color Measurement"
+BUNDLE_IDENTIFIER = "io.github.ferazambuja.colormeasurement"
 
 
 def sha256(path):
@@ -34,7 +37,7 @@ def sha256(path):
 
 def verify_distribution_identity(application, metadata):
     """A candidate renamed after freezing is not a distribution build."""
-    name = "Color Measurement"
+    name = APPLICATION_NAME
     if metadata.get("application_name") != name:
         raise ValueError("Build a distribution without --candidate; do not rename it afterwards")
     application = Path(application)
@@ -45,7 +48,7 @@ def verify_distribution_identity(application, metadata):
         expected = dict(
             CFBundleExecutable=name,
             CFBundleName=name,
-            CFBundleIdentifier="io.github.ferazambuja.colormeasurement",
+            CFBundleIdentifier=BUNDLE_IDENTIFIER,
             CFBundleVersion=metadata["version"],
             CFBundleShortVersionString=metadata["version"],
             CMInstrumentSoftwareReportSHA256=metadata["instrument_report_sha256"],
@@ -61,6 +64,26 @@ def verify_distribution_identity(application, metadata):
         executable = application / (name + (".exe" if metadata["system"] == "Windows" else ""))
     if executable.is_symlink() or not executable.is_file():
         raise ValueError("Distribution executable is missing or a symlink")
+
+
+def verify_adhoc_signature(application):
+    """Check the complete bundle seal and the beta's ad-hoc signing policy.
+
+    The seal is the only integrity check for third-party runtime files after
+    freezing. Inspecting a signature does not execute the application.
+    """
+    verified = subprocess.run(
+        ["/usr/bin/codesign", "--verify", "--deep", "--strict", str(application)],
+        capture_output=True,
+    )
+    details = subprocess.run(
+        ["/usr/bin/codesign", "--display", "--verbose=2", str(application)],
+        capture_output=True, text=True,
+    )
+    required = {"Signature=adhoc", "TeamIdentifier=not set", "Identifier=" + BUNDLE_IDENTIFIER}
+    if (verified.returncode or details.returncode
+            or not required <= set(details.stderr.splitlines())):
+        raise ValueError("Distribution signature is not an intact ad-hoc beta seal")
 
 
 def verify_source_distribution(archive, root):
@@ -92,7 +115,10 @@ def verify_source_distribution(archive, root):
 
 
 def corresponding_sources(directory, version, root=ROOT):
-    """Verify all four required source attachments before creating any assets."""
+    """Verify all four required source attachments before creating any assets.
+
+    Returns each attachment's verified digest, to bind the delivered copies.
+    """
     from color_measurement.argyll_source import ARCHIVE_SHA256
 
     directory = Path(directory)
@@ -104,7 +130,8 @@ def corresponding_sources(directory, version, root=ROOT):
     if app.is_symlink():
         raise ValueError("Application source archive must not be a symlink")
     verify_source_distribution(app, root)
-    return [app, argyll, *(directory / item["filename"] for item in origin["archives"])]
+    return {app: sha256(app), argyll: ARCHIVE_SHA256,
+            **{directory / item["filename"]: item["sha256"] for item in origin["archives"]}}
 
 
 def main():
@@ -145,6 +172,8 @@ def main():
     InstrumentBuild.from_report(report)  # Authentication only, never worker execution.
     if json.loads(report.read_bytes())["source_report_sha256"] != sha256(args.native_report):
         raise ValueError("Original native report differs from the package's retained identity")
+    if metadata["system"] == "Darwin":
+        verify_adhoc_signature(application)
     refuse_build_paths(application, home_interpreter_prefixes())
     sources = corresponding_sources(args.source_directory, version)
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
@@ -179,6 +208,15 @@ def main():
                 base_dir=application.name,
             )
         )
+    for path in sources:
+        target_path = args.output / path.name
+        try:
+            os.link(path, target_path)
+        except OSError:
+            shutil.copy2(path, target_path)
+    digests = {path.name: sha256(path) for path in args.output.iterdir()}
+    if any(digests[path.name] != digest for path, digest in sources.items()):
+        raise ValueError("Delivered source attachment differs from its verified bytes")
     manifest = dict(
         format=1,
         beta=True,
@@ -186,10 +224,10 @@ def main():
         tree=tree,
         package=metadata,
         archive=archive.name,
-        archive_sha256=sha256(archive),
+        archive_sha256=digests[archive.name],
         native_report_sha256=sha256(args.native_report),
         production_workers_executed=False,
-        corresponding_source={path.name: sha256(path) for path in sources},
+        corresponding_source={path.name: digests[path.name] for path in sources},
         corresponding_source_required=True,
     )
     target_notice = "Windows/Linux packages are experimental.\n"
@@ -199,14 +237,14 @@ def main():
                         signing="ad-hoc", notarized=False)
         target_notice = (
             f"Requires macOS {manifest['minimum_macos']} or later.\n"
-            "This beta is ad-hoc signed and is not notarized.\n"
+            "This beta is ad-hoc signed and is not notarized; Gatekeeper may block it.\n"
+            "Use only the guide's app-specific approval; never disable system protections.\n"
         )
-    for path in sources:
-        target_path = args.output / path.name
-        try:
-            os.link(path, target_path)
-        except OSError:
-            shutil.copy2(path, target_path)
+    elif metadata["system"] == "Windows":
+        target_notice += (
+            "This beta is unsigned; SmartScreen or system policy may block it.\n"
+            "Use only app-specific approval; never disable system protections.\n"
+        )
     (args.output / "SOURCE-MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n")
     (args.output / "RELEASE.txt").write_text(
         f"Color Measurement {version} beta ({target}). Testers wanted.\n"
@@ -216,17 +254,16 @@ def main():
         "Keep the complete application folder together.\n"
         "Start with Demo; it is simulated and needs no instrument.\n"
         "Physical instrument operation and accuracy have not been validated.\n"
-        "Unsigned/ad-hoc packages may be blocked by Gatekeeper or SmartScreen.\n"
-        "Use only app-specific approval; never disable system protections.\n"
         "Guide: https://github.com/ferazambuja/color-measurement-app/blob/main/"
         "docs/getting-started.md\n"
         "Feedback: https://github.com/ferazambuja/color-measurement-app/issues/new/choose\n\n"
         "Distribute all matching app, Argyll and Qt/PySide source attachments together.\n"
         "SOURCE-MANIFEST.json binds their digests to this application archive.\n"
     )
-    paths = sorted(args.output.iterdir())
+    for name in ("SOURCE-MANIFEST.json", "RELEASE.txt"):
+        digests[name] = sha256(args.output / name)
     (args.output / "SHA256SUMS").write_text(
-        "".join(sha256(path) + "  " + path.name + "\n" for path in paths)
+        "".join(digests[name] + "  " + name + "\n" for name in sorted(digests))
     )
     print("Prepared local beta assets:", args.output)
 
