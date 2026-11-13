@@ -17,6 +17,8 @@ import tomllib
 from pathlib import Path, PurePosixPath
 
 from build_desktop_app import (
+    APPLICATION_NAME,
+    BUNDLE_IDENTIFIER,
     home_interpreter_prefixes,
     package_root,
     refuse_build_paths,
@@ -25,9 +27,6 @@ from build_desktop_app import (
 from collect_runtime_sources import verify_sources
 
 ROOT = Path(__file__).resolve().parents[1]
-# The distribution identity written by build_desktop_app.py without --candidate.
-APPLICATION_NAME = "Color Measurement"
-BUNDLE_IDENTIFIER = "io.github.ferazambuja.colormeasurement"
 
 
 def sha256(path):
@@ -129,9 +128,29 @@ def corresponding_sources(directory, version, root=ROOT):
     app = directory / f"color_measurement-{version}.tar.gz"
     if app.is_symlink():
         raise ValueError("Application source archive must not be a symlink")
+    app_digest = sha256(app)
     verify_source_distribution(app, root)
-    return {app: sha256(app), argyll: ARCHIVE_SHA256,
+    if sha256(app) != app_digest:
+        raise ValueError("Application source archive changed during verification")
+    return {app: app_digest, argyll: ARCHIVE_SHA256,
             **{directory / item["filename"]: item["sha256"] for item in origin["archives"]}}
+
+
+def release_notice(system, minimum_macos=None):
+    """State the target requirements and its applicable security-prompt guidance."""
+    if system == "Darwin":
+        return (
+            f"Requires macOS {minimum_macos} or later.\n"
+            "This beta is ad-hoc signed and is not notarized. Gatekeeper may block it.\n"
+            "Follow the guide's app-specific approval instructions.\n"
+        )
+    if system == "Windows":
+        return (
+            "Windows packages are experimental.\n"
+            "SmartScreen or system policy may block this beta.\n"
+            "Follow the guide's app-specific approval instructions.\n"
+        )
+    return "Linux packages are experimental.\n"
 
 
 def main():
@@ -170,7 +189,8 @@ def main():
     if sha256(report) != metadata["instrument_report_sha256"]:
         raise ValueError("Packaged worker report changed")
     InstrumentBuild.from_report(report)  # Authentication only, never worker execution.
-    if json.loads(report.read_bytes())["source_report_sha256"] != sha256(args.native_report):
+    native_report_digest = sha256(args.native_report)
+    if json.loads(report.read_bytes())["source_report_sha256"] != native_report_digest:
         raise ValueError("Original native report differs from the package's retained identity")
     if metadata["system"] == "Darwin":
         verify_adhoc_signature(application)
@@ -210,6 +230,11 @@ def main():
         )
     for path in sources:
         target_path = args.output / path.name
+        if path.name == f"color_measurement-{version}.tar.gz":
+            # uv may overwrite a reusable input sdist on the next source build.
+            # Give the small per-commit delivery its own bytes.
+            shutil.copy2(path, target_path)
+            continue
         try:
             os.link(path, target_path)
         except OSError:
@@ -217,6 +242,8 @@ def main():
     digests = {path.name: sha256(path) for path in args.output.iterdir()}
     if any(digests[path.name] != digest for path, digest in sources.items()):
         raise ValueError("Delivered source attachment differs from its verified bytes")
+    if sha256(args.native_report) != native_report_digest:
+        raise ValueError("Original native report changed during preparation")
     manifest = dict(
         format=1,
         beta=True,
@@ -225,26 +252,16 @@ def main():
         package=metadata,
         archive=archive.name,
         archive_sha256=digests[archive.name],
-        native_report_sha256=sha256(args.native_report),
+        native_report_sha256=native_report_digest,
         production_workers_executed=False,
         corresponding_source={path.name: digests[path.name] for path in sources},
         corresponding_source_required=True,
     )
-    target_notice = "Windows/Linux packages are experimental.\n"
     if metadata["system"] == "Darwin":
         info = plistlib.loads((application / "Contents/Info.plist").read_bytes())
         manifest.update(minimum_macos=info["LSMinimumSystemVersion"],
                         signing="ad-hoc", notarized=False)
-        target_notice = (
-            f"Requires macOS {manifest['minimum_macos']} or later.\n"
-            "This beta is ad-hoc signed and is not notarized; Gatekeeper may block it.\n"
-            "Use only the guide's app-specific approval; never disable system protections.\n"
-        )
-    elif metadata["system"] == "Windows":
-        target_notice += (
-            "This beta is unsigned; SmartScreen or system policy may block it.\n"
-            "Use only app-specific approval; never disable system protections.\n"
-        )
+    target_notice = release_notice(metadata["system"], manifest.get("minimum_macos"))
     (args.output / "SOURCE-MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n")
     (args.output / "RELEASE.txt").write_text(
         f"Color Measurement {version} beta ({target}). Testers wanted.\n"

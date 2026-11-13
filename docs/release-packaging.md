@@ -43,8 +43,8 @@ Each binary delivery must include these files together:
 - The complete runtime/application/native notices, a source manifest naming the
   commit/tree and worker report, and SHA-256 checksums for every asset.
 
-Collect the four source attachments in one new directory for each delivery
-commit, from that clean commit:
+Collect the four source attachments from the selected clean delivery commit in
+one source directory.
 
 ```sh
 uv run --locked python tools/collect_runtime_sources.py /path/to/sources
@@ -53,9 +53,10 @@ cp /path/to/Argyll_V3.5.0_src.zip /path/to/sources/
 ```
 
 The Argyll ZIP is the pinned archive used by the native check. The Qt source
-archive is large: the collector downloads only missing archives, so hard-link
-already verified Qt/PySide archives into the new directory first. Never rebuild an
-sdist into an older set; its bytes may already be linked into earlier assets.
+archive is large. Reuse verified Qt/PySide archives by hard link. The collector
+checks existing files and downloads missing archives. The application sdist gets
+an independent copy in the delivery, so its input directory can be reused when
+building the next commit.
 
 Actions artifact storage can incur charges, including in public projects; the
 manual workflow retains candidate artifacts for one day. Public-repository
@@ -87,9 +88,11 @@ The tool rejects Candidate builds, checks the frozen worker identity and compare
 the sdist with all included tracked source bytes. It authenticates workers
 without executing them. On macOS it requires an intact ad-hoc seal over the whole
 bundle, the only post-build check of third-party runtime files. It verifies the
-pinned dependency archives and includes all four source attachments, refusing a
-delivered copy whose bytes differ from the verified ones. Unchanged large source
-archives can share storage by hard link. Keep their verified bytes immutable.
+pinned dependency archives and includes all four source attachments. Delivered
+copies must match their verified hashes. Changes to the application sdist during
+verification or the original native report during preparation cause a failure.
+Pinned dependency archives share storage by hard link when supported, with a copy
+fallback. Keep the dependency archives and completed deliveries immutable.
 
 The tool writes `RELEASE.txt`, `SOURCE-MANIFEST.json` and `SHA256SUMS` from the
 verified inputs. The manifest binds the app archive, source commit/tree, package

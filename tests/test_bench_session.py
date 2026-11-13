@@ -777,6 +777,7 @@ _PREPARE_FAULTS = {
     None: None,
     "identity": "worker identity",
     "source_receipt": "Original native report",
+    "source_receipt_during_archive": "Original native report changed during preparation",
     "candidate": "without --candidate",
     "system": "metadata must match",
     "home_path": "build-host path",
@@ -874,11 +875,14 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
             for path in app.rglob("*"):
                 if path.is_file():
                     zipped.write(path, path.relative_to(app.parent))
+        if fault == "source_receipt_during_archive":
+            original.write_text("receipt changed while archiving")
     monkeypatch.setattr(prepare.subprocess, "run", archive_application)
     if fault:
         with pytest.raises(ValueError, match=_PREPARE_FAULTS[fault]):
             prepare.main()
-        assert fault == "delivered_source" or not output.exists()
+        assert fault in {"delivered_source", "source_receipt_during_archive"} or not output.exists()
+        assert not (output / "SHA256SUMS").exists()
         return
     prepare.main()
     assert signed == ([app.resolve()] if platform.system() == "Darwin" else [])
@@ -908,9 +912,16 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
     for line in checksums:
         expected, name = line.split("  ", 1)
         assert prepare.sha256(output / name) == expected
+    # Rebuilding the reusable input sdist must not mutate a completed delivery.
+    delivered = output / names[0]
+    saved = delivered.read_bytes()
+    (sources / names[0]).write_bytes(b"next source distribution")
+    assert delivered.read_bytes() == saved
 
 
-@pytest.mark.parametrize("fault", [None, "changed", "argyll_link", "app_link"])
+@pytest.mark.parametrize("fault", [
+    None, "changed", "argyll_link", "app_link", "app_changed_during_verification",
+])
 def test_release_source_set_requires_the_pinned_argyll_archive(tmp_path, monkeypatch, fault):
     import prepare_beta_assets as prepare
 
@@ -940,17 +951,63 @@ def test_release_source_set_requires_the_pinned_argyll_archive(tmp_path, monkeyp
         {"filename": "qt.tar.xz", "sha256": "c" * 64},
         {"filename": "pyside.tar.xz", "sha256": "d" * 64}]})
     compared = []
-    monkeypatch.setattr(prepare, "verify_source_distribution",
-                        lambda archive, root: compared.append(archive))
+    def verify_app(archive, root):
+        compared.append(archive)
+        if fault == "app_changed_during_verification":
+            archive.write_bytes(b"changed after source comparison")
+    monkeypatch.setattr(prepare, "verify_source_distribution", verify_app)
     if fault:
-        message = ("must not be a symlink" if fault == "app_link"
-                   else "Argyll source archive differs")
+        message = {"app_link": "must not be a symlink",
+                   "app_changed_during_verification": "changed during verification"}.get(
+                       fault, "Argyll source archive differs")
         with pytest.raises(ValueError, match=message):
             prepare.corresponding_sources(directory, "0.1.0")
-        assert compared == []
+        assert compared == ([app] if fault == "app_changed_during_verification" else [])
     else:
         verified = prepare.corresponding_sources(directory, "0.1.0")
         assert verified == {app: prepare.sha256(app), argyll: prepare.sha256(argyll),
                             directory / "qt.tar.xz": "c" * 64,
                             directory / "pyside.tar.xz": "d" * 64}
         assert compared == [app]
+
+
+@pytest.mark.parametrize("policy", ["adhoc", "certificate", "team"])
+def test_release_signing_policy_requires_each_inspected_property(monkeypatch, policy):
+    from subprocess import CompletedProcess
+
+    import prepare_beta_assets as prepare
+
+    properties = ["Signature=adhoc", "TeamIdentifier=not set",
+                  "Identifier=" + prepare.BUNDLE_IDENTIFIER]
+    if policy == "certificate":
+        properties[0] = "Authority=Developer ID Application: Synthetic Test"
+    elif policy == "team":
+        properties[1] = "TeamIdentifier=SYNTHETIC"
+
+    def inspected(command, **kwargs):
+        details = "\n".join(properties) if "--display" in command else ""
+        return CompletedProcess(command, 0, stdout="", stderr=details)
+
+    monkeypatch.setattr(prepare.subprocess, "run", inspected)
+    if policy == "adhoc":
+        prepare.verify_adhoc_signature(Path("synthetic.app"))
+    else:
+        with pytest.raises(ValueError, match="intact ad-hoc beta seal"):
+            prepare.verify_adhoc_signature(Path("synthetic.app"))
+
+
+@pytest.mark.parametrize(("system", "approval"), [
+    ("Darwin", "Gatekeeper"), ("Windows", "SmartScreen"), ("Linux", None),
+])
+def test_release_notice_describes_only_the_selected_target(system, approval):
+    import prepare_beta_assets as prepare
+
+    notice = prepare.release_notice(system, "27.0" if system == "Darwin" else None)
+    assert ("Gatekeeper" in notice) == (approval == "Gatekeeper")
+    assert ("SmartScreen" in notice) == (approval == "SmartScreen")
+    if system == "Darwin":
+        assert "macOS 27.0" in notice and "ad-hoc signed" in notice
+        assert "not notarized" in notice
+    else:
+        assert system + " packages are experimental" in notice
+        assert "signed" not in notice

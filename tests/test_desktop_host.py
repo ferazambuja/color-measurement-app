@@ -3047,3 +3047,25 @@ def test_frozen_verification_requires_the_plaintext_freshness_inputs(tmp_path, n
     plaintext.unlink()
     with pytest.raises(ValueError, match="freshness source is missing"):
         verify(application, source)
+
+
+@pytest.mark.parametrize(("encoding", "present"), [
+    ("utf-8", True), ("utf-16-le", True), ("utf-16-be", True), ("utf-8", False),
+])
+def test_package_scan_refuses_encoded_interpreter_paths(tmp_path, encoding, present):
+    import runpy
+    from pathlib import Path
+
+    functions = runpy.run_path(
+        str(Path(__file__).resolve().parents[1] / "tools/build_desktop_app.py")
+    )
+    prefix = r"C:\Users\Builder\.venv"
+    application = tmp_path / "application"
+    application.mkdir()
+    content = (prefix if present else "unrelated runtime data").encode(encoding)
+    (application / "runtime.dat").write_bytes(content)
+    if present:
+        with pytest.raises(ValueError, match="build-host path: runtime.dat"):
+            functions["refuse_build_paths"](application, [prefix])
+    else:
+        functions["refuse_build_paths"](application, [prefix])

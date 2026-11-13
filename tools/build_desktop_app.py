@@ -19,6 +19,9 @@ import sys
 import tempfile
 from pathlib import Path
 
+APPLICATION_NAME = "Color Measurement"
+BUNDLE_IDENTIFIER = "io.github.ferazambuja.colormeasurement"
+
 
 def prepare_instrument_software(report_path, destination):
     """Stage authenticated production workers and portable metadata; never run them.
@@ -315,7 +318,12 @@ def replace_frozen_prefix(frozen, source, prefix, neutral="/install"):
 def refuse_build_paths(application, paths):
     """Refuse a package whose files record any of these build-host paths."""
     application = Path(application)
-    markers = sorted({os.fsencode(str(path)) for path in paths if str(path)})
+    markers = set()
+    for path in paths:
+        value = str(path)
+        if value:
+            markers.update((os.fsencode(value), value.encode("utf-16-le"),
+                            value.encode("utf-16-be")))
     for path in sorted(application.rglob("*")):
         if path.is_symlink() or not path.is_file():
             continue
@@ -451,7 +459,7 @@ def main():
         if worker_architecture(worker) != architecture:
             parser.error("Workers must match the application target architecture")
     output, build = args.output.resolve(), args.build.resolve()
-    name = "Color Measurement Candidate" if args.candidate else "Color Measurement"
+    name = APPLICATION_NAME + (" Candidate" if args.candidate else "")
     application = output / (name + ".app" if sys.platform == "darwin" else name)
     if application.exists() or build.exists():
         parser.error("Choose unused output and build paths; existing artifacts are preserved")
@@ -525,7 +533,7 @@ def main():
                 "--icon",
                 str(root / "tools/desktop_builder/app-icon.icns"),
                 "--osx-bundle-identifier",
-                "io.github.ferazambuja.colormeasurement" + (".candidate" if args.candidate else ""),
+                BUNDLE_IDENTIFIER + (".candidate" if args.candidate else ""),
                 "--codesign-identity",
                 "-",
             ]
