@@ -113,6 +113,33 @@ def windows_dll_imports(inspected: str, *, compiler_target: str) -> list[str]:
     return imports
 
 
+def source_proof_compiler(output: Path, report: dict) -> str:
+    """Record the isolated proof compiler separately from native worker builds.
+
+    Windows ARM64 has no MSYS2 sanitizer runtime. Its x64 compiler can run the
+    same source proofs under Windows emulation while workers and their inert
+    transport/session tests remain native ARM64.
+    """
+    cc = shutil.which(compiler_name())
+    if cc is None:
+        raise ValueError("A source-proof C compiler is required")
+    receipt = {"path": cc, "version": command([cc, "--version"], output, report).strip(),
+               "execution": "native"}
+    if report["build_system"] == "Windows":
+        target = command([cc, "-dumpmachine"], output, report).strip()
+        machine = platform.machine()
+        if not windows_compiler_matches(target, machine):
+            if (machine.lower() not in {"arm64", "aarch64"}
+                    or not windows_compiler_matches(target, "AMD64")):
+                raise ValueError(
+                    "Source proofs require a native or Windows ARM64-emulated x64 compiler")
+            receipt["execution"] = "x64 emulation on Windows ARM64"
+        receipt["target"] = target
+    report["source_proof_compiler"] = receipt
+    print("Source-proof compiler execution: " + receipt["execution"], flush=True)
+    return cc
+
+
 def system_link_flags(system: str) -> list[str]:
     """That platform's system dependencies, after any Argyll objects."""
     check_build_platform(system)
@@ -1430,6 +1457,10 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--archive", type=Path, required=True)
     parser.add_argument(
+        "--native-compiler",
+        help="Compiler for target workers and platform checks; CC owns isolated source proofs",
+    )
+    parser.add_argument(
         "--output", type=Path, required=True, help="New directory; never overwritten"
     )
     parser.add_argument(
@@ -1450,7 +1481,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         system = platform.system()
         check_build_platform(system)
-        cc = shutil.which(compiler_name())
+        cc = shutil.which(args.native_compiler or compiler_name())
         if cc is None:
             raise ValueError("A C compiler and platform development headers are required")
         if shutil.which("ar") is None:
@@ -1481,6 +1512,7 @@ def main(argv: list[str] | None = None) -> int:
             report["status"] = "passed"
             return 0
         prepare_proof_inputs(args.archive.resolve(), source, output, report)
+        proof_cc = source_proof_compiler(output, report)
         import importlib
 
         proofs = (
@@ -1520,7 +1552,7 @@ def main(argv: list[str] | None = None) -> int:
         for key, module_name, function_name in proofs:
             module = importlib.import_module("native_argyll." + module_name)
             proof = getattr(module, function_name)(
-                args.archive.resolve(), output / key, compiler=cc, source=source)
+                args.archive.resolve(), output / key, compiler=proof_cc, source=source)
             if proof["status"] != "passed":
                 raise ValueError(f"Native behavior proof failed: {module_name}")
             report[key] = proof
@@ -1528,16 +1560,16 @@ def main(argv: list[str] | None = None) -> int:
 
         report["legacy_reflective_calibration_regression"] = prove_reflective(
             args.archive.resolve(), source, output / "legacy-reflective-calibration-proof",
-            compiler=cc)
+            compiler=proof_cc)
         report["spectral_display_timing_regression"] = prove_spectral_display_timing(
-            source, output, report, cc)
+            source, output, report, proof_cc)
         from native_argyll.native_resync_proof import prove as prove_native_resync
 
         stage = report["native_resync_repair"]
         report["native_resync_regression"] = prove_native_resync(
             source, {name: (output / stage["inputs"] / name).read_text(encoding="utf-8")
                      for name in stage["before_sha256"]},
-            output / "native-resync-proof", compiler=cc)
+            output / "native-resync-proof", compiler=proof_cc)
         flags = build_library(source, output, report, cc)
         if "standalone_utf16_compatibility" in report:
             report["standalone_utf16_regression"] = prove_standalone_utf16(

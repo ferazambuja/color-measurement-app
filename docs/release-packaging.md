@@ -16,8 +16,17 @@ full target gate. Attach the hosted run URL and ID when a hosted run exists.
 
 The Linux x64 package is built inside Debian 12, giving a glibc 2.36 baseline.
 Windows x64 uses MSYS2 CLANG64 and Windows ARM64 uses CLANGARM64 for production
-workers. Each target uses matching native Windows Python for freezing. macOS packages are built on macOS. A Mac cannot produce a qualified
-Windows GUI executable by running PyInstaller against Mac libraries.
+workers. Each target uses matching native Windows Python for freezing. macOS
+packages are built on macOS. A Mac cannot produce a qualified Windows GUI
+executable by running PyInstaller against Mac libraries.
+
+Windows ARM64 uses native ARM64 Python and workers. MSYS2 does not build ARM64
+sanitizer runtimes, so its isolated source proofs and their Python tests use
+CLANG64 under Windows x64 emulation. Native worker compilation, pipe checks and
+substituted instrument/session checks still use CLANGARM64. The native report
+records both compiler identities and the emulated source-proof scope. The gate
+runs every applicable test and preserves sanitizer checks on the x64 proofs.
+ARM64 sanitizer instrumentation and physical device operation remain unqualified.
 
 Use `tools/build_desktop_app.py` as described in the [desktop reference](desktop.md#build-a-standalone-application).
 The builder uses the same host on every OS, checks application code/resources,

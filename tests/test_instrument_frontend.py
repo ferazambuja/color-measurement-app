@@ -974,9 +974,13 @@ def test_the_synthetic_tail_exception_has_its_declared_width_and_scope(monkeypat
         "result"]["patches"][0]["observation"]
     spectrum = observation["backend_reported"]["spectrum"]
     profile = generator._synthetic_profiles()[7]
-    nm, value = spectrum["wavelengths_nm"][399], spectrum["values"][399]
+    nm = spectrum["wavelengths_nm"][399]
+    # Measure width around this CRT's central value. A fixture emitted by a
+    # different CRT may be offset within the independently bounded interval.
+    value = 1000.0 * sum(amplitude * math.exp(-0.5 * math.pow((nm - centre) / width, 2))
+                         for centre, width, amplitude in profile)
     # At 779 nm the 640 nm component dominates; the 445 nm one is below 1e-160.
-    z = max(-0.5 * ((nm - centre) / width) ** 2 for centre, width, _ in profile)
+    z = max(-0.5 * math.pow((nm - centre) / width, 2) for centre, width, _ in profile)
     budget = math.expm1(4 * math.ulp(z))
     lower, upper = generator._synthetic_emitted_interval(profile, nm)
     for half_width in (upper / value - 1, 1 - lower / value):

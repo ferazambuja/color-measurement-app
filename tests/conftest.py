@@ -262,7 +262,7 @@ def mutate_production(prepared_production, tmp_path):
             if replacement != text:
                 path = target / relative
                 path.unlink()
-                path.write_text(replacement, encoding="utf-8")
+                path.write_text(replacement, encoding="utf-8", newline="\n")
                 changed = True
         assert changed, "C mutation did not change a production input"
         return target

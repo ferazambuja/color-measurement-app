@@ -878,6 +878,15 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
         if fault == "source_receipt_during_archive":
             original.write_text("receipt changed while archiving")
     monkeypatch.setattr(prepare.subprocess, "run", archive_application)
+    if platform.system() != "Darwin" and fault == "source_receipt_during_archive":
+        make_archive = prepare.shutil.make_archive
+
+        def archive_and_change_receipt(*args, **kwargs):
+            result = make_archive(*args, **kwargs)
+            original.write_text("receipt changed while archiving")
+            return result
+
+        monkeypatch.setattr(prepare.shutil, "make_archive", archive_and_change_receipt)
     if fault:
         with pytest.raises(ValueError, match=_PREPARE_FAULTS[fault]):
             prepare.main()

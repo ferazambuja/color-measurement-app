@@ -654,6 +654,10 @@ def main(argv: list[str] | None = None) -> int:
         help="Keep the native stage at this unused path for packaging; requires --argyll-archive",
     )
     parser.add_argument(
+        "--native-compiler",
+        help="Target worker compiler; CC still owns source proofs and their pytest checks",
+    )
+    parser.add_argument(
         "--generic-stub", type=Path,
         help="Run the generic-ladder pytest with an existing trusted "
              "generic-session-stub-worker",
@@ -678,6 +682,8 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--argyll-contribution requires --argyll-archive")
     if args.native_output and not args.argyll_archive:
         parser.error("--native-output requires --argyll-archive")
+    if args.native_compiler and not args.argyll_archive:
+        parser.error("--native-compiler requires --argyll-archive")
     if args.native_output and args.native_output.exists():
         parser.error("--native-output must be an unused path")
 
@@ -777,6 +783,8 @@ def main(argv: list[str] | None = None) -> int:
                             str(native_directory),
                             *(["--contribution", str(args.argyll_contribution.absolute())]
                               if args.argyll_contribution else []),
+                            *(["--native-compiler", args.native_compiler]
+                              if args.native_compiler else []),
                         ],
                     )
                 )

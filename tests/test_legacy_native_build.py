@@ -73,6 +73,8 @@ def test_broad_recipe_links_declared_sources_without_executing_real_workers(
     implementation.parent.mkdir(parents=True)
     implementation.write_text(_preprocessed())
     report = {"driver_scope": "all_public", "patches": []}
+    if system == "Windows":
+        report["compiler_target"] = "x86_64-w64-mingw32"
     flags = native.build_library(source, tmp_path, report, "/tool/cc")
     units = report["library_build_link"]["translation_units"]
     expected_units = {*native.SOURCES, *driver_sources}
