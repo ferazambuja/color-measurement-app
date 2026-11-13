@@ -912,11 +912,12 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
     for line in checksums:
         expected, name = line.split("  ", 1)
         assert prepare.sha256(output / name) == expected
-    # Rebuilding the reusable input sdist must not mutate a completed delivery.
-    delivered = output / names[0]
-    saved = delivered.read_bytes()
-    (sources / names[0]).write_bytes(b"next source distribution")
-    assert delivered.read_bytes() == saved
+    # A later source build or Argyll download must preserve completed deliveries.
+    for name in names[:2]:
+        delivered = output / name
+        saved = delivered.read_bytes()
+        (sources / name).write_bytes(b"replacement input archive")
+        assert delivered.read_bytes() == saved, name
 
 
 @pytest.mark.parametrize("fault", [

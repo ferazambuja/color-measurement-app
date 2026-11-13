@@ -236,11 +236,12 @@ def main():
                 base_dir=application.name,
             )
         )
+    independent_sources = {f"color_measurement-{version}.tar.gz", "Argyll_V3.5.0_src.zip"}
     for path in sources:
         target_path = args.output / path.name
-        if path.name == f"color_measurement-{version}.tar.gz":
-            # uv may overwrite a reusable input sdist on the next source build.
-            # Give the small per-commit delivery its own bytes.
+        if path.name in independent_sources:
+            # Source builds and manual downloads may overwrite these input files.
+            # Give each delivery independent copies of the small archives.
             shutil.copy2(path, target_path)
             continue
         try:

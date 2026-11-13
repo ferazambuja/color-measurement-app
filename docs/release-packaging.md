@@ -52,13 +52,12 @@ uv build --sdist --out-dir /path/to/sources
 ln /path/to/Argyll_V3.5.0_src.zip /path/to/sources/
 ```
 
-The Argyll ZIP is the pinned archive used by the native check. Completed
-deliveries can share its bytes by hard link. In a reused source directory, `ln`
-reports that the file exists and leaves it unchanged; `cp` would rewrite the
-shared bytes in place. The Qt source archive is large. Reuse verified Qt/PySide
-archives by hard link. The collector checks existing files and downloads missing
-archives. The application sdist gets an independent copy in the delivery, so its
-input directory can be reused when building the next commit.
+The Argyll ZIP is the pinned archive used by the native check. In a reused source
+directory, `ln` preserves the existing file and reports that its name is already
+taken. Each delivery gets independent copies of the Argyll ZIP and application
+sdist. Reusing the input directory for a later build or download therefore
+preserves completed deliveries. Reuse the large verified Qt/PySide archives by
+hard link. Their collector checks existing files and downloads missing archives.
 
 Actions artifact storage can incur charges, including in public projects; the
 manual workflow retains candidate artifacts for one day. Public-repository
@@ -93,8 +92,8 @@ bundle, the only post-build check of third-party runtime files. It verifies the
 pinned dependency archives and includes all four source attachments. Delivered
 copies must match their verified hashes. Changes to the application sdist during
 verification or the original native report during preparation cause a failure.
-Pinned dependency archives share storage by hard link when supported, with a copy
-fallback. Keep the dependency archives and completed deliveries immutable.
+Qt/PySide archives share storage by hard link when supported, with a copy
+fallback. Keep the verified Qt/PySide archives and completed deliveries immutable.
 
 The tool writes `RELEASE.txt`, `SOURCE-MANIFEST.json` and `SHA256SUMS` from the
 verified inputs. The manifest binds the app archive, source commit/tree, package
