@@ -775,6 +775,7 @@ def test_release_source_check_compares_all_tracked_bytes(tmp_path, fault, messag
 
 _PREPARE_FAULTS = {
     None: None,
+    "partial": None,
     "identity": "worker identity",
     "source_receipt": "Original native report",
     "source_receipt_during_archive": "Original native report changed during preparation",
@@ -801,6 +802,8 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
     report = resources / "instrument-software/report.json"
     original = tmp_path / "original-report.json"
     original.write_text('{"original": "native receipt"}\n')
+    if fault == "partial":
+        original.write_text('{"check_scope": "substituted_binding"}\n')
     receipt = json.loads(report.read_bytes())
     receipt["source_report_sha256"] = prepare.sha256(original)
     report.write_text(json.dumps(receipt))
@@ -887,7 +890,7 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
             return result
 
         monkeypatch.setattr(prepare.shutil, "make_archive", archive_and_change_receipt)
-    if fault:
+    if _PREPARE_FAULTS[fault]:
         with pytest.raises(ValueError, match=_PREPARE_FAULTS[fault]):
             prepare.main()
         assert fault in {"delivered_source", "source_receipt_during_archive"} or not output.exists()
@@ -898,6 +901,10 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
     assert len(list(output.iterdir())) == 8
     assert not (output / "README.txt").exists()
     manifest = json.loads((output / "SOURCE-MANIFEST.json").read_bytes())
+    assert manifest["native_check_scope"] == (
+        "substituted_binding" if fault == "partial" else "full_native_regressions")
+    assert ("Preview with partial target checks" in (output / "RELEASE.txt").read_text()) == (
+        fault == "partial")
     system = {"Darwin": "macos"}.get(platform.system(), platform.system().lower())
     architecture = {"amd64": "x86_64", "aarch64": "arm64"}.get(
         platform.machine().lower(), platform.machine().lower())

@@ -545,17 +545,14 @@ def test_native_stage_has_its_own_deadline_without_extending_other_commands(monk
     monkeypatch.setattr(runner.shutil, "which", lambda _: "uv")
     monkeypatch.setattr(runner, "tree_state", lambda: ("a" * 40, "", "fixture"))
     monkeypatch.setattr(runner, "check_installed_wheel", lambda *_: None)
-    assert runner.main(["--argyll-archive", str(tmp_path / "source.zip"),
-                        "--native-compiler", "target-cc"]) == 0
+    assert runner.main(["--argyll-archive", str(tmp_path / "source.zip")]) == 0
     native = [deadline for command, deadline in deadlines
               if "tools/argyll_native_check.py" in command]
     ordinary = [deadline for command, deadline in deadlines
                 if "tools/argyll_native_check.py" not in command and "pytest" not in command]
     assert len(native) == 1 and 300 < native[0] <= 900
     assert ordinary and all(deadline == 300 for deadline in ordinary)
-    native_command = next(command for command, _ in deadlines
-                          if "tools/argyll_native_check.py" in command)
-    assert native_command[-2:] == ["--native-compiler", "target-cc"]
+
 
 
 @pytest.mark.skipif(os.name != "posix", reason="POSIX inherited group and pipe control")

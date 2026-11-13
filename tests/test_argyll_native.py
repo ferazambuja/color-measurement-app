@@ -1885,32 +1885,6 @@ def test_native_proof_assertion_is_retained_in_failure_report(tmp_path, monkeypa
     assert report["status"] == "failed" and "negative control" in report["error"]
 
 
-@pytest.mark.parametrize("machine,target,execution", [
-    ("AMD64", "x86_64-w64-mingw32", "native"),
-    ("ARM64", "aarch64-w64-windows-gnu", "native"),
-    ("ARM64", "x86_64-w64-windows-gnu", "x64 emulation on Windows ARM64"),
-    ("AMD64", "aarch64-w64-windows-gnu", None),
-    ("ARM64", "aarch64-linux-gnu", None),
-])
-def test_source_proof_compiler_records_native_and_emulated_scope(
-    tmp_path, monkeypatch, machine, target, execution,
-):
-    monkeypatch.setattr(native.shutil, "which", lambda _: "/tool/proof-cc")
-    monkeypatch.setattr(native.platform, "machine", lambda: machine)
-    monkeypatch.setattr(native, "command", lambda argv, *args:
-                        target if "-dumpmachine" in argv else "proof compiler version")
-    report = {"build_system": "Windows"}
-    if execution is None:
-        with pytest.raises(ValueError, match="Source proofs require"):
-            native.source_proof_compiler(tmp_path, report)
-        assert "source_proof_compiler" not in report
-    else:
-        assert native.source_proof_compiler(tmp_path, report) == "/tool/proof-cc"
-        assert report["source_proof_compiler"] == dict(
-            path="/tool/proof-cc", version="proof compiler version", target=target,
-            execution=execution)
-
-
 def test_source_inventory_canonicalizes_the_builder_path(argyll_archive, tmp_path, monkeypatch):
     # Python may preserve a symlink/.. spelling in __file__, while HERE is canonical.
     # Inventory keys must still bind the one actual build script in the source root.

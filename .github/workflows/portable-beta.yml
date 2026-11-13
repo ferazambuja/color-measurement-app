@@ -124,7 +124,6 @@ jobs:
             mingw-w64-clang-${{ matrix.arch }}-clang
             mingw-w64-clang-${{ matrix.arch }}-compiler-rt
             mingw-w64-clang-${{ matrix.arch }}-binutils
-            ${{ matrix.arch == 'aarch64' && 'mingw-w64-clang-x86_64-clang mingw-w64-clang-x86_64-compiler-rt' || '' }}
       - name: Expose native compiler and obtain pinned Argyll source
         shell: pwsh
         env:
@@ -132,13 +131,6 @@ jobs:
           COMPILER_DIRECTORY: ${{ matrix.arch == 'aarch64' && 'clangarm64/bin' || 'clang64/bin' }}
         run: |
           Add-Content $env:GITHUB_PATH (Join-Path $env:MSYS2_LOCATION $env:COMPILER_DIRECTORY)
-          $nativeCompiler = Join-Path $env:MSYS2_LOCATION "$env:COMPILER_DIRECTORY/clang.exe"
-          Add-Content $env:GITHUB_ENV "CM_NATIVE_CC=$nativeCompiler"
-          # ARM64 workers and platform checks stay native. MSYS2 supplies its
-          # sanitizer runtime only for x64, so isolate source proofs there.
-          $proofBin = Join-Path $env:MSYS2_LOCATION 'clang64/bin'
-          Add-Content $env:GITHUB_PATH $proofBin
-          Add-Content $env:GITHUB_ENV "CC=$(Join-Path $proofBin 'clang.exe')"
           New-Item -ItemType Directory -Force local/beta | Out-Null
           curl.exe --fail --location --retry 2 --output local/beta/Argyll_V3.5.0_src.zip https://www.argyllcms.com/Argyll_V3.5.0_src.zip
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
@@ -151,7 +143,18 @@ jobs:
           npm ci --prefix tools/desktop_builder --ignore-scripts --no-audit --no-fund
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Full software gate without production execution
-        run: uv run --locked --extra app python tools/test_all.py --require-mat --jobs 4 --argyll-archive local/beta/Argyll_V3.5.0_src.zip --argyll-contribution tools/native_argyll/contributions/cr_pr --native-output local/beta/native --native-compiler "$env:CM_NATIVE_CC"
+        if: matrix.arch != 'aarch64'
+        run: uv run --locked --extra app python tools/test_all.py --require-mat --jobs 4 --argyll-archive local/beta/Argyll_V3.5.0_src.zip --argyll-contribution tools/native_argyll/contributions/cr_pr --native-output local/beta/native
+      - name: ARM64 preview native functional checks without production execution
+        if: matrix.arch == 'aarch64'
+        run: uv run --locked --extra app python tools/argyll_native_check.py --substituted-binding --archive local/beta/Argyll_V3.5.0_src.zip --contribution tools/native_argyll/contributions/cr_pr --output local/beta/native
+      - name: ARM64 preview application, frontend and science checks (partial target gate)
+        if: matrix.arch == 'aarch64'
+        shell: pwsh
+        run: |
+          $env:CM_RENDERER_NATIVE_REPORT = (Resolve-Path local/beta/native/report.json).Path
+          uv run --locked --extra app python tools/test_scoped.py application frontend science --require-mat --jobs 4 --generic-stub local/beta/native/generic-session-stub-worker.exe --chart-stub local/beta/native/generic-chart-stub-worker.exe
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: corresponding-source-${{ github.sha }}

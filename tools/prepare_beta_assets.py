@@ -222,6 +222,7 @@ def main():
         raise ValueError("Packaged worker report changed")
     InstrumentBuild.from_report(report)  # Authentication only, never worker execution.
     native_report_digest = sha256(args.native_report)
+    original_native = json.loads(args.native_report.read_bytes())
     if json.loads(report.read_bytes())["source_report_sha256"] != native_report_digest:
         raise ValueError("Original native report differs from the package's retained identity")
     if metadata["system"] == "Darwin":
@@ -271,6 +272,7 @@ def main():
         archive=archive.name,
         archive_sha256=digests[archive.name],
         native_report_sha256=native_report_digest,
+        native_check_scope=original_native.get("check_scope", "full_native_regressions"),
         production_workers_executed=False,
         corresponding_source={path.name: digests[path.name] for path in sources},
         corresponding_source_required=True,
@@ -280,6 +282,11 @@ def main():
         manifest.update(minimum_macos=info["LSMinimumSystemVersion"],
                         signing="ad-hoc", notarized=False)
     target_notice = release_notice(metadata["system"], manifest.get("minimum_macos"))
+    if manifest["native_check_scope"] == "substituted_binding":
+        target_notice += (
+            "Preview with partial target checks: native functional and app/profile tests.\n"
+            "Full native source-regression qualification remains open on this target.\n"
+        )
     (args.output / "SOURCE-MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n")
     (args.output / "RELEASE.txt").write_text(
         f"Color Measurement {version} beta ({target}). Testers wanted.\n"
