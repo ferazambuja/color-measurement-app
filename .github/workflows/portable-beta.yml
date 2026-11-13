@@ -36,10 +36,8 @@ jobs:
           echo 'f8576ce5589fd15620abb73ff049ea31f55ddbd1bba6d1ffa87452658e7bc85f  sources/Argyll_V3.5.0_src.zip' | sha256sum --check
           uv build --sdist --out-dir sources
           uv run --locked python tools/collect_runtime_sources.py sources
-          python3 -c 'import json,subprocess,pathlib; pathlib.Path("sources/SOURCE.json").write_text(json.dumps({"commit": subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip(), "tree": subprocess.check_output(["git","rev-parse","HEAD^{tree}"],text=True).strip()},indent=2)+"\n")'
-          cd sources
-          sha256sum ./* > ../SOURCE-SHA256SUMS
-          mv ../SOURCE-SHA256SUMS .
+      # Exactly the four attachments: each package job verifies them, and its
+      # SOURCE-MANIFEST.json and SHA256SUMS bind them to that delivery.
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: corresponding-source-${{ github.sha }}
