@@ -49,14 +49,16 @@ one source directory.
 ```sh
 uv run --locked python tools/collect_runtime_sources.py /path/to/sources
 uv build --sdist --out-dir /path/to/sources
-cp /path/to/Argyll_V3.5.0_src.zip /path/to/sources/
+ln /path/to/Argyll_V3.5.0_src.zip /path/to/sources/
 ```
 
-The Argyll ZIP is the pinned archive used by the native check. The Qt source
-archive is large. Reuse verified Qt/PySide archives by hard link. The collector
-checks existing files and downloads missing archives. The application sdist gets
-an independent copy in the delivery, so its input directory can be reused when
-building the next commit.
+The Argyll ZIP is the pinned archive used by the native check. Completed
+deliveries can share its bytes by hard link. In a reused source directory, `ln`
+reports that the file exists and leaves it unchanged; `cp` would rewrite the
+shared bytes in place. The Qt source archive is large. Reuse verified Qt/PySide
+archives by hard link. The collector checks existing files and downloads missing
+archives. The application sdist gets an independent copy in the delivery, so its
+input directory can be reused when building the next commit.
 
 Actions artifact storage can incur charges, including in public projects; the
 manual workflow retains candidate artifacts for one day. Public-repository

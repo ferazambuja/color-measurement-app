@@ -27,6 +27,9 @@ from build_desktop_app import (
 from collect_runtime_sources import verify_sources
 
 ROOT = Path(__file__).resolve().parents[1]
+DOCS_URL = "https://github.com/ferazambuja/color-measurement-app/blob/main/docs/"
+# Windows/Linux requirements and prompt guidance live in this section, not the macOS guide.
+RUNTIME_REQUIREMENTS = "platforms.md#desktop-runtime-requirements"
 
 
 def sha256(path):
@@ -143,14 +146,19 @@ def release_notice(system, minimum_macos=None):
             f"Requires macOS {minimum_macos} or later.\n"
             "This beta is ad-hoc signed and is not notarized. Gatekeeper may block it.\n"
             "Follow the guide's app-specific approval instructions.\n"
+            "Never disable Gatekeeper or remove quarantine.\n"
         )
     if system == "Windows":
         return (
             "Windows packages are experimental.\n"
             "SmartScreen or system policy may block this beta.\n"
-            "Follow the guide's app-specific approval instructions.\n"
+            f"Requirements and SmartScreen guidance: {DOCS_URL}{RUNTIME_REQUIREMENTS}\n"
+            "Never disable SmartScreen, antivirus or system policy.\n"
         )
-    return "Linux packages are experimental.\n"
+    return (
+        "Linux packages are experimental.\n"
+        f"Required system libraries: {DOCS_URL}{RUNTIME_REQUIREMENTS}\n"
+    )
 
 
 def main():
@@ -271,8 +279,7 @@ def main():
         "Keep the complete application folder together.\n"
         "Start with Demo; it is simulated and needs no instrument.\n"
         "Physical instrument operation and accuracy have not been validated.\n"
-        "Guide: https://github.com/ferazambuja/color-measurement-app/blob/main/"
-        "docs/getting-started.md\n"
+        f"Guide: {DOCS_URL}getting-started.md\n"
         "Feedback: https://github.com/ferazambuja/color-measurement-app/issues/new/choose\n\n"
         "Distribute all matching app, Argyll and Qt/PySide source attachments together.\n"
         "SOURCE-MANIFEST.json binds their digests to this application archive.\n"

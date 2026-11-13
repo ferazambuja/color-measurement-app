@@ -1008,6 +1008,16 @@ def test_release_notice_describes_only_the_selected_target(system, approval):
     if system == "Darwin":
         assert "macOS 27.0" in notice and "ad-hoc signed" in notice
         assert "not notarized" in notice
+        assert "Never disable Gatekeeper or remove quarantine" in notice
     else:
         assert system + " packages are experimental" in notice
         assert "signed" not in notice
+        # Their instructions are not in the macOS guide named by every release.
+        link = prepare.DOCS_URL + prepare.RUNTIME_REQUIREMENTS
+        assert link in notice and "getting-started" not in notice
+        document, anchor = prepare.RUNTIME_REQUIREMENTS.split("#")
+        headings = [line[3:].strip().lower().replace(" ", "-") for line in
+                    (bench.ROOT / "docs" / document).read_text().splitlines()
+                    if line.startswith("## ")]
+        assert anchor in headings
+        assert ("Never disable SmartScreen" in notice) == (system == "Windows")
