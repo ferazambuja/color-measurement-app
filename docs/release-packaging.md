@@ -15,8 +15,8 @@ partial run must retain that label. Do not silently use a reduced replay as a
 full target gate. Attach the hosted run URL and ID when a hosted run exists.
 
 The Linux x64 package is built inside Debian 12, giving a glibc 2.36 baseline.
-Windows x64 uses MSYS2 CLANG64 for production workers and native Windows Python
-for freezing. macOS packages are built on macOS. A Mac cannot produce a qualified
+Windows x64 uses MSYS2 CLANG64 and Windows ARM64 uses CLANGARM64 for production
+workers. Each target uses matching native Windows Python for freezing. macOS packages are built on macOS. A Mac cannot produce a qualified
 Windows GUI executable by running PyInstaller against Mac libraries.
 
 Use `tools/build_desktop_app.py` as described in the [desktop reference](desktop.md#build-a-standalone-application).
@@ -103,6 +103,24 @@ command prepares local files and never publishes them. In Actions, the candidate
 records and the `corresponding-source-<commit>` artifact are retained separately
 to avoid storing the large source archives twice. Put the candidate's `assets/`
 files beside the source archives and verify `SHA256SUMS` before delivery.
+
+## Combine platform deliveries
+
+Download the corresponding-source artifact and each successful target artifact.
+Put the four source archives beside each target's candidate records, then verify
+that target's SHA256SUMS. All targets must name the same source commit and tree.
+Combine the candidate asset directories with:
+
+```sh
+uv run --locked python tools/assemble_beta_release.py \
+  --candidates /path/to/macos/assets /path/to/windows-x64/assets \
+  /path/to/windows-arm64/assets /path/to/linux/assets --output /path/to/release
+```
+
+The combined directory contains each app download, one copy of the common source
+archives and one RELEASE.txt, SOURCE-MANIFEST.json and SHA256SUMS. Manifest format
+2 retains every target's original metadata under its target name. Verify the
+combined checksums before uploading the complete directory.
 
 ## Inspect and release manually
 

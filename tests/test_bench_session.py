@@ -1022,3 +1022,61 @@ def test_release_notice_describes_only_the_selected_target(system, approval):
                     if line.startswith("## ")]
         assert anchor in headings
         assert ("Never disable SmartScreen" in notice) == (system == "Windows")
+
+
+@pytest.mark.parametrize("fault", [None, "bytes", "commit", "sources", "duplicate", "path"])
+def test_multi_platform_release_binds_one_source_revision(tmp_path, fault):
+    import assemble_beta_release as assemble
+    from prepare_beta_assets import sha256
+
+    candidates = []
+    for system, machine in (("Windows", "ARM64"), ("Linux", "x86_64")):
+        folder = tmp_path / system
+        folder.mkdir()
+        names = ["color_measurement-0.1.0.tar.gz", "Argyll_V3.5.0_src.zip",
+                 "qt.tar.xz", "pyside.tar.xz"]
+        for name in names:
+            (folder / name).write_bytes(b"shared corresponding source")
+        target = "windows-arm64" if system == "Windows" else "linux-x86_64"
+        archive = f"Color-Measurement-0.1.0-{target}" + (
+            ".zip" if system == "Windows" else ".tar.gz")
+        (folder / archive).write_bytes(b"inert package for " + system.encode())
+        manifest = dict(format=1, beta=True, commit="a" * 40, tree="b" * 40,
+                        archive=archive, archive_sha256=sha256(folder / archive),
+                        package=dict(system=system, architecture=machine, version="0.1.0",
+                                     package_sha256={"module.py": "c" * 64}),
+                        corresponding_source={name: sha256(folder / name) for name in names})
+        if system == "Linux":
+            if fault == "commit":
+                manifest["commit"] = "d" * 40
+            elif fault == "sources":
+                (folder / names[0]).write_bytes(b"different source")
+                manifest["corresponding_source"][names[0]] = sha256(folder / names[0])
+        (folder / "SOURCE-MANIFEST.json").write_text(json.dumps(manifest))
+        (folder / "RELEASE.txt").write_text(system + " beta instructions\n")
+        paths = sorted(folder.iterdir())
+        (folder / "SHA256SUMS").write_text(
+            "".join(sha256(p) + "  " + p.name + "\n" for p in paths))
+        if system == "Linux":
+            if fault == "bytes":
+                (folder / archive).write_bytes(b"damaged")
+            elif fault == "path":
+                with (folder / "SHA256SUMS").open("a") as stream:
+                    stream.write("e" * 64 + "  ../outside\n")
+        candidates.append(folder)
+    if fault == "duplicate":
+        candidates[1] = candidates[0]
+    output = tmp_path / "release"
+    if fault:
+        with pytest.raises(ValueError):
+            assemble.assemble(candidates, output, commit="a" * 40, tree="b" * 40)
+        assert not output.exists()
+    else:
+        assemble.assemble(candidates, output, commit="a" * 40, tree="b" * 40)
+        manifest = json.loads((output / "SOURCE-MANIFEST.json").read_text())
+        assert manifest["format"] == 2
+        assert set(manifest["targets"]) == {"windows-arm64", "linux-x86_64"}
+        assert len(list(output.iterdir())) == 9
+        for line in (output / "SHA256SUMS").read_text().splitlines():
+            digest, name = line.split("  ", 1)
+            assert sha256(output / name) == digest

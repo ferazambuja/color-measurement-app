@@ -88,12 +88,25 @@ def process_entry_flags(system: str) -> list[str]:
     return ["-municode", "-UUNICODE"] if system == "Windows" else []
 
 
-def windows_dll_imports(inspected: str) -> list[str]:
+def windows_compiler_matches(target: str, machine: str) -> bool:
+    """Require the GNU Windows compiler to match the native interpreter host."""
+    architecture = {"amd64": "x86_64", "x86_64": "x86_64",
+                    "arm64": "aarch64", "aarch64": "aarch64"}.get(machine.lower())
+    return architecture is not None and target in {
+        f"{architecture}-w64-mingw32", f"{architecture}-w64-windows-gnu",
+    }
+
+
+def windows_dll_imports(inspected: str, *, compiler_target: str) -> list[str]:
     """Validate GNU/LLVM PE inspection and retain the imported runtime DLLs."""
-    if (not re.search(r"file format (?:pei|coff)-x86-64\b", inspected)
+    architecture = compiler_target.split("-", 1)[0]
+    formats = {"x86_64": r"(?:pei|coff)-x86-64",
+               "aarch64": r"(?:coff-arm64|pei-aarch64(?:-little)?)"}
+    if (architecture not in formats
+            or not re.search(r"file format " + formats[architecture] + r"\b", inspected)
             or not re.search(r"^Magic\s+020b\s", inspected, re.M)
             or not re.search(r"^\s+executable\s*$", inspected, re.M)):
-        raise ValueError("Windows worker must be a native x86-64 PE32+ executable")
+        raise ValueError("Windows worker must be a matching native PE32+ executable")
     imports = sorted(set(re.findall(r"DLL Name:\s*([^\s]+)", inspected)))
     if not imports:
         raise ValueError("Windows worker import table is empty")
@@ -1051,11 +1064,12 @@ def build_library(source: Path, output: Path, report: dict, cc: str) -> list[str
         "executed": False,
     }
     if system == "Windows":
-        inspector = shutil.which("objdump")
+        inspector = shutil.which("objdump") or shutil.which("llvm-objdump")
         if inspector is None:
             raise ValueError("Windows MinGW-w64 binutils objdump is required")
         pe = command([inspector, "-p", str(generic_worker)], output, report)
-        report["generic_worker_build_link"]["runtime_dll_imports"] = windows_dll_imports(pe)
+        report["generic_worker_build_link"]["runtime_dll_imports"] = windows_dll_imports(
+            pe, compiler_target=report["compiler_target"])
     description_objects = []
     for name in ("description.c", "description_attach.c"):
         obj = output / f"{name}.o"
@@ -1075,7 +1089,8 @@ def build_library(source: Path, output: Path, report: dict, cc: str) -> list[str
     }
     if system == "Windows":
         pe = command([inspector, "-p", str(description_worker)], output, report)
-        report["description_worker_build_link"]["runtime_dll_imports"] = windows_dll_imports(pe)
+        report["description_worker_build_link"]["runtime_dll_imports"] = windows_dll_imports(
+            pe, compiler_target=report["compiler_target"])
     contributed = {row["path"]: row
                    for row in report.get("contribution", {}).get("entries", [])
                    if row["operation"] == "add"}
@@ -1449,8 +1464,8 @@ def main(argv: list[str] | None = None) -> int:
         report["compiler"] = command([cc, "--version"], output, report).strip()
         if system == "Windows":
             target = command([cc, "-dumpmachine"], output, report).strip()
-            if target not in {"x86_64-w64-mingw32", "x86_64-w64-windows-gnu"}:
-                raise ValueError("Windows recipe requires a native x86_64 Windows-GNU compiler")
+            if not windows_compiler_matches(target, platform.machine()):
+                raise ValueError("Windows recipe requires a matching native Windows-GNU compiler")
             report["compiler_target"] = target
             report["windows_usb_route"] = "EN_LIBUSB0; bundled driver API; no driver installed"
         report["platform_pipe_regression"] = prove_platform_io(output, report, cc)

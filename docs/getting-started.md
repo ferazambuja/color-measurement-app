@@ -9,7 +9,9 @@ experimental source route below.
 
 The prebuilt target is Apple silicon on macOS 27 or later. It includes
 Python, the workspace, numerical libraries and authenticated instrument workers.
-It does not need a development checkout for ordinary use.
+The app includes its own instrument software and manages its version. For
+ordinary use, download the app ZIP and SHA256SUMS. The source archives on the
+release page are optional downloads for rebuilding and modification.
 
 Download the [app ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.1/Color-Measurement-0.1.0-macos-arm64.zip)
 and [SHA256SUMS](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.1/SHA256SUMS)

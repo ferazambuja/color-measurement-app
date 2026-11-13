@@ -943,13 +943,19 @@ def test_build_and_compiled_tests_share_compiler_selection(
     assert native.compiler_name() == expected
 
 
-@pytest.mark.parametrize("format_name", ["pei-x86-64", "coff-x86-64"])
-def test_windows_import_inspection_accepts_gnu_and_llvm_pe_images(format_name):
+@pytest.mark.parametrize(("format_name", "target"), [
+    ("pei-x86-64", "x86_64-w64-mingw32"), ("coff-x86-64", "x86_64-w64-windows-gnu"),
+    ("pei-aarch64-little", "aarch64-w64-mingw32"),
+    ("coff-arm64", "aarch64-w64-windows-gnu"),
+])
+def test_windows_import_inspection_accepts_gnu_and_llvm_pe_images(format_name, target):
     inspected = (f"worker.exe: file format {format_name}\nCharacteristics 0x22\n"
                  "\texecutable\nMagic                   020b\t(PE32+)\n"
                  "    DLL Name: KERNEL32.dll\n    DLL Name: UCRTBASE.dll\n"
                  "    DLL Name: KERNEL32.dll\n")
-    assert native.windows_dll_imports(inspected) == ["KERNEL32.dll", "UCRTBASE.dll"]
+    assert native.windows_dll_imports(inspected, compiler_target=target) == [
+        "KERNEL32.dll", "UCRTBASE.dll",
+    ]
 
 
 @pytest.mark.parametrize("inspected", [
@@ -961,12 +967,14 @@ def test_windows_import_inspection_accepts_gnu_and_llvm_pe_images(format_name):
 ])
 def test_windows_import_inspection_refuses_other_architectures_and_objects(inspected):
     with pytest.raises(ValueError, match=r"PE32\+"):
-        native.windows_dll_imports(inspected + " DLL Name: KERNEL32.dll\n")
+        native.windows_dll_imports(inspected + " DLL Name: KERNEL32.dll\n",
+                                   compiler_target="x86_64-w64-mingw32")
 
 
 def test_windows_import_inspection_requires_a_runtime_table():
     with pytest.raises(ValueError, match="import table is empty"):
-        native.windows_dll_imports("file format coff-x86-64\n\texecutable\nMagic 020b (PE32+)\n")
+        native.windows_dll_imports("file format coff-x86-64\n\texecutable\nMagic 020b (PE32+)\n",
+                                   compiler_target="x86_64-w64-mingw32")
 
 
 def test_dependency_paths_preserve_windows_drives_and_make_escaping():
@@ -1837,6 +1845,7 @@ def test_windows_runtime_hid_exports_match_pinned_loader(argyll_archive):
 @pytest.mark.parametrize("target", ["aarch64-w64-mingw32", "x86_64-linux-gnu"])
 def test_windows_target_abi_is_checked_before_probe_execution(tmp_path, monkeypatch, target):
     monkeypatch.setattr(native.platform, "system", lambda: "Windows")
+    monkeypatch.setattr(native.platform, "machine", lambda: "AMD64")
     monkeypatch.setattr(native.shutil, "which", lambda name: name)
     output = tmp_path / "build"
 
@@ -1884,3 +1893,27 @@ def test_source_inventory_canonicalizes_the_builder_path(argyll_archive, tmp_pat
     inputs = report["original_check_source_sha256"]
     assert inputs["tools/argyll_native_check.py"] == native.digest(alias.read_bytes())
     assert not any(".." in Path(name).parts for name in inputs)
+
+
+@pytest.mark.parametrize(("target", "machine", "expected"), [
+    ("x86_64-w64-mingw32", "AMD64", True),
+    ("x86_64-w64-windows-gnu", "x86_64", True),
+    ("aarch64-w64-mingw32", "ARM64", True),
+    ("aarch64-w64-windows-gnu", "aarch64", True),
+    ("aarch64-w64-mingw32", "AMD64", False),
+    ("x86_64-w64-mingw32", "ARM64", False),
+    ("aarch64-linux-gnu", "ARM64", False),
+])
+def test_windows_compiler_matches_native_architecture(target, machine, expected):
+    assert native.windows_compiler_matches(target, machine) is expected
+
+
+@pytest.mark.parametrize(("format_name", "target"), [
+    ("coff-x86-64", "aarch64-w64-mingw32"),
+    ("coff-arm64", "x86_64-w64-mingw32"),
+])
+def test_windows_imports_refuse_a_different_machine(format_name, target):
+    inspected = (f"file format {format_name}\n\texecutable\nMagic 020b (PE32+)\n"
+                 " DLL Name: KERNEL32.dll\n")
+    with pytest.raises(ValueError, match="matching native PE32"):
+        native.windows_dll_imports(inspected, compiler_target=target)

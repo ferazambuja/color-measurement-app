@@ -37,6 +37,30 @@ def sha256(path):
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
+def package_target(metadata):
+    """Use one target name for archives and combined release records."""
+    system = {"Darwin": "macos", "Windows": "windows", "Linux": "linux"}[metadata["system"]]
+    machine = metadata["architecture"].lower()
+    architecture = {"amd64": "x86_64", "aarch64": "arm64"}.get(machine, machine)
+    if architecture not in {"x86_64", "arm64"}:
+        raise ValueError("Unsupported package architecture")
+    return system + "-" + architecture
+
+
+def copy_sources(sources, output, version):
+    """Keep small mutable inputs independent and reuse immutable runtime archives."""
+    independent = {f"color_measurement-{version}.tar.gz", "Argyll_V3.5.0_src.zip"}
+    for path in sources:
+        target = Path(output) / path.name
+        if path.name in independent:
+            shutil.copy2(path, target)
+        else:
+            try:
+                os.link(path, target)
+            except OSError:
+                shutil.copy2(path, target)
+
+
 def verify_distribution_identity(application, metadata):
     """A candidate renamed after freezing is not a distribution build."""
     name = APPLICATION_NAME
@@ -207,11 +231,7 @@ def main():
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     tree = subprocess.check_output(["git", "rev-parse", "HEAD^{tree}"], cwd=ROOT, text=True).strip()
     args.output.mkdir(parents=True)
-    system = {"Darwin": "macos"}.get(metadata["system"], metadata["system"].lower())
-    architecture = {"amd64": "x86_64", "aarch64": "arm64"}.get(
-        metadata["architecture"].lower(), metadata["architecture"].lower()
-    )
-    target = system + "-" + architecture
+    target = package_target(metadata)
     name = f"Color-Measurement-{metadata['version']}-{target}"
     if platform.system() == "Darwin":
         archive = args.output / (name + ".zip")
@@ -236,18 +256,7 @@ def main():
                 base_dir=application.name,
             )
         )
-    independent_sources = {f"color_measurement-{version}.tar.gz", "Argyll_V3.5.0_src.zip"}
-    for path in sources:
-        target_path = args.output / path.name
-        if path.name in independent_sources:
-            # Source builds and manual downloads may overwrite these input files.
-            # Give each delivery independent copies of the small archives.
-            shutil.copy2(path, target_path)
-            continue
-        try:
-            os.link(path, target_path)
-        except OSError:
-            shutil.copy2(path, target_path)
+    copy_sources(sources, args.output, version)
     digests = {path.name: sha256(path) for path in args.output.iterdir()}
     if any(digests[path.name] != digest for path, digest in sources.items()):
         raise ValueError("Delivered source attachment differs from its verified bytes")

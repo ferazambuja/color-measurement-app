@@ -23,7 +23,7 @@ use real equipment only after reading the [instrument guide](docs/testing-with-a
 - **Recover from save errors.** Retry saving or choose another folder using the retained readings.
 - **Use your own scripts.** Python and command-line interfaces are available alongside the desktop workspace.
 
-## Try it
+## Download the app
 
 - **Apple silicon Mac, macOS 27 or later:** download the
   [macOS beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.1).
@@ -35,6 +35,10 @@ use real equipment only after reading the [instrument guide](docs/testing-with-a
   no Windows/Linux binary is published. Other Macs can attempt the source route; compatibility with Intel Macs or older
   macOS is not confirmed. See [platforms and reporting](docs/platforms.md).
 - **Contribute:** use the [setup checklist and contribution workflow](CONTRIBUTING.md).
+
+The app download includes its instrument drivers and runtime libraries. Choose
+its ZIP and the release's SHA256SUMS. The Argyll, Qt and PySide archives are
+optional source code for rebuilding and modification.
 
 The [user guide](docs/user-guide.md) covers the first Demo reading, workspace
 controls, saved data, charts, comparisons and common problems.

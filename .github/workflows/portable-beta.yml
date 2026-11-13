@@ -8,7 +8,7 @@ on:
       target:
         description: Target to qualify and package (no publication)
         type: choice
-        options: [linux, windows, both]
+        options: [linux, windows-x64, windows-arm64, all]
         default: linux
 
 permissions:
@@ -48,7 +48,7 @@ jobs:
 
   linux:
     name: Linux x64 / glibc 2.36
-    if: inputs.target == 'linux' || inputs.target == 'both'
+    if: inputs.target == 'linux' || inputs.target == 'all'
     needs: sources
     runs-on: ubuntu-24.04
     timeout-minutes: 60
@@ -91,11 +91,15 @@ jobs:
           if-no-files-found: error
 
   windows:
-    name: Windows x64 / CLANG64
-    if: inputs.target == 'windows' || inputs.target == 'both'
+    name: Windows / ${{ matrix.arch }}
+    if: inputs.target == 'windows-x64' || inputs.target == 'windows-arm64' || inputs.target == 'all'
     needs: sources
-    runs-on: windows-latest
+    runs-on: ${{ matrix.arch == 'aarch64' && 'windows-11-arm' || 'windows-latest' }}
     timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: ${{ fromJSON(inputs.target == 'windows-x64' && '["x86_64"]' || inputs.target == 'windows-arm64' && '["aarch64"]' || '["x86_64", "aarch64"]') }}
     env:
       PYTHONUTF8: "1"
       CC: clang
@@ -111,16 +115,20 @@ jobs:
       - uses: msys2/setup-msys2@66cd2cce69caa17b53920067426061ca1de3a884 # v2
         id: msys2
         with:
-          msystem: CLANG64
+          msystem: ${{ matrix.arch == 'aarch64' && 'CLANGARM64' || 'CLANG64' }}
           release: true
           update: true
-          install: mingw-w64-clang-x86_64-clang mingw-w64-clang-x86_64-compiler-rt mingw-w64-clang-x86_64-binutils
+          install: >-
+            mingw-w64-clang-${{ matrix.arch }}-clang
+            mingw-w64-clang-${{ matrix.arch }}-compiler-rt
+            mingw-w64-clang-${{ matrix.arch }}-binutils
       - name: Expose native compiler and obtain pinned Argyll source
         shell: pwsh
         env:
           MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
+          COMPILER_DIRECTORY: ${{ matrix.arch == 'aarch64' && 'clangarm64/bin' || 'clang64/bin' }}
         run: |
-          Add-Content $env:GITHUB_PATH (Join-Path $env:MSYS2_LOCATION "clang64/bin")
+          Add-Content $env:GITHUB_PATH (Join-Path $env:MSYS2_LOCATION $env:COMPILER_DIRECTORY)
           New-Item -ItemType Directory -Force local/beta | Out-Null
           curl.exe --fail --location --retry 2 --output local/beta/Argyll_V3.5.0_src.zip https://www.argyllcms.com/Argyll_V3.5.0_src.zip
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
@@ -151,7 +159,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: windows-x64-candidate-${{ github.sha }}
+          name: windows-${{ matrix.arch }}-candidate-${{ github.sha }}
           path: |
             local/beta/assets/Color-Measurement-*
             local/beta/assets/RELEASE.txt
