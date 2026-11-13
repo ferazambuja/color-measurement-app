@@ -222,9 +222,9 @@ def main():
         raise ValueError("Packaged worker report changed")
     InstrumentBuild.from_report(report)  # Authentication only, never worker execution.
     native_report_digest = sha256(args.native_report)
-    original_native = json.loads(args.native_report.read_bytes())
     if json.loads(report.read_bytes())["source_report_sha256"] != native_report_digest:
         raise ValueError("Original native report differs from the package's retained identity")
+    original_native = json.loads(args.native_report.read_bytes())
     if metadata["system"] == "Darwin":
         verify_adhoc_signature(application)
     refuse_build_paths(application, home_interpreter_prefixes())
