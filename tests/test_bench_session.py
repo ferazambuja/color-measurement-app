@@ -674,7 +674,9 @@ def test_release_preparation_refuses_renamed_or_inconsistent_distribution(tmp_pa
 
 
 @pytest.mark.skipif(sys.platform == "win32", reason="POSIX execute permission")
-@pytest.mark.parametrize("fault", [None, "missing", "changed", "not_executable", "symlink"])
+@pytest.mark.parametrize("fault", [
+    None, "missing", "changed", "not_executable", "symlink", "owner_only",
+])
 def test_linux_delivery_binds_its_menu_script_to_the_source(tmp_path, fault):
     import shutil
 
@@ -689,12 +691,12 @@ def test_linux_delivery_binds_its_menu_script_to_the_source(tmp_path, fault):
         launcher.symlink_to(committed)
     elif fault != "missing":
         shutil.copyfile(committed, launcher)
-        launcher.chmod(0o644 if fault == "not_executable" else 0o755)
+        launcher.chmod({"not_executable": 0o644, "owner_only": 0o700}.get(fault, 0o755))
         if fault == "changed":
             launcher.write_bytes(committed.read_bytes() + b"# appended\n")
     metadata = dict(application_name="Color Measurement", version="0.1.0", system="Linux",
                     instrument_report_sha256="a" * 64)
-    if fault:
+    if fault not in (None, "owner_only"):
         with pytest.raises(ValueError, match="menu script differs"):
             prepare.verify_distribution_identity(app, metadata)
     else:

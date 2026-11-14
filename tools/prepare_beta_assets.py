@@ -97,7 +97,7 @@ def verify_distribution_identity(application, metadata):
         launcher = application / "Add to Applications.sh"
         committed = ROOT / "tools/desktop_builder/install-linux-desktop.sh"
         if (launcher.is_symlink() or not launcher.is_file()
-                or launcher.stat().st_mode & 0o111 != 0o111
+                or not os.access(launcher, os.X_OK)
                 or launcher.read_bytes() != committed.read_bytes()):
             raise ValueError("Distribution menu script differs from this source")
 
