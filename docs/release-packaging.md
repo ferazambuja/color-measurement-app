@@ -98,6 +98,10 @@ The tool archives the selected application first and checks an extraction of the
 archive, so every application check reads the delivered bytes. The extraction uses
 `ditto` on macOS, `tar` on Linux and the ZIP extractor on Windows. It needs temporary
 space beside the output folder for one extracted copy of the application.
+Choose an output location outside the application folder so the archive cannot
+include its own temporary files. Source copies and release records are completed
+in the private staging folder before the output name is claimed. A failure removes
+temporary files and any partially moved delivery owned by this invocation.
 The tool rejects Candidate builds, checks the frozen worker identity and compares
 the sdist with all included tracked source bytes. It authenticates workers
 without executing them. On macOS it requires an intact ad-hoc seal over the whole

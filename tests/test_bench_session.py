@@ -822,6 +822,9 @@ _PREPARE_FAULTS = {
     "system": "metadata must match",
     "home_path": "build-host path",
     "delivered_source": "Delivered source attachment differs",
+    "record_write": "record write failed",
+    "publication_move": "delivery move failed",
+    "output_occupied": "exists",
 }
 
 
@@ -1013,15 +1016,40 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
         elif fault == "scope_after_check":
             original.write_bytes(authenticated)
         elif fault == "archive_after_verification":
-            with next(output.glob("Color-Measurement-*")).open("ab") as delivered:
+            with next(Path(args[1]).glob("Color-Measurement-*")).open("ab") as delivered:
                 delivered.write(b"changed after verification")
+        elif fault == "output_occupied":
+            output.mkdir()
+            (output / "foreign.txt").write_text("another delivery")
     monkeypatch.setattr(prepare, "copy_sources", during_delivery)
+    if fault == "record_write":
+        def fail_record_write(*args, **kwargs):
+            raise OSError("record write failed")
+        monkeypatch.setattr(Path, "write_text", fail_record_write)
+    if fault == "publication_move":
+        rename = Path.rename
+        published = []
+
+        def fail_second_move(self, target):
+            if Path(target).parent == output:
+                if published:
+                    raise OSError("delivery move failed")
+                published.append(self.name)
+            return rename(self, target)
+
+        monkeypatch.setattr(Path, "rename", fail_second_move)
     if _PREPARE_FAULTS[fault]:
-        with pytest.raises(ValueError, match=_PREPARE_FAULTS[fault]):
+        error = OSError if fault in {
+            "record_write", "publication_move", "output_occupied"} else ValueError
+        with pytest.raises(error, match=_PREPARE_FAULTS[fault]):
             prepare.main()
-        assert fault in {"delivered_source", "source_receipt_during_delivery",
-                         "archive_during_extraction", "archive_after_verification"
-                         } or not output.exists()
+        if fault == "output_occupied":
+            assert [path.name for path in output.iterdir()] == ["foreign.txt"]
+            assert (output / "foreign.txt").read_text() == "another delivery"
+        else:
+            assert not output.exists()
+        if fault == "publication_move":
+            assert len(published) == 1
         assert not (output / "SHA256SUMS").exists()
         assert not list(tmp_path.glob(".cm-*"))
         return
@@ -1068,6 +1096,28 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
         saved = delivered.read_bytes()
         (sources / name).write_bytes(b"replacement input archive")
         assert delivered.read_bytes() == saved, name
+
+
+@pytest.mark.parametrize("relative", ["assets", "nested/assets"])
+def test_release_output_cannot_contain_its_own_archive(tmp_path, monkeypatch, capsys, relative):
+    import prepare_beta_assets as prepare
+
+    application = tmp_path / "Color Measurement"
+    application.mkdir()
+    monkeypatch.setattr(sys, "argv", [
+        "prepare_beta_assets.py", "--application", str(application),
+        "--native-report", str(tmp_path / "report.json"),
+        "--source-directory", str(tmp_path / "sources"),
+        "--output", str(application / relative),
+    ])
+    monkeypatch.setattr(prepare.subprocess, "check_output", lambda *args, **kwargs: "")
+    monkeypatch.setattr(prepare, "create_archive", lambda *args:
+                        pytest.fail("The recursive archive reached the archiver"))
+    with pytest.raises(SystemExit) as refused:
+        prepare.main()
+    assert refused.value.code == 2
+    assert "outside the application folder" in capsys.readouterr().err
+    assert list(application.iterdir()) == []
 
 
 @pytest.mark.parametrize("fault", [

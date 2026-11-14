@@ -259,6 +259,9 @@ def main():
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Choose an unused asset directory")
+    application_source = args.application.resolve()
+    if args.output.parent.resolve().is_relative_to(application_source):
+        parser.error("Choose an asset directory outside the application folder")
     dirty = subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True)
     if dirty.strip():
         parser.error("Commit the complete candidate before preparing its assets")
@@ -272,10 +275,10 @@ def main():
     # Every check reads the extracted archive: the staged folder may change after archiving.
     with tempfile.TemporaryDirectory(prefix=".cm-", dir=args.output.parent) as work:
         work = Path(work)
-        archive = create_archive(args.application.resolve(), work / name)
+        archive = create_archive(application_source, work / name)
         archive_digest = sha256(archive)
         extract_archive(archive, work)
-        application = work / args.application.resolve().name
+        application = work / application_source.name
         metadata, build = verify_application(application, version)
         # Read once: the recorded check scope must come from the authenticated bytes.
         native_report = args.native_report.read_bytes()
@@ -291,58 +294,67 @@ def main():
         commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
         tree = subprocess.check_output(["git", "rev-parse", "HEAD^{tree}"], cwd=ROOT,
                                        text=True).strip()
-        args.output.mkdir()
-        archive = archive.rename(args.output / archive.name)
-    copy_sources(sources, args.output, version)
-    digests = {path.name: sha256(path) for path in args.output.iterdir()}
-    if any(digests[path.name] != digest for path, digest in sources.items()):
-        raise ValueError("Delivered source attachment differs from its verified bytes")
-    if digests[archive.name] != archive_digest:
-        raise ValueError("Application archive changed after verification")
-    if sha256(args.native_report) != native_report_digest:
-        raise ValueError("Original native report changed during preparation")
-    manifest = dict(
-        format=1,
-        beta=True,
-        commit=commit,
-        tree=tree,
-        package=metadata,
-        archive=archive.name,
-        archive_sha256=digests[archive.name],
-        native_report_sha256=native_report_digest,
-        native_check_scope=native_check_scope,
-        production_workers_executed=False,
-        corresponding_source={path.name: digests[path.name] for path in sources},
-        corresponding_source_required=True,
-    )
-    if metadata["system"] == "Darwin":
-        manifest.update(minimum_macos=info["LSMinimumSystemVersion"],
-                        signing="ad-hoc", notarized=False)
-    target_notice = release_notice(metadata["system"], manifest.get("minimum_macos"))
-    if manifest["native_check_scope"] == "substituted_binding":
-        target_notice += (
-            "Preview with partial target checks: native functional and app/profile tests.\n"
-            "Full native source-regression qualification remains open on this target.\n"
+        delivery = work / "delivery"
+        delivery.mkdir()
+        archive = archive.rename(delivery / archive.name)
+        copy_sources(sources, delivery, version)
+        digests = {path.name: sha256(path) for path in delivery.iterdir()}
+        if any(digests[path.name] != digest for path, digest in sources.items()):
+            raise ValueError("Delivered source attachment differs from its verified bytes")
+        if digests[archive.name] != archive_digest:
+            raise ValueError("Application archive changed after verification")
+        if sha256(args.native_report) != native_report_digest:
+            raise ValueError("Original native report changed during preparation")
+        manifest = dict(
+            format=1,
+            beta=True,
+            commit=commit,
+            tree=tree,
+            package=metadata,
+            archive=archive.name,
+            archive_sha256=digests[archive.name],
+            native_report_sha256=native_report_digest,
+            native_check_scope=native_check_scope,
+            production_workers_executed=False,
+            corresponding_source={path.name: digests[path.name] for path in sources},
+            corresponding_source_required=True,
         )
-    (args.output / "SOURCE-MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    (args.output / "RELEASE.txt").write_text(
-        f"Color Measurement {version} beta ({target}). Testers wanted.\n"
-        f"Source commit: {commit}\nSource tree: {tree}\n\n"
-        + target_notice +
-        "Verify the application archive against SHA256SUMS before extracting.\n"
-        "Keep the complete application folder together.\n"
-        "Start with Demo; it is simulated and needs no instrument.\n"
-        "Physical instrument operation and accuracy have not been validated.\n"
-        f"Guide: {DOCS_URL}getting-started.md\n"
-        "Feedback: https://github.com/ferazambuja/color-measurement-app/issues/new/choose\n\n"
-        "Distribute all matching app, Argyll and Qt/PySide source attachments together.\n"
-        "SOURCE-MANIFEST.json binds their digests to this application archive.\n"
-    )
-    for name in ("SOURCE-MANIFEST.json", "RELEASE.txt"):
-        digests[name] = sha256(args.output / name)
-    (args.output / "SHA256SUMS").write_text(
-        "".join(digests[name] + "  " + name + "\n" for name in sorted(digests))
-    )
+        if metadata["system"] == "Darwin":
+            manifest.update(minimum_macos=info["LSMinimumSystemVersion"],
+                            signing="ad-hoc", notarized=False)
+        target_notice = release_notice(metadata["system"], manifest.get("minimum_macos"))
+        if manifest["native_check_scope"] == "substituted_binding":
+            target_notice += (
+                "Preview with partial target checks: native functional and app/profile tests.\n"
+                "Full native source-regression qualification remains open on this target.\n"
+            )
+        (delivery / "SOURCE-MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n")
+        (delivery / "RELEASE.txt").write_text(
+            f"Color Measurement {version} beta ({target}). Testers wanted.\n"
+            f"Source commit: {commit}\nSource tree: {tree}\n\n"
+            + target_notice +
+            "Verify the application archive against SHA256SUMS before extracting.\n"
+            "Keep the complete application folder together.\n"
+            "Start with Demo; it is simulated and needs no instrument.\n"
+            "Physical instrument operation and accuracy have not been validated.\n"
+            f"Guide: {DOCS_URL}getting-started.md\n"
+            "Feedback: https://github.com/ferazambuja/color-measurement-app/issues/new/choose\n\n"
+            "Distribute all matching app, Argyll and Qt/PySide source attachments together.\n"
+            "SOURCE-MANIFEST.json binds their digests to this application archive.\n"
+        )
+        for name in ("SOURCE-MANIFEST.json", "RELEASE.txt"):
+            digests[name] = sha256(delivery / name)
+        (delivery / "SHA256SUMS").write_text(
+            "".join(digests[name] + "  " + name + "\n" for name in sorted(digests))
+        )
+        # Claim the unused name only after every asset and record is ready.
+        args.output.mkdir()
+        try:
+            for path in delivery.iterdir():
+                path.rename(args.output / path.name)
+        except BaseException:
+            shutil.rmtree(args.output)
+            raise
     print("Prepared local beta assets:", args.output)
 
 
