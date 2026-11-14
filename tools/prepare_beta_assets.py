@@ -226,16 +226,16 @@ def main():
     ):
         raise ValueError("Packaged source differs from this checkout")
     report = resources / "instrument-software/report.json"
-    if sha256(report) != metadata["instrument_report_sha256"]:
+    build = InstrumentBuild.from_report(report)  # Authentication only, never worker execution.
+    if build._client._report_sha256 != metadata["instrument_report_sha256"]:
         raise ValueError("Packaged worker report changed")
-    InstrumentBuild.from_report(report)  # Authentication only, never worker execution.
     # Read once: the recorded check scope must come from the authenticated bytes.
     native_report = args.native_report.read_bytes()
     native_report_digest = hashlib.sha256(native_report).hexdigest()
-    if json.loads(report.read_bytes())["source_report_sha256"] != native_report_digest:
+    if build._client._build_report["source_report_sha256"] != native_report_digest:
         raise ValueError("Original native report differs from the package's retained identity")
     native_check_scope = json.loads(native_report).get("check_scope")
-    if native_check_scope not in {"full_native_regressions", "substituted_binding"}:
+    if native_check_scope not in ("full_native_regressions", "substituted_binding"):
         raise ValueError("Original native report does not declare a known check scope")
     if metadata["system"] == "Darwin":
         verify_adhoc_signature(application)

@@ -807,6 +807,9 @@ _PREPARE_FAULTS = {
     "partial": None,
     "scope_after_check": None,
     "unscoped": "known check scope",
+    "scope_type": "known check scope",
+    "packaged_receipt_before_auth": "Packaged worker report changed",
+    "packaged_receipt_after_auth": "Original native report differs",
     "identity": "worker identity",
     "source_receipt": "Original native report",
     "source_receipt_during_archive": "Original native report changed during preparation",
@@ -837,6 +840,8 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
         original.write_text('{"check_scope": "substituted_binding"}\n')
     elif fault == "unscoped":
         original.write_text('{"original": "native receipt"}\n')
+    elif fault == "scope_type":
+        original.write_text('{"check_scope": []}\n')
     authenticated = original.read_bytes()
     receipt = json.loads(report.read_bytes())
     receipt["source_report_sha256"] = prepare.sha256(original)
@@ -911,6 +916,26 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
     monkeypatch.setattr(sys, "argv", ["prepare_beta_assets.py", "--application", str(app),
                         "--native-report", str(original), "--source-directory", str(sources),
                         "--output", str(output)])
+    if fault in {"packaged_receipt_before_auth", "packaged_receipt_after_auth"}:
+        from color_measurement.discovery import InstrumentBuild
+
+        authenticate = InstrumentBuild.from_report
+
+        def replace_packaged_receipt(cls, *args, **kwargs):
+            if fault == "packaged_receipt_before_auth":
+                changed = json.loads(report.read_bytes())
+                changed["changed_after_initial_digest"] = True
+                report.write_text(json.dumps(changed))
+            build = authenticate(*args, **kwargs)
+            if fault == "packaged_receipt_after_auth":
+                original.write_text(
+                    '{"check_scope": "full_native_regressions", "replacement": true}\n')
+                changed = json.loads(report.read_bytes())
+                changed["source_report_sha256"] = prepare.sha256(original)
+                report.write_text(json.dumps(changed))
+            return build
+
+        monkeypatch.setattr(InstrumentBuild, "from_report", classmethod(replace_packaged_receipt))
     if fault == "scope_after_check":
         # The first read authenticates the partial receipt; a full-scope receipt
         # replaces it until archiving, so the post-archive digest check still passes.
