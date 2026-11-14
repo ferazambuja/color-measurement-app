@@ -2690,6 +2690,51 @@ def test_windows_icon_contains_all_native_sizes(qt_app):
     assert end == len(payload)
 
 
+def _desktop_string(value):
+    """Desktop Entry `string` value: only these escapes exist; others are invalid."""
+    escapes = {"s": " ", "n": "\n", "t": "\t", "r": "\r", "\\": "\\"}
+    decoded, index = [], 0
+    while index < len(value):
+        if value[index] == "\\":
+            decoded.append(escapes[value[index + 1]])
+            index += 2
+        else:
+            decoded.append(value[index])
+            index += 1
+    return "".join(decoded)
+
+
+def _desktop_exec(value):
+    """Exec after string unescaping: %% field codes, then double-quoted arguments."""
+    import re
+
+    value = _desktop_string(value)
+    assert re.fullmatch(r"(?:[^%]|%%)*", value), "unescaped field code"
+    value = value.replace("%%", "%")
+    arguments, index = [], 0
+    while index < len(value):
+        if value[index] == " ":
+            index += 1
+        elif value[index] == '"':
+            argument, index = [], index + 1
+            while value[index] != '"':
+                if value[index] == "\\":
+                    assert value[index + 1] in '"`$\\', "invalid quoted escape"
+                    index += 1
+                else:
+                    assert value[index] not in '"`$', "unescaped reserved character"
+                argument.append(value[index])
+                index += 1
+            arguments.append("".join(argument))
+            index += 1
+        else:
+            stop = value.find(" ", index)
+            stop = len(value) if stop < 0 else stop
+            arguments.append(value[index:stop])
+            index = stop
+    return arguments
+
+
 @pytest.mark.skipif(sys.platform == "win32", reason="Linux menu uses a POSIX shell")
 def test_linux_menu_registration_follows_the_extracted_folder(tmp_path):
     import os
@@ -2711,20 +2756,29 @@ def test_linux_menu_registration_follows_the_extracted_folder(tmp_path):
     data = tmp_path / "desktop data"
     environment = dict(os.environ, XDG_DATA_HOME=str(data))
     entry = data / "applications/io.github.ferazambuja.colormeasurement.desktop"
-    for name, escaped in (
-        ("Color Measurement", "Color Measurement"),
-        ("Moved Color % Measurement", "Moved Color %% Measurement"),
-    ):
+    # Every character the Exec quoting and string rules treat specially.
+    for name in ("Color Measurement", "Moved Color % Measurement",
+                 "Odd $HOME `id` \"quoted\" back\\slash \\s 100% 'single' &;|<>~*?#()"):
         application = application.rename(tmp_path / name)
         subprocess.run(["sh", str(application / launcher.name)], env=environment, check=True)
         text = entry.read_text()
         assert text.startswith("[Desktop Entry]\n")
-        assert f'Exec=/usr/bin/env "{tmp_path / escaped}/Color Measurement"\n' in text
-        assert (
-            f"Icon={application}/_internal/color_measurement/desktop_assets/app-icon.svg\n"
-        ) in text
-        assert "Name=Color Measurement\n" in text
-        assert "StartupWMClass=Color Measurement\n" in text
+        values = dict(line.split("=", 1) for line in text.splitlines()[1:])
+        assert _desktop_exec(values["Exec"]) == [
+            "/usr/bin/env", str(application / "Color Measurement")]
+        assert _desktop_string(values["Icon"]) == str(
+            application / "_internal/color_measurement/desktop_assets/app-icon.svg")
+        assert values["Name"] == "Color Measurement"
+        assert values["StartupWMClass"] == "Color Measurement"
+    for separator in ("\n", "\r"):
+        entry.unlink()
+        application = application.rename(tmp_path / f"line{separator}break")
+        refused = subprocess.run(["sh", str(application / launcher.name)], env=environment,
+                                 capture_output=True, text=True, check=False)
+        assert refused.returncode != 0 and "line breaks" in refused.stderr
+        assert not entry.exists()
+        application = application.rename(tmp_path / "Color Measurement")
+        subprocess.run(["sh", str(application / launcher.name)], env=environment, check=True)
     entry.unlink()
     (application / "Color Measurement").unlink()
     failed = subprocess.run(["sh", str(application / launcher.name)], env=environment, check=False)

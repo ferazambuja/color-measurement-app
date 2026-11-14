@@ -3,6 +3,9 @@
 The vector scene below is the only design source. SVG is the browser icon;
 PNG, ICNS and ICO are native build assets. These colors are decorative branding,
 not colorimetric values or a measured spectrum.
+
+AppKit is not a project dependency. On macOS, check or regenerate with:
+uv run --no-project --with pyobjc-framework-Cocoa python tools/generate_app_icon.py --check
 """
 
 import argparse
