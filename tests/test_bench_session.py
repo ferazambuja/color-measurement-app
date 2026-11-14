@@ -910,6 +910,7 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
             launcher.write_bytes(
                 (prepare.ROOT / "tools/desktop_builder/install-linux-desktop.sh").read_bytes())
             launcher.chmod(0o755)
+    report = prepare.package_root(app) / "instrument-software/report.json"
     monkeypatch.setattr(prepare.subprocess, "check_output", lambda command, **kwargs:
                         "" if "status" in command else "a" * 40 + "\n")
     output = tmp_path / "assets"
