@@ -60,6 +60,9 @@ Follow the [SmartScreen guidance](platforms.md#desktop-runtime-requirements)
 if Windows blocks the app. Never disable SmartScreen, antivirus or system policy.
 Python, Argyll and WebView2 installations are unnecessary for the bundled app.
 
+If the app exits before its workspace appears in a virtual machine, try the
+[Windows VM graphics launch option](platforms.md#windows-virtual-machine-graphics).
+
 ## Standalone Linux beta
 
 Download the [Linux x64 archive](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.2/Color-Measurement-0.1.0-linux-x86_64.tar.gz)
