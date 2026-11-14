@@ -114,26 +114,30 @@ SmartScreen, antivirus, driver-signature enforcement or system policy. Signing
 is required before wider distribution. A checksum detects changed bytes; it
 does not establish a trusted publisher.
 
+The [manual package workflow](../.github/workflows/portable-beta.yml) runs only
+on dispatch. It builds and checks a candidate; it does not publish a release.
+Artifacts follow repository read permissions, so public-repository artifacts
+are public to readers. Private hosted runs consume the account's current
+Actions allowance; review the matrix and budget before dispatching.
+
 ### Windows virtual-machine graphics
 
-In a Windows 11 ARM64 Parallels VM, the x64 app opened with Qt's software
-graphics device. Its default startup crashed in Microsoft's `vulkan_dzn.dll`
-graphics mapping driver before the workspace appeared. If you encounter this
-startup failure, open PowerShell in the extracted **Color Measurement** folder
-and run these two commands together.
+In a Windows 11 ARM64 Parallels VM, the x64 app's default startup crashed before
+its workspace appeared. Windows Event Viewer's Application log named Microsoft's
+`vulkan_dzn.dll` graphics mapping driver. Qt checks Vulkan only when it cannot
+identify the graphics vendor through Direct3D or OpenGL. Qt's software-renderer
+option selects Windows's software Direct3D device, whose vendor Qt recognizes, so
+the same app opened without that check. If you encounter this startup failure,
+open PowerShell in the extracted **Color Measurement** folder and run these two
+commands together.
 
 ```powershell
 $env:QSG_RHI_PREFER_SOFTWARE_RENDERER = '1'
 & '.\Color Measurement.exe'
 ```
 
-This selects Qt's software graphics device for apps started from that PowerShell
-session. Close the session to discard the setting. The Chromium sandbox stays
-enabled. This launch check showed the workspace and chromaticity plot. A complete
-Demo/save/reopen session in the VM remains unverified.
-
-The [manual package workflow](../.github/workflows/portable-beta.yml) runs only
-on dispatch. It builds and checks a candidate; it does not publish a release.
-Artifacts follow repository read permissions, so public-repository artifacts
-are public to readers. Private hosted runs consume the account's current
-Actions allowance; review the matrix and budget before dispatching.
+The setting applies only to apps started from that PowerShell session. Close
+the session to discard it. Software rendering uses the processor and can draw more
+slowly. The Chromium sandbox stays enabled. This launch check showed the workspace
+and chromaticity plot. A complete Demo/save/reopen session in the VM remains
+unverified.

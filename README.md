@@ -40,7 +40,7 @@ unqualified. A native Windows ARM64 app is unavailable because its current
 PySide6 wheel omits Qt WebEngine. To contribute, use the
 [setup checklist](CONTRIBUTING.md).
 
-The app download includes its instrument drivers and runtime libraries. Choose
+The app download includes its instrument software and runtime libraries. Choose
 its platform archive and the release's SHA256SUMS. The Argyll, Qt and PySide archives are
 optional source code for rebuilding and modification.
 

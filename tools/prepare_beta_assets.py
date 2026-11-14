@@ -221,10 +221,12 @@ def main():
     if sha256(report) != metadata["instrument_report_sha256"]:
         raise ValueError("Packaged worker report changed")
     InstrumentBuild.from_report(report)  # Authentication only, never worker execution.
-    native_report_digest = sha256(args.native_report)
+    # Read once: the recorded check scope must come from the authenticated bytes.
+    native_report = args.native_report.read_bytes()
+    native_report_digest = hashlib.sha256(native_report).hexdigest()
     if json.loads(report.read_bytes())["source_report_sha256"] != native_report_digest:
         raise ValueError("Original native report differs from the package's retained identity")
-    original_native = json.loads(args.native_report.read_bytes())
+    native_check_scope = json.loads(native_report).get("check_scope", "full_native_regressions")
     if metadata["system"] == "Darwin":
         verify_adhoc_signature(application)
     refuse_build_paths(application, home_interpreter_prefixes())
@@ -272,7 +274,7 @@ def main():
         archive=archive.name,
         archive_sha256=digests[archive.name],
         native_report_sha256=native_report_digest,
-        native_check_scope=original_native.get("check_scope", "full_native_regressions"),
+        native_check_scope=native_check_scope,
         production_workers_executed=False,
         corresponding_source={path.name: digests[path.name] for path in sources},
         corresponding_source_required=True,

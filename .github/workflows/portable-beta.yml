@@ -86,6 +86,8 @@ jobs:
             local/beta/assets/SHA256SUMS
             local/beta/native/report.json
             local/beta/native/**/*.log
+            local/beta/native/**/*.stderr
+            local/beta/native/**/*.stdout
           retention-days: 1
           compression-level: 0
           if-no-files-found: error
@@ -122,9 +124,8 @@ jobs:
         shell: pwsh
         env:
           MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
-          COMPILER_DIRECTORY: clang64/bin
         run: |
-          Add-Content $env:GITHUB_PATH (Join-Path $env:MSYS2_LOCATION $env:COMPILER_DIRECTORY)
+          Add-Content $env:GITHUB_PATH (Join-Path $env:MSYS2_LOCATION "clang64/bin")
           New-Item -ItemType Directory -Force local/beta | Out-Null
           curl.exe --fail --location --retry 2 --output local/beta/Argyll_V3.5.0_src.zip https://www.argyllcms.com/Argyll_V3.5.0_src.zip
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

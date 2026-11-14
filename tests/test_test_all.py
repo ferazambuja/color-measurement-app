@@ -554,7 +554,6 @@ def test_native_stage_has_its_own_deadline_without_extending_other_commands(monk
     assert ordinary and all(deadline == 300 for deadline in ordinary)
 
 
-
 @pytest.mark.skipif(os.name != "posix", reason="POSIX inherited group and pipe control")
 def test_timeout_returns_even_when_a_descendant_keeps_the_captured_pipe(tmp_path):
     """The outer group owner retires the writer; run must not wait for its EOF.

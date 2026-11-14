@@ -6,8 +6,8 @@ ordinary use is welcome. You do not need an instrument to try Demo.
 
 For installation and platform requirements, start with
 [getting started](getting-started.md). The downloadable beta covers Apple silicon
-Macs. Windows and Linux have an experimental desktop source route, alongside
-the command-line and Python interfaces.
+Macs, Windows x64 and Linux x64; the Windows and Linux packages are experimental.
+The command-line and Python interfaces are also available from source.
 
 ## Take your first Demo reading
 

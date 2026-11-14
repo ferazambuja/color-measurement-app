@@ -53,9 +53,10 @@ native workspace after its dependent pytest stage.
 | Linux | GNU-compatible ELF linking and pthreads; USB and serial sources. Serial listing uses metadata without opening candidates. Upstream's disabled HID enumerator supplies no separate Linux HID route. |
 | Windows x64 | Native MinGW-w64/Windows-GNU toolchain with `clang`, `ar`, `nm` and `objdump`; libusb0, Windows HID and registry-based serial listing. |
 
-The Windows checker accepts compiler targets `x86_64-w64-mingw32` and
-`x86_64-w64-windows-gnu`. CI uses MSYS2 CLANG64 with compiler-rt. PE inspection
-checks x64 format and records DLL imports without loading the production workers;
+The Windows checker accepts the `-w64-mingw32` or `-w64-windows-gnu` compiler
+target matching the interpreter's architecture, `x86_64` or `aarch64`. CI uses
+MSYS2 CLANG64 with compiler-rt. PE inspection checks the matching executable format
+and records DLL imports without loading the production workers;
 it does not establish that every target runtime dependency is available.
 Production and substituted workers share the Windows wide-entrypoint wrapper in
 [`platform_io.h`](../tools/native_argyll/platform_io.h). Strict UTF-16/UTF-8
@@ -71,12 +72,11 @@ permissions and terminates no vendor service. Actual access depends on existing
 [Linux permissions](https://www.argyllcms.com/doc/Installing_Linux.html) or
 [Windows driver binding](https://www.argyllcms.com/doc/Installing_MSWindows.html).
 
-The planned standalone app and pinned bundled runtime require Apple silicon
-and macOS 27 or later. The source host checks for macOS; compatibility with
-other Mac configurations remains unqualified. Other operating systems
-provide the CLI after a local build; a native backend pass does not supply a
-Windows or Linux desktop host. See the [platform guide](platforms.md) for reporting
-scope. Cross-compilation, another platform's pass and substituted I/O do not
+The standalone macOS package requires Apple silicon and macOS 27 or later;
+compatibility with other Mac configurations remains unqualified. The Windows x64
+and Linux x64 packages use the same desktop host and are experimental. Windows
+ARM64 runs the x64 package through emulation. See the [platform guide](platforms.md)
+for reporting scope. Cross-compilation, another platform's pass and substituted I/O do not
 establish execution or physical operation on the target.
 
 ## Source ownership and composition

@@ -54,7 +54,8 @@ In PowerShell, compute the ZIP's hash:
 Get-FileHash -Algorithm SHA256 Color-Measurement-0.1.0-windows-x86_64.zip
 ```
 
-Compare it with that filename's line in SHA256SUMS. Use **Extract All**, keep the
+Compare it with that filename's line in SHA256SUMS; PowerShell prints the hash in
+capital letters, and letter case does not matter. Use **Extract All**, keep the
 whole extracted folder together and open **Color Measurement.exe** inside it.
 Follow the [SmartScreen guidance](platforms.md#desktop-runtime-requirements)
 if Windows blocks the app. Never disable SmartScreen, antivirus or system policy.

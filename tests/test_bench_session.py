@@ -5,6 +5,7 @@ read back through ``review_saved``; no instrument, native worker or port is used
 """
 import hashlib
 import importlib.util
+import io
 import json
 import plistlib
 import sys
@@ -776,6 +777,7 @@ def test_release_source_check_compares_all_tracked_bytes(tmp_path, fault, messag
 _PREPARE_FAULTS = {
     None: None,
     "partial": None,
+    "scope_after_check": None,
     "identity": "worker identity",
     "source_receipt": "Original native report",
     "source_receipt_during_archive": "Original native report changed during preparation",
@@ -802,8 +804,9 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
     report = resources / "instrument-software/report.json"
     original = tmp_path / "original-report.json"
     original.write_text('{"original": "native receipt"}\n')
-    if fault == "partial":
+    if fault in {"partial", "scope_after_check"}:
         original.write_text('{"check_scope": "substituted_binding"}\n')
+    authenticated = original.read_bytes()
     receipt = json.loads(report.read_bytes())
     receipt["source_report_sha256"] = prepare.sha256(original)
     report.write_text(json.dumps(receipt))
@@ -871,6 +874,27 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
     monkeypatch.setattr(sys, "argv", ["prepare_beta_assets.py", "--application", str(app),
                         "--native-report", str(original), "--source-directory", str(sources),
                         "--output", str(output)])
+    if fault == "scope_after_check":
+        # The first read authenticates the partial receipt; a full-scope receipt
+        # replaces it until archiving, so the post-archive digest check still passes.
+        real_open = Path.open
+        opened = []
+
+        def open_then_replace(self, mode="r", *args, **kwargs):
+            if self == original and not opened:
+                opened.append(self)
+                original.write_text('{"check_scope": "full_native_regressions"}\n')
+                return io.BytesIO(authenticated)
+            return real_open(self, mode, *args, **kwargs)
+
+        monkeypatch.setattr(Path, "open", open_then_replace)
+
+    def during_archive():
+        if fault == "source_receipt_during_archive":
+            original.write_text("receipt changed while archiving")
+        elif fault == "scope_after_check":
+            original.write_bytes(authenticated)
+
     # Use the standard library archiver so this inert test also runs off macOS.
     def archive_application(command, **kwargs):
         import zipfile
@@ -878,15 +902,14 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
             for path in app.rglob("*"):
                 if path.is_file():
                     zipped.write(path, path.relative_to(app.parent))
-        if fault == "source_receipt_during_archive":
-            original.write_text("receipt changed while archiving")
+        during_archive()
     monkeypatch.setattr(prepare.subprocess, "run", archive_application)
-    if platform.system() != "Darwin" and fault == "source_receipt_during_archive":
+    if platform.system() != "Darwin":
         make_archive = prepare.shutil.make_archive
 
         def archive_and_change_receipt(*args, **kwargs):
             result = make_archive(*args, **kwargs)
-            original.write_text("receipt changed while archiving")
+            during_archive()
             return result
 
         monkeypatch.setattr(prepare.shutil, "make_archive", archive_and_change_receipt)
@@ -901,10 +924,11 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
     assert len(list(output.iterdir())) == 8
     assert not (output / "README.txt").exists()
     manifest = json.loads((output / "SOURCE-MANIFEST.json").read_bytes())
+    partial = fault in {"partial", "scope_after_check"}
     assert manifest["native_check_scope"] == (
-        "substituted_binding" if fault == "partial" else "full_native_regressions")
+        "substituted_binding" if partial else "full_native_regressions")
     assert ("Preview with partial target checks" in (output / "RELEASE.txt").read_text()) == (
-        fault == "partial")
+        partial)
     system = {"Darwin": "macos"}.get(platform.system(), platform.system().lower())
     architecture = {"amd64": "x86_64", "aarch64": "arm64"}.get(
         platform.machine().lower(), platform.machine().lower())
@@ -1040,8 +1064,29 @@ def test_release_notice_describes_only_the_selected_target(system, approval):
         assert ("Never disable SmartScreen" in notice) == (system == "Windows")
 
 
-@pytest.mark.parametrize("fault", [None, "bytes", "commit", "sources", "duplicate", "path"])
-def test_multi_platform_release_binds_one_source_revision(tmp_path, fault):
+_ASSEMBLY_FAULTS = {
+    None: None,
+    "bytes": "Candidate checksum differs",
+    "path": "Invalid candidate checksum entry",
+    "inventory": "Candidate checksum inventory differs",
+    "three_sources": "Candidate checksum inventory differs",
+    "duplicate_entry": "Duplicate or invalid candidate checksum name",
+    "manifest_digest": "Candidate manifest differs from delivered bytes",
+    "format": "Expected a prepared beta candidate",
+    "version": "Candidate archive name or version differs",
+    "archive_name": "Candidate archive name or version differs",
+    "commit": "Candidate source revision differs",
+    "tree": "Candidate source revision differs",
+    "duplicate": "Duplicate release target",
+    "sources": "Targets have different source sets or versions",
+    "package": "Targets have different source sets or versions",
+    "copied_archive": "Copied target archive changed",
+    "copied_source": "Copied source archive changed",
+}
+
+
+@pytest.mark.parametrize("fault", _ASSEMBLY_FAULTS)
+def test_multi_platform_release_binds_one_source_revision(tmp_path, monkeypatch, fault):
     import assemble_beta_release as assemble
     from prepare_beta_assets import sha256
 
@@ -1051,11 +1096,15 @@ def test_multi_platform_release_binds_one_source_revision(tmp_path, fault):
         folder.mkdir()
         names = ["color_measurement-0.1.0.tar.gz", "Argyll_V3.5.0_src.zip",
                  "qt.tar.xz", "pyside.tar.xz"]
+        if system == "Linux" and fault == "three_sources":
+            names = names[:3]
         for name in names:
             (folder / name).write_bytes(b"shared corresponding source")
         target = "windows-arm64" if system == "Windows" else "linux-x86_64"
         archive = f"Color-Measurement-0.1.0-{target}" + (
             ".zip" if system == "Windows" else ".tar.gz")
+        if system == "Linux" and fault == "archive_name":
+            archive = archive.replace("x86_64", "arm64")
         (folder / archive).write_bytes(b"inert package for " + system.encode())
         manifest = dict(format=1, beta=True, commit="a" * 40, tree="b" * 40,
                         archive=archive, archive_sha256=sha256(folder / archive),
@@ -1063,11 +1112,21 @@ def test_multi_platform_release_binds_one_source_revision(tmp_path, fault):
                                      package_sha256={"module.py": "c" * 64}),
                         corresponding_source={name: sha256(folder / name) for name in names})
         if system == "Linux":
-            if fault == "commit":
-                manifest["commit"] = "d" * 40
+            if fault in {"commit", "tree"}:
+                manifest[fault] = "d" * 40
             elif fault == "sources":
                 (folder / names[0]).write_bytes(b"different source")
                 manifest["corresponding_source"][names[0]] = sha256(folder / names[0])
+            elif fault == "version":
+                manifest["package"]["version"] = "0.2.0"
+            elif fault == "package":
+                manifest["package"]["package_sha256"] = {"module.py": "d" * 64}
+            elif fault == "format":
+                manifest["format"] = 2
+            elif fault == "manifest_digest":
+                manifest["archive_sha256"] = "e" * 64
+            elif fault == "inventory":
+                (folder / "notes.txt").write_text("not a delivery file\n")
         (folder / "SOURCE-MANIFEST.json").write_text(json.dumps(manifest))
         (folder / "RELEASE.txt").write_text(system + " beta instructions\n")
         paths = sorted(folder.iterdir())
@@ -1079,14 +1138,28 @@ def test_multi_platform_release_binds_one_source_revision(tmp_path, fault):
             elif fault == "path":
                 with (folder / "SHA256SUMS").open("a") as stream:
                     stream.write("e" * 64 + "  ../outside\n")
+            elif fault == "duplicate_entry":
+                with (folder / "SHA256SUMS").open("a") as stream:
+                    stream.write(sha256(folder / archive) + "  " + archive + "\n")
         candidates.append(folder)
     if fault == "duplicate":
         candidates[1] = candidates[0]
+    if fault in {"copied_archive", "copied_source"}:
+        changed = "Color-Measurement-" if fault == "copied_archive" else "color_measurement-"
+        copy2 = assemble.shutil.copy2
+
+        def changing_copy(source, target):
+            copy2(source, target)
+            if Path(target).name.startswith(changed):
+                Path(target).write_bytes(b"not the verified bytes")
+
+        monkeypatch.setattr(assemble.shutil, "copy2", changing_copy)
     output = tmp_path / "release"
     if fault:
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match=_ASSEMBLY_FAULTS[fault]):
             assemble.assemble(candidates, output, commit="a" * 40, tree="b" * 40)
-        assert not output.exists()
+        assert not (output / "SHA256SUMS").exists()
+        assert fault in {"copied_archive", "copied_source"} or not output.exists()
     else:
         assemble.assemble(candidates, output, commit="a" * 40, tree="b" * 40)
         manifest = json.loads((output / "SOURCE-MANIFEST.json").read_text())
