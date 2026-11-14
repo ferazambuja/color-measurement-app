@@ -36,7 +36,9 @@ that combined projection and both substituted workers; see
 `--substituted-binding` runs a smaller binding rehearsal through the same source
 preparation and substituted acquisition/description checks. Its report declares
 `check_scope="substituted_binding"`; ordinary production report selection refuses
-that receipt. It does not establish full native or scientific coverage.
+that receipt. It does not establish full native or scientific coverage. A complete
+run declares `check_scope="full_native_regressions"`. Release preparation refuses
+a report that declares neither.
 
 Inspect the overall status, component results and failure logs in `report.json`.
 A successful compile alone is not a complete check. The standalone tool retains

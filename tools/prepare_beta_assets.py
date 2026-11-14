@@ -226,7 +226,9 @@ def main():
     native_report_digest = hashlib.sha256(native_report).hexdigest()
     if json.loads(report.read_bytes())["source_report_sha256"] != native_report_digest:
         raise ValueError("Original native report differs from the package's retained identity")
-    native_check_scope = json.loads(native_report).get("check_scope", "full_native_regressions")
+    native_check_scope = json.loads(native_report).get("check_scope")
+    if native_check_scope not in {"full_native_regressions", "substituted_binding"}:
+        raise ValueError("Original native report does not declare a known check scope")
     if metadata["system"] == "Darwin":
         verify_adhoc_signature(application)
     refuse_build_paths(application, home_interpreter_prefixes())

@@ -1469,8 +1469,10 @@ def main(argv: list[str] | None = None) -> int:
             report["compiler_target"] = target
             report["windows_usb_route"] = "EN_LIBUSB0; bundled driver API; no driver installed"
         report["platform_pipe_regression"] = prove_platform_io(output, report, cc)
+        # Release records read this declaration; an absent scope is never a full check.
+        report["check_scope"] = (
+            "substituted_binding" if args.substituted_binding else "full_native_regressions")
         if args.substituted_binding:
-            report["check_scope"] = "substituted_binding"
             report["scope"] = (
                 "Broad library/catalog built without production execution; existing substituted "
                 "description/acquisition and transport guards, "

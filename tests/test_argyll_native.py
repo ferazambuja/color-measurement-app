@@ -464,6 +464,28 @@ def test_native_diagnostic_limits_refuse_before_file_or_worker(tmp_path, level, 
     assert not target.exists()
 
 
+def test_complete_recipe_declares_its_full_check_scope(tmp_path, monkeypatch):
+    """Release records refuse an undeclared scope, so the complete run must state it."""
+    output = tmp_path / "complete"
+    monkeypatch.setattr(native.platform, "system", lambda: "Darwin")
+    monkeypatch.setattr(native.shutil, "which", lambda name: name)
+
+    def prepare(archive, destination, **kwargs):
+        destination.mkdir()
+        return destination / "source", dict(status="failed", commands=[])
+
+    def stop(*args):
+        raise ValueError("stopped after the scope declaration")
+
+    monkeypatch.setattr(native, "prepare", prepare)
+    monkeypatch.setattr(native, "prove_platform_io", lambda *args: {"status": "passed"})
+    monkeypatch.setattr(native, "command", lambda *args: "Inert compiler version")
+    monkeypatch.setattr(native, "prepare_proof_inputs", stop)
+    assert native.main(["--archive", "unused.zip", "--output", str(output)]) == 1
+    report = json.loads((output / "report.json").read_bytes())
+    assert report["status"] == "failed" and report["check_scope"] == "full_native_regressions"
+
+
 def test_scoped_binding_recipe_reuses_shared_builder_and_declares_omitted_regressions(
     tmp_path, monkeypatch,
 ):

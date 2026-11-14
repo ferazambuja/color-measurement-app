@@ -778,6 +778,7 @@ _PREPARE_FAULTS = {
     None: None,
     "partial": None,
     "scope_after_check": None,
+    "unscoped": "known check scope",
     "identity": "worker identity",
     "source_receipt": "Original native report",
     "source_receipt_during_archive": "Original native report changed during preparation",
@@ -803,9 +804,11 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
     resources = app / "Contents/Resources"
     report = resources / "instrument-software/report.json"
     original = tmp_path / "original-report.json"
-    original.write_text('{"original": "native receipt"}\n')
+    original.write_text('{"check_scope": "full_native_regressions"}\n')
     if fault in {"partial", "scope_after_check"}:
         original.write_text('{"check_scope": "substituted_binding"}\n')
+    elif fault == "unscoped":
+        original.write_text('{"original": "native receipt"}\n')
     authenticated = original.read_bytes()
     receipt = json.loads(report.read_bytes())
     receipt["source_report_sha256"] = prepare.sha256(original)
