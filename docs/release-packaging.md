@@ -30,6 +30,11 @@ Build a delivered package without `tools/build_desktop_app.py --candidate`: that
 names a side-by-side candidate, and renaming its bundle afterwards keeps the
 candidate executable name. A real package launch and Demo session still need
 their own target result.
+The shared vector icon supplies Qt windows and dialogs. The builder embeds its
+multi-resolution ICO in Windows executables and its ICNS in macOS bundles.
+Linux deliveries include **Add to Applications.sh**, which registers the extracted
+folder and its icon in the current user's application menu. Run it again after
+moving that folder.
 Check a normal user account without development paths or installed Python.
 Keep this separate from testing physical equipment.
 

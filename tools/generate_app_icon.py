@@ -1,11 +1,12 @@
 """Render the original spectrum-and-reading app icon with macOS AppKit.
 
 The vector scene below is the only design source. SVG is the browser icon;
-PNG and ICNS are native build assets. These colors are decorative branding,
+PNG, ICNS and ICO are native build assets. These colors are decorative branding,
 not colorimetric values or a measured spectrum.
 """
 
 import argparse
+import struct
 import subprocess
 import tempfile
 from pathlib import Path
@@ -101,6 +102,22 @@ def png(size):
     return bytes(bitmap.representationUsingType_properties_(NSPNGFileType, {}))
 
 
+def ico():
+    """Package PNG images at Windows icon sizes in a standard ICO container."""
+    sizes = (16, 24, 32, 48, 64, 128, 256)
+    entries, images = [], []
+    offset = 6 + 16 * len(sizes)
+    for size in sizes:
+        image = png(size)
+        dimension = size if size < 256 else 0
+        entries.append(struct.pack(
+            "<BBBBHHII", dimension, dimension, 0, 0, 1, 32, len(image), offset
+        ))
+        images.append(image)
+        offset += len(image)
+    return struct.pack("<HHH", 0, 1, len(sizes)) + b"".join(entries + images)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true",
@@ -125,6 +142,7 @@ def main():
                 svg().encode("utf-8"),
             builder / "app-icon.png": (iconset / "icon_512x512@2x.png").read_bytes(),
             builder / "app-icon.icns": icns.read_bytes(),
+            builder / "app-icon.ico": ico(),
         }
         if arguments.check:
             stale = [str(path.relative_to(root)) for path, payload in outputs.items()
@@ -133,7 +151,7 @@ def main():
                 raise SystemExit(
                     "App icon assets differ from their vector source: " + ", ".join(stale)
                 )
-            print("App icon SVG/PNG/ICNS match their vector source; no asset writes")
+            print("App icon SVG/PNG/ICNS/ICO match their vector source; no asset writes")
         else:
             for path, payload in outputs.items():
                 path.write_bytes(payload)

@@ -16,7 +16,7 @@ from .desktop_session import DesktopSession
 def qt_types():
     """Load Qt only for the optional desktop path, never during core imports."""
     from PySide6.QtCore import QEvent, QFile, QIODevice, QObject, Qt, QUrl, Signal, Slot
-    from PySide6.QtGui import QDesktopServices, QKeySequence
+    from PySide6.QtGui import QDesktopServices, QIcon, QKeySequence
     from PySide6.QtWebChannel import QWebChannel
     from PySide6.QtWebEngineCore import (
         QWebEnginePage,
@@ -219,6 +219,8 @@ def qt_types():
     class QtDesktop:
         def __init__(self, application, assets):
             self.application, self.assets = application, assets
+            application.setWindowIcon(QIcon(str(assets / "app-icon.svg")))
+            application.setDesktopFileName("io.github.ferazambuja.colormeasurement")
             self.window = DesktopWindow()
             self.window.ui = self
             self.window.setWindowTitle(_WINDOW_TITLE)

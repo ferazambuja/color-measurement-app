@@ -2662,6 +2662,75 @@ def test_qt_main_queue_dispatches_and_releases_captures_while_sender_lives(qt_ap
         assert sender.submit(lambda: True).result(2)
 
 
+def test_windows_icon_contains_all_native_sizes(qt_app):
+    import struct
+    from pathlib import Path
+
+    from PySide6.QtGui import QColorSpace, QImage
+
+    path = Path(__file__).resolve().parents[1] / "tools/desktop_builder/app-icon.ico"
+    payload = path.read_bytes()
+    sizes = (16, 24, 32, 48, 64, 128, 256)
+    assert struct.unpack_from("<HHH", payload) == (0, 1, len(sizes))
+    end = 6 + 16 * len(sizes)
+    for index, size in enumerate(sizes):
+        width, height, colors, reserved, planes, depth, length, offset = struct.unpack_from(
+            "<BBBBHHII", payload, 6 + 16 * index
+        )
+        dimension = size if size < 256 else 0
+        assert (width, height, colors, reserved, planes, depth) == (
+            dimension, dimension, 0, 0, 1, 32
+        )
+        assert offset == end
+        image = QImage.fromData(payload[offset:offset + length], "PNG")
+        assert (image.width(), image.height()) == (size, size)
+        image = image.convertedToColorSpace(QColorSpace(QColorSpace.NamedColorSpace.SRgb))
+        assert image.pixelColor(size // 8, size // 2).name() == "#181a1e"
+        end += length
+    assert end == len(payload)
+
+
+@pytest.mark.skipif(sys.platform == "win32", reason="Linux menu uses a POSIX shell")
+def test_linux_menu_registration_follows_the_extracted_folder(tmp_path):
+    import os
+    import shutil
+    import subprocess
+    from pathlib import Path
+
+    source = Path(__file__).resolve().parents[1] / "tools/desktop_builder/install-linux-desktop.sh"
+    application = tmp_path / "Color Measurement"
+    application.mkdir()
+    launcher = application / "Add to Applications.sh"
+    shutil.copy2(source, launcher)
+    program = application / "Color Measurement"
+    program.write_text("#!/bin/sh\nexit 0\n")
+    program.chmod(0o755)
+    icon = application / "_internal/color_measurement/desktop_assets/app-icon.svg"
+    icon.parent.mkdir(parents=True)
+    icon.write_text("<svg/>")
+    data = tmp_path / "desktop data"
+    environment = dict(os.environ, XDG_DATA_HOME=str(data))
+    entry = data / "applications/io.github.ferazambuja.colormeasurement.desktop"
+    for name, escaped in (
+        ("Color Measurement", "Color Measurement"),
+        ("Moved Color % Measurement", "Moved Color %% Measurement"),
+    ):
+        application = application.rename(tmp_path / name)
+        subprocess.run(["sh", str(application / launcher.name)], env=environment, check=True)
+        text = entry.read_text()
+        assert text.startswith("[Desktop Entry]\n")
+        assert f'Exec=/usr/bin/env "{tmp_path / escaped}/Color Measurement"\n' in text
+        assert (
+            f"Icon={application}/_internal/color_measurement/desktop_assets/app-icon.svg\n"
+        ) in text
+        assert "Name=Color Measurement\n" in text
+        assert "StartupWMClass=Color Measurement\n" in text
+    entry.unlink()
+    (application / "Color Measurement").unlink()
+    failed = subprocess.run(["sh", str(application / launcher.name)], env=environment, check=False)
+    assert failed.returncode != 0 and not entry.exists()
+
+
 def test_qt_choice_has_no_implicit_physical_acceptance_and_keeps_three_choices(qt_app):
     from PySide6.QtCore import Qt
     from PySide6.QtTest import QTest
@@ -2698,6 +2767,10 @@ def test_qt_real_channel_demo_navigation_and_renderer_recovery(qt_app, harness, 
     h = harness()
     assets = Path(desktop.__file__).with_name("desktop_assets").resolve()
     ui = QtDesktop(qt_app, assets)
+    assert qt_app.desktopFileName() == "io.github.ferazambuja.colormeasurement"
+    icon = ui.window.windowIcon().pixmap(64, 64).toImage()
+    assert not icon.isNull()
+    assert icon.pixelColor(8, 32).name() == "#181a1e"
     h.host.ui = ui
     h.host.dispatch_main = ui.queue
     ui.bind(h.host)

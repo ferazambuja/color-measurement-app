@@ -1,7 +1,7 @@
 # Getting started
 
 This is a beta looking for testers. Start with Demo before connecting equipment.
-The [beta release](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.2)
+The [beta release](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.3)
 has downloads for Apple silicon Macs, Windows x64 and Linux x64. Windows ARM64
 uses the Windows x64 package through emulation. The app includes Python, its
 instrument software and runtime libraries. Ordinary users need the app archive
@@ -13,8 +13,8 @@ instrument software.
 
 The prebuilt Mac target is Apple silicon on macOS 27 or later.
 
-Download the [app ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.2/Color-Measurement-0.1.0-macos-arm64.zip)
-and [SHA256SUMS](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.2/SHA256SUMS)
+Download the [app ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.3/Color-Measurement-0.1.0-macos-arm64.zip)
+and [SHA256SUMS](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.3/SHA256SUMS)
 from the beta release. Verify the ZIP before extracting it. Safari opens
 downloaded ZIP files by default: it extracts the app and moves the ZIP to the
 Trash. To verify first, turn off **Open “safe” files after downloading** in
@@ -45,7 +45,7 @@ distribution.
 
 ## Standalone Windows beta
 
-Download the [Windows x64 ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.2/Color-Measurement-0.1.0-windows-x86_64.zip)
+Download the [Windows x64 ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.3/Color-Measurement-0.1.0-windows-x86_64.zip)
 and the release's SHA256SUMS. Windows 11 ARM64 runs this package through x64
 emulation. A native ARM64 package is unavailable with the current Qt dependency.
 In PowerShell, compute the ZIP's hash:
@@ -65,7 +65,7 @@ If the app exits before its workspace appears in a virtual machine, try the
 
 ## Standalone Linux beta
 
-Download the [Linux x64 archive](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.2/Color-Measurement-0.1.0-linux-x86_64.tar.gz)
+Download the [Linux x64 archive](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.3/Color-Measurement-0.1.0-linux-x86_64.tar.gz)
 and SHA256SUMS. Use a graphical desktop with glibc 2.36 or newer and the
 [required system libraries](platforms.md#desktop-runtime-requirements).
 From the download folder:
@@ -80,6 +80,16 @@ The checksum command must report the application archive as `OK`. Keep the
 extracted folder together. Run as your normal desktop user with the Chromium
 sandbox enabled. Linux ARM64 requires its own build and is outside this download's
 qualification.
+
+To add the app and its icon to your application menu, keep the extracted folder
+where you want it and run this once from the download folder:
+
+```sh
+sh "Color Measurement/Add to Applications.sh"
+```
+
+Choose **Color Measurement** in your application menu afterwards. If you move
+the extracted folder, run the script again from its new location.
 
 ## Try Demo
 

@@ -537,8 +537,14 @@ def main():
                 "--codesign-identity",
                 "-",
             ]
+        elif sys.platform == "win32":
+            command += ["--icon", str(root / "tools/desktop_builder/app-icon.ico")]
         command += [str(root / "tools" / "desktop_entry.py")]
         subprocess.run(command, cwd=staging, check=True)
+        if sys.platform == "linux" and not args.candidate:
+            launcher = application / "Add to Applications.sh"
+            shutil.copy2(root / "tools/desktop_builder/install-linux-desktop.sh", launcher)
+            launcher.chmod(0o755)
         neutralize_sysconfig(application)
         inventory = verify_package_code(
             application, root / "src" / "color_measurement", report_sha256=prepared["report_sha256"]
