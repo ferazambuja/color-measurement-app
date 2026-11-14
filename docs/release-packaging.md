@@ -94,6 +94,10 @@ uv run --locked --extra app --group app-build python tools/prepare_beta_assets.p
 ```
 
 On Windows/Linux, select the complete `Color Measurement` application folder.
+The tool archives the selected application first and checks an extraction of the
+archive, so every application check reads the delivered bytes. The extraction uses
+`ditto` on macOS, `tar` on Linux and the ZIP extractor on Windows. It needs temporary
+space beside the output folder for one extracted copy of the application.
 The tool rejects Candidate builds, checks the frozen worker identity and compares
 the sdist with all included tracked source bytes. It authenticates workers
 without executing them. On macOS it requires an intact ad-hoc seal over the whole
@@ -101,7 +105,8 @@ bundle, the only post-build check of third-party runtime files. On Linux the
 delivered **Add to Applications.sh** must be the committed executable script. It verifies the
 pinned dependency archives and includes all four source attachments. Delivered
 copies must match their verified hashes. Changes to the application sdist during
-verification or the original native report during preparation cause a failure.
+verification, the archive after its check or the original native report during
+preparation cause a failure.
 Qt/PySide archives share storage by hard link when supported, with a copy
 fallback. Keep the verified Qt/PySide archives and completed deliveries immutable.
 

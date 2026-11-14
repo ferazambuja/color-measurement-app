@@ -810,9 +810,14 @@ _PREPARE_FAULTS = {
     "scope_type": "known check scope",
     "packaged_receipt_before_auth": "Packaged worker report changed",
     "packaged_receipt_after_auth": "Original native report differs",
+    # Changed only inside the archive; the staged folder is restored afterwards.
+    "packaged_receipt_while_archiving": "Packaged worker report changed",
+    "packaged_code_while_archiving": "Frozen code has trailing data",
+    "archive_during_extraction": "Application archive changed after verification",
+    "archive_after_verification": "Application archive changed after verification",
     "identity": "worker identity",
     "source_receipt": "Original native report",
-    "source_receipt_during_archive": "Original native report changed during preparation",
+    "source_receipt_during_delivery": "Original native report changed during preparation",
     "candidate": "without --candidate",
     "system": "metadata must match",
     "home_path": "build-host path",
@@ -922,18 +927,20 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
 
         authenticate = InstrumentBuild.from_report
 
-        def replace_packaged_receipt(cls, *args, **kwargs):
+        def replace_packaged_receipt(cls, path, *args, **kwargs):
+            # The report being authenticated is the delivered archive's extracted copy.
+            authenticated_report = Path(path)
             if fault == "packaged_receipt_before_auth":
-                changed = json.loads(report.read_bytes())
+                changed = json.loads(authenticated_report.read_bytes())
                 changed["changed_after_initial_digest"] = True
-                report.write_text(json.dumps(changed))
-            build = authenticate(*args, **kwargs)
+                authenticated_report.write_text(json.dumps(changed))
+            build = authenticate(path, *args, **kwargs)
             if fault == "packaged_receipt_after_auth":
                 original.write_text(
                     '{"check_scope": "full_native_regressions", "replacement": true}\n')
-                changed = json.loads(report.read_bytes())
+                changed = json.loads(authenticated_report.read_bytes())
                 changed["source_report_sha256"] = prepare.sha256(original)
-                report.write_text(json.dumps(changed))
+                authenticated_report.write_text(json.dumps(changed))
             return build
 
         monkeypatch.setattr(InstrumentBuild, "from_report", classmethod(replace_packaged_receipt))
@@ -952,38 +959,78 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
 
         monkeypatch.setattr(Path, "open", open_then_replace)
 
-    def during_archive():
-        if fault == "source_receipt_during_archive":
-            original.write_text("receipt changed while archiving")
-        elif fault == "scope_after_check":
-            original.write_bytes(authenticated)
+    frozen = (app / "Contents/Frameworks" if platform.system() == "Darwin"
+              else prepare.package_root(app)) / "color_measurement/science.pyc"
+    archived_changes = {
+        "packaged_receipt_while_archiving": (report, lambda saved: json.dumps(
+            dict(json.loads(saved), changed_while_archiving=True)).encode()),
+        "packaged_code_while_archiving": (frozen, lambda saved: saved + b"changed"),
+    }
+
+    def while_archiving(archive):
+        if fault not in archived_changes:
+            return archive()
+        changed, change = archived_changes[fault]
+        saved = changed.read_bytes()
+        changed.write_bytes(change(saved))
+        try:
+            return archive()
+        finally:
+            changed.write_bytes(saved)
+
+    run = prepare.subprocess.run
 
     # Use the standard library archiver so this inert test also runs off macOS.
     def archive_application(command, **kwargs):
-        import zipfile
-        with zipfile.ZipFile(command[-1], "w") as zipped:
-            for path in app.rglob("*"):
-                if path.is_file():
-                    zipped.write(path, path.relative_to(app.parent))
-        during_archive()
+        if command[:3] != ["/usr/bin/ditto", "-c", "-k"]:
+            return run(command, **kwargs)  # The delivered archive is really extracted.
+
+        def write():
+            import zipfile
+            with zipfile.ZipFile(command[-1], "w") as zipped:
+                for path in app.rglob("*"):
+                    if path.is_file():
+                        zipped.write(path, path.relative_to(app.parent))
+        while_archiving(write)
     monkeypatch.setattr(prepare.subprocess, "run", archive_application)
-    if platform.system() != "Darwin":
-        make_archive = prepare.shutil.make_archive
+    make_archive = prepare.shutil.make_archive
+    monkeypatch.setattr(prepare.shutil, "make_archive", lambda *args, **kwargs:
+                        while_archiving(lambda: make_archive(*args, **kwargs)))
+    extract_archive = prepare.extract_archive
 
-        def archive_and_change_receipt(*args, **kwargs):
-            result = make_archive(*args, **kwargs)
-            during_archive()
-            return result
+    def extract_then_change(archive, destination):
+        extract_archive(archive, destination)
+        if fault == "archive_during_extraction":
+            with Path(archive).open("ab") as delivered:
+                delivered.write(b"changed after extraction")
+    monkeypatch.setattr(prepare, "extract_archive", extract_then_change)
+    copy_sources = prepare.copy_sources
 
-        monkeypatch.setattr(prepare.shutil, "make_archive", archive_and_change_receipt)
+    def during_delivery(*args):
+        copy_sources(*args)
+        if fault == "source_receipt_during_delivery":
+            original.write_text("receipt changed during delivery")
+        elif fault == "scope_after_check":
+            original.write_bytes(authenticated)
+        elif fault == "archive_after_verification":
+            with next(output.glob("Color-Measurement-*")).open("ab") as delivered:
+                delivered.write(b"changed after verification")
+    monkeypatch.setattr(prepare, "copy_sources", during_delivery)
     if _PREPARE_FAULTS[fault]:
         with pytest.raises(ValueError, match=_PREPARE_FAULTS[fault]):
             prepare.main()
-        assert fault in {"delivered_source", "source_receipt_during_archive"} or not output.exists()
+        assert fault in {"delivered_source", "source_receipt_during_delivery",
+                         "archive_during_extraction", "archive_after_verification"
+                         } or not output.exists()
         assert not (output / "SHA256SUMS").exists()
+        assert not list(tmp_path.glob(".cm-*"))
         return
     prepare.main()
-    assert signed == ([app.resolve()] if platform.system() == "Darwin" else [])
+    assert not list(tmp_path.glob(".cm-*"))
+    # The seal check read the retired extraction of the delivered archive.
+    assert [path.name for path in signed] == (
+        [app.name] if platform.system() == "Darwin" else [])
+    assert all(path != app.resolve() and not path.exists() for path in signed)
     assert len(list(output.iterdir())) == 8
     assert not (output / "README.txt").exists()
     manifest = json.loads((output / "SOURCE-MANIFEST.json").read_bytes())

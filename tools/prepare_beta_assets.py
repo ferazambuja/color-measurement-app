@@ -13,7 +13,9 @@ import plistlib
 import shutil
 import subprocess
 import tarfile
+import tempfile
 import tomllib
+import zipfile
 from pathlib import Path, PurePosixPath
 
 from build_desktop_app import (
@@ -193,6 +195,60 @@ def release_notice(system, minimum_macos=None):
     )
 
 
+def create_archive(application, base):
+    """Archive the application folder with its parent name, as users extract it."""
+    if platform.system() == "Darwin":
+        archive = base.with_name(base.name + ".zip")
+        subprocess.run(
+            ["/usr/bin/ditto", "-c", "-k", "--norsrc", "--keepParent",
+             str(application), str(archive)],
+            check=True,
+        )
+        return archive
+    return Path(shutil.make_archive(
+        str(base), "zip" if os.name == "nt" else "gztar",
+        root_dir=application.parent, base_dir=application.name,
+    ))
+
+
+def extract_archive(archive, destination):
+    """Unpack with the platform's ordinary extractor; macOS keeps the bundle seal."""
+    if platform.system() == "Darwin":
+        subprocess.run(["/usr/bin/ditto", "-x", "-k", str(archive), str(destination)],
+                       check=True)
+    elif os.name == "nt":
+        with zipfile.ZipFile(archive) as zipped:
+            zipped.extractall(destination)
+    else:
+        subprocess.run(["tar", "-xzf", str(archive), "-C", str(destination)], check=True)
+
+
+def verify_application(application, version):
+    """Authenticate one application folder without running it or its workers."""
+    from color_measurement.discovery import InstrumentBuild
+
+    resources = package_root(application)
+    metadata = json.loads((resources / "PACKAGE.json").read_text())
+    if (metadata.get("format") != 1 or metadata.get("version") != version
+            or metadata.get("system") != platform.system()
+            or metadata.get("architecture") != platform.machine()):
+        raise ValueError("Application metadata must match this source and target")
+    verify_distribution_identity(application, metadata)
+    if metadata["package_sha256"] != verify_package_code(
+        application, ROOT / "src/color_measurement",
+        report_sha256=metadata["instrument_report_sha256"],
+    ):
+        raise ValueError("Packaged source differs from this checkout")
+    # Authentication only, never worker execution.
+    build = InstrumentBuild.from_report(resources / "instrument-software/report.json")
+    if build._client._report_sha256 != metadata["instrument_report_sha256"]:
+        raise ValueError("Packaged worker report changed")
+    if metadata["system"] == "Darwin":
+        verify_adhoc_signature(application)
+    refuse_build_paths(application, home_interpreter_prefixes())
+    return metadata, build
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--application", type=Path, required=True)
@@ -209,70 +265,40 @@ def main():
     import sys
 
     sys.path.insert(0, str(ROOT / "src"))
-    from color_measurement.discovery import InstrumentBuild
-
-    application = args.application.resolve()
-    resources = package_root(application)
-    metadata = json.loads((resources / "PACKAGE.json").read_text())
     version = tomllib.loads((ROOT / "pyproject.toml").read_text())["project"]["version"]
-    if (metadata.get("format") != 1 or metadata.get("version") != version
-            or metadata.get("system") != platform.system()
-            or metadata.get("architecture") != platform.machine()):
-        raise ValueError("Application metadata must match this source and target")
-    verify_distribution_identity(application, metadata)
-    if metadata["package_sha256"] != verify_package_code(
-        application, ROOT / "src/color_measurement",
-        report_sha256=metadata["instrument_report_sha256"],
-    ):
-        raise ValueError("Packaged source differs from this checkout")
-    report = resources / "instrument-software/report.json"
-    build = InstrumentBuild.from_report(report)  # Authentication only, never worker execution.
-    if build._client._report_sha256 != metadata["instrument_report_sha256"]:
-        raise ValueError("Packaged worker report changed")
-    # Read once: the recorded check scope must come from the authenticated bytes.
-    native_report = args.native_report.read_bytes()
-    native_report_digest = hashlib.sha256(native_report).hexdigest()
-    if build._client._build_report["source_report_sha256"] != native_report_digest:
-        raise ValueError("Original native report differs from the package's retained identity")
-    native_check_scope = json.loads(native_report).get("check_scope")
-    if native_check_scope not in ("full_native_regressions", "substituted_binding"):
-        raise ValueError("Original native report does not declare a known check scope")
-    if metadata["system"] == "Darwin":
-        verify_adhoc_signature(application)
-    refuse_build_paths(application, home_interpreter_prefixes())
-    sources = corresponding_sources(args.source_directory, version)
-    commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
-    tree = subprocess.check_output(["git", "rev-parse", "HEAD^{tree}"], cwd=ROOT, text=True).strip()
-    args.output.mkdir(parents=True)
-    target = package_target(metadata)
-    name = f"Color-Measurement-{metadata['version']}-{target}"
-    if platform.system() == "Darwin":
-        archive = args.output / (name + ".zip")
-        subprocess.run(
-            [
-                "/usr/bin/ditto",
-                "-c",
-                "-k",
-                "--norsrc",
-                "--keepParent",
-                str(application),
-                str(archive),
-            ],
-            check=True,
-        )
-    else:
-        archive = Path(
-            shutil.make_archive(
-                str(args.output / name),
-                "zip" if os.name == "nt" else "gztar",
-                root_dir=application.parent,
-                base_dir=application.name,
-            )
-        )
+    target = package_target(dict(system=platform.system(), architecture=platform.machine()))
+    name = f"Color-Measurement-{version}-{target}"
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    # Every check reads the extracted archive: the staged folder may change after archiving.
+    with tempfile.TemporaryDirectory(prefix=".cm-", dir=args.output.parent) as work:
+        work = Path(work)
+        archive = create_archive(args.application.resolve(), work / name)
+        archive_digest = sha256(archive)
+        extract_archive(archive, work)
+        application = work / args.application.resolve().name
+        metadata, build = verify_application(application, version)
+        # Read once: the recorded check scope must come from the authenticated bytes.
+        native_report = args.native_report.read_bytes()
+        native_report_digest = hashlib.sha256(native_report).hexdigest()
+        if build._client._build_report["source_report_sha256"] != native_report_digest:
+            raise ValueError("Original native report differs from the package's retained identity")
+        native_check_scope = json.loads(native_report).get("check_scope")
+        if native_check_scope not in ("full_native_regressions", "substituted_binding"):
+            raise ValueError("Original native report does not declare a known check scope")
+        if metadata["system"] == "Darwin":
+            info = plistlib.loads((application / "Contents/Info.plist").read_bytes())
+        sources = corresponding_sources(args.source_directory, version)
+        commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+        tree = subprocess.check_output(["git", "rev-parse", "HEAD^{tree}"], cwd=ROOT,
+                                       text=True).strip()
+        args.output.mkdir()
+        archive = archive.rename(args.output / archive.name)
     copy_sources(sources, args.output, version)
     digests = {path.name: sha256(path) for path in args.output.iterdir()}
     if any(digests[path.name] != digest for path, digest in sources.items()):
         raise ValueError("Delivered source attachment differs from its verified bytes")
+    if digests[archive.name] != archive_digest:
+        raise ValueError("Application archive changed after verification")
     if sha256(args.native_report) != native_report_digest:
         raise ValueError("Original native report changed during preparation")
     manifest = dict(
@@ -290,7 +316,6 @@ def main():
         corresponding_source_required=True,
     )
     if metadata["system"] == "Darwin":
-        info = plistlib.loads((application / "Contents/Info.plist").read_bytes())
         manifest.update(minimum_macos=info["LSMinimumSystemVersion"],
                         signing="ad-hoc", notarized=False)
     target_notice = release_notice(metadata["system"], manifest.get("minimum_macos"))
