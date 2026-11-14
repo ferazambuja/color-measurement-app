@@ -91,7 +91,9 @@ sh "Color Measurement/Add to Applications.sh"
 ```
 
 Choose **Color Measurement** in your application menu afterwards. If you move
-the extracted folder, run the script again from its new location.
+or delete the extracted folder, GNOME and other menus that check the entry's
+program hide it. Run the script again from the new location. To remove the
+entry, delete `~/.local/share/applications/io.github.ferazambuja.colormeasurement.desktop`.
 
 ## Try Demo
 

@@ -21,6 +21,8 @@ fi
 # A fixed env executable also lets GIO validate Exec before expanding those codes.
 program=$(printf '%s' "$application/Color Measurement" |
     sed 's/[\\`"$]/\\&/g; s/%/%%/g; s/\\/\\\\/g')
+# env always exists, so TryExec lets menus hide the entry once this folder moves.
+executable=$(printf '%s' "$application/Color Measurement" | sed 's/\\/\\\\/g')
 icon=$(printf '%s' "$application/_internal/color_measurement/desktop_assets/app-icon.svg" |
     sed 's/\\/\\\\/g')
 applications=${XDG_DATA_HOME:-"$HOME/.local/share"}/applications
@@ -34,6 +36,7 @@ Type=Application
 Name=Color Measurement
 Comment=Collect and review color measurements
 Exec=/usr/bin/env "$program"
+TryExec=$executable
 Icon=$icon
 Terminal=false
 Categories=Science;Graphics;

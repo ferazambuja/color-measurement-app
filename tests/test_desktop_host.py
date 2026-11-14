@@ -2766,6 +2766,7 @@ def test_linux_menu_registration_follows_the_extracted_folder(tmp_path):
         values = dict(line.split("=", 1) for line in text.splitlines()[1:])
         assert _desktop_exec(values["Exec"]) == [
             "/usr/bin/env", str(application / "Color Measurement")]
+        assert _desktop_string(values["TryExec"]) == str(application / "Color Measurement")
         assert _desktop_string(values["Icon"]) == str(
             application / "_internal/color_measurement/desktop_assets/app-icon.svg")
         assert values["Name"] == "Color Measurement"
