@@ -2793,9 +2793,11 @@ def test_linux_menu_registration_follows_the_extracted_folder(tmp_path):
             application / "_internal/color_measurement/desktop_assets/app-icon.svg")
         assert values["Name"] == "Color Measurement"
         assert values["StartupWMClass"] == "Color Measurement"
-    for separator in ("\n", "\r"):
+    # A trailing newline must not resolve to an existing folder without it.
+    shutil.copytree(application, tmp_path / "linebreak")
+    for name in ("line\nbreak", "line\rbreak", "linebreak\n", "linebreak\r"):
         entry.unlink()
-        application = application.rename(tmp_path / f"line{separator}break")
+        application = application.rename(tmp_path / name)
         refused = subprocess.run(["sh", str(application / launcher.name)], env=environment,
                                  capture_output=True, text=True, check=False)
         assert refused.returncode != 0 and "line breaks" in refused.stderr

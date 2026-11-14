@@ -2,7 +2,12 @@
 # Register this extracted folder in the current user's application menu.
 set -eu
 
-application=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd -P)
+# Command substitution strips trailing newlines, which could select another folder.
+case "$0" in
+    */*) CDPATH='' cd -P -- "${0%/*}/." ;;
+    *) CDPATH='' cd -P -- . ;;
+esac
+application=$PWD
 case "$application" in
     *'
 '*|*"$(printf '\r')"*)
