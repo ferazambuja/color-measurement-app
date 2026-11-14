@@ -25,11 +25,11 @@ use real equipment only after reading the [instrument guide](docs/testing-with-a
 
 ## Download the app
 
-- [**Apple silicon Mac**](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.3/Color-Measurement-0.1.0-macos-arm64.zip), macOS 27 or later.
-- [**Windows x64**](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.3/Color-Measurement-0.1.0-windows-x86_64.zip), Windows 11. Windows ARM64 uses this build through x64 emulation.
-- [**Linux x64**](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.3/Color-Measurement-0.1.0-linux-x86_64.tar.gz), glibc 2.36 or newer with a graphical desktop.
+- [**Apple silicon Mac**](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.4/Color-Measurement-0.1.0-macos-arm64.zip), macOS 27 or later.
+- [**Windows x64**](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.4/Color-Measurement-0.1.0-windows-x86_64.zip), Windows 11. Windows ARM64 uses this build through x64 emulation.
+- [**Linux x64**](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.4/Color-Measurement-0.1.0-linux-x86_64.tar.gz), glibc 2.36 or newer with a graphical desktop.
 
-Download [**SHA256SUMS**](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.3/SHA256SUMS)
+Download [**SHA256SUMS**](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.4/SHA256SUMS)
 and follow [getting started](docs/getting-started.md) to verify and open the app.
 These are early beta packages. The Mac app is ad-hoc signed and awaits
 notarization. Windows packages are unsigned. See [platform requirements and

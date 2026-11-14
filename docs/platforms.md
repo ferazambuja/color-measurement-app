@@ -5,10 +5,10 @@ instrument use are separate facts. None establishes optical accuracy.
 
 | Platform | Application route | Native backend recipe | Physical qualification |
 | --- | --- | --- | --- |
-| Apple silicon/macOS 27+ | [Standalone beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.3); source desktop host | macOS USB/HID/serial | None |
+| Apple silicon/macOS 27+ | [Standalone beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.4); source desktop host | macOS USB/HID/serial | None |
 | Intel/older macOS | Attempt source setup; host/dependency compatibility unqualified | macOS recipe, target result must be reported | None |
-| Linux x64 | [Experimental x64 beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.3), desktop source, CLI and Python API | USB and serial, no separate HID enumerator | None |
-| Windows x64 | [Experimental x64 beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.3), desktop source, CLI and Python API | Windows-GNU/MinGW-w64 CLANG64, libusb0, HID, serial | None |
+| Linux x64 | [Experimental x64 beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.4), desktop source, CLI and Python API | USB and serial, no separate HID enumerator | None |
+| Windows x64 | [Experimental x64 beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.4), desktop source, CLI and Python API | Windows-GNU/MinGW-w64 CLANG64, libusb0, HID, serial | None |
 | Windows ARM64 | Windows x64 beta through emulation; native GUI unavailable with current Qt wheel | Native ARM64 backend compiled and functionally checked with substituted instruments; device drivers must support ARM64 | None |
 | Other architectures/toolchains | Source investigation; no claimed backend qualification | Not established by another target's result | None |
 

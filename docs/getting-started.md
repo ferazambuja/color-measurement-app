@@ -1,7 +1,7 @@
 # Getting started
 
 This is a beta looking for testers. Start with Demo before connecting equipment.
-The [beta release](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.3)
+The [beta release](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.4)
 has downloads for Apple silicon Macs, Windows x64 and Linux x64. Windows ARM64
 uses the Windows x64 package through emulation. The app includes Python, its
 instrument software and runtime libraries. Ordinary users need the app archive
@@ -13,8 +13,8 @@ instrument software.
 
 The prebuilt Mac target is Apple silicon on macOS 27 or later.
 
-Download the [app ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.3/Color-Measurement-0.1.0-macos-arm64.zip)
-and [SHA256SUMS](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.3/SHA256SUMS)
+Download the [app ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.4/Color-Measurement-0.1.0-macos-arm64.zip)
+and [SHA256SUMS](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.4/SHA256SUMS)
 from the beta release. Verify the ZIP before extracting it. Safari opens
 downloaded ZIP files by default: it extracts the app and moves the ZIP to the
 Trash. To verify first, turn off **Open “safe” files after downloading** in
@@ -45,7 +45,7 @@ distribution.
 
 ## Standalone Windows beta
 
-Download the [Windows x64 ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.3/Color-Measurement-0.1.0-windows-x86_64.zip)
+Download the [Windows x64 ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.4/Color-Measurement-0.1.0-windows-x86_64.zip)
 and the release's SHA256SUMS. Windows 11 ARM64 runs this package through x64
 emulation. A native ARM64 package is unavailable with the current Qt dependency.
 In PowerShell, compute the ZIP's hash:
@@ -54,8 +54,8 @@ In PowerShell, compute the ZIP's hash:
 Get-FileHash -Algorithm SHA256 Color-Measurement-0.1.0-windows-x86_64.zip
 ```
 
-Compare it with that filename's line in SHA256SUMS; PowerShell prints the hash in
-capital letters, and letter case does not matter. Use **Extract All**, keep the
+PowerShell prints the hash in capital letters. Compare it with that filename's
+line in SHA256SUMS, ignoring letter case. Use **Extract All**, keep the
 whole extracted folder together and open **Color Measurement.exe** inside it.
 Follow the [SmartScreen guidance](platforms.md#desktop-runtime-requirements)
 if Windows blocks the app. Never disable SmartScreen, antivirus or system policy.
@@ -66,7 +66,7 @@ If the app exits before its workspace appears in a virtual machine, try the
 
 ## Standalone Linux beta
 
-Download the [Linux x64 archive](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.3/Color-Measurement-0.1.0-linux-x86_64.tar.gz)
+Download the [Linux x64 archive](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.4/Color-Measurement-0.1.0-linux-x86_64.tar.gz)
 and SHA256SUMS. Use a graphical desktop with glibc 2.36 or newer and the
 [required system libraries](platforms.md#desktop-runtime-requirements).
 From the download folder:
@@ -91,9 +91,9 @@ sh "Color Measurement/Add to Applications.sh"
 ```
 
 Choose **Color Measurement** in your application menu afterwards. If you move
-or delete the extracted folder, GNOME and other menus that check the entry's
-program hide it. Run the script again from the new location. To remove the
-entry, delete `~/.local/share/applications/io.github.ferazambuja.colormeasurement.desktop`.
+the extracted folder, run the script again from its new location. To remove the
+shortcut, delete `~/.local/share/applications/io.github.ferazambuja.colormeasurement.desktop`.
+If you set `XDG_DATA_HOME`, use its `applications` folder instead.
 
 ## Try Demo
 
