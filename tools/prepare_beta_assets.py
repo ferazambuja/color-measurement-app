@@ -90,6 +90,14 @@ def verify_distribution_identity(application, metadata):
         executable = application / (name + (".exe" if metadata["system"] == "Windows" else ""))
     if executable.is_symlink() or not executable.is_file():
         raise ValueError("Distribution executable is missing or a symlink")
+    if metadata["system"] == "Linux":
+        # The menu script writes into the user's home; deliver the committed bytes only.
+        launcher = application / "Add to Applications.sh"
+        committed = ROOT / "tools/desktop_builder/install-linux-desktop.sh"
+        if (launcher.is_symlink() or not launcher.is_file()
+                or launcher.stat().st_mode & 0o111 != 0o111
+                or launcher.read_bytes() != committed.read_bytes()):
+            raise ValueError("Distribution menu script differs from this source")
 
 
 def verify_adhoc_signature(application):

@@ -673,6 +673,34 @@ def test_release_preparation_refuses_renamed_or_inconsistent_distribution(tmp_pa
         prepare.verify_distribution_identity(app, metadata)
 
 
+@pytest.mark.skipif(sys.platform == "win32", reason="POSIX execute permission")
+@pytest.mark.parametrize("fault", [None, "missing", "changed", "not_executable", "symlink"])
+def test_linux_delivery_binds_its_menu_script_to_the_source(tmp_path, fault):
+    import shutil
+
+    import prepare_beta_assets as prepare
+
+    app = tmp_path / "Color Measurement"
+    app.mkdir()
+    (app / "Color Measurement").write_bytes(b"inert, never run")
+    committed = prepare.ROOT / "tools/desktop_builder/install-linux-desktop.sh"
+    launcher = app / "Add to Applications.sh"
+    if fault == "symlink":
+        launcher.symlink_to(committed)
+    elif fault != "missing":
+        shutil.copyfile(committed, launcher)
+        launcher.chmod(0o644 if fault == "not_executable" else 0o755)
+        if fault == "changed":
+            launcher.write_bytes(committed.read_bytes() + b"# appended\n")
+    metadata = dict(application_name="Color Measurement", version="0.1.0", system="Linux",
+                    instrument_report_sha256="a" * 64)
+    if fault:
+        with pytest.raises(ValueError, match="menu script differs"):
+            prepare.verify_distribution_identity(app, metadata)
+    else:
+        prepare.verify_distribution_identity(app, metadata)
+
+
 @pytest.mark.skipif(sys.platform != "darwin", reason="codesign is macOS-only")
 @pytest.mark.parametrize("fault", [None, "unsigned", "modified", "identifier"])
 def test_release_signature_check_requires_an_intact_adhoc_seal(tmp_path, fault):
@@ -871,6 +899,12 @@ def test_release_assets_bind_code_workers_sources_and_generated_records(
         shutil.rmtree(contents)
         executable = "Color Measurement" + (".exe" if sys.platform == "win32" else "")
         (app / executable).write_bytes(b"inert, never run")
+        if platform.system() == "Linux":
+            # Not shutil.copy2: the delivered_source fault replaces it for source copies.
+            launcher = app / "Add to Applications.sh"
+            launcher.write_bytes(
+                (prepare.ROOT / "tools/desktop_builder/install-linux-desktop.sh").read_bytes())
+            launcher.chmod(0o755)
     monkeypatch.setattr(prepare.subprocess, "check_output", lambda command, **kwargs:
                         "" if "status" in command else "a" * 40 + "\n")
     output = tmp_path / "assets"

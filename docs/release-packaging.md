@@ -97,7 +97,8 @@ On Windows/Linux, select the complete `Color Measurement` application folder.
 The tool rejects Candidate builds, checks the frozen worker identity and compares
 the sdist with all included tracked source bytes. It authenticates workers
 without executing them. On macOS it requires an intact ad-hoc seal over the whole
-bundle, the only post-build check of third-party runtime files. It verifies the
+bundle, the only post-build check of third-party runtime files. On Linux the
+delivered **Add to Applications.sh** must be the committed executable script. It verifies the
 pinned dependency archives and includes all four source attachments. Delivered
 copies must match their verified hashes. Changes to the application sdist during
 verification or the original native report during preparation cause a failure.
