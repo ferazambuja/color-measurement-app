@@ -8,7 +8,7 @@ on:
       target:
         description: Target to qualify and package (no publication)
         type: choice
-        options: [linux, windows-x64, windows-arm64, all]
+        options: [linux, windows-x64, all]
         default: linux
 
 permissions:
@@ -91,15 +91,11 @@ jobs:
           if-no-files-found: error
 
   windows:
-    name: Windows / ${{ matrix.arch }}
-    if: inputs.target == 'windows-x64' || inputs.target == 'windows-arm64' || inputs.target == 'all'
+    name: Windows x64
+    if: inputs.target == 'windows-x64' || inputs.target == 'all'
     needs: sources
-    runs-on: ${{ matrix.arch == 'aarch64' && 'windows-11-arm' || 'windows-latest' }}
+    runs-on: windows-latest
     timeout-minutes: 60
-    strategy:
-      fail-fast: false
-      matrix:
-        arch: ${{ fromJSON(inputs.target == 'windows-x64' && '["x86_64"]' || inputs.target == 'windows-arm64' && '["aarch64"]' || '["x86_64", "aarch64"]') }}
     env:
       PYTHONUTF8: "1"
       CC: clang
@@ -108,27 +104,25 @@ jobs:
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
         with:
           version: "0.12.15"
-          # An ARM runner can execute x64 tools. Require a native managed Python
-          # explicitly, using the Windows ARM64 build available from Python 3.13.
-          python-version: ${{ matrix.arch == 'aarch64' && 'cpython-3.13-windows-aarch64-none' || '3.11' }}
+          python-version: "3.11"
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: "22"
       - uses: msys2/setup-msys2@66cd2cce69caa17b53920067426061ca1de3a884 # v2
         id: msys2
         with:
-          msystem: ${{ matrix.arch == 'aarch64' && 'CLANGARM64' || 'CLANG64' }}
+          msystem: CLANG64
           release: true
           update: true
           install: >-
-            mingw-w64-clang-${{ matrix.arch }}-clang
-            mingw-w64-clang-${{ matrix.arch }}-compiler-rt
-            mingw-w64-clang-${{ matrix.arch }}-binutils
+            mingw-w64-clang-x86_64-clang
+            mingw-w64-clang-x86_64-compiler-rt
+            mingw-w64-clang-x86_64-binutils
       - name: Expose native compiler and obtain pinned Argyll source
         shell: pwsh
         env:
           MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
-          COMPILER_DIRECTORY: ${{ matrix.arch == 'aarch64' && 'clangarm64/bin' || 'clang64/bin' }}
+          COMPILER_DIRECTORY: clang64/bin
         run: |
           Add-Content $env:GITHUB_PATH (Join-Path $env:MSYS2_LOCATION $env:COMPILER_DIRECTORY)
           New-Item -ItemType Directory -Force local/beta | Out-Null
@@ -143,18 +137,7 @@ jobs:
           npm ci --prefix tools/desktop_builder --ignore-scripts --no-audit --no-fund
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Full software gate without production execution
-        if: matrix.arch != 'aarch64'
         run: uv run --locked --extra app python tools/test_all.py --require-mat --jobs 4 --argyll-archive local/beta/Argyll_V3.5.0_src.zip --argyll-contribution tools/native_argyll/contributions/cr_pr --native-output local/beta/native
-      - name: ARM64 preview native functional checks without production execution
-        if: matrix.arch == 'aarch64'
-        run: uv run --locked --extra app python tools/argyll_native_check.py --substituted-binding --archive local/beta/Argyll_V3.5.0_src.zip --contribution tools/native_argyll/contributions/cr_pr --output local/beta/native
-      - name: ARM64 preview application, frontend and science checks (partial target gate)
-        if: matrix.arch == 'aarch64'
-        shell: pwsh
-        run: |
-          $env:CM_RENDERER_NATIVE_REPORT = (Resolve-Path local/beta/native/report.json).Path
-          uv run --locked --extra app python tools/test_scoped.py application frontend science --require-mat --jobs 4 --generic-stub local/beta/native/generic-session-stub-worker.exe --chart-stub local/beta/native/generic-chart-stub-worker.exe
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: corresponding-source-${{ github.sha }}
@@ -172,7 +155,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: windows-${{ matrix.arch }}-candidate-${{ github.sha }}
+          name: windows-x64-candidate-${{ github.sha }}
           path: |
             local/beta/assets/Color-Measurement-*
             local/beta/assets/RELEASE.txt

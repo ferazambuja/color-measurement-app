@@ -15,19 +15,13 @@ partial run must retain that label. Do not silently use a reduced replay as a
 full target gate. Attach the hosted run URL and ID when a hosted run exists.
 
 The Linux x64 package is built inside Debian 12, giving a glibc 2.36 baseline.
-Windows x64 uses MSYS2 CLANG64 and Windows ARM64 uses CLANGARM64 for production
-workers. Each target uses matching native Windows Python for freezing. macOS
-packages are built on macOS. A Mac cannot produce a qualified Windows GUI
-executable by running PyInstaller against Mac libraries.
-
-Windows ARM64 is a preview target. MSYS2 omits its ARM64 sanitizer runtimes,
-and x64 AddressSanitizer fails during startup under Windows ARM64 emulation.
-The ARM64 job builds native workers, runs native substituted instrument/session
-checks and the application, frontend and Python science profiles, then packages
-with native ARM64 Python. These are partial target checks. The other targets'
-full gates provide the shared source-proof evidence. The manifest and release
-text retain this boundary. ARM64 sanitizer coverage and physical device
-operation remain unqualified.
+Windows x64 uses MSYS2 CLANG64 for production workers and native Windows Python
+for freezing. Windows ARM64 runs that x64 app through emulation. The current
+native ARM64 PySide6 wheel omits Qt WebEngine, so it cannot package this UI.
+Native ARM64 instrument workers passed substituted functional checks during the
+investigation. MSYS2 also omits ARM64 sanitizer runtimes, and x64 ASan fails at
+startup under Windows ARM64 emulation. Native ARM64 app qualification remains
+open. macOS packages are built on macOS.
 
 Use `tools/build_desktop_app.py` as described in the [desktop reference](desktop.md#build-a-standalone-application).
 The builder uses the same host on every OS, checks application code/resources,
@@ -124,7 +118,7 @@ Combine the candidate asset directories with:
 ```sh
 uv run --locked python tools/assemble_beta_release.py \
   --candidates /path/to/macos/assets /path/to/windows-x64/assets \
-  /path/to/windows-arm64/assets /path/to/linux/assets --output /path/to/release
+  /path/to/linux/assets --output /path/to/release
 ```
 
 The combined directory contains each app download, one copy of the common source

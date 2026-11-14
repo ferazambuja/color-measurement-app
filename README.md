@@ -25,19 +25,23 @@ use real equipment only after reading the [instrument guide](docs/testing-with-a
 
 ## Download the app
 
-- **Apple silicon Mac, macOS 27 or later:** download the
-  [macOS beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.1).
-  Follow [getting started](docs/getting-started.md) to verify the download and open it.
-  This early beta is ad-hoc signed and is not notarized; macOS may require a
-  one-time approval for this app.
-- **Build and report:** Windows and Linux now have the same desktop workspace
-  in source, alongside the CLI and Python API. These desktop targets are experimental;
-  no Windows/Linux binary is published. Other Macs can attempt the source route; compatibility with Intel Macs or older
-  macOS is not confirmed. See [platforms and reporting](docs/platforms.md).
-- **Contribute:** use the [setup checklist and contribution workflow](CONTRIBUTING.md).
+- [**Apple silicon Mac**](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.2/Color-Measurement-0.1.0-macos-arm64.zip), macOS 27 or later.
+- [**Windows x64**](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.2/Color-Measurement-0.1.0-windows-x86_64.zip), Windows 11. Windows ARM64 uses this build through x64 emulation.
+- [**Linux x64**](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.2/Color-Measurement-0.1.0-linux-x86_64.tar.gz), glibc 2.36 or newer with a graphical desktop.
+
+Download [**SHA256SUMS**](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.2/SHA256SUMS)
+and follow [getting started](docs/getting-started.md) to verify and open the app.
+These are early beta packages. The Mac app is ad-hoc signed and awaits
+notarization. Windows packages are unsigned. See [platform requirements and
+known limits](docs/platforms.md#desktop-runtime-requirements).
+
+Other Macs and Linux ARM64 can attempt the source route, with compatibility
+unqualified. A native Windows ARM64 app is unavailable because its current
+PySide6 wheel omits Qt WebEngine. To contribute, use the
+[setup checklist](CONTRIBUTING.md).
 
 The app download includes its instrument drivers and runtime libraries. Choose
-its ZIP and the release's SHA256SUMS. The Argyll, Qt and PySide archives are
+its platform archive and the release's SHA256SUMS. The Argyll, Qt and PySide archives are
 optional source code for rebuilding and modification.
 
 The [user guide](docs/user-guide.md) covers the first Demo reading, workspace
@@ -77,7 +81,7 @@ scope. Demo and software tests do not qualify physical operation.
 
 The app uses ArgyllCMS instrument drivers, including additional CR-100/250/300 and
 PR-655/670 support. A listed model is not a guarantee that its physical modes work.
-Windows/Linux desktop packaging is under test; command-line and Python use remain available.
+Windows/Linux desktop packages are experimental; command-line and Python use are also available.
 Direct serial CR/CS routes have their own documented settings and limitations.
 See the [support and platform distinctions](docs/platforms.md),
 [Argyll frontend](docs/generic-frontend.md) and [direct serial reference](docs/direct-serial.md).

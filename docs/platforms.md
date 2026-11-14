@@ -5,18 +5,19 @@ instrument use are separate facts. None establishes optical accuracy.
 
 | Platform | Application route | Native backend recipe | Physical qualification |
 | --- | --- | --- | --- |
-| Apple silicon/macOS 27+ | [Standalone beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.1); source desktop host | macOS USB/HID/serial | None |
+| Apple silicon/macOS 27+ | [Standalone beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.2); source desktop host | macOS USB/HID/serial | None |
 | Intel/older macOS | Attempt source setup; host/dependency compatibility unqualified | macOS recipe, target result must be reported | None |
-| Linux x64 | Experimental Qt desktop source, CLI and Python API; no download | USB and serial, no separate HID enumerator | None |
-| Windows x64 | Experimental Qt desktop source, CLI and Python API; no download | Windows-GNU/MinGW-w64 CLANG64, libusb0, HID, serial | None |
-| Windows ARM64 | Experimental Qt desktop source, CLI and Python API; no download | Windows-GNU/MinGW-w64 CLANGARM64; device drivers must support ARM64 | None |
+| Linux x64 | [Experimental x64 beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.2), desktop source, CLI and Python API | USB and serial, no separate HID enumerator | None |
+| Windows x64 | [Experimental x64 beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.2), desktop source, CLI and Python API | Windows-GNU/MinGW-w64 CLANG64, libusb0, HID, serial | None |
+| Windows ARM64 | Windows x64 beta through emulation; native GUI unavailable with current Qt wheel | Native ARM64 backend compiled and functionally checked with substituted instruments; device drivers must support ARM64 | None |
 | Other architectures/toolchains | Source investigation; no claimed backend qualification | Not established by another target's result | None |
 
 The stock catalog has 38 names; with the combined CR/PR contribution, the catalog has 43
 names. These are recognized names, not physical qualification.
 
-The current binary release covers Apple silicon Macs only. No community target
-report is published yet. CI configuration is a recipe, not proof of a successful run. Historical results apply to their
+The beta has Apple silicon Mac, Windows x64 and Linux x64 downloads. Native
+Windows ARM64 packaging is blocked by the pinned PySide6 wheel's missing Qt
+WebEngine module. No community physical-instrument report is published yet. CI configuration is a recipe, not proof of a successful run. Historical results apply to their
 original source/target; they are not silently promoted to a new revision.
 
 ## Send a software report
@@ -78,23 +79,25 @@ instrument workers or establishes macOS desktop/hardware behavior.
 
 ## Desktop runtime requirements
 
-The Windows/Linux package targets are Windows 11 x64/ARM64 and Debian 12-class
+The Windows/Linux package targets are Windows 11 x64 and Debian 12-class
 Linux x64 (glibc 2.36 or newer), with a graphical desktop and working GPU drivers
 or a supported software-rendering route. This is a build target, not a successful
-user-test claim. Older systems and Linux ARM64 need their own results. In particular,
+user-test claim. Windows ARM64 uses the x64 app through emulation. Native ARM64
+Windows and Linux GUI builds need their own results. In particular,
 the pinned Qt ARM64 Linux wheel requires glibc 2.39; it cannot be used for the x64
 package's older baseline. macOS qualification still concerns Apple silicon on
 macOS 27. Other Mac hardware and OS versions remain unqualified.
 
 Qt WebEngine is bundled. Windows does not need WebView2, and Linux does not need
 WebKitGTK. Linux still needs its normal graphics, font, X11/Wayland, NSS, audio
-and desktop libraries. On Debian 12, the package-check environment installs:
+and desktop libraries. On Debian 12, install the runtime prerequisites with:
 
 ```sh
 sudo apt install libegl1 libopengl0 libxcb-cursor0 libxkbcommon-x11-0 libnss3 \
   libasound2 libxcomposite1 libxdamage1 libxrandr2 libxtst6 libxi6 libxss1 \
   libxshmfence1 libgl1 libglib2.0-0 libdbus-1-3 libfontconfig1 \
-  libxcb-icccm4 libxcb-keysyms1 libxcb-shape0
+  libxcb-icccm4 libxcb-keysyms1 libxcb-shape0 libwayland-client0 \
+  libwayland-server0 libwayland-cursor0 libwayland-egl1
 ```
 
 Use your distribution's package names and administrator-approved procedure.

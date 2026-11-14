@@ -1,20 +1,20 @@
 # Getting started
 
 This is a beta looking for testers. Start with Demo before connecting equipment.
-The [macOS beta](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.1)
-is available for Apple silicon Macs. Windows and Linux users can try the
-experimental source route below.
+The [beta release](https://github.com/ferazambuja/color-measurement-app/releases/tag/v0.1.0-beta.2)
+has downloads for Apple silicon Macs, Windows x64 and Linux x64. Windows ARM64
+uses the Windows x64 package through emulation. The app includes Python, its
+instrument software and runtime libraries. Ordinary users need the app archive
+and SHA256SUMS. The source archives are optional downloads for rebuilding and
+modification. An installed Argyll version is independent of the app's bundled
+instrument software.
 
 ## Standalone macOS test release
 
-The prebuilt target is Apple silicon on macOS 27 or later. It includes
-Python, the workspace, numerical libraries and authenticated instrument workers.
-The app includes its own instrument software and manages its version. For
-ordinary use, download the app ZIP and SHA256SUMS. The source archives on the
-release page are optional downloads for rebuilding and modification.
+The prebuilt Mac target is Apple silicon on macOS 27 or later.
 
-Download the [app ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.1/Color-Measurement-0.1.0-macos-arm64.zip)
-and [SHA256SUMS](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.1/SHA256SUMS)
+Download the [app ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.2/Color-Measurement-0.1.0-macos-arm64.zip)
+and [SHA256SUMS](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.2/SHA256SUMS)
 from the beta release. Verify the ZIP before extracting it. Safari opens
 downloaded ZIP files by default: it extracts the app and moves the ZIP to the
 Trash. To verify first, turn off **Open “safe” files after downloading** in
@@ -42,6 +42,43 @@ See [Apple's instructions](https://support.apple.com/en-us/102445). Stop if its
 origin or checksum is uncertain. Do not disable Gatekeeper, remove quarantine
 recursively or run the app with `sudo`. Notarization is required before wider
 distribution.
+
+## Standalone Windows beta
+
+Download the [Windows x64 ZIP](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.2/Color-Measurement-0.1.0-windows-x86_64.zip)
+and the release's SHA256SUMS. Windows 11 ARM64 runs this package through x64
+emulation. A native ARM64 package is unavailable with the current Qt dependency.
+In PowerShell, compute the ZIP's hash:
+
+```powershell
+Get-FileHash -Algorithm SHA256 Color-Measurement-0.1.0-windows-x86_64.zip
+```
+
+Compare it with that filename's line in SHA256SUMS. Use **Extract All**, keep the
+whole extracted folder together and open **Color Measurement.exe** inside it.
+Follow the [SmartScreen guidance](platforms.md#desktop-runtime-requirements)
+if Windows blocks the app. Never disable SmartScreen, antivirus or system policy.
+Python, Argyll and WebView2 installations are unnecessary for the bundled app.
+
+## Standalone Linux beta
+
+Download the [Linux x64 archive](https://github.com/ferazambuja/color-measurement-app/releases/download/v0.1.0-beta.2/Color-Measurement-0.1.0-linux-x86_64.tar.gz)
+and SHA256SUMS. Use a graphical desktop with glibc 2.36 or newer and the
+[required system libraries](platforms.md#desktop-runtime-requirements).
+From the download folder:
+
+```sh
+sha256sum --check --ignore-missing SHA256SUMS
+tar -xzf Color-Measurement-0.1.0-linux-x86_64.tar.gz
+"Color Measurement/Color Measurement"
+```
+
+The checksum command must report the application archive as `OK`. Keep the
+extracted folder together. Run as your normal desktop user with the Chromium
+sandbox enabled. Linux ARM64 requires its own build and is outside this download's
+qualification.
+
+## Try Demo
 
 Choose **Try Demo**, select the Demo instrument and a mode, then **Create batch**
 in a new folder. Acquire a simulated reading,
@@ -78,7 +115,7 @@ uv run --locked --extra app color-measurement-app
 ```
 
 The same Qt host is implemented for macOS, Windows and Linux. Windows/Linux
-desktop builds are experimental, and no Windows/Linux binary download is published. Check the
+desktop builds are experimental. Check the
 [platform requirements](platforms.md#desktop-runtime-requirements) first.
 Node.js is needed for software tests
 and renderer regeneration, not normal runtime.

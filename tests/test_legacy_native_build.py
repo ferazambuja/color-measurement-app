@@ -108,7 +108,7 @@ def test_broad_recipe_links_declared_sources_without_executing_real_workers(
     worker = "generic-worker-never-run" + (".exe" if system == "Windows" else "")
     assert any(args[-1] == str(tmp_path / worker) for args in calls)
     compiled_local = {Path(arg).name for args in calls for arg in args
-                      if arg.startswith(str(native.NATIVE)) and arg.endswith(".c")}
+                      if arg.endswith(".c") and Path(arg).is_relative_to(native.NATIVE)}
     assert compiled_local == {"link_probe.c", "session.c", "session_attach.c",
                               "description.c", "description_attach.c"}
 
