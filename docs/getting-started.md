@@ -82,7 +82,8 @@ sandbox enabled. Linux ARM64 requires its own build and is outside this download
 qualification.
 
 To add the app and its icon to your application menu, keep the extracted folder
-where you want it and run this once from the download folder:
+where you want it. Run this once from the folder containing the extracted
+**Color Measurement** directory:
 
 ```sh
 sh "Color Measurement/Add to Applications.sh"
