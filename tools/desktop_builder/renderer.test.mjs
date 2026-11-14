@@ -19,6 +19,18 @@ const spaceViewModuleURL = pathToFileURL(path.join(sources, 'space-view.js'));
 const threeModuleURL = pathToFileURL(path.join(sources, 'vendor/three.module.js'));
 const copy = value => JSON.parse(JSON.stringify(value));
 
+async function waitForComparisonAnalysis(app) {
+  const deadline = performance.now() + 10000;
+  let result = app.run('currentAnalysis()');
+  while (!result?.color_comparison_by_source) {
+    assert.ok(!result?.error, result?.error);
+    assert.ok(performance.now() < deadline, 'The current comparison analysis did not settle');
+    await new Promise(resolve => setTimeout(resolve, 20));
+    result = app.run('currentAnalysis()');
+  }
+  return copy(result);
+}
+
 function pythonOwnerPeer(nativeContext = null) {
   const root = path.resolve(assets, '../../..');
   const python = process.env.CM_RENDERER_PYTHON || path.join(root, '.venv/bin/python');
@@ -2268,8 +2280,7 @@ test('actual signed comparison rendering and full summary consume Python values 
     const native=JSON.stringify(app.run('state.rows.map(row=>row.obs)'));
     await app.run("sendComparison({reference:readingIdentity(state.rows[0]),white:{kind:'theoretical-lab-reference',name:'D50',observer:state.rows[0].obs.backend_reported.xyz.observer,reference_y:100,unit:state.rows[0].obs.backend_reported.xyz.unit,scale:state.rows[0].obs.backend_reported.xyz.scale}})");
     app.run("setTool('compare');$('column-deltaX').checked=true;render()");
-    for(let attempt=0;attempt<150&&!app.run('currentAnalysis()?.color_comparison_by_source');attempt++)await new Promise(resolve=>setTimeout(resolve,20));
-    const result=copy(app.run('currentAnalysis()'));assert.ok(result.color_comparison_by_source);
+    const result=await waitForComparisonAnalysis(app);assert.ok(result.color_comparison_by_source);
     assert.ok(app.run('comparisonSummaryText()').includes('ΔX: '+result.summary.delta_xyz_range[0].min));
     const row=app.run('state.rows[1].id'),cell=app.window.document.getElementById('row-'+row).closest('tr').querySelector('[data-column="deltaX"]');
     assert.equal(cell.textContent,app.run('signedValue(currentAnalysis().color_comparison_by_source[state.rows[1].source].delta_xyz[0])'));
@@ -3813,7 +3824,7 @@ test('actual imported observation analysis export and native recovery preserve t
     assert.equal(app.run('displayDescriptor()'),null);
     app.run('inspect(state.rows[0].id)');await app.run('changeComparison({reference:readingIdentity(state.selected)})');
     app.run("setTool('compare')");
-    for(let attempt=0;attempt<150&&!app.run('currentAnalysis()?.color_comparison_by_source');attempt++)await new Promise(resolve=>setTimeout(resolve,20));
+    await waitForComparisonAnalysis(app);
     const text=app.run('comparisonSummaryText()');
     assert.match(text,/Record format: observation_json/);assert.match(text,/Original record kind: observation/);
     assert.ok(!text.includes('Batch:'));

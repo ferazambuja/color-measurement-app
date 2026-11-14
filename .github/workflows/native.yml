@@ -38,6 +38,10 @@ jobs:
         with:
           version: "0.12.15"
           python-version: "3.11"
+      - name: Install headless Qt graphics libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libegl1 libopengl0 libgl1 libxcb-cursor0 libxkbcommon-x11-0
       - name: Obtain pinned upstream source
         run: |
           mkdir -p local/argyll-audit
@@ -60,10 +64,13 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: linux-broad-native-evidence
-          retention-days: 7
+          retention-days: 1
           if-no-files-found: warn
           path: |
-            local/native-feasibility/linux-broad-01/*.log
+            local/native-feasibility/linux-broad-01/report.json
+            local/native-feasibility/linux-broad-01/**/*.log
+            local/native-feasibility/linux-broad-01/**/*.stderr
+            local/native-feasibility/linux-broad-01/**/*.stdout
   windows-broad:
     name: Windows x64 broad catalog / scripted CR and PR drivers
     # Private repositories run only on explicit dispatch to protect the minute allowance.
@@ -130,8 +137,11 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: windows-broad-native-evidence
-          retention-days: 7
+          retention-days: 1
           if-no-files-found: warn
           path: |
             local/native-feasibility/windows-toolchain.txt
-            local/native-feasibility/windows-broad-01/*.log
+            local/native-feasibility/windows-broad-01/report.json
+            local/native-feasibility/windows-broad-01/**/*.log
+            local/native-feasibility/windows-broad-01/**/*.stderr
+            local/native-feasibility/windows-broad-01/**/*.stdout

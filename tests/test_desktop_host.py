@@ -919,46 +919,68 @@ def test_demo_load_holds_its_own_worker_while_the_owner_keeps_answering(tmp_path
     assert h.failures == []
 
 
-def test_actual_demo_load_answers_polls_and_stops_through_the_host(tmp_path, harness):
+def test_actual_demo_load_answers_polls_and_stops_through_the_host(tmp_path, harness, monkeypatch):
+    from threading import Event, current_thread
+
     h = harness(answers=[1])
     h.create(tmp_path / "batch")
     state = h.session.snapshot()["batch"]
-    h.message(
-        "load",
-        "preload_demo",
-        dict(
-            batch_id=state["batch_id"],
-            generation=state["generation"],
-            count=40,
-            load_id="real",
-        ),
-    )
-    h.wait(lambda: h.session.snapshot()["batch"]["operation_id"] is not None)
-    h.message("poll", "snapshot", {})
-    polled = h.reply("poll")
-    assert polled["value"]["batch"]["phase"] != "idle"
-    assert not any(reply["id"] == "load" for reply in h.replies())
-    # Catches a poll reply presenting a Demo instruction natively while the load
-    # acknowledges its own: the confirmation would answer a consumed instruction.
-    # The packet is a captured poll reply with the pending instruction such a
-    # poll can observe (about one in a hundred samples during a load).
-    pending = dict(
-        polled["value"],
-        batch=dict(
-            polled["value"]["batch"],
-            instructions=dict(
-                kind="calibration_setup",
-                operation_id=polled["value"]["batch"]["operation_id"],
-                request_id="captured",
-                message="Simulated setup",
-                response_timeout_seconds=5,
+    completed, release = Event(), Event()
+    command_outcome = h.session.batch.command_outcome
+
+    def hold_completed_outcome(command_id):
+        outcome = command_outcome(command_id)
+        if current_thread().name == "desktop-demo-load_0":
+            # A real load is still active between readings, when the batch is idle.
+            # Hold that boundary so the owner poll cannot race the next reading.
+            completed.set()
+            assert release.wait(8), "The test never released the completed Demo reading"
+        return outcome
+
+    monkeypatch.setattr(h.session.batch, "command_outcome", hold_completed_outcome)
+    try:
+        h.message(
+            "load",
+            "preload_demo",
+            dict(
+                batch_id=state["batch_id"],
+                generation=state["generation"],
+                count=40,
+                load_id="real",
             ),
-        ),
-    )
-    assert h.host.demo_stop is not None
-    h.host.reply_value("captured", pending)
-    assert h.alerts.shown == [] and h.host.instruction_key is None
-    h.message("halt", "stop_demo_preload", dict(load_id="real"))
+        )
+        assert completed.wait(8), "The real Demo reading did not complete"
+        h.message("poll", "snapshot", {})
+        polled = h.reply("poll")
+        assert polled["ok"] and polled["value"]["batch"]["phase"] == "idle"
+        assert polled["value"]["batch"]["sample_count"] == 1
+        assert h.session._demo_preload_running
+        assert not any(reply["id"] == "load" for reply in h.replies())
+        # Catches a poll reply presenting a Demo instruction natively while the load
+        # acknowledges its own: the confirmation would answer a consumed instruction.
+        # The packet is a captured poll reply with the pending instruction such a
+        # poll can observe (about one in a hundred samples during a load).
+        pending = dict(
+            polled["value"],
+            batch=dict(
+                polled["value"]["batch"],
+                instructions=dict(
+                    kind="calibration_setup",
+                    operation_id=polled["value"]["batch"]["operation_id"],
+                    request_id="captured",
+                    message="Simulated setup",
+                    response_timeout_seconds=5,
+                ),
+            ),
+        )
+        assert h.host.demo_stop is not None
+        h.host.reply_value("captured", pending)
+        assert h.alerts.shown == [] and h.host.instruction_key is None
+        h.message("halt", "stop_demo_preload", dict(load_id="real"))
+    finally:
+        if h.host.demo_stop is not None:
+            h.host.demo_stop.set()
+        release.set()
     loaded = h.reply("load")
     assert loaded["ok"], loaded
     assert loaded["value"]["state"] == "stopped" and loaded["value"]["requested"] == 40
