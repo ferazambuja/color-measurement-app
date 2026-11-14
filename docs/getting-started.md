@@ -81,9 +81,9 @@ extracted folder together. Run as your normal desktop user with the Chromium
 sandbox enabled. Linux ARM64 requires its own build and is outside this download's
 qualification.
 
-To add the app and its icon to your application menu, keep the extracted folder
-where you want it. Run this once from the folder containing the extracted
-**Color Measurement** directory:
+To add the app to your application menu, first choose where to keep the
+extracted **Color Measurement** folder. Open a terminal in the folder containing
+**Color Measurement** and run the shortcut script.
 
 ```sh
 sh "Color Measurement/Add to Applications.sh"
